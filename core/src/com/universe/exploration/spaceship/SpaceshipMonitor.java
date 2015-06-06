@@ -2,7 +2,7 @@ package com.universe.exploration.spaceship;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.universe.exploration.Configuration;
+import com.universe.exploration.GameConfiguration;
 
 public class SpaceshipMonitor {
 	private float spaceshipAngle;
@@ -19,7 +19,7 @@ public class SpaceshipMonitor {
 	public SpaceshipMonitor() {
 		this.desiredSpaceshipAngle = 0;
 		this.turnspeed = 0;
-		this.velocity = Configuration.minVelocity;
+		this.velocity = GameConfiguration.minVelocity;
 		this.spaceshipAngle = 0;
 		this.camera = new OrthographicCamera(1920, 1080);
 	}
@@ -64,7 +64,7 @@ public class SpaceshipMonitor {
 	 * @return float turnspeed for graphically turning the ship
 	 */
 	public void thrusterOn() {
-		if(this.velocity < Configuration.maxVelocity) {
+		if(this.velocity < GameConfiguration.maxVelocity) {
 			this.velocity += 0.1;
 		}
 	}

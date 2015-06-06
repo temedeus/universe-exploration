@@ -1,8 +1,6 @@
 package com.universe.exploration.universe;
 
-import com.badlogic.gdx.Gdx;
-import com.universe.exploration.Configuration;
-import com.universe.exploration.GeneralTools;
+import com.universe.exploration.common.tools.RandomizationTools;
 
 public class Universe {
 	/**
@@ -23,7 +21,12 @@ public class Universe {
 	 */
 	private String planetTypes[];
 	
+	/**
+	 * Universe constructor.
+
+	 */
 	public Universe() {
+	
 	}
 	
 	public String getStarType() {
