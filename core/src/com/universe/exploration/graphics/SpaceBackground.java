@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.universe.exploration.GameConfiguration;
-import com.universe.exploration.universe.BackgroundAssembler;
 
 public class SpaceBackground extends Graphics {
 	
