@@ -111,6 +111,10 @@ project(":core") {
     }
 }
 
+project(":universe") {
+    apply plugin: "java"
+}
+
 tasks.eclipse.doLast {
     delete ".project"
 }
