@@ -25,7 +25,7 @@ public class UniverseConfiguration {
 	private int minPlanetCount = 0;
 	
 	/**
-	 * Star types and their weighted propabilities.
+	 * Star types and their weighted probabilities.
 	 * @access private
 	 */
 	private String[][] startypeListing = {

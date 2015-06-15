@@ -3,45 +3,38 @@ package com.universe.exploration.universe;
 import com.universe.exploration.common.tools.RandomizationTools;
 
 public class Universe {
-	/**
-	 * Star type.
-	 * @access private
-	 */
-	private String starType = "";
 
+	private String starType;
 	/**
-	 * Planet count in the system.
-	 * @access private
+	 * @return the starType
 	 */
+	public String getStarType() {
+		return starType;
+	}
+	/**
+	 * @param starType the starType to set
+	 */
+	public void setStarType(String starType) {
+		this.starType = starType;
+	}
+	/**
+	 * @return the planetCount
+	 */
+	public int getPlanetCount() {
+		return planetCount;
+	}
+	/**
+	 * @param planetCount the planetCount to set
+	 */
+	public void setPlanetCount(int planetCount) {
+		this.planetCount = planetCount;
+	}
 	private int planetCount;
-	
-	/**
-	 * Planet types. Create this array once planet count has been randomized.
-	 * @access private
-	 */
-	private String planetTypes[];
-	
 	/**
 	 * Universe constructor.
 
 	 */
 	public Universe() {
 	
-	}
-	
-	public String getStarType() {
-		return starType;
-	}
-
-	public void setStarType(String starType) {
-		this.starType = starType;
-	}
-	
-	public int getPlanetCount() {
-		return planetCount;
-	}
-
-	public void setPlanetCount(int planetCount) {
-		this.planetCount = planetCount;
 	}
 }

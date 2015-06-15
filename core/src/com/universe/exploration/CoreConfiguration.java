@@ -9,7 +9,7 @@ package com.universe.exploration;
  * @author 6.6.2015 Teemu Puurunen 
  *
  */
-public class GameConfiguration {
+public class CoreConfiguration {
 
 	/**
 	 * Background tile width/height (for simplicity tiles are all squares so width equals height)

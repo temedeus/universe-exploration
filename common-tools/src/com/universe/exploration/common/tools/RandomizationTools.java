@@ -48,5 +48,16 @@ public class RandomizationTools {
 		
 		return sourceForRandomization[0][0];
 	}
+	
+	/**
+	 * Get weighted random array index.
+	 * 
+	 * @param weights
+	 * @return
+	 */
+	public static final int getWeightedRandomArrayIndex(int[] weights) {
+		int index = 0;
+		return index;
+	}
 }
 
