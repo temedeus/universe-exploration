@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
         jcenter()
     }
@@ -33,6 +34,7 @@ project(":desktop") {
 
 
     dependencies {
+        testCompile "junit:junit:4.11"
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
@@ -71,6 +73,7 @@ project(":ios") {
     configurations { natives }
 
     dependencies {
+        testCompile "junit:junit:4.11"
         compile project(":core")
         compile "org.robovm:robovm-rt:${roboVMVersion}"
         compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
@@ -86,6 +89,8 @@ project(":html") {
 
 
     dependencies {
+        compile project(":common-tools")
+        compile project(":universe")
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
@@ -104,6 +109,9 @@ project(":core") {
 
 
     dependencies {
+        testCompile "junit:junit:4.11"
+        compile project(":common-tools")
+        compile project(":universe")
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
@@ -111,13 +119,24 @@ project(":core") {
     }
 }
 
+project(":common-tools") {
+    apply plugin: "java"
+    
+    dependencies {
+        testCompile "junit:junit:4.11"
+    }
+}
+
 project(":universe") {
     apply plugin: "java"
 	
 	dependencies {
-		testCompile "junit:junit:4.11"
+        testCompile "junit:junit:4.11"
+        compile project(":common-tools")
 	}
 }
+
+
 
 tasks.eclipse.doLast {
     delete ".project"

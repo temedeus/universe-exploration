@@ -55,6 +55,8 @@ draftWar {
 }
 
 task addSource << {
+    sourceSets.main.compileClasspath += files(project(':common-tools').sourceSets.main.allJava.srcDirs)
+    sourceSets.main.compileClasspath += files(project(':universe').sourceSets.main.allJava.srcDirs)
 	sourceSets.main.compileClasspath += files(project(':core').sourceSets.main.allJava.srcDirs)
 }
 
