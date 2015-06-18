@@ -1,9 +1,9 @@
 package com.universe.exploration.universe;
 
-import com.universe.exploration.common.tools.RandomizationTools;
-
 public class Universe {
 
+	private UniverseConfiguration uConf; 
+	
 	private String starType;
 	/**
 	 * @return the starType
@@ -26,15 +26,21 @@ public class Universe {
 	/**
 	 * @param planetCount the planetCount to set
 	 */
-	public void setPlanetCount(int planetCount) {
-		this.planetCount = planetCount;
+	public void setPlanetCount(int planetCount) throws PlanetCountOutOfRangeException {
+		if(planetCount < this.uConf.getMinPlanetCount() || planetCount > this.uConf.getMaxPlanetCount()) {
+			throw new PlanetCountOutOfRangeException("Planet count must be between " + this.uConf.getMinPlanetCount() + " and " + this.uConf.getMaxPlanetCount());
+		} else {
+			this.planetCount = planetCount;
+		}
+		
 	}
+	
 	private int planetCount;
 	/**
 	 * Universe constructor.
 
 	 */
-	public Universe() {
-	
+	public Universe(UniverseConfiguration ue) {
+		this.uConf = ue;
 	}
 }

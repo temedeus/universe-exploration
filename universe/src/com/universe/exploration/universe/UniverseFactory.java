@@ -17,8 +17,14 @@ public class UniverseFactory {
 	public UniverseFactory() {
 		uConf = new UniverseConfiguration();
 		
-		this.universe = new Universe();
-		this.universe.setPlanetCount(RandomizationTools.getRandomInteger(uConf.getMinPlanetCount(), uConf.getMaxPlanetCount()));
+		this.universe = new Universe(uConf);
+		
+		try {
+			this.universe.setPlanetCount(RandomizationTools.getRandomInteger(uConf.getMinPlanetCount(), uConf.getMaxPlanetCount()));
+		} catch(PlanetCountOutOfRangeException e) {
+			
+		}
+		
 		this.universe.setStarType(RandomizationTools.getStringFromWeightedRandomArray(uConf.getStartypeListing()));
 	}
 	
