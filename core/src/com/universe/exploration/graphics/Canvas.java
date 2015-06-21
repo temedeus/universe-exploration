@@ -13,13 +13,10 @@ import com.universe.exploration.universe.Universe;
 
 public class Canvas {
 	private SpriteBatch batch;
-	private Sprite player;
 	private Sprite space;
 	private BitmapFont font;
 	private Sprite star;
 	private Universe ua;
-	private Skin skin;
-	private Stage stage;
 	private Sprite planet;
 	float px = 0;
 	float py = 0;
@@ -37,11 +34,6 @@ public class Canvas {
         //this.skin = new Skin(Gdx.files.internal("uiskin.json"));
         //this.stage = new Stage();
         
-        // Player
-		Spaceship pGfx = new Spaceship();
-		this.player = pGfx.getItem();
-		this.player.setPosition(this.playerGfxPositionX(), this.playerGfxPositionY());
-		
 		// Space background
 		SpaceBackground spaceBgGFX = new SpaceBackground();
 		this.space = spaceBgGFX.getItem();
@@ -66,25 +58,25 @@ public class Canvas {
 	}
 	
 	/**
-	 * Player graphical position X (relative to draw area size)
-	 * @return float Position X
+	 * Get screen center X
+	 * @return float
 	 */
-	public float playerGfxPositionX() {
+	public float getScreenCenterX() {
 		float w = Gdx.graphics.getWidth();
-		return (w/2 - this.player.getWidth()/2);
+		return (w/2);
 	}
 	
 	/**
-	 * Player graphical position Y (relative to draw area size)
-	 * @return float Position Y
+	 * Get screen center Y
+	 * @return float
 	 */
-	public float playerGfxPositionY() {
+	public float getScreenCenterY() {
         float h = Gdx.graphics.getHeight();
-        return (h/2 - this.player.getHeight()/2);
+        return (h/2);
 	}
 	
 	/**
-	 * renderGame
+	 * Render game
 	 */
 	public void renderGame() {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -97,7 +89,6 @@ public class Canvas {
 		this.planet.draw(batch);
 
 		this.star.rotate((float)0.1);
-		this.player.draw(batch);
 		this.batch.end();
 	}
 

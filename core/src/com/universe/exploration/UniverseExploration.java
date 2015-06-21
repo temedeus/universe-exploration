@@ -25,7 +25,7 @@ public class UniverseExploration extends ApplicationAdapter {
 		this.canvas = new Canvas(this.ua);
 		this.gs = new PointerGuidanceSystem();
 		this.shm = new SpaceshipMonitor();
-		ua = new Universe();
+
 		
 	}
 	
@@ -45,7 +45,7 @@ public class UniverseExploration extends ApplicationAdapter {
 		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			angle = gs.getAngle(
 					(int)Gdx.input.getX(), (int)Gdx.input.getY(), 
-	 				(int)this.canvas.playerGfxPositionX(), (int)this.canvas.playerGfxPositionY());
+	 				(int)this.canvas.getScreenCenterX(), (int)this.canvas.getScreenCenterY());
 			
 			this.shm.thrusterOn();
 			this.shm.move((float) angle, (float)this.shm.getVelocity());
