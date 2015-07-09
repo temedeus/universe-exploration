@@ -1,23 +1,13 @@
-/**
- * 
- */
-package com.universe.exploration.universe.starsystem;
+package com.universe.exploration.starsystem.components;
 
 /**
  * 
- * Star
+ * Star system star representation.
  * 
  * @author 6.6.2015 Teemu Puurunen 
  *
  */
-public class Star {
-
-	/**
-	 * Reference to the graphic image
-	 * @access private
-	 */
-	private String graphic;
-
+public class Star extends StarSystemComponent {
 	/**
 	 * Solar mass
 	 * @access private
@@ -35,23 +25,8 @@ public class Star {
 	 * At least generate minimum values (equivalent to sun).
 	 */
 	public Star() {
-		this.graphic = "star1.jpg";
 		this.solarMass = 1.0;
 		this.solarRadius = 1.0;
-	}
-	
-	/**
-	 * @return the graphic
-	 */
-	public String getGraphic() {
-		return graphic;
-	}
-
-	/**
-	 * @param graphic the graphic to set
-	 */
-	public void setGraphic(String graphic) {
-		this.graphic = graphic;
 	}
 
 	/**

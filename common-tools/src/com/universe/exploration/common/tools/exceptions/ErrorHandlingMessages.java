@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.common.tools;
+package com.universe.exploration.common.tools.exceptions;
 
 /**
  * Error handling enum.
@@ -9,7 +9,7 @@ package com.universe.exploration.common.tools;
  * @author 14.6.2015 Teemu Puurunen 
  *
  */
-public enum ErrorHandling {
+public enum ErrorHandlingMessages {
 	RANDOMIZATION_FAILED(-1, "Randomization has failed!");
 	
 	/**
@@ -23,7 +23,7 @@ public enum ErrorHandling {
 	private final int errorCode;
 	private final String errorMessage;
 	
-	ErrorHandling(int ec, String em) {
+	ErrorHandlingMessages(int ec, String em) {
 		this.errorCode = ec;
 		this.errorMessage = em;
 	}

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.universe.starsystem;
+package com.universe.exploration.starsystem.components;
 
 import com.universe.exploration.common.tools.AstronomicalConstants;
 
@@ -12,7 +12,7 @@ import com.universe.exploration.common.tools.AstronomicalConstants;
  * @author 15.6.2015 Teemu Puurunen 
  *
  */
-public class Planet {
+public class Planet extends StarSystemComponent {
 	/**
 	 * Aphelion - distance when farthest to star.
 	 */

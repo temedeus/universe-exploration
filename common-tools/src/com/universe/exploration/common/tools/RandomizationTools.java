@@ -1,5 +1,4 @@
 package com.universe.exploration.common.tools;
-import java.util.Random;
 
 /**
  * RandomTools

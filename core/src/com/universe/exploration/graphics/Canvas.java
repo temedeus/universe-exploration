@@ -9,21 +9,28 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.universe.exploration.universe.Universe;
+import com.universe.exploration.starsystem.StarSystem;
 
 public class Canvas {
 	private SpriteBatch batch;
 	private Sprite space;
 	private BitmapFont font;
 	private Sprite star;
-	private Universe ua;
+	private StarSystem ua;
 	private Sprite planet;
 	float px = 0;
 	float py = 0;
 	float degree = 0;
 	private OrthographicCamera camera;
 	
-	public Canvas(Universe iua) {
+	float planetX;
+	float planetY;
+	float planetAngle;
+	
+	public Canvas(StarSystem iua) {
+		this.planetX = 0;
+		this.planetY = 0;
+		this.planetAngle = 0;
 		this.ua = iua;
 		
 		this.batch = new SpriteBatch();
@@ -46,7 +53,7 @@ public class Canvas {
 		SystemStar ss = new SystemStar();
 		ss.setStarType(this.ua.getStarType());
 		this.star = ss.getItem();
-		
+
 		// Planet
 		Planet p = new Planet();
 		this.planet = p.getItem();
@@ -86,8 +93,15 @@ public class Canvas {
 		this.batch.begin();
 		this.space.draw(batch);
 		this.star.draw(batch);
+		
+		this.planetX = 2000 * (float)Math.cos((float)this.planetAngle);
+		this.planetY = 2000 * (float)Math.sin((float)this.planetAngle);
+		
+		this.planetAngle += 0.01;
+		
+		this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
 		this.planet.draw(batch);
-
+		this.star.setPosition(this.getScreenCenterX() / 2 - this.star.getScaleX(), this.getScreenCenterY() / 2 - this.star.getScaleY());
 		this.star.rotate((float)0.1);
 		this.batch.end();
 	}

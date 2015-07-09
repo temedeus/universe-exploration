@@ -1,11 +1,12 @@
 package com.universe.exploration;
 import com.universe.exploration.spaceship.PointerGuidanceSystem;
 import com.universe.exploration.spaceship.SpaceshipMonitor;
-import com.universe.exploration.universe.Universe;
-import com.universe.exploration.universe.UniverseFactory;
+import com.universe.exploration.starsystem.StarSystem;
+import com.universe.exploration.starsystem.StarSystemFactory;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.graphics.Canvas;
 import com.badlogic.gdx.Input;
 
@@ -14,19 +15,23 @@ public class UniverseExploration extends ApplicationAdapter {
 	Canvas canvas;
 	SpaceshipMonitor shm;
 	double angle = 0;
-	Universe ua;
+	StarSystem ua;
 
 	@Override
 	public void create () {
-		UniverseFactory uf = new UniverseFactory();
-		this.ua = uf.getUniverse();
+		StarSystemFactory uf = new StarSystemFactory();
+		
+		try {
+			this.ua = uf.makeUniverse();
+		} catch(PlanetCountOutOfRangeException e) {
+			// TODO: error handling on planet count error
+		}
 		
 		// Start game canvas. All graphics processing starts from this class.
 		this.canvas = new Canvas(this.ua);
 		this.gs = new PointerGuidanceSystem();
 		this.shm = new SpaceshipMonitor();
-
-		
+		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
 	}
 	
 	@Override

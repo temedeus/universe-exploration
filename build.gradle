@@ -32,7 +32,6 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
-
     dependencies {
         testCompile "junit:junit:4.11"
         compile project(":core")
@@ -107,7 +106,6 @@ project(":html") {
 project(":core") {
     apply plugin: "java"
 
-
     dependencies {
         testCompile "junit:junit:4.11"
         compile project(":common-tools")
@@ -116,6 +114,8 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:1.2"
+		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
+		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
     }
 }
 
@@ -124,6 +124,8 @@ project(":common-tools") {
     
     dependencies {
         testCompile "junit:junit:4.11"
+		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
+		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
     }
 }
 
@@ -133,6 +135,8 @@ project(":universe") {
 	dependencies {
         testCompile "junit:junit:4.11"
         compile project(":common-tools")
+		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
+		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
 	}
 }
 

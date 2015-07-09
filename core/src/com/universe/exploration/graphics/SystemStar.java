@@ -16,6 +16,20 @@ public class SystemStar extends Graphics {
 	private String planetType = "star1";
 	
 	/**
+	 * @return the planetType
+	 */
+	public String getPlanetType() {
+		return planetType;
+	}
+
+	/**
+	 * @param planetType the planetType to set
+	 */
+	public void setPlanetType(String planetType) {
+		this.planetType = planetType;
+	}
+
+	/**
 	 * Set planet type.
 	 * @param pt
 	 */
@@ -29,7 +43,7 @@ public class SystemStar extends Graphics {
 		sprite = new Sprite(texture);
 		sprite.setSize(4096,4096);
 		sprite.setOrigin(2048, 2048);
-		
+		sprite.setCenter((float)2048, (float)2048);
         return sprite;
 	}
 }

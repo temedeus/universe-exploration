@@ -1,4 +1,4 @@
-package com.universe.exploration.universe;
+package com.universe.exploration.starsystem;
 
 /**
  * Config
@@ -11,7 +11,7 @@ package com.universe.exploration.universe;
  * @author 6.6.2015 Teemu Puurunen 
  *
  */
-public class UniverseConfiguration {
+public class StarSystemConfiguration {
 	/** 
 	 * Max planet count
 	 * @access private
@@ -35,9 +35,28 @@ public class UniverseConfiguration {
 	};
 
 	/**
+	 * Graphics format
+	 */
+	private String graphicsFormat = "png";
+	
+	/**
+	 * @return the graphicsFormat
+	 */
+	public String getGraphicsFormat() {
+		return graphicsFormat;
+	}
+
+	/**
+	 * @param graphicsFormat the graphicsFormat to set
+	 */
+	public void setGraphicsFormat(String graphicsFormat) {
+		this.graphicsFormat = graphicsFormat;
+	}
+
+	/**
 	 * Initiate configuration
 	 */
-	public UniverseConfiguration() {
+	public StarSystemConfiguration() {
 		
 	}
 

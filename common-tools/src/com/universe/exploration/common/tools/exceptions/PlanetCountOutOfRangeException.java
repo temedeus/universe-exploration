@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.universe;
+package com.universe.exploration.common.tools.exceptions;
 
 /**
  * @author 18.6.2015 Teemu Puurunen 
@@ -9,9 +9,6 @@ package com.universe.exploration.universe;
  */
 public class PlanetCountOutOfRangeException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2071201718468432753L;
 	
 	public PlanetCountOutOfRangeException() {

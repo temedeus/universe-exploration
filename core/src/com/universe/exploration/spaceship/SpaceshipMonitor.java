@@ -22,6 +22,7 @@ public class SpaceshipMonitor {
 		this.velocity = CoreConfiguration.minVelocity;
 		this.spaceshipAngle = 0;
 		this.camera = new OrthographicCamera(1920, 1080);
+		this.camera.zoom = -5;
 	}
 	
 	/**
