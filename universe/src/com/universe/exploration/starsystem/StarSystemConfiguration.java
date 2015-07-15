@@ -29,30 +29,11 @@ public class StarSystemConfiguration {
 	 * @access private
 	 */
 	private String[][] startypeListing = {
-		{"star1", "10"}, 
-		{"star2", "3"}, 
-		{"star3", "5"}
+		{"LARGE_STAR", "10"}, 
+		{"MEDIUM_STAR", "3"}, 
+		{"SMALL_STAR", "5"}
 	};
-
-	/**
-	 * Graphics format
-	 */
-	private String graphicsFormat = "png";
 	
-	/**
-	 * @return the graphicsFormat
-	 */
-	public String getGraphicsFormat() {
-		return graphicsFormat;
-	}
-
-	/**
-	 * @param graphicsFormat the graphicsFormat to set
-	 */
-	public void setGraphicsFormat(String graphicsFormat) {
-		this.graphicsFormat = graphicsFormat;
-	}
-
 	/**
 	 * Initiate configuration
 	 */

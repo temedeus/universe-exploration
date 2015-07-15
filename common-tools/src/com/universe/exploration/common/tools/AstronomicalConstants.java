@@ -9,7 +9,8 @@ package com.universe.exploration.common.tools;
  */
 public enum AstronomicalConstants {
 	APHELION_EARTH(1.0, "AU"),
-	PERIPHELION_EARTH(1.0, "AU");
+	PERIPHELION_EARTH(1.0, "AU"),
+	ORBITAL_VELOCITY(0.005, "Orbital velocity relative to that of Earth");
 	
 	private final double value;
 	private final String explanation;

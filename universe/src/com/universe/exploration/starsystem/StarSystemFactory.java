@@ -1,8 +1,10 @@
 package com.universe.exploration.starsystem;
 
+import com.universe.exploration.common.tools.StarsystemComponentType;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
+import com.universe.exploration.starsystem.components.*;
 
 /**
  * 
@@ -38,13 +40,23 @@ public class StarSystemFactory {
 		int planetCount = RandomizationTools.getRandomInteger(uConf.getMinPlanetCount(), uConf.getMaxPlanetCount());
 	
 		// Planet count between configured limits.
-		if(MathTools.betweenIntRangeExclusively(planetCount, this.uConf.getMaxPlanetCount(), this.uConf.getMinPlanetCount())) {
+		if(MathTools.betweenIntRangeInclusively(planetCount, this.uConf.getMaxPlanetCount(), this.uConf.getMinPlanetCount())) {
 			this.starsystem.setPlanetCount(planetCount);
 		} else {
-			throw new PlanetCountOutOfRangeException("Planet count must be between " + this.uConf.getMinPlanetCount() + " and " + this.uConf.getMaxPlanetCount());
+			throw new PlanetCountOutOfRangeException("Planet count must be between " + this.uConf.getMinPlanetCount() + " and " + this.uConf.getMaxPlanetCount() + ". Current value: " + planetCount);
 		}
 		
-		this.starsystem.setStarType(RandomizationTools.getStringFromWeightedRandomArray(uConf.getStartypeListing()));
+		for(int x=0; x < planetCount; x++) {
+			Planet planet = new Planet();
+		}
+		
+		String tmpStarType = RandomizationTools.getStringFromWeightedRandomArray(uConf.getStartypeListing());
+
+		StarsystemComponentType x = StarsystemComponentType.valueOf(tmpStarType);
+		Star systemstar = new Star();
+		systemstar.setcomponentType(StarsystemComponentType.valueOf(tmpStarType));
+		
+		this.starsystem.setSystemstar(systemstar);
 		
 		return this.starsystem;
 	}

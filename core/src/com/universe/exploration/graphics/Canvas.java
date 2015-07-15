@@ -27,6 +27,11 @@ public class Canvas {
 	float planetY;
 	float planetAngle;
 	
+	/**
+	 * Generates graphical representation based on given star system
+	 * 
+	 * @param iua
+	 */
 	public Canvas(StarSystem iua) {
 		this.planetX = 0;
 		this.planetY = 0;
@@ -47,11 +52,11 @@ public class Canvas {
 		
 		for(int x = 0; x < 3; x++) {
 			//this.space[x] = spaceBgGFX.getItem();
-		}
 		
+		}
 		// Generate system star.
 		SystemStar ss = new SystemStar();
-		ss.setStarType(this.ua.getStarType());
+		ss.setStarType(this.ua.getSystemstar().getcomponentType().getGraphicsFile());
 		this.star = ss.getItem();
 
 		// Planet
@@ -91,18 +96,26 @@ public class Canvas {
 		
 		this.batch.setProjectionMatrix(this.camera.combined);
 		this.batch.begin();
-		this.space.draw(batch);
-		this.star.draw(batch);
 		
-		this.planetX = 2000 * (float)Math.cos((float)this.planetAngle);
-		this.planetY = 2000 * (float)Math.sin((float)this.planetAngle);
+		this.planetX = 1500 * (float)Math.cos((float)this.planetAngle);
+		this.planetY = 1500 * (float)Math.sin((float)this.planetAngle);
 		
-		this.planetAngle += 0.01;
+		this.planetAngle += 0.001;
 		
 		this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
-		this.planet.draw(batch);
-		this.star.setPosition(this.getScreenCenterX() / 2 - this.star.getScaleX(), this.getScreenCenterY() / 2 - this.star.getScaleY());
+		
+		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2;
+		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2;
+		
 		this.star.rotate((float)0.1);
+
+		this.star.setPosition(starX-2000, starY-2000); // TODO: solve what the hell is this 2000 offset?
+		
+		// Background first, next star and then planets.
+		this.space.draw(batch);
+		this.star.draw(batch);
+		this.planet.draw(batch);
+		
 		this.batch.end();
 	}
 

@@ -38,12 +38,11 @@ public class SystemStar extends Graphics {
 	}
 	
 	public Sprite getItem() {
-		Texture texture = new Texture(Gdx.files.internal(this.planetType + ".png"));
+		Texture texture = new Texture(Gdx.files.internal(this.planetType));
 		//texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		sprite = new Sprite(texture);
 		sprite.setSize(4096,4096);
 		sprite.setOrigin(2048, 2048);
-		sprite.setCenter((float)2048, (float)2048);
         return sprite;
 	}
 }

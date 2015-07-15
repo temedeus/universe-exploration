@@ -18,11 +18,6 @@ public class CoreConfiguration {
 	
 	public static final int backgroundTileCount = 6;
 	
-	/**
-	 * Spaceship rotation speed
-	 */
-	public static final float spaceshipRotationSpeed = 5;
-	
 	public static final float maxVelocity = 5;
 	
 	public static final float minVelocity = 2;

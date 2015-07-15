@@ -19,12 +19,14 @@ public class UniverseExploration extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		
 		StarSystemFactory uf = new StarSystemFactory();
 		
 		try {
 			this.ua = uf.makeUniverse();
 		} catch(PlanetCountOutOfRangeException e) {
-			// TODO: error handling on planet count error
+			// TODO: error handling on planet count error (overall error handling?)
 		}
 		
 		// Start game canvas. All graphics processing starts from this class.
@@ -40,9 +42,7 @@ public class UniverseExploration extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render () {
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);	
-		
+	public void render () {	
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
 			Gdx.app.exit();
 		}
@@ -53,7 +53,7 @@ public class UniverseExploration extends ApplicationAdapter {
 	 				(int)this.canvas.getScreenCenterX(), (int)this.canvas.getScreenCenterY());
 			
 			this.shm.thrusterOn();
-			this.shm.move((float) angle, (float)this.shm.getVelocity());
+			this.shm.moveCameraUsingHitCoordinates((float) angle, (float)this.shm.getVelocity());
 		} else {
 			this.shm.thrusterOff();
 		}

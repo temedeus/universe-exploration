@@ -22,7 +22,8 @@ public class SpaceshipMonitor {
 		this.velocity = CoreConfiguration.minVelocity;
 		this.spaceshipAngle = 0;
 		this.camera = new OrthographicCamera(1920, 1080);
-		this.camera.zoom = -5;
+		this.camera.zoom = -15;
+		this.camera.update();
 	}
 	
 	/**
@@ -31,7 +32,7 @@ public class SpaceshipMonitor {
 	 * @param float x
 	 * @param float s
 	 */
-	public void move(float x, float s) {
+	public void moveCameraUsingHitCoordinates(float x, float s) {
 		float xInc = (float)Math.cos(x * Math.PI/180) * -1 * s * Gdx.graphics.getDeltaTime() * 50;
 		float yInc =  (float)Math.sin(x * Math.PI/180) * -1 * s * Gdx.graphics.getDeltaTime() * 50;
 		this.camera.translate(xInc, yInc);

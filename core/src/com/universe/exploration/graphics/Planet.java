@@ -25,7 +25,7 @@ public class Planet extends Graphics {
 	
 	public Sprite getItem() {
 		Texture texture = new Texture(Gdx.files.internal(this.planetType));
-		//texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 		sprite = new Sprite(texture);
 		sprite.setSize(64,64);
 		sprite.setOrigin(32, 32);

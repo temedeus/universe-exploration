@@ -7,7 +7,7 @@ public class PointerGuidanceSystem implements IGuidanceSystem {
 	 * @param my Y clicked
 	 * @param cpx spaceship position X
 	 * @param cpy spaceship position Y
-	 * @return angle Note angle ranges from -180 to 180. 
+	 * @return double angle Note angle ranges from -180 to 180. 
 	 */
 	public double getAngle(int mx, int my, int cpx, int cpy)
 	{

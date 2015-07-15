@@ -3,6 +3,8 @@
  */
 package com.universe.exploration.starsystem.components;
 
+import com.universe.exploration.common.tools.StarsystemComponentType;
+
 /**
  * @author 7.7.2015 Teemu Puurunen 
  *
@@ -10,21 +12,21 @@ package com.universe.exploration.starsystem.components;
 public class StarSystemComponent implements IStarSystemComponent {
 
 	/**
-	 * Graphics filename
+	 * componentName
 	 */
-	protected String graphicsFile;
+	protected StarsystemComponentType componentType;
 
 	/**
-	 * @return the graphicsFile
+	 * @return the componentName
 	 */
-	public String getGraphicsFile() {
-		return graphicsFile;
+	public StarsystemComponentType getcomponentType() {
+		return this.componentType;
 	}
 
 	/**
-	 * @param graphicsFile the graphicsFile to set
+	 * @param componentName the componentName to set
 	 */
-	public void setGraphicsFile(String graphicsFile) {
-		this.graphicsFile = graphicsFile;
+	public void setcomponentType(StarsystemComponentType componentType) {
+		this.componentType = componentType;
 	}
 }
