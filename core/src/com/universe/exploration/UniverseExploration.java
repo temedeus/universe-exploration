@@ -67,6 +67,6 @@ public class UniverseExploration extends ApplicationAdapter {
 		}
 		
 		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
-		this.canvas.renderGame();
+		this.canvas.drawGameContent();
 	}
 }

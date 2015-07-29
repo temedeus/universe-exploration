@@ -8,5 +8,7 @@ package com.universe.exploration.common.tools;
  *
  */
 public class Conversions {
-
+	public double AUtoScreenPoint() {
+		return 0.0;
+	}
 }

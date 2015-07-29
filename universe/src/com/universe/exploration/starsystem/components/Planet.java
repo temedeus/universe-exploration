@@ -3,7 +3,7 @@
  */
 package com.universe.exploration.starsystem.components;
 
-import com.universe.exploration.common.tools.AstronomicalConstants;
+import com.universe.exploration.common.tools.IngameAstronomicalConstants;
 
 /**
  * Planet numerical representation (e.g. speed, mass, velocity etc.)
@@ -16,14 +16,23 @@ import com.universe.exploration.common.tools.AstronomicalConstants;
 public class Planet extends StarSystemComponent {
 	/**
 	 * Aphelion - distance when farthest to star.
+	 * TODO: calculate radius based on periphelion and aphelion
 	 */
 	private double aphelion;
 	
 	/**
 	 * Periphelion - distance when nearest to star.
+	 * TODO: calculate radius based on periphelion and aphelion
 	 */
 	private double periphelion;
 	
+	/**
+	 * Right now we do not use aphelion nor periphelion. As a simple solution we
+	 * just generate circle orbits (for simplicity)
+	 * TODO: calculate radius based on periphelion and aphelion
+	 */
+	private double orbitalRadius;
+
 	/**
 	 * Mean radius
 	 */
@@ -50,9 +59,9 @@ public class Planet extends StarSystemComponent {
 	 * nothing is set.
 	 */
 	public Planet() {
-		this.aphelion = AstronomicalConstants.APHELION_EARTH.getValue();
-		this.periphelion = AstronomicalConstants.PERIPHELION_EARTH.getValue();
-		this.orbitalVelocity = AstronomicalConstants.ORBITAL_VELOCITY.getValue();
+		this.aphelion = IngameAstronomicalConstants.APHELION_EARTH.getValue();
+		this.periphelion = IngameAstronomicalConstants.PERIPHELION_EARTH.getValue();
+		this.orbitalVelocity = IngameAstronomicalConstants.MIN_ORBITAL_VELOCITY.getValue();
 	}
 	
 	/**
@@ -137,5 +146,33 @@ public class Planet extends StarSystemComponent {
 	 */
 	public void setOrbitalVelocity(double orbitalVelocity) {
 		this.orbitalVelocity = orbitalVelocity;
+	}
+	
+	/**
+	 * @return the radius
+	 */
+	public double getRadius() {
+		return orbitalRadius;
+	}
+
+	/**
+	 * @param radius the radius to set
+	 */
+	public void setRadius(double radius) {
+		this.orbitalRadius = radius;
+	}
+	
+	/**
+	 * @return the orbitalRadius
+	 */
+	public double getOrbitalRadius() {
+		return orbitalRadius;
+	}
+
+	/**
+	 * @param orbitalRadius the orbitalRadius to set
+	 */
+	public void setOrbitalRadius(double orbitalRadius) {
+		this.orbitalRadius = orbitalRadius;
 	}
 }

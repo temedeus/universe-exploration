@@ -1,5 +1,7 @@
 package com.universe.exploration.common.tools;
 
+import java.util.Random;
+
 /**
  * RandomTools
  *  
@@ -20,6 +22,19 @@ public class RandomizationTools {
 		int randomNumber =  (int)(Math.random() * (upper - lower + 1)) + lower;
 		
 		return randomNumber;
+	}
+	
+	/**
+	 * Generate random double using given limits
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public static final double getRandomDouble(double min, double max) {
+		Random r = new Random();
+		double randomDouble = min + (max - min) * r.nextDouble();
+		
+		return randomDouble;
 	}
 	
 	/**

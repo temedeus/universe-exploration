@@ -24,16 +24,24 @@ public class StarSystemConfiguration {
 	 */
 	private int minPlanetCount = 0;
 	
-	/**
-	 * Star types and their weighted probabilities.
-	 * @access private
-	 */
 	private String[][] startypeListing = {
 		{"LARGE_STAR", "10"}, 
 		{"MEDIUM_STAR", "3"}, 
 		{"SMALL_STAR", "5"}
 	};
 	
+	/**
+	 * Planet types and their weighted probabilities.
+	 * @access private
+	 */
+	private String[][] planettypeListing = {
+		{"ACID_RAIN_PLANET", "6"},
+		{"RED_MINERAL_PLANET", "4"},
+		{"GAS_GIANT_PLANET", "10"},
+		{"COLD_ROCKY_PLANET", "15"},
+		{"EARTLIKE_PLANET", "2"}
+	};
+
 	/**
 	 * Initiate configuration
 	 */
@@ -82,5 +90,18 @@ public class StarSystemConfiguration {
 	public void setStartypeListing(String[][] startypeListing) {
 		this.startypeListing = startypeListing;
 	}
+	
+	/**
+	 * @return the planettypeListing
+	 */
+	public String[][] getPlanettypeListing() {
+		return planettypeListing;
+	}
 
+	/**
+	 * @param planettypeListing the planettypeListing to set
+	 */
+	public void setPlanettypeListing(String[][] planettypeListing) {
+		this.planettypeListing = planettypeListing;
+	}
 }

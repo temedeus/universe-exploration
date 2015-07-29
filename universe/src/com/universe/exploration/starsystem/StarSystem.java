@@ -1,5 +1,6 @@
 package com.universe.exploration.starsystem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.universe.exploration.starsystem.components.Planet;
@@ -17,6 +18,18 @@ public class StarSystem {
 	private List<Planet> planets;
 
 	/**
+	 * Add planet to star system.
+	 * @param planet
+	 */
+	public void addPlanet(Planet planet) {
+		planets.add(planet);
+	}
+	
+	public void emptyPlanetsList() {
+		planets.clear();
+	}
+	
+	/**
 	 * @return the systemstar
 	 */
 	public Star getSystemstar() {
@@ -30,12 +43,16 @@ public class StarSystem {
 		this.systemstar = systemstar;
 	}
 
+	/**
+	 * Planets in given star system.
+	 */
 	private int planetCount;
 	
 	/**
 	 * Star system constructor.
 	 */
 	public StarSystem() {
+		this.planets = new ArrayList<Planet>();
 	}
 	
 	/**

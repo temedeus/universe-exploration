@@ -5,24 +5,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.universe.exploration.CoreConfiguration;
 
 public class SpaceshipMonitor {
-	private float spaceshipAngle;
 	private float desiredSpaceshipAngle; 
 	private float turnspeed; 
 	private float velocity;
 	private OrthographicCamera camera;
 	
-	/** 
-	 * Turning direction. 0 = we're at target, -1 = turn counter-clockwise, 1 = turn clockwise.
-	 */
-	private int direction = 0;
-	
 	public SpaceshipMonitor() {
 		this.desiredSpaceshipAngle = 0;
 		this.turnspeed = 0;
 		this.velocity = CoreConfiguration.minVelocity;
-		this.spaceshipAngle = 0;
 		this.camera = new OrthographicCamera(1920, 1080);
-		this.camera.zoom = -15;
+		this.camera.zoom = -5;
 		this.camera.update();
 	}
 	

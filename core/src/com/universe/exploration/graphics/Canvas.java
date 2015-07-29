@@ -54,9 +54,10 @@ public class Canvas {
 			//this.space[x] = spaceBgGFX.getItem();
 		
 		}
+		
 		// Generate system star.
 		SystemStar ss = new SystemStar();
-		ss.setStarType(this.ua.getSystemstar().getcomponentType().getGraphicsFile());
+		ss.setGraphicsSource(this.ua.getSystemstar().getcomponentType().getGraphicsFile());
 		this.star = ss.getItem();
 
 		// Planet
@@ -90,7 +91,7 @@ public class Canvas {
 	/**
 	 * Render game
 	 */
-	public void renderGame() {
+	public void drawGameContent() {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		

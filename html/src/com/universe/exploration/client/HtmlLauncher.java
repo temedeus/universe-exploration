@@ -14,8 +14,8 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class HtmlLauncher extends GwtApplication {
-	static final int WIDTH = 1024;
-	static final int HEIGHT = 768;
+	static final int WIDTH = 800;
+	static final int HEIGHT = 600;
 	static HtmlLauncher instance;
 	
 	@Override

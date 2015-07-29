@@ -124,6 +124,7 @@ project(":common-tools") {
     
     dependencies {
         testCompile "junit:junit:4.11"
+		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
     }
@@ -135,6 +136,7 @@ project(":universe") {
 	dependencies {
         testCompile "junit:junit:4.11"
         compile project(":common-tools")
+		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
 	}

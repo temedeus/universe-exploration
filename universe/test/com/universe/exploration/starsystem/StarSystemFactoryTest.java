@@ -1,13 +1,26 @@
 package com.universe.exploration.starsystem;
 
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import com.universe.exploration.common.tools.IngameAstronomicalConstants;
+import com.universe.exploration.starsystem.components.Planet;
 
 
 public class StarSystemFactoryTest {
-
+	StarSystemFactory ssf;
+	
+	@Before 
+	public void executedBeforeEach() {
+		ssf = new StarSystemFactory();
+	}
+	
 	@Test
-	public void testMakeUniverse() throws Exception {
-		StarSystemFactory ssf = new StarSystemFactory();
+	public void testPlanetCountWithinRange() throws Exception {
+		
 		StarSystem[] ss = new StarSystem[3];
 
 		/**
@@ -19,6 +32,28 @@ public class StarSystemFactoryTest {
 		for(int x=0; x < 3; x++) {
 			ss[x] = ssf.makeUniverse();
 			System.out.println("-- star type: " + ss[x].getSystemstar().getcomponentType().toString());
+		}
+	}
+	
+	@Test
+	public void testGeneratedPlanetsValidDistances() {
+		StarSystem ss = new StarSystem();
+		
+		try {
+			ss = ssf.makeUniverse();
+		} catch(Exception e) {
+		}
+		
+		
+		List<Planet> planets = ss.getPlanets();
+		
+		double previousOrbitalRadius = -100;
+		
+		for (Planet planet : planets) {
+			//Assert.assertTrue(planet.getOrbitalRadius() >= previousOrbitalRadius + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue());
+			System.out.println("Planet type:" + planet.getcomponentType() + ", orbital radius: " + planet.getOrbitalRadius());
+			
+			previousOrbitalRadius = planet.getOrbitalRadius();
 		}
 	}
 
