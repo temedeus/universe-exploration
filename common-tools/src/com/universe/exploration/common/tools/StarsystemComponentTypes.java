@@ -18,7 +18,7 @@ public enum StarsystemComponentTypes {
 	GAS_GIANT_PLANET("Gas giant", "planet3.png"),
 	COLD_ROCKY_PLANET("Large star", "planet4.png"),
 	EARTLIKE_PLANET("Earthlike planet", "planet5.png");
-	
+	// 
 	private final String name;
 
 	private final String graphicsFile;

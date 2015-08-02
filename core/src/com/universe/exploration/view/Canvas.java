@@ -1,4 +1,6 @@
-package com.universe.exploration.graphics;
+package com.universe.exploration.view;
+
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.universe.exploration.starsystem.StarSystem;
+import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
 
 public class Canvas {
 	private SpriteBatch batch;
@@ -22,10 +25,7 @@ public class Canvas {
 	float py = 0;
 	float degree = 0;
 	private OrthographicCamera camera;
-	
-	float planetX;
-	float planetY;
-	float planetAngle;
+	private PlanetGfxContainer[] planetcontainer;
 	
 	/**
 	 * Generates graphical representation based on given star system
@@ -33,9 +33,6 @@ public class Canvas {
 	 * @param iua
 	 */
 	public Canvas(StarSystem iua) {
-		this.planetX = 0;
-		this.planetY = 0;
-		this.planetAngle = 0;
 		this.ua = iua;
 		
 		this.batch = new SpriteBatch();
@@ -47,8 +44,8 @@ public class Canvas {
         //this.stage = new Stage();
         
 		// Space background
-		SpaceBackground spaceBgGFX = new SpaceBackground();
-		this.space = spaceBgGFX.getItem();
+		SpaceBackgroundGfxContainer spaceBgGFX = new SpaceBackgroundGfxContainer();
+		this.space = spaceBgGFX.getSprite();
 		
 		for(int x = 0; x < 3; x++) {
 			//this.space[x] = spaceBgGFX.getItem();
@@ -56,13 +53,19 @@ public class Canvas {
 		}
 		
 		// Generate system star.
-		SystemStar ss = new SystemStar();
-		ss.setGraphicsSource(this.ua.getSystemstar().getcomponentType().getGraphicsFile());
-		this.star = ss.getItem();
+		SystemStarGfxContainer ss = new SystemStarGfxContainer();
+		ss.setup(this.ua.getSystemstar());
+		
+		star = ss.getSprite();
 
-		// Planet
-		Planet p = new Planet();
-		this.planet = p.getItem();
+		List<PlanetAbstractComponent> listOfPlanets = ua.getPlanets();
+
+		int planetCount = ua.getPlanetCount();
+		planetcontainer = new PlanetGfxContainer[ua.getPlanetCount()];
+		
+		for(int x=0; x < listOfPlanets.size(); x++ ) {
+			planetcontainer[x].setComponentType(listOfPlanets.get(x));
+		}
 	}
 	
 	public void destroy() {
@@ -98,12 +101,7 @@ public class Canvas {
 		this.batch.setProjectionMatrix(this.camera.combined);
 		this.batch.begin();
 		
-		this.planetX = 1500 * (float)Math.cos((float)this.planetAngle);
-		this.planetY = 1500 * (float)Math.sin((float)this.planetAngle);
-		
-		this.planetAngle += 0.001;
-		
-		this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
+		//this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
 		
 		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2;
 		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2;
@@ -115,7 +113,7 @@ public class Canvas {
 		// Background first, next star and then planets.
 		this.space.draw(batch);
 		this.star.draw(batch);
-		this.planet.draw(batch);
+		//this.planet.draw(batch);
 		
 		this.batch.end();
 	}

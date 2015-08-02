@@ -7,7 +7,7 @@ package com.universe.exploration.starsystem.components;
  * @author 6.6.2015 Teemu Puurunen 
  *
  */
-public class Star extends StarSystemComponent {
+public class StarAbstractComponent extends StarSystemComponent {
 	/**
 	 * Solar mass
 	 * @access private
@@ -24,7 +24,7 @@ public class Star extends StarSystemComponent {
 	 * Constructor for star.
 	 * At least generate minimum values (equivalent to sun).
 	 */
-	public Star() {
+	public StarAbstractComponent() {
 		this.solarMass = 1.0;
 		this.solarRadius = 1.0;
 	}

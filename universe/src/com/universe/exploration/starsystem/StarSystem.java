@@ -3,8 +3,8 @@ package com.universe.exploration.starsystem;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.universe.exploration.starsystem.components.Planet;
-import com.universe.exploration.starsystem.components.Star;
+import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
+import com.universe.exploration.starsystem.components.StarAbstractComponent;
 
 public class StarSystem {
 
@@ -13,15 +13,15 @@ public class StarSystem {
 	/**
 	 * System star
 	 */
-	private Star systemstar;
+	private StarAbstractComponent systemstar;
 	
-	private List<Planet> planets;
+	private List<PlanetAbstractComponent> planets;
 
 	/**
 	 * Add planet to star system.
 	 * @param planet
 	 */
-	public void addPlanet(Planet planet) {
+	public void addPlanet(PlanetAbstractComponent planet) {
 		planets.add(planet);
 	}
 	
@@ -32,14 +32,14 @@ public class StarSystem {
 	/**
 	 * @return the systemstar
 	 */
-	public Star getSystemstar() {
+	public StarAbstractComponent getSystemstar() {
 		return systemstar;
 	}
 
 	/**
 	 * @param systemstar the systemstar to set
 	 */
-	public void setSystemstar(Star systemstar) {
+	public void setSystemstar(StarAbstractComponent systemstar) {
 		this.systemstar = systemstar;
 	}
 
@@ -52,7 +52,7 @@ public class StarSystem {
 	 * Star system constructor.
 	 */
 	public StarSystem() {
-		this.planets = new ArrayList<Planet>();
+		this.planets = new ArrayList<PlanetAbstractComponent>();
 	}
 	
 	/**
@@ -72,14 +72,14 @@ public class StarSystem {
 	/**
 	 * @return the planets
 	 */
-	public List<Planet> getPlanets() {
+	public List<PlanetAbstractComponent> getPlanets() {
 		return planets;
 	}
 
 	/**
 	 * @param planets the planets to set
 	 */
-	public void setPlanets(List<Planet> planets) {
+	public void setPlanets(List<PlanetAbstractComponent> planets) {
 		this.planets = planets;
 	}
 }

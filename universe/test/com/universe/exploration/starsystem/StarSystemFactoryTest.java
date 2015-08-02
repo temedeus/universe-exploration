@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
-import com.universe.exploration.starsystem.components.Planet;
+import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
 
 
 public class StarSystemFactoryTest {
@@ -20,6 +20,7 @@ public class StarSystemFactoryTest {
 	
 	@Test
 	public void testPlanetCountWithinRange() throws Exception {
+		System.out.println("*****testPlanetCountWithinRange*****");
 		
 		StarSystem[] ss = new StarSystem[3];
 
@@ -37,6 +38,7 @@ public class StarSystemFactoryTest {
 	
 	@Test
 	public void testGeneratedPlanetsValidDistances() {
+		System.out.println("*****testGeneratedPlanetsValidDistances*********");
 		StarSystem ss = new StarSystem();
 		
 		try {
@@ -45,12 +47,14 @@ public class StarSystemFactoryTest {
 		}
 		
 		
-		List<Planet> planets = ss.getPlanets();
+		List<PlanetAbstractComponent> planets = ss.getPlanets();
 		
 		double previousOrbitalRadius = -100;
 		
-		for (Planet planet : planets) {
-			//Assert.assertTrue(planet.getOrbitalRadius() >= previousOrbitalRadius + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue());
+		for (PlanetAbstractComponent planet : planets) {
+			//planet.getOrbitalRadius() >= previousOrbitalRadius + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue()
+			
+			Assert.assertTrue(planet.getOrbitalRadius() >= previousOrbitalRadius + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue());
 			System.out.println("Planet type:" + planet.getcomponentType() + ", orbital radius: " + planet.getOrbitalRadius());
 			
 			previousOrbitalRadius = planet.getOrbitalRadius();

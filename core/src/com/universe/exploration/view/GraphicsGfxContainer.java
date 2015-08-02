@@ -1,13 +1,13 @@
-package com.universe.exploration.graphics;
+package com.universe.exploration.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.universe.exploration.starsystem.components.StarSystemComponent;
 
-abstract class Graphics implements IGraphics {
+abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	
-	protected StarSystemComponent componentType;
+	protected StarSystemComponent starSystemComponent;
 
 	/**
 	 * Generic pixmap
@@ -23,7 +23,7 @@ abstract class Graphics implements IGraphics {
 	 * Sprite containing graphics item
 	 */
 	protected Sprite sprite;
-	
+
 	/**
 	 * 
 	 */
@@ -38,14 +38,38 @@ abstract class Graphics implements IGraphics {
 	 * Graphics source
 	 */
 	protected String graphicsSource;
-
-	public Sprite getItem() {
-		Texture texture = new Texture(Gdx.files.internal(this.graphicsSource));
+	
+	public GraphicsGfxContainer() {
+		// Empty constructor if one does not wish to install component yet
+	}
+	
+	public GraphicsGfxContainer(StarSystemComponent starSystemComponent) {
+		this.starSystemComponent = starSystemComponent;
+	}
+	
+	public boolean setup() {
+		Texture texture = new Texture(Gdx.files.internal(graphicsSource));
 		sprite = new Sprite(texture);
 		sprite.setSize(this.spriteSize, this.spriteSize);
 		sprite.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
 		
-        return sprite;
+		return true;
+	}
+	
+	public boolean setup(StarSystemComponent starSystemComponent) {
+		if(starSystemComponent != null) {
+			this.starSystemComponent = starSystemComponent;
+			
+			graphicsSource = this.starSystemComponent.getcomponentType().getGraphicsFile();
+			Texture texture = new Texture(Gdx.files.internal(graphicsSource));
+			sprite = new Sprite(texture);
+			sprite.setSize(this.spriteSize, this.spriteSize);
+			sprite.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
+			
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	protected void setupSprite() {};
@@ -82,14 +106,27 @@ abstract class Graphics implements IGraphics {
 	 * @return the componentType
 	 */
 	public StarSystemComponent getComponentType() {
-		return componentType;
+		return starSystemComponent;
 	}
 
 	/**
 	 * @param componentType the componentType to set
 	 */
 	public void setComponentType(StarSystemComponent componentType) {
-		this.componentType = componentType;
-		this.graphicsSource = this.componentType.getcomponentType().getGraphicsFile();
+		this.starSystemComponent = componentType;
+	}
+	
+	/**
+	 * @return the sprite
+	 */
+	public Sprite getSprite() {
+		return sprite;
+	}
+
+	/**
+	 * @param sprite the sprite to set
+	 */
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
 	}
 }

@@ -3,11 +3,11 @@ import com.universe.exploration.spaceship.PointerGuidanceSystem;
 import com.universe.exploration.spaceship.SpaceshipMonitor;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
+import com.universe.exploration.view.Canvas;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
-import com.universe.exploration.graphics.Canvas;
 import com.badlogic.gdx.Input;
 
 public class UniverseExploration extends ApplicationAdapter {
