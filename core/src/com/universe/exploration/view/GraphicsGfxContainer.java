@@ -3,11 +3,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.universe.exploration.model.StarsystemBodyGfxModel;
 import com.universe.exploration.starsystem.components.StarSystemComponent;
 
 abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	
+	/**
+	 * TODO: {@link StarsystemBodyGfxModel} already has {@link StarSystemComponent} inside. Do we need this?
+	 */
 	protected StarSystemComponent starSystemComponent;
+
+	protected StarsystemBodyGfxModel startBodyGfxModel;
 
 	/**
 	 * Generic pixmap
@@ -43,36 +49,33 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 		// Empty constructor if one does not wish to install component yet
 	}
 	
-	public GraphicsGfxContainer(StarSystemComponent starSystemComponent) {
-		this.starSystemComponent = starSystemComponent;
-	}
-	
-	public boolean setup() {
+	public GraphicsGfxContainer(int spriteSize, String graphicsSource) {
+		this.spriteSize = spriteSize;
+		this.graphicsSource = graphicsSource;
+		
 		Texture texture = new Texture(Gdx.files.internal(graphicsSource));
 		sprite = new Sprite(texture);
 		sprite.setSize(this.spriteSize, this.spriteSize);
 		sprite.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
-		
-		return true;
 	}
 	
-	public boolean setup(StarSystemComponent starSystemComponent) {
-		if(starSystemComponent != null) {
-			this.starSystemComponent = starSystemComponent;
-			
-			graphicsSource = this.starSystemComponent.getcomponentType().getGraphicsFile();
-			Texture texture = new Texture(Gdx.files.internal(graphicsSource));
-			sprite = new Sprite(texture);
-			sprite.setSize(this.spriteSize, this.spriteSize);
-			sprite.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
-			
-			return true;
-		} else {
-			return false;
-		}
+	public GraphicsGfxContainer(StarSystemComponent starSystemComponent) {
+		this.starSystemComponent = starSystemComponent;
+		
+		graphicsSource = this.starSystemComponent.getcomponentType().getGraphicsFile();
+		spriteSize = this.starSystemComponent.getSpriteSize();
+		
+		Texture texture = new Texture(Gdx.files.internal(graphicsSource));
+		sprite = new Sprite(texture);
+		sprite.setSize(this.spriteSize, this.spriteSize);
+		sprite.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
 	}
 	
 	protected void setupSprite() {};
+	
+	public void updateSprite() {
+		sprite.setPosition(startBodyGfxModel.getPositionX(), startBodyGfxModel.getPositionY());
+	}
 	
 	/**
 	 * @return the spriteSize
@@ -128,5 +131,19 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	 */
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
+	}
+	
+	/**
+	 * @return the startBodyGfxModel
+	 */
+	public StarsystemBodyGfxModel getStartBodyGfxModel() {
+		return startBodyGfxModel;
+	}
+
+	/**
+	 * @param startBodyGfxModel the startBodyGfxModel to set
+	 */
+	public void setStartBodyGfxModel(StarsystemBodyGfxModel startBodyGfxModel) {
+		this.startBodyGfxModel = startBodyGfxModel;
 	}
 }

@@ -1,5 +1,6 @@
 package com.universe.exploration.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
+import com.universe.exploration.starsystem.components.StarSystemComponent;
 
 public class Canvas {
 	private SpriteBatch batch;
@@ -26,6 +28,8 @@ public class Canvas {
 	float degree = 0;
 	private OrthographicCamera camera;
 	private PlanetGfxContainer[] planetcontainer;
+	
+	private SpriteContainer spriteContainer;
 	
 	/**
 	 * Generates graphical representation based on given star system
@@ -47,25 +51,19 @@ public class Canvas {
 		SpaceBackgroundGfxContainer spaceBgGFX = new SpaceBackgroundGfxContainer();
 		this.space = spaceBgGFX.getSprite();
 		
-		for(int x = 0; x < 3; x++) {
-			//this.space[x] = spaceBgGFX.getItem();
-		
-		}
-		
 		// Generate system star.
-		SystemStarGfxContainer ss = new SystemStarGfxContainer();
-		ss.setup(this.ua.getSystemstar());
+		SystemStarGfxContainer ss = new SystemStarGfxContainer(this.ua.getSystemstar());
 		
 		star = ss.getSprite();
 
 		List<PlanetAbstractComponent> listOfPlanets = ua.getPlanets();
 
-		int planetCount = ua.getPlanetCount();
-		planetcontainer = new PlanetGfxContainer[ua.getPlanetCount()];
+		spriteContainer = new SpriteContainer();
 		
-		for(int x=0; x < listOfPlanets.size(); x++ ) {
-			planetcontainer[x].setComponentType(listOfPlanets.get(x));
+		for(PlanetAbstractComponent planet : listOfPlanets) {
+			spriteContainer.addStarSystemObject(planet);
 		}
+
 	}
 	
 	public void destroy() {
@@ -110,10 +108,12 @@ public class Canvas {
 
 		this.star.setPosition(starX-2000, starY-2000); // TODO: solve what the hell is this 2000 offset?
 		
+		
+		spriteContainer.update(batch);
 		// Background first, next star and then planets.
 		this.space.draw(batch);
 		this.star.draw(batch);
-		//this.planet.draw(batch);
+
 		
 		this.batch.end();
 	}

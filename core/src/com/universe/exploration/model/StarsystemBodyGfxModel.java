@@ -40,7 +40,7 @@ public class StarsystemBodyGfxModel  implements IStarsystemBodyGfxModel {
 		angle = 0;
 	}
 	
-	public void updatePosition() {
+	public void updateSpriteData() {
 		
 	}
 	

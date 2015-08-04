@@ -57,7 +57,7 @@ public class StarSystemFactory {
 		StarsystemComponentTypes x = StarsystemComponentTypes.valueOf(tmpStarType);
 		StarAbstractComponent systemstar = new StarAbstractComponent();
 		systemstar.setcomponentType(StarsystemComponentTypes.valueOf(tmpStarType));
-		
+
 		this.starsystem.setSystemstar(systemstar);
 		
 		return this.starsystem;

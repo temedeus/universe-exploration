@@ -37,4 +37,12 @@ public class StarSystemComponent implements IStarSystemComponent {
 	public boolean configure() {
 		return false;
 	}
+	
+	/**
+	 * Calculates sprite size based on defined "real" spacial values.
+	 * Must be overridden in each file that extends this class.
+	 */
+	public int getSpriteSize() {
+		return 64; // Return at least something
+	}
 }

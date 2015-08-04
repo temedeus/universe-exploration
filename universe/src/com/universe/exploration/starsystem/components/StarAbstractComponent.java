@@ -28,6 +28,13 @@ public class StarAbstractComponent extends StarSystemComponent {
 		this.solarMass = 1.0;
 		this.solarRadius = 1.0;
 	}
+	
+	/**
+	 * Calculate sprite size
+	 */
+	public int getSpriteSize() {
+		return 4096;
+	}
 
 	/**
 	 * @return the solarMass

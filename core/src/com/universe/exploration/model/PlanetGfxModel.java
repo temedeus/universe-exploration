@@ -15,7 +15,7 @@ public class PlanetGfxModel extends StarsystemBodyGfxModel {
 	}
 	
 	@Override
-	public void updatePosition() {
+	public void updateSpriteData() {
 		if(starSystemComponent instanceof PlanetAbstractComponent) {
 			this.positionX = (float) (((PlanetAbstractComponent) starSystemComponent).getOrbitalRadius() * (float)Math.cos((float)angle));
 			this.positionY = (float) (((PlanetAbstractComponent) starSystemComponent).getOrbitalRadius() * (float)Math.sin((float)angle));

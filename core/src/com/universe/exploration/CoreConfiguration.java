@@ -21,5 +21,7 @@ public class CoreConfiguration {
 	public static final float maxVelocity = 5;
 	
 	public static final float minVelocity = 2;
+	
+	public static final int SYSTEMSTAR_SIZE = 4096;
 
 }

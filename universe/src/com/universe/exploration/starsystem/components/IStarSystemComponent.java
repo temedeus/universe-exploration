@@ -9,4 +9,5 @@ package com.universe.exploration.starsystem.components;
  */
 interface IStarSystemComponent {
 	public boolean configure();
+	public int getSpriteSize();
 }

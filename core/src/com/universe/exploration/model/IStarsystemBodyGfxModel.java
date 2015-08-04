@@ -8,5 +8,5 @@ package com.universe.exploration.model;
  *
  */
 public interface IStarsystemBodyGfxModel {
-	public void updatePosition();
+	public void updateSpriteData();
 }
