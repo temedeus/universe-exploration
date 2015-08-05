@@ -96,6 +96,8 @@ public class Canvas {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		
+		
 		this.batch.setProjectionMatrix(this.camera.combined);
 		this.batch.begin();
 		
@@ -108,12 +110,15 @@ public class Canvas {
 
 		this.star.setPosition(starX-2000, starY-2000); // TODO: solve what the hell is this 2000 offset?
 		
+		spriteContainer.update();
 		
-		spriteContainer.update(batch);
 		// Background first, next star and then planets.
 		this.space.draw(batch);
 		this.star.draw(batch);
 
+		for(Sprite sprite : spriteContainer.getSprites()) {
+			sprite.draw(batch);
+		}
 		
 		this.batch.end();
 	}

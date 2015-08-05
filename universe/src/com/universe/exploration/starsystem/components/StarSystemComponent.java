@@ -6,6 +6,12 @@ package com.universe.exploration.starsystem.components;
 import com.universe.exploration.common.tools.StarsystemComponentTypes;
 
 /**
+ * <p>Any class extending StarSystemComponent describes component properties,
+ * maximum and minimum values, but NOT the current state of the astronomical body!</p>
+ * 
+ * <p>You "install" one of these components into a model and from there on
+ * it acts upon boundaries and settings defined in one of these classes.</p>
+ * 
  * @author 7.7.2015 Teemu Puurunen 
  *
  */
@@ -31,7 +37,8 @@ public class StarSystemComponent implements IStarSystemComponent {
 	}
 	
 	/**
-	 * If not overridden, return false. This is pretty much component specific.
+	 * If not overridden, return false. This is pretty much component specific, but each
+	 * component should have one.
 	 * @return
 	 */
 	public boolean configure() {

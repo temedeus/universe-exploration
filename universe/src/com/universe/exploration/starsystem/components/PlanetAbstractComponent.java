@@ -112,6 +112,13 @@ public class PlanetAbstractComponent extends StarSystemComponent {
 	public double getMassOfEarth() {
 		return massOfEarth;
 	}
+	
+	/**
+	 * Calculate sprite size
+	 */
+	public int getSpriteSize() {
+		return 64;
+	}
 
 	/**
 	 * @param massOfEarth the massOfEarth to set

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Plane.PlaneSide;
 
 /**
  * 
+ * Generates a new star system.
  * @author 7.6.2015 Teemu Puurunen 
  *
  */
@@ -70,8 +71,8 @@ public class StarSystemFactory {
 	private void populateWithPlanets(int planetCount) {
 		double planetarySpace = 
 				(IngameAstronomicalConstants.MAX_ORBITAL_RADIUS.getValue() - 
-						IngameAstronomicalConstants.MIN_ORBITAL_RADIUS.getValue()) / 
-						(planetCount);
+				IngameAstronomicalConstants.MIN_ORBITAL_RADIUS.getValue()) / 
+				(planetCount);
 		
 		double previousOrbitalRadious = 0;
 		
@@ -91,7 +92,7 @@ public class StarSystemFactory {
 			double orbitalRadius = RandomizationTools.getRandomDouble(minOrbitalRadius, maxOrbitalRadius);
 			previousOrbitalRadious = orbitalRadius;
 			
-			System.out.println("Min o.rad=" + minOrbitalRadius + " / max o.rad =" + maxOrbitalRadius + " / cur o.rad=" + orbitalRadius);
+			//System.out.println("Min o.rad=" + minOrbitalRadius + " / max o.rad =" + maxOrbitalRadius + " / cur o.rad=" + orbitalRadius);
 			// Set values
 			planet.setcomponentType(StarsystemComponentTypes.valueOf(tmpPlanetType));
 			planet.setOrbitalVelocity(planetOrbitalVelocity);

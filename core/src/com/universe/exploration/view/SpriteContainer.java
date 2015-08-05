@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
 import com.universe.exploration.starsystem.components.StarSystemComponent;
 
 /**
  * 
- * Maintains all the sprites used in the current game scene
+ * Maintains all the sprites used in the current game scene.
+ * Basically works as a controller between model and view.
  * 
  * @author 4.8.2015 Teemu Puurunen 
  */
@@ -44,17 +46,25 @@ public class SpriteContainer {
 		}
 	}
 	
+	public ArrayList<Sprite> getSprites() {
+		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+		for(GraphicsGfxContainer graphicsGfx : graphicsGfxContainer) {
+			sprites.add(graphicsGfx.getSprite());
+		
+		}
+		return sprites;
+	}
+	
 	/**
 	 * Draw sprites on screen and update their position and angles
-	 * @param batch
 	 */
-	public void update(Batch batch) {
-		for(GraphicsGfxContainer graphicsGfxContainer : graphicsGfxContainer) {
-			graphicsGfxContainer.startBodyGfxModel.updateSpriteData();
-		}
-		
-		for(GraphicsGfxContainer graphicsGfxContainer : graphicsGfxContainer) {
-			graphicsGfxContainer.getSprite().draw(batch);
+	public void update() {
+		for(GraphicsGfxContainer graphicsGfx : graphicsGfxContainer) {
+			try {
+				graphicsGfx.getStarSystemBodyGfxModel().updateSpriteData();
+				graphicsGfx.updateSpritePosition();
+				
+			} catch(NullPointerException e) { }
 		}
 	}
 }

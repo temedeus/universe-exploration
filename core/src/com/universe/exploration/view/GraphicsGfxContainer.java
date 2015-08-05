@@ -9,11 +9,11 @@ import com.universe.exploration.starsystem.components.StarSystemComponent;
 abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	
 	/**
-	 * TODO: {@link StarsystemBodyGfxModel} already has {@link StarSystemComponent} inside. Do we need this?
+	 * TODO: constructor takes {@link StarsystemBodyGfxModel} instead of {@link StarSystemComponent}
 	 */
 	protected StarSystemComponent starSystemComponent;
 
-	protected StarsystemBodyGfxModel startBodyGfxModel;
+	protected StarsystemBodyGfxModel starSystemBodyGfxModel;
 
 	/**
 	 * Generic pixmap
@@ -31,7 +31,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	protected Sprite sprite;
 
 	/**
-	 * 
+	 * Sprite size
 	 */
 	protected int spriteSize;
 
@@ -53,10 +53,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 		this.spriteSize = spriteSize;
 		this.graphicsSource = graphicsSource;
 		
-		Texture texture = new Texture(Gdx.files.internal(graphicsSource));
-		sprite = new Sprite(texture);
-		sprite.setSize(this.spriteSize, this.spriteSize);
-		sprite.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
+		setupSprite();
 	}
 	
 	public GraphicsGfxContainer(StarSystemComponent starSystemComponent) {
@@ -65,16 +62,21 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 		graphicsSource = this.starSystemComponent.getcomponentType().getGraphicsFile();
 		spriteSize = this.starSystemComponent.getSpriteSize();
 		
+		setupSprite();
+	}
+	
+	/**
+	 * Initialize sprite and set its basic properties
+	 */
+	public void setupSprite() {
 		Texture texture = new Texture(Gdx.files.internal(graphicsSource));
 		sprite = new Sprite(texture);
 		sprite.setSize(this.spriteSize, this.spriteSize);
 		sprite.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
 	}
-	
-	protected void setupSprite() {};
-	
-	public void updateSprite() {
-		sprite.setPosition(startBodyGfxModel.getPositionX(), startBodyGfxModel.getPositionY());
+
+	public void updateSpritePosition() {
+		sprite.setPosition(starSystemBodyGfxModel.getPositionX(), starSystemBodyGfxModel.getPositionY());
 	}
 	
 	/**
@@ -136,14 +138,14 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	/**
 	 * @return the startBodyGfxModel
 	 */
-	public StarsystemBodyGfxModel getStartBodyGfxModel() {
-		return startBodyGfxModel;
+	public StarsystemBodyGfxModel getStarSystemBodyGfxModel() {
+		return starSystemBodyGfxModel;
 	}
 
 	/**
 	 * @param startBodyGfxModel the startBodyGfxModel to set
 	 */
-	public void setStartBodyGfxModel(StarsystemBodyGfxModel startBodyGfxModel) {
-		this.startBodyGfxModel = startBodyGfxModel;
+	public void setStarSystemBodyGfxModel(StarsystemBodyGfxModel startBodyGfxModel) {
+		this.starSystemBodyGfxModel = startBodyGfxModel;
 	}
 }
