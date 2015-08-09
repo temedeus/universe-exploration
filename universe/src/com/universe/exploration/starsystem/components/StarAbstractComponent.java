@@ -7,7 +7,7 @@ package com.universe.exploration.starsystem.components;
  * @author 6.6.2015 Teemu Puurunen 
  *
  */
-public class StarAbstractComponent extends StarSystemComponent {
+public class StarAbstractComponent extends CelestialComponent {
 	/**
 	 * Solar mass
 	 * @access private

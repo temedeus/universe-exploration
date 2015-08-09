@@ -4,13 +4,13 @@
 package com.universe.exploration.model;
 
 import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
-import com.universe.exploration.starsystem.components.StarSystemComponent;
+import com.universe.exploration.starsystem.components.CelestialComponent;
 
 /**
  * @author 2.8.2015 Teemu Puurunen 
  *
  */
-public class StarsystemBodyGfxModel  implements IStarsystemBodyGfxModel {
+public class CelestialBodyGfxModel  implements IStarsystemBodyGfxModel {
 	
 	/**
 	 * Gdx position
@@ -30,12 +30,12 @@ public class StarsystemBodyGfxModel  implements IStarsystemBodyGfxModel {
 	/**
 	 * Contains planetary data
 	 */
-	protected StarSystemComponent starSystemComponent;
+	protected CelestialComponent starSystemComponent;
 	
 	/**
 	 * 
 	 */
-	public StarsystemBodyGfxModel() {
+	public CelestialBodyGfxModel() {
 		positionX = 0;
 		positionY = 0;
 		angle = 0;
@@ -93,14 +93,14 @@ public class StarsystemBodyGfxModel  implements IStarsystemBodyGfxModel {
 	/**
 	 * @return the starSystemComponent
 	 */
-	public StarSystemComponent getStarSystemComponent() {
+	public CelestialComponent getStarSystemComponent() {
 		return starSystemComponent;
 	}
 
 	/**
 	 * @param starSystemComponent the starSystemComponent to set
 	 */
-	public void setStarSystemComponent(StarSystemComponent starSystemComponent) {
+	public void setStarSystemComponent(CelestialComponent starSystemComponent) {
 		this.starSystemComponent = starSystemComponent;
 	}
 }

@@ -9,7 +9,7 @@ import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
  * @author 4.8.2015 Teemu Puurunen 
  *
  */
-public class SystemstarGfxModel extends StarsystemBodyGfxModel {
+public class SystemstarGfxModel extends CelestialBodyGfxModel {
 	public SystemstarGfxModel() {
 		
 	}

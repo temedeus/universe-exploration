@@ -9,7 +9,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
-import com.universe.exploration.starsystem.components.StarSystemComponent;
+import com.universe.exploration.starsystem.components.CelestialComponent;
 
 /**
  * 
@@ -29,7 +29,7 @@ public class SpriteContainer {
 	 * Add single star system object into arraylist
 	 * @param starsystemObject
 	 */
-	public void addStarSystemObject(StarSystemComponent starSystemComponent) {
+	public void addStarSystemObject(CelestialComponent starSystemComponent) {
 
 		if(starSystemComponent instanceof PlanetAbstractComponent) {
 			graphicsGfxContainer.add(new PlanetGfxContainer(starSystemComponent));
@@ -40,8 +40,8 @@ public class SpriteContainer {
 	 * Add multiple star system objects into arraylist
 	 * @param starsystemObjects
 	 */
-	public void addMultipleStarSystemObjects(List<StarSystemComponent> starSystemComponents) {
-		for(StarSystemComponent starSystemComponent : starSystemComponents) {
+	public void addMultipleStarSystemObjects(List<CelestialComponent> starSystemComponents) {
+		for(CelestialComponent starSystemComponent : starSystemComponents) {
 			addStarSystemObject(starSystemComponent);
 		}
 	}
@@ -60,11 +60,13 @@ public class SpriteContainer {
 	 */
 	public void update() {
 		for(GraphicsGfxContainer graphicsGfx : graphicsGfxContainer) {
-			try {
-				graphicsGfx.getStarSystemBodyGfxModel().updateSpriteData();
-				graphicsGfx.updateSpritePosition();
-				
-			} catch(NullPointerException e) { }
+			if(graphicsGfx instanceof PlanetGfxContainer) {
+				try {
+					graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();
+					graphicsGfx.updateSpritePosition();
+					
+				} catch(NullPointerException e) { }	
+			}
 		}
 	}
 }

@@ -1,13 +1,13 @@
 package com.universe.exploration.view;
 
-import com.universe.exploration.starsystem.components.StarSystemComponent;
+import com.universe.exploration.starsystem.components.CelestialComponent;
 
 public class PlanetGfxContainer extends GraphicsGfxContainer {
 	public PlanetGfxContainer() {
 		super(64, "planet2.png");
 	}
 	
-	public PlanetGfxContainer(StarSystemComponent starSystemComponent) {
+	public PlanetGfxContainer(CelestialComponent starSystemComponent) {
 		super(starSystemComponent);
 	}
 }

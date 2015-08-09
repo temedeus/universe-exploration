@@ -13,7 +13,7 @@ import com.universe.exploration.common.tools.IngameAstronomicalConstants;
  * @author 15.6.2015 Teemu Puurunen 
  *
  */
-public class PlanetAbstractComponent extends StarSystemComponent {
+public class PlanetAbstractComponent extends CelestialComponent {
 	/**
 	 * Aphelion - distance when farthest to star.
 	 * TODO: calculate radius based on periphelion and aphelion

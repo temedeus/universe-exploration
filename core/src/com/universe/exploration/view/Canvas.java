@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
-import com.universe.exploration.starsystem.components.StarSystemComponent;
+import com.universe.exploration.starsystem.components.CelestialComponent;
 
 public class Canvas {
 	private SpriteBatch batch;
@@ -103,8 +103,8 @@ public class Canvas {
 		
 		//this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
 		
-		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2;
-		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2;
+		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2 - 2000;
+		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2 - 2000;
 		
 		this.star.rotate((float)0.1);
 

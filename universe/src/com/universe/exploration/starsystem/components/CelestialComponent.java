@@ -15,7 +15,7 @@ import com.universe.exploration.common.tools.StarsystemComponentTypes;
  * @author 7.7.2015 Teemu Puurunen 
  *
  */
-public class StarSystemComponent implements IStarSystemComponent {
+public class CelestialComponent implements IStarSystemComponent {
 
 	/**
 	 * componentName

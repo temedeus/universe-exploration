@@ -3,17 +3,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.universe.exploration.model.StarsystemBodyGfxModel;
-import com.universe.exploration.starsystem.components.StarSystemComponent;
+import com.universe.exploration.model.CelestialBodyGfxModel;
+import com.universe.exploration.starsystem.components.CelestialComponent;
 
 abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	
 	/**
-	 * TODO: constructor takes {@link StarsystemBodyGfxModel} instead of {@link StarSystemComponent}
+	 * TODO: constructor takes {@link CelestialBodyGfxModel} instead of {@link CelestialComponent}
 	 */
-	protected StarSystemComponent starSystemComponent;
+	protected CelestialComponent starSystemComponent;
 
-	protected StarsystemBodyGfxModel starSystemBodyGfxModel;
+	protected CelestialBodyGfxModel celestialBodyGfxModel;
 
 	/**
 	 * Generic pixmap
@@ -56,9 +56,10 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 		setupSprite();
 	}
 	
-	public GraphicsGfxContainer(StarSystemComponent starSystemComponent) {
+	public GraphicsGfxContainer(CelestialComponent starSystemComponent) {
 		this.starSystemComponent = starSystemComponent;
-		
+		this.celestialBodyGfxModel = new CelestialBodyGfxModel();
+		this.celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
 		graphicsSource = this.starSystemComponent.getcomponentType().getGraphicsFile();
 		spriteSize = this.starSystemComponent.getSpriteSize();
 		
@@ -76,7 +77,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	}
 
 	public void updateSpritePosition() {
-		sprite.setPosition(starSystemBodyGfxModel.getPositionX(), starSystemBodyGfxModel.getPositionY());
+		sprite.setPosition(celestialBodyGfxModel.getPositionX(), celestialBodyGfxModel.getPositionY());
 	}
 	
 	/**
@@ -110,15 +111,17 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	/**
 	 * @return the componentType
 	 */
-	public StarSystemComponent getComponentType() {
+	public CelestialComponent getComponentType() {
 		return starSystemComponent;
 	}
 
 	/**
 	 * @param componentType the componentType to set
 	 */
-	public void setComponentType(StarSystemComponent componentType) {
+	public void setComponentType(CelestialComponent componentType) {
 		this.starSystemComponent = componentType;
+		this.setCelestialBodyGfxModel(new CelestialBodyGfxModel());
+		this.celestialBodyGfxModel.setStarSystemComponent(componentType);
 	}
 	
 	/**
@@ -138,14 +141,14 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	/**
 	 * @return the startBodyGfxModel
 	 */
-	public StarsystemBodyGfxModel getStarSystemBodyGfxModel() {
-		return starSystemBodyGfxModel;
+	public CelestialBodyGfxModel getCelestialBodyGfxModel() {
+		return celestialBodyGfxModel;
 	}
 
 	/**
 	 * @param startBodyGfxModel the startBodyGfxModel to set
 	 */
-	public void setStarSystemBodyGfxModel(StarsystemBodyGfxModel startBodyGfxModel) {
-		this.starSystemBodyGfxModel = startBodyGfxModel;
+	public void setCelestialBodyGfxModel(CelestialBodyGfxModel startBodyGfxModel) {
+		this.celestialBodyGfxModel = startBodyGfxModel;
 	}
 }
