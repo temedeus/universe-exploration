@@ -3,8 +3,8 @@ package com.universe.exploration.starsystem;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
-import com.universe.exploration.starsystem.components.StarAbstractComponent;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
+import com.universe.exploration.starsystem.components.StarCelestialComponent;
 
 public class StarSystem {
 
@@ -13,15 +13,15 @@ public class StarSystem {
 	/**
 	 * System star
 	 */
-	private StarAbstractComponent systemstar;
+	private StarCelestialComponent systemstar;
 	
-	private List<PlanetAbstractComponent> planets;
+	private List<PlanetCelestialComponent> planets;
 
 	/**
 	 * Add planet to star system.
 	 * @param planet
 	 */
-	public void addPlanet(PlanetAbstractComponent planet) {
+	public void addPlanet(PlanetCelestialComponent planet) {
 		planets.add(planet);
 	}
 	
@@ -32,14 +32,14 @@ public class StarSystem {
 	/**
 	 * @return the systemstar
 	 */
-	public StarAbstractComponent getSystemstar() {
+	public StarCelestialComponent getSystemstar() {
 		return systemstar;
 	}
 
 	/**
 	 * @param systemstar the systemstar to set
 	 */
-	public void setSystemstar(StarAbstractComponent systemstar) {
+	public void setSystemstar(StarCelestialComponent systemstar) {
 		this.systemstar = systemstar;
 	}
 
@@ -52,7 +52,7 @@ public class StarSystem {
 	 * Star system constructor.
 	 */
 	public StarSystem() {
-		this.planets = new ArrayList<PlanetAbstractComponent>();
+		this.planets = new ArrayList<PlanetCelestialComponent>();
 	}
 	
 	/**
@@ -72,14 +72,14 @@ public class StarSystem {
 	/**
 	 * @return the planets
 	 */
-	public List<PlanetAbstractComponent> getPlanets() {
+	public List<PlanetCelestialComponent> getPlanets() {
 		return planets;
 	}
 
 	/**
 	 * @param planets the planets to set
 	 */
-	public void setPlanets(List<PlanetAbstractComponent> planets) {
+	public void setPlanets(List<PlanetCelestialComponent> planets) {
 		this.planets = planets;
 	}
 }

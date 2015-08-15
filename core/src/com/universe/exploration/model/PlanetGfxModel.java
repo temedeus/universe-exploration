@@ -3,7 +3,7 @@
  */
 package com.universe.exploration.model;
 
-import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
  * @author 2.8.2015 Teemu Puurunen 
@@ -11,16 +11,16 @@ import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
  */
 public class PlanetGfxModel extends CelestialBodyGfxModel {
 	PlanetGfxModel() {
-		starSystemComponent = new PlanetAbstractComponent();
+		starSystemComponent = new PlanetCelestialComponent();
 	}
 	
 	@Override
 	public void updateSpriteData() {
-		if(starSystemComponent instanceof PlanetAbstractComponent) {
-			this.positionX = (float) (((PlanetAbstractComponent) starSystemComponent).getOrbitalRadius() * (float)Math.cos((float)angle));
-			this.positionY = (float) (((PlanetAbstractComponent) starSystemComponent).getOrbitalRadius() * (float)Math.sin((float)angle));
+		if(starSystemComponent instanceof PlanetCelestialComponent) {
+			this.positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float)Math.cos((float)angle));
+			this.positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float)Math.sin((float)angle));
 			
-			angle += 0.001;
+			angle += ((PlanetCelestialComponent) starSystemComponent).getOrbitalVelocity();
 		}
 
 	}

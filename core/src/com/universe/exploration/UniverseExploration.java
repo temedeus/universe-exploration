@@ -46,25 +46,25 @@ public class UniverseExploration extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
 			Gdx.app.exit();
 		}
-					
-		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			angle = gs.getAngle(
-					(int)Gdx.input.getX(), (int)Gdx.input.getY(), 
-	 				(int)this.canvas.getScreenCenterX(), (int)this.canvas.getScreenCenterY());
-			
-			this.shm.thrusterOn();
-			this.shm.moveCameraUsingHitCoordinates((float) angle, (float)this.shm.getVelocity());
-		} else {
-			this.shm.thrusterOff();
-		}
-		
-		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				this.shm.zoomIn();
-		}
-		
-		if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-			this.shm.zoomOut();
-		}
+//					
+//		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+//			angle = gs.getAngle(
+//					(int)Gdx.input.getX(), (int)Gdx.input.getY(), 
+//	 				(int)this.canvas.getScreenCenterX(), (int)this.canvas.getScreenCenterY());
+//			
+//			this.shm.thrusterOn();
+//			this.shm.moveCameraUsingHitCoordinates((float) angle, (float)this.shm.getVelocity());
+//		} else {
+//			this.shm.thrusterOff();
+//		}
+//		
+//		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+//				this.shm.zoomIn();
+//		}
+//		
+//		if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+//			this.shm.zoomOut();
+//		}
 		
 		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
 		this.canvas.drawGameContent();

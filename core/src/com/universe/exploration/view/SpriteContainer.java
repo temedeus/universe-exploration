@@ -6,9 +6,8 @@ package com.universe.exploration.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
 /**
@@ -19,10 +18,13 @@ import com.universe.exploration.starsystem.components.CelestialComponent;
  * @author 4.8.2015 Teemu Puurunen 
  */
 public class SpriteContainer {
-	private ArrayList<GraphicsGfxContainer> graphicsGfxContainer;
+	/** 
+	 * Planets
+	 */
+	private ArrayList<PlanetGfxContainer> graphicsGfxContainer;
 
 	public SpriteContainer() {
-		graphicsGfxContainer = new ArrayList<GraphicsGfxContainer>();
+		graphicsGfxContainer = new ArrayList<PlanetGfxContainer>();
 	}
 	
 	/**
@@ -31,7 +33,7 @@ public class SpriteContainer {
 	 */
 	public void addStarSystemObject(CelestialComponent starSystemComponent) {
 
-		if(starSystemComponent instanceof PlanetAbstractComponent) {
+		if(starSystemComponent instanceof PlanetCelestialComponent) {
 			graphicsGfxContainer.add(new PlanetGfxContainer(starSystemComponent));
 		}	
 	}
@@ -46,9 +48,9 @@ public class SpriteContainer {
 		}
 	}
 	
-	public ArrayList<Sprite> getSprites() {
+	public ArrayList<Sprite> getPlanetSprites() {
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		for(GraphicsGfxContainer graphicsGfx : graphicsGfxContainer) {
+		for(PlanetGfxContainer graphicsGfx : graphicsGfxContainer) {
 			sprites.add(graphicsGfx.getSprite());
 		
 		}
@@ -59,7 +61,7 @@ public class SpriteContainer {
 	 * Draw sprites on screen and update their position and angles
 	 */
 	public void update() {
-		for(GraphicsGfxContainer graphicsGfx : graphicsGfxContainer) {
+		for(PlanetGfxContainer graphicsGfx : graphicsGfxContainer) {
 			if(graphicsGfx instanceof PlanetGfxContainer) {
 				try {
 					graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();

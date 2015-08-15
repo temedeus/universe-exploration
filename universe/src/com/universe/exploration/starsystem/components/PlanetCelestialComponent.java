@@ -13,7 +13,7 @@ import com.universe.exploration.common.tools.IngameAstronomicalConstants;
  * @author 15.6.2015 Teemu Puurunen 
  *
  */
-public class PlanetAbstractComponent extends CelestialComponent {
+public class PlanetCelestialComponent extends CelestialComponent {
 	/**
 	 * Aphelion - distance when farthest to star.
 	 * TODO: calculate radius based on periphelion and aphelion
@@ -53,12 +53,13 @@ public class PlanetAbstractComponent extends CelestialComponent {
 	 */
 	private double solarMass;
 	
+	
 	/**
 	 * Planet numerical representation (e.g. speed, mass, velocity etc.)
 	 * Constructor makes sure at least basic values are defined if
 	 * nothing is set.
 	 */
-	public PlanetAbstractComponent() {
+	public PlanetCelestialComponent() {
 		this.aphelion = IngameAstronomicalConstants.APHELION_EARTH.getValue();
 		this.periphelion = IngameAstronomicalConstants.PERIPHELION_EARTH.getValue();
 		this.orbitalVelocity = IngameAstronomicalConstants.MIN_ORBITAL_VELOCITY.getValue();

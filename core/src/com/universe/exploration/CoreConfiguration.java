@@ -16,8 +16,6 @@ public class CoreConfiguration {
 	 */
 	public static final int bgSize = 2048;
 	
-	public static final int backgroundTileCount = 6;
-	
 	public static final float maxVelocity = 5;
 	
 	public static final float minVelocity = 2;

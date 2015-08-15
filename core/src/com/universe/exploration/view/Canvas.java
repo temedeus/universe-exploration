@@ -13,20 +13,21 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.universe.exploration.starsystem.StarSystem;
-import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
 public class Canvas {
-	private SpriteBatch batch;
+	private SpriteBatch liveComponentBatch;
+	private SpriteBatch backgroundBatch;
 	private Sprite space;
 	private BitmapFont font;
 	private Sprite star;
 	private StarSystem ua;
-	private Sprite planet;
-	float px = 0;
-	float py = 0;
-	float degree = 0;
+	
 	private OrthographicCamera camera;
+	
+	private OrthographicCamera backgroundCamera;
+	
 	private PlanetGfxContainer[] planetcontainer;
 	
 	private SpriteContainer spriteContainer;
@@ -39,35 +40,38 @@ public class Canvas {
 	public Canvas(StarSystem iua) {
 		this.ua = iua;
 		
-		this.batch = new SpriteBatch();
+		liveComponentBatch = new SpriteBatch();
+		backgroundBatch = new SpriteBatch();
 		
-        this.font = new BitmapFont();
-        this.font.setColor(Color.WHITE);
+		backgroundCamera = new OrthographicCamera(1920, 1080);
+
+        font = new BitmapFont();
+        font.setColor(Color.WHITE);
 
         //this.skin = new Skin(Gdx.files.internal("uiskin.json"));
         //this.stage = new Stage();
         
 		// Space background
 		SpaceBackgroundGfxContainer spaceBgGFX = new SpaceBackgroundGfxContainer();
-		this.space = spaceBgGFX.getSprite();
+		space = spaceBgGFX.getSprite();
 		
 		// Generate system star.
 		SystemStarGfxContainer ss = new SystemStarGfxContainer(this.ua.getSystemstar());
 		
 		star = ss.getSprite();
 
-		List<PlanetAbstractComponent> listOfPlanets = ua.getPlanets();
+		List<PlanetCelestialComponent> listOfPlanets = ua.getPlanets();
 
 		spriteContainer = new SpriteContainer();
 		
-		for(PlanetAbstractComponent planet : listOfPlanets) {
+		for(PlanetCelestialComponent planet : listOfPlanets) {
 			spriteContainer.addStarSystemObject(planet);
 		}
 
 	}
 	
 	public void destroy() {
-		this.batch.dispose();
+		this.liveComponentBatch.dispose();
 		this.font.dispose();
 	}
 	
@@ -96,31 +100,38 @@ public class Canvas {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		backgroundBatch.setProjectionMatrix(backgroundCamera.combined);
 		
+		backgroundBatch.begin();
+		space.draw(backgroundBatch);
+		space.setPosition(-1000, -500);
+		backgroundCamera.update();
 		
-		this.batch.setProjectionMatrix(this.camera.combined);
-		this.batch.begin();
+		backgroundBatch.end();
+		
+		liveComponentBatch.setProjectionMatrix(camera.combined);
+		liveComponentBatch.begin();
 		
 		//this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
 		
-		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2 - 2000;
-		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2 - 2000;
+		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2 - 2500;
+		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2 - 2500;
 		
-		this.star.rotate((float)0.1);
+		star.rotate((float)0.1);
 
-		this.star.setPosition(starX-2000, starY-2000); // TODO: solve what the hell is this 2000 offset?
+		star.setPosition(starX, starY); // TODO: solve what the hell is this 2000 offset?
 		
 		spriteContainer.update();
 		
 		// Background first, next star and then planets.
-		this.space.draw(batch);
-		this.star.draw(batch);
+		
+		star.draw(liveComponentBatch);
 
-		for(Sprite sprite : spriteContainer.getSprites()) {
-			sprite.draw(batch);
+		for(Sprite sprite : spriteContainer.getPlanetSprites()) {
+			sprite.draw(liveComponentBatch);
 		}
 		
-		this.batch.end();
+		liveComponentBatch.end();
 	}
 
 	/**

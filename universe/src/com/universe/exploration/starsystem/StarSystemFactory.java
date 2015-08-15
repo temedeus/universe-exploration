@@ -56,7 +56,7 @@ public class StarSystemFactory {
 		String tmpStarType = RandomizationTools.getStringFromWeightedRandomArray(uConf.getStartypeListing());
 
 		StarsystemComponentTypes x = StarsystemComponentTypes.valueOf(tmpStarType);
-		StarAbstractComponent systemstar = new StarAbstractComponent();
+		StarCelestialComponent systemstar = new StarCelestialComponent();
 		systemstar.setcomponentType(StarsystemComponentTypes.valueOf(tmpStarType));
 
 		this.starsystem.setSystemstar(systemstar);
@@ -78,7 +78,7 @@ public class StarSystemFactory {
 		
 		// Generate required number of planets.
 		for(int x = 0; x < planetCount; x++) {
-			PlanetAbstractComponent planet = new PlanetAbstractComponent();
+			PlanetCelestialComponent planet = new PlanetCelestialComponent();
 			
 			// Generate all the new values
 			String tmpPlanetType = RandomizationTools.getStringFromWeightedRandomArray(uConf.getPlanettypeListing());
@@ -92,11 +92,14 @@ public class StarSystemFactory {
 			double orbitalRadius = RandomizationTools.getRandomDouble(minOrbitalRadius, maxOrbitalRadius);
 			previousOrbitalRadious = orbitalRadius;
 			
+			double angle = RandomizationTools.getRandomDouble(0, 360);
+			
 			//System.out.println("Min o.rad=" + minOrbitalRadius + " / max o.rad =" + maxOrbitalRadius + " / cur o.rad=" + orbitalRadius);
 			// Set values
 			planet.setcomponentType(StarsystemComponentTypes.valueOf(tmpPlanetType));
 			planet.setOrbitalVelocity(planetOrbitalVelocity);
 			planet.setOrbitalRadius(orbitalRadius);
+			planet.setAngle(angle);
 			
 			// Add planet
 			this.starsystem.addPlanet(planet);

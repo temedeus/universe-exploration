@@ -15,7 +15,7 @@ import com.universe.exploration.common.tools.StarsystemComponentTypes;
  * @author 7.7.2015 Teemu Puurunen 
  *
  */
-public class CelestialComponent implements IStarSystemComponent {
+public class CelestialComponent implements ICelestialComponent {
 
 	/**
 	 * componentName
@@ -36,6 +36,25 @@ public class CelestialComponent implements IStarSystemComponent {
 		this.componentType = componentType;
 	}
 	
+	/**
+	 * Initial angle
+	 */
+	private double angle;
+	
+	/**
+	 * @return the angle
+	 */
+	public double getAngle() {
+		return angle;
+	}
+
+	/**
+	 * @param angle the angle to set
+	 */
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
+
 	/**
 	 * If not overridden, return false. This is pretty much component specific, but each
 	 * component should have one.

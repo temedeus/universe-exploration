@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
-import com.universe.exploration.starsystem.components.PlanetAbstractComponent;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 
 public class StarSystemFactoryTest {
@@ -47,11 +47,11 @@ public class StarSystemFactoryTest {
 		}
 		
 		
-		List<PlanetAbstractComponent> planets = ss.getPlanets();
+		List<PlanetCelestialComponent> planets = ss.getPlanets();
 		
 		double previousOrbitalRadius = -100;
 		
-		for (PlanetAbstractComponent planet : planets) {
+		for (PlanetCelestialComponent planet : planets) {
 			//planet.getOrbitalRadius() >= previousOrbitalRadius + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue()
 			
 			Assert.assertTrue(planet.getOrbitalRadius() >= previousOrbitalRadius + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue());

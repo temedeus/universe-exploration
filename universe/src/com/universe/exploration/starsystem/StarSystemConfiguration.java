@@ -16,7 +16,7 @@ public class StarSystemConfiguration {
 	 * Max planet count
 	 * @access private
 	 */
-	private int maxPlanetCount = 10;
+	private int maxPlanetCount = 6;
 
 	/**
 	 * Minimum of planets.
