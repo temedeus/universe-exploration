@@ -31,8 +31,8 @@ public class StarSystemFactoryTest {
 		 */
 		System.out.println("Generating 3 different star systems to see if randomization makes something fail.");
 		for(int x=0; x < 3; x++) {
-			ss[x] = ssf.makeUniverse();
-			System.out.println("-- star type: " + ss[x].getSystemstar().getcomponentType().toString());
+			ss[x] = ssf.makeStarSystem();
+
 		}
 	}
 	
@@ -42,7 +42,7 @@ public class StarSystemFactoryTest {
 		StarSystem ss = new StarSystem();
 		
 		try {
-			ss = ssf.makeUniverse();
+			ss = ssf.makeStarSystem();
 		} catch(Exception e) {
 		}
 		
@@ -55,8 +55,7 @@ public class StarSystemFactoryTest {
 			//planet.getOrbitalRadius() >= previousOrbitalRadius + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue()
 			
 			Assert.assertTrue(planet.getOrbitalRadius() >= previousOrbitalRadius + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue());
-			System.out.println("Planet type:" + planet.getcomponentType() + ", orbital radius: " + planet.getOrbitalRadius());
-			
+
 			previousOrbitalRadius = planet.getOrbitalRadius();
 		}
 	}

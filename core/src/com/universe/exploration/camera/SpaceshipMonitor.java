@@ -1,14 +1,14 @@
-package com.universe.exploration.spaceship;
+package com.universe.exploration.camera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.universe.exploration.CoreConfiguration;
 
 public class SpaceshipMonitor {
-	private float desiredSpaceshipAngle; 
-	private float turnspeed; 
 	private float velocity;
 	private OrthographicCamera camera;
+	private int desiredSpaceshipAngle;
+	private int turnspeed;
 	
 	public SpaceshipMonitor() {
 		this.desiredSpaceshipAngle = 0;

@@ -1,13 +1,12 @@
 package com.universe.exploration.starsystem;
 
+import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
+import com.universe.exploration.celestialcomponents.configuration.ComponentType;
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
-import com.universe.exploration.common.tools.StarsystemComponentTypes;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.starsystem.components.*;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Plane.PlaneSide;
 
 /**
  * 
@@ -37,13 +36,12 @@ public class StarSystemFactory {
 	}
 
 	/**
-	 * Create a universe
-	 * @return Universe universe
+	 * Create a star system
+	 * @return StarSystem starsystem
 	 */
-	public StarSystem makeUniverse() throws PlanetCountOutOfRangeException {	
+	public StarSystem makeStarSystem() throws PlanetCountOutOfRangeException {	
 		int planetCount = RandomizationTools.getRandomInteger(uConf.getMinPlanetCount(), uConf.getMaxPlanetCount());
 	
-		System.out.println("Planet count = " + planetCount);
 		// Planet count between configured limits.
 		if(MathTools.betweenIntRangeInclusively(planetCount, this.uConf.getMaxPlanetCount(), this.uConf.getMinPlanetCount())) {
 			this.starsystem.setPlanetCount(planetCount);
@@ -55,10 +53,9 @@ public class StarSystemFactory {
 		
 		String tmpStarType = RandomizationTools.getStringFromWeightedRandomArray(uConf.getStartypeListing());
 
-		StarsystemComponentTypes x = StarsystemComponentTypes.valueOf(tmpStarType);
 		StarCelestialComponent systemstar = new StarCelestialComponent();
-		systemstar.setcomponentType(StarsystemComponentTypes.valueOf(tmpStarType));
-
+		systemstar.setGraphicsFile(CelestialComponentTypes.valueOf(tmpStarType).getComponentType().getRandomGraphicsFile());
+		systemstar.setComponentName(CelestialComponentTypes.valueOf(tmpStarType).getName());
 		this.starsystem.setSystemstar(systemstar);
 		
 		return this.starsystem;
@@ -96,11 +93,14 @@ public class StarSystemFactory {
 			
 			//System.out.println("Min o.rad=" + minOrbitalRadius + " / max o.rad =" + maxOrbitalRadius + " / cur o.rad=" + orbitalRadius);
 			// Set values
-			planet.setcomponentType(StarsystemComponentTypes.valueOf(tmpPlanetType));
+			ComponentType cc = CelestialComponentTypes.valueOf(tmpPlanetType).getComponentType();
+			
+			planet.setGraphicsFile(cc.getRandomGraphicsFile());
+			planet.setComponentName(CelestialComponentTypes.valueOf(tmpPlanetType).getName());
 			planet.setOrbitalVelocity(planetOrbitalVelocity);
 			planet.setOrbitalRadius(orbitalRadius);
 			planet.setAngle(angle);
-			
+			planet.setSpriteSize(cc.getRandomSpriteSize());
 			// Add planet
 			this.starsystem.addPlanet(planet);
 		}

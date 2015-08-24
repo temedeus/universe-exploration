@@ -113,13 +113,6 @@ public class PlanetCelestialComponent extends CelestialComponent {
 	public double getMassOfEarth() {
 		return massOfEarth;
 	}
-	
-	/**
-	 * Calculate sprite size
-	 */
-	public int getSpriteSize() {
-		return 64;
-	}
 
 	/**
 	 * @param massOfEarth the massOfEarth to set

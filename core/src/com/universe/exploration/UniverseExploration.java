@@ -1,12 +1,12 @@
 package com.universe.exploration;
-import com.universe.exploration.spaceship.PointerGuidanceSystem;
-import com.universe.exploration.spaceship.SpaceshipMonitor;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.view.Canvas;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.universe.exploration.camera.PointerGuidanceSystem;
+import com.universe.exploration.camera.SpaceshipMonitor;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.badlogic.gdx.Input;
 
@@ -24,7 +24,7 @@ public class UniverseExploration extends ApplicationAdapter {
 		StarSystemFactory uf = new StarSystemFactory();
 		
 		try {
-			this.ua = uf.makeUniverse();
+			this.ua = uf.makeStarSystem();
 		} catch(PlanetCountOutOfRangeException e) {
 			// TODO: error handling on planet count error (overall error handling?)
 		}

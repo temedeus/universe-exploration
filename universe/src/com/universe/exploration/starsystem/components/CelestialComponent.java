@@ -3,10 +3,9 @@
  */
 package com.universe.exploration.starsystem.components;
 
-import com.universe.exploration.common.tools.StarsystemComponentTypes;
 
 /**
- * <p>Any class extending StarSystemComponent describes component properties,
+ * <p>Any class extending CelestialComponent describes component properties,
  * maximum and minimum values, but NOT the current state of the astronomical body!</p>
  * 
  * <p>You "install" one of these components into a model and from there on
@@ -16,25 +15,18 @@ import com.universe.exploration.common.tools.StarsystemComponentTypes;
  *
  */
 public class CelestialComponent implements ICelestialComponent {
-
-	/**
-	 * componentName
-	 */
-	protected StarsystemComponentTypes componentType;
-
-	/**
-	 * @return the componentName
-	 */
-	public StarsystemComponentTypes getcomponentType() {
-		return this.componentType;
-	}
+	protected int spriteSize;
+	
+	protected String graphicsFile;
 
 	/**
 	 * @param componentName the componentName to set
 	 */
-	public void setcomponentType(StarsystemComponentTypes componentType) {
-		this.componentType = componentType;
+	public void setComponentName(String componentName) {
+		this.componentName = componentName;
 	}
+
+	protected String componentName;
 	
 	/**
 	 * Initial angle
@@ -63,12 +55,41 @@ public class CelestialComponent implements ICelestialComponent {
 	public boolean configure() {
 		return false;
 	}
+
+	/**
+	 * Calculates sprite size based on defined "real" spacial values.
+	 * Must be overridden in each file that extends this class.
+	 */
+	public void setSpriteSize(int spriteSize) {
+		this.spriteSize = spriteSize; // Return at least something
+	}
 	
 	/**
 	 * Calculates sprite size based on defined "real" spacial values.
 	 * Must be overridden in each file that extends this class.
 	 */
 	public int getSpriteSize() {
-		return 64; // Return at least something
+		return spriteSize; // Return at least something
+	}
+	
+	/**
+	 * @return the graphicsFile
+	 */
+	public String getGraphicsFile() {
+		return graphicsFile;
+	}
+
+	/**
+	 * @param graphicsFile the graphicsFile to set
+	 */
+	public void setGraphicsFile(String graphicsFile) {
+		this.graphicsFile = graphicsFile;
+	}
+
+	/**
+	 * @return the componentName
+	 */
+	public String getComponentName() {
+		return componentName;
 	}
 }

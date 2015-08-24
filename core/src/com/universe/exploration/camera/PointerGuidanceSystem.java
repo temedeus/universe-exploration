@@ -1,4 +1,4 @@
-package com.universe.exploration.spaceship;
+package com.universe.exploration.camera;
 
 public class PointerGuidanceSystem implements IGuidanceSystem {
 	/**

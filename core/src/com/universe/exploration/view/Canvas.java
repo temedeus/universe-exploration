@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
@@ -48,9 +51,6 @@ public class Canvas {
         font = new BitmapFont();
         font.setColor(Color.WHITE);
 
-        //this.skin = new Skin(Gdx.files.internal("uiskin.json"));
-        //this.stage = new Stage();
-        
 		// Space background
 		SpaceBackgroundGfxContainer spaceBgGFX = new SpaceBackgroundGfxContainer();
 		space = spaceBgGFX.getSprite();
@@ -104,7 +104,7 @@ public class Canvas {
 		
 		backgroundBatch.begin();
 		space.draw(backgroundBatch);
-		space.setPosition(-1000, -500);
+		space.setPosition(-1000, -600);
 		backgroundCamera.update();
 		
 		backgroundBatch.end();
@@ -114,8 +114,9 @@ public class Canvas {
 		
 		//this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
 		
-		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2 - 2500;
-		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2 - 2500;
+		// TODO: sort this offset. It likely has something to do with initiating the sprite and its offsets etc.
+		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2 - 2600;
+		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2 - 2600;
 		
 		star.rotate((float)0.1);
 

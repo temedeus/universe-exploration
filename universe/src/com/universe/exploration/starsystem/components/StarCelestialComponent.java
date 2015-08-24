@@ -32,6 +32,7 @@ public class StarCelestialComponent extends CelestialComponent {
 	/**
 	 * Calculate sprite size
 	 */
+	@Override
 	public int getSpriteSize() {
 		return 4096;
 	}
