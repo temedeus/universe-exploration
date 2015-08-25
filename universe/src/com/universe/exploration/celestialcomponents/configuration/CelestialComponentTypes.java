@@ -18,32 +18,22 @@ import com.universe.exploration.celestialcomponents.configuration.stars.SmallSta
  */
 public enum CelestialComponentTypes {
 	// SYSTEM STARS
-	LARGE_STAR("Large star", new LargeStar()),
-	MEDIUM_STAR("Medium star", new MediumStar()),
-	SMALL_STAR("Small star", new SmallStar()),
+	LARGE_STAR(new LargeStar()),
+	MEDIUM_STAR(new MediumStar()),
+	SMALL_STAR(new SmallStar()),
 	// PLANETS
-	ACID_RAIN_PLANET("Large star", new AcidRainPlanet()),
-	RED_MINERAL_PLANET("Medium star", new RedMineralPlanet()),
-	GAS_GIANT_PLANET("Gas giant", new GasGiantPlanet()),
-	COLD_ROCKY_PLANET("Large star", new ColdRockyPlanet()),
-	EARTLIKE_PLANET("Earthlike planet", new EarthlikePlanet());
-
-	private final String name;
+	ACID_RAIN_PLANET(new AcidRainPlanet()),
+	RED_MINERAL_PLANET(new RedMineralPlanet()),
+	GAS_GIANT_PLANET(new GasGiantPlanet()),
+	COLD_ROCKY_PLANET(new ColdRockyPlanet()),
+	EARTLIKE_PLANET(new EarthlikePlanet());
 
 	private final ComponentType componentType;
 	
-	CelestialComponentTypes(String name, ComponentType componentType) {
-		this.name = name;
+	CelestialComponentTypes(ComponentType componentType) {
 		this.componentType = componentType;
 	}
-	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-	
+
 	/**
 	 * @return the graphicsFile
 	 */

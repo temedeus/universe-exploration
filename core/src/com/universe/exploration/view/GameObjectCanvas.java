@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.universe.exploration.GdxHelper;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.CelestialComponent;
@@ -81,25 +82,7 @@ public class GameObjectCanvas {
 		this.liveComponentBatch.dispose();
 		this.font.dispose();
 	}
-	
-	/**
-	 * Get screen center X
-	 * @return float
-	 */
-	public float getScreenCenterX() {
-		float w = Gdx.graphics.getWidth();
-		return (w/2);
-	}
-	
-	/**
-	 * Get screen center Y
-	 * @return float
-	 */
-	public float getScreenCenterY() {
-        float h = Gdx.graphics.getHeight();
-        return (h/2);
-	}
-	
+
 	/**
 	 * Render game
 	 */
@@ -122,12 +105,12 @@ public class GameObjectCanvas {
 		//this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
 		
 		// TODO: sort this offset. It likely has something to do with initiating the sprite and its offsets etc.
-		float starX = this.getScreenCenterX() - this.star.getScaleX() * 2 - 2600;
-		float starY = this.getScreenCenterY() - this.star.getScaleY() * 2 - 2600;
+		float starX = GdxHelper.getScreenCenterX() - this.star.getScaleX() * 2 - 2600;
+		float starY = GdxHelper.getScreenCenterY() - this.star.getScaleY() * 2 - 2600;
 		
 		star.rotate((float)0.1);
 
-		star.setPosition(starX, starY); // TODO: solve what the hell is this 2000 offset?
+		star.setPosition(starX, starY);
 		
 		gameViewObjectContainer.update();
 		

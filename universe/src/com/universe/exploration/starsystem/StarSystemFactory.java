@@ -55,7 +55,6 @@ public class StarSystemFactory {
 
 		StarCelestialComponent systemstar = new StarCelestialComponent();
 		systemstar.setGraphicsFile(CelestialComponentTypes.valueOf(tmpStarType).getComponentType().getRandomGraphicsFile());
-		systemstar.setComponentName(CelestialComponentTypes.valueOf(tmpStarType).getName());
 		this.starsystem.setSystemstar(systemstar);
 		
 		return this.starsystem;
@@ -96,7 +95,6 @@ public class StarSystemFactory {
 			ComponentType cc = CelestialComponentTypes.valueOf(tmpPlanetType).getComponentType();
 			
 			planet.setGraphicsFile(cc.getRandomGraphicsFile());
-			planet.setComponentName(CelestialComponentTypes.valueOf(tmpPlanetType).getName());
 			planet.setOrbitalVelocity(planetOrbitalVelocity);
 			planet.setOrbitalRadius(orbitalRadius);
 			planet.setAngle(angle);
