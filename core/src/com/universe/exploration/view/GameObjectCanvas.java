@@ -19,29 +19,36 @@ import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
-public class Canvas {
+public class GameObjectCanvas {
 	private SpriteBatch liveComponentBatch;
 	private SpriteBatch backgroundBatch;
 	private Sprite space;
 	private BitmapFont font;
 	private Sprite star;
-	private StarSystem ua;
+	private StarSystem starSystem;
 	
+	/** 
+	 * Camera describing planets etc.
+	 */
 	private OrthographicCamera camera;
 	
+	/**
+	 * Stars background camera (should not move as the other objects do)
+	 */
 	private OrthographicCamera backgroundCamera;
 	
-	private PlanetGfxContainer[] planetcontainer;
-	
-	private SpriteContainer spriteContainer;
+	/**
+	 * Contains all the game objects (e.g. planets, stars and whatnot)
+	 */
+	private GameViewObjectContainer gameViewObjectContainer;
 	
 	/**
 	 * Generates graphical representation based on given star system
 	 * 
 	 * @param iua
 	 */
-	public Canvas(StarSystem iua) {
-		this.ua = iua;
+	public GameObjectCanvas(StarSystem starSystem) {
+		this.starSystem = starSystem;
 		
 		liveComponentBatch = new SpriteBatch();
 		backgroundBatch = new SpriteBatch();
@@ -56,16 +63,16 @@ public class Canvas {
 		space = spaceBgGFX.getSprite();
 		
 		// Generate system star.
-		SystemStarGfxContainer ss = new SystemStarGfxContainer(this.ua.getSystemstar());
+		SystemStarGfxContainer ss = new SystemStarGfxContainer(this.starSystem.getSystemstar());
 		
 		star = ss.getSprite();
 
-		List<PlanetCelestialComponent> listOfPlanets = ua.getPlanets();
+		List<PlanetCelestialComponent> listOfPlanets = starSystem.getPlanets();
 
-		spriteContainer = new SpriteContainer();
+		gameViewObjectContainer = new GameViewObjectContainer();
 		
 		for(PlanetCelestialComponent planet : listOfPlanets) {
-			spriteContainer.addStarSystemObject(planet);
+			gameViewObjectContainer.addStarSystemObject(planet);
 		}
 
 	}
@@ -122,13 +129,13 @@ public class Canvas {
 
 		star.setPosition(starX, starY); // TODO: solve what the hell is this 2000 offset?
 		
-		spriteContainer.update();
+		gameViewObjectContainer.update();
 		
 		// Background first, next star and then planets.
 		
 		star.draw(liveComponentBatch);
 
-		for(Sprite sprite : spriteContainer.getPlanetSprites()) {
+		for(Sprite sprite : gameViewObjectContainer.getPlanetSprites()) {
 			sprite.draw(liveComponentBatch);
 		}
 		

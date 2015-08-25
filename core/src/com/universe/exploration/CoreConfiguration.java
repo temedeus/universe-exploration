@@ -22,4 +22,5 @@ public class CoreConfiguration {
 	
 	public static final int SYSTEMSTAR_SIZE = 4096;
 
+	public static final String uiSkin = "uiskin.json";
 }

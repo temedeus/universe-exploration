@@ -12,18 +12,18 @@ import com.universe.exploration.starsystem.components.CelestialComponent;
 
 /**
  * 
- * Maintains all the sprites used in the current game scene.
+ * Maintains all the views used in the current game scene.
  * Basically works as a controller between model and view.
  * 
  * @author 4.8.2015 Teemu Puurunen 
  */
-public class SpriteContainer {
+public class GameViewObjectContainer {
 	/** 
 	 * Planets
 	 */
 	private ArrayList<PlanetGfxContainer> graphicsGfxContainer;
 
-	public SpriteContainer() {
+	public GameViewObjectContainer() {
 		graphicsGfxContainer = new ArrayList<PlanetGfxContainer>();
 	}
 	

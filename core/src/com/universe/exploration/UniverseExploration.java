@@ -1,7 +1,8 @@
 package com.universe.exploration;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
-import com.universe.exploration.view.Canvas;
+import com.universe.exploration.ui.UIController;
+import com.universe.exploration.view.GameObjectCanvas;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -10,17 +11,22 @@ import com.universe.exploration.camera.SpaceshipMonitor;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.badlogic.gdx.Input;
 
+import common.universe.exploration.common.tools.localization.Localizer;
+
 public class UniverseExploration extends ApplicationAdapter {
 	PointerGuidanceSystem gs;
-	Canvas canvas;
+	GameObjectCanvas canvas;
 	SpaceshipMonitor shm;
 	double angle = 0;
 	StarSystem ua;
+
+	private UIController uiController;
 
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
+		uiController = new UIController();
 		StarSystemFactory uf = new StarSystemFactory();
 		
 		try {
@@ -30,7 +36,7 @@ public class UniverseExploration extends ApplicationAdapter {
 		}
 		
 		// Start game canvas. All graphics processing starts from this class.
-		this.canvas = new Canvas(this.ua);
+		this.canvas = new GameObjectCanvas(this.ua);
 		this.gs = new PointerGuidanceSystem();
 		this.shm = new SpaceshipMonitor();
 		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
@@ -43,30 +49,14 @@ public class UniverseExploration extends ApplicationAdapter {
 
 	@Override
 	public void render () {	
+	      
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
 			Gdx.app.exit();
 		}
-//					
-//		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-//			angle = gs.getAngle(
-//					(int)Gdx.input.getX(), (int)Gdx.input.getY(), 
-//	 				(int)this.canvas.getScreenCenterX(), (int)this.canvas.getScreenCenterY());
-//			
-//			this.shm.thrusterOn();
-//			this.shm.moveCameraUsingHitCoordinates((float) angle, (float)this.shm.getVelocity());
-//		} else {
-//			this.shm.thrusterOff();
-//		}
-//		
-//		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-//				this.shm.zoomIn();
-//		}
-//		
-//		if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-//			this.shm.zoomOut();
-//		}
 		
 		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
 		this.canvas.drawGameContent();
+		
+		uiController.updateUI();
 	}
 }
