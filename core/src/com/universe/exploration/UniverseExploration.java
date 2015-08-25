@@ -11,8 +11,6 @@ import com.universe.exploration.camera.SpaceshipMonitor;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.badlogic.gdx.Input;
 
-import common.universe.exploration.common.tools.localization.Localizer;
-
 public class UniverseExploration extends ApplicationAdapter {
 	PointerGuidanceSystem gs;
 	GameObjectCanvas canvas;
