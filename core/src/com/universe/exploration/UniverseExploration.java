@@ -1,4 +1,6 @@
 package com.universe.exploration;
+import com.universe.exploration.listener.UEEvent;
+import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.ui.UIController;
@@ -23,9 +25,16 @@ public class UniverseExploration extends ApplicationAdapter {
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		StarSystemFactory uf = new StarSystemFactory();
 		
 		uiController = new UIController();
-		StarSystemFactory uf = new StarSystemFactory();
+		uiController.setHyperspaceJumpListener(new UEListener() {
+			@Override
+			public void handleEventClassEvent() {
+				regenerateStarSystem();
+			};
+		});
+
 		
 		try {
 			this.ua = uf.makeStarSystem();
@@ -34,15 +43,26 @@ public class UniverseExploration extends ApplicationAdapter {
 		}
 		
 		// Start game canvas. All graphics processing starts from this class.
-		this.canvas = new GameObjectCanvas(this.ua);
-		this.gs = new PointerGuidanceSystem();
-		this.shm = new SpaceshipMonitor();
-		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
+		canvas = new GameObjectCanvas(this.ua);
+		gs = new PointerGuidanceSystem();
+		shm = new SpaceshipMonitor();
+		canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
+	}
+	
+	private void regenerateStarSystem() {
+		StarSystemFactory uf = new StarSystemFactory();
+		
+		try {
+			ua = uf.makeStarSystem();
+			canvas = new GameObjectCanvas(this.ua);
+		} catch(PlanetCountOutOfRangeException e) {
+			// TODO: error handling on planet count error (overall error handling?)
+		}
 	}
 	
 	@Override
 	public void dispose() {
-		this.canvas.destroy();
+		canvas.destroy();
 	}
 
 	@Override

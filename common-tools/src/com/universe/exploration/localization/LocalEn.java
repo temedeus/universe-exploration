@@ -4,6 +4,7 @@
 package com.universe.exploration.localization;
 
 /**
+ * TODO: XML based localization
  * @author 25.8.2015 Teemu Puurunen 
  *
  */
@@ -15,6 +16,7 @@ public enum LocalEn {
 	BTN_HYPERSPACE_JUMP("Hyperspace jump"),
 	// Titles
 	TITLE_QUIT_GAME("Quit game"),
+	TITLE_CREWMEN_LEFT("Crewmen left:"),
 	// Descriptions
 	DESC_QUIT_GAME("Are you sure you wish to quit?"),
 	DESC_HYPERSPACE_JUMP("Preparing for hyperspace jump...");
