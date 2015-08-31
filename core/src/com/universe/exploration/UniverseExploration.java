@@ -1,5 +1,4 @@
 package com.universe.exploration;
-import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
@@ -34,7 +33,6 @@ public class UniverseExploration extends ApplicationAdapter {
 				regenerateStarSystem();
 			};
 		});
-
 		
 		try {
 			this.ua = uf.makeStarSystem();
@@ -67,14 +65,13 @@ public class UniverseExploration extends ApplicationAdapter {
 
 	@Override
 	public void render () {	
-	      
-		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-			Gdx.app.exit();
-		}
-		
 		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
 		this.canvas.drawGameContent();
 		
 		uiController.updateUI();
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
 	}
 }
