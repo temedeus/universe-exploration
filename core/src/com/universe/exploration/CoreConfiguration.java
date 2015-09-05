@@ -23,4 +23,14 @@ public class CoreConfiguration {
 	public static final int SYSTEMSTAR_SIZE = 4096;
 
 	public static final String uiSkin = "uiskin.json";
+	
+	public static final int MAX_CREWMEN = 10;
+	
+	public static final float MAX_AIR = 100;
+	
+	public static final float MAX_WATER = 100;
+	
+	public static final float MAX_POWER = 100;
+
+	public static final float MAX_FOOD = 100;
 }
