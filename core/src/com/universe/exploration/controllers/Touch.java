@@ -33,7 +33,7 @@ public class Touch implements GestureListener {
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		Vector3 touchPos = new Vector3(x,y,0);
-
+		
 		return true;
 	}
 

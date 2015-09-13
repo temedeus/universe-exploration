@@ -7,12 +7,8 @@ import com.universe.exploration.CoreConfiguration;
 public class SpaceshipMonitor {
 	private float velocity;
 	private OrthographicCamera camera;
-	private int desiredSpaceshipAngle;
-	private int turnspeed;
 	
 	public SpaceshipMonitor() {
-		this.desiredSpaceshipAngle = 0;
-		this.turnspeed = 0;
 		this.velocity = CoreConfiguration.minVelocity;
 		this.camera = new OrthographicCamera(1920, 1080);
 		this.camera.zoom = -5;

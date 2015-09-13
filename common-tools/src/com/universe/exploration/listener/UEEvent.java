@@ -8,7 +8,12 @@ package com.universe.exploration.listener;
  *
  */
 public class UEEvent extends java.util.EventObject {
-    public UEEvent(Object source) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8867027440945524371L;
+
+	public UEEvent(Object source) {
         super(source);
     }
 }

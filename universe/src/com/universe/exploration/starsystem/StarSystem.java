@@ -7,8 +7,6 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.StarCelestialComponent;
 
 public class StarSystem {
-
-	private StarSystemConfiguration uConf; 
 	
 	/**
 	 * System star

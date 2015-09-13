@@ -3,8 +3,6 @@
  */
 package com.universe.exploration.model;
 
-import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-
 /**
  * @author 4.8.2015 Teemu Puurunen 
  *
