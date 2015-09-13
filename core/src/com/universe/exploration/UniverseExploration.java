@@ -1,6 +1,7 @@
 package com.universe.exploration;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.player.PlayerStatus;
+import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.ui.UIController;
@@ -28,31 +29,26 @@ public class UniverseExploration extends ApplicationAdapter {
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		StarSystemFactory uf = new StarSystemFactory();
-		
+
 		playerStatus = new PlayerStatus();
 		
 		uiController = new UIController();
 		uiController.setHyperspaceJumpListener(new UEListener() {
 			@Override
 			public void handleEventClassEvent() {
-				regenerateStarSystem();
+				createStarSystem();
 			};
 		});
 		
-		try {
-			this.ua = uf.makeStarSystem();
-		} catch(PlanetCountOutOfRangeException e) {
-			// TODO: error handling on planet count error (overall error handling?)
-		}
+		createStarSystem();
 		
 		// Start game canvas. All graphics processing starts from this class.
-		canvas = new GameObjectCanvas(this.ua);
+		
 		shm = new SpaceshipMonitor();
 		canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
 	}
 	
-	private void regenerateStarSystem() {
+	private void createStarSystem() {
 		StarSystemFactory uf = new StarSystemFactory();
 		
 		try {
@@ -73,7 +69,7 @@ public class UniverseExploration extends ApplicationAdapter {
 		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
 		this.canvas.drawGameContent();
 		
-		playerStatus.decreaseAirBy((float) 0.1);
+		playerStatus.decreaseAirBy(StatusConsumption.AIR_DECREMENT);
 		uiController.updateUI(playerStatus);
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {

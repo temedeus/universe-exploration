@@ -101,7 +101,7 @@ public class GameObjectCanvas {
 		//this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
 		
 		// TODO: sort this offset. It likely has something to do with initiating the sprite and its offsets etc.
-		float starX = GdxHelper.getScreenCenterX() - this.star.getScaleX() * 2 - 2600;
+		float starX = GdxHelper.getScreenCenterX() - this.star.getScaleX() * 2 - 2800;
 		float starY = GdxHelper.getScreenCenterY() - this.star.getScaleY() * 2 - 2600;
 		
 		star.rotate((float)0.1);

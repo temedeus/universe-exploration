@@ -3,8 +3,6 @@
  */
 package com.universe.exploration.player;
 
-import oracle.jrockit.jfr.tools.ConCatRepository;
-
 import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.common.tools.MathTools;
 
@@ -27,7 +25,8 @@ public class PlayerStatus {
 	private float power;
 	
 	/**
-	 * Setup initial values
+	 * Setup initial values.
+	 * Start with full values
 	 */
 	public PlayerStatus(){
 		crewmen = CoreConfiguration.MAX_CREWMEN;
