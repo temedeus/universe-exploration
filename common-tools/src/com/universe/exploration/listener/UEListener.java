@@ -17,7 +17,6 @@ public class UEListener implements IUEListener {
 	@Override
 	public void handleEventClassEvent(EventObject e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -25,7 +24,5 @@ public class UEListener implements IUEListener {
 	 */
 	@Override
 	public void handleEventClassEvent() {
-		// TODO Auto-generated method stub
-		
 	}
 }

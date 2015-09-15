@@ -3,15 +3,14 @@ package com.universe.exploration.view;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
 import com.universe.exploration.GdxHelper;
+import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
@@ -39,6 +38,7 @@ public class GameObjectCanvas {
 	 */
 	private GameViewObjectContainer gameViewObjectContainer;
 	
+	private UEListener planetClickListener;
 	/**
 	 * Generates graphical representation based on given star system
 	 * 
@@ -75,8 +75,9 @@ public class GameObjectCanvas {
 	}
 	
 	public void destroy() {
-		this.liveComponentBatch.dispose();
-		this.font.dispose();
+		liveComponentBatch.dispose();
+		backgroundBatch.dispose();
+		font.dispose();
 	}
 
 	/**
@@ -86,19 +87,16 @@ public class GameObjectCanvas {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		backgroundBatch.setProjectionMatrix(backgroundCamera.combined);
+		//TODO: bg and other objects are handled in different batches because game is
+		// suppose to feature zooming/moving camera in the future. Find out if 1 batch is okay after all
 		
-		backgroundBatch.begin();
-		space.draw(backgroundBatch);
-		space.setPosition(-1000, -600);
-		backgroundCamera.update();
-		
-		backgroundBatch.end();
-		
+		handleBackgroundBatch();
+		handleLiveComponentBatch();
+	}
+	
+	public void handleLiveComponentBatch() {
 		liveComponentBatch.setProjectionMatrix(camera.combined);
 		liveComponentBatch.begin();
-		
-		//this.planet.setPosition(this.getScreenCenterX() + this.planetX - this.planet.getScaleX() / 2, this.getScreenCenterY() + this.planetY - this.planet.getScaleY() / 2);
 		
 		// TODO: sort this offset. It likely has something to do with initiating the sprite and its offsets etc.
 		float starX = GdxHelper.getScreenCenterX() - this.star.getScaleX() * 2 - 2800;
@@ -120,6 +118,17 @@ public class GameObjectCanvas {
 		
 		liveComponentBatch.end();
 	}
+	
+	public void handleBackgroundBatch() {
+		backgroundBatch.setProjectionMatrix(backgroundCamera.combined);
+		
+		backgroundBatch.begin();
+		space.draw(backgroundBatch);
+		space.setPosition(-1000, -600);
+		backgroundCamera.update();
+		
+		backgroundBatch.end();
+	}
 
 	/**
 	 * Update camera on canvas
@@ -127,5 +136,19 @@ public class GameObjectCanvas {
 	 */
 	public void updateCameraOnCanvas(OrthographicCamera cam) {
 		this.camera = cam;
+	}
+	
+	/**
+	 * @return the planetClickListener
+	 */
+	public UEListener getPlanetClickListener() {
+		return planetClickListener;
+	}
+
+	/**
+	 * @param planetClickListener the planetClickListener to set
+	 */
+	public void setPlanetClickListener(UEListener planetClickListener) {
+		this.planetClickListener = planetClickListener;
 	}
 }

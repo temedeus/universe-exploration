@@ -14,11 +14,24 @@ import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeExc
 import com.badlogic.gdx.Input;
 
 public class UniverseExploration extends ApplicationAdapter {
+	/**
+	 * Game objects are handled here
+	 */
 	private GameObjectCanvas canvas;
-	SpaceshipMonitor shm;
-	double angle = 0;
-	StarSystem ua;
+	
+	/**
+	 * Controls the camera
+	 */
+	SpaceshipMonitor playerMonitor;
 
+	/**
+	 * Star system
+	 */
+	StarSystem ua;
+	
+	/**
+	 * User interface
+	 */
 	private UIController uiController;
 	
 	/**
@@ -43,20 +56,31 @@ public class UniverseExploration extends ApplicationAdapter {
 		createStarSystem();
 		
 		// Start game canvas. All graphics processing starts from this class.
-		
-		shm = new SpaceshipMonitor();
-		canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
+		playerMonitor = new SpaceshipMonitor();
+		canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
+		canvas.setPlanetClickListener(new UEListener() {
+			@Override
+			public void handleEventClassEvent() {
+				uiController.createDescriptionWindow();
+			};
+		});
 	}
 	
-	private void createStarSystem() {
+	/**
+	 * Attempts to create a new star system. Returns boolean result.
+	 * @return
+	 */
+	private boolean createStarSystem() {
 		StarSystemFactory uf = new StarSystemFactory();
 		
 		try {
 			ua = uf.makeStarSystem();
 			canvas = new GameObjectCanvas(this.ua);
 		} catch(PlanetCountOutOfRangeException e) {
-			// TODO: error handling on planet count error (overall error handling?)
-		}
+			return false;
+		} 
+		
+		return true;
 	}
 	
 	@Override
@@ -66,7 +90,7 @@ public class UniverseExploration extends ApplicationAdapter {
 
 	@Override
 	public void render () {	
-		this.canvas.updateCameraOnCanvas(this.shm.getOrthographicCamera());
+		this.canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
 		this.canvas.drawGameContent();
 		
 		playerStatus.decreaseAirBy(StatusConsumption.AIR_DECREMENT);
