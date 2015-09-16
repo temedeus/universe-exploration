@@ -58,8 +58,8 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	
 	public GraphicsGfxContainer(CelestialComponent starSystemComponent) {
 		this.starSystemComponent = starSystemComponent;
-		this.celestialBodyGfxModel = new CelestialBodyGfxModel();
-		this.celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
+		celestialBodyGfxModel = new CelestialBodyGfxModel();
+		celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
 		graphicsSource = this.starSystemComponent.getGraphicsFile();
 		spriteSize = this.starSystemComponent.getSpriteSize();
 		

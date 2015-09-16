@@ -3,6 +3,7 @@ package com.universe.exploration.view;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.universe.exploration.GdxHelper;
+import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
@@ -103,7 +105,6 @@ public class GameObjectCanvas {
 		float starY = GdxHelper.getScreenCenterY() - this.star.getScaleY() * 2 - 2600;
 		
 		star.rotate((float)0.1);
-
 		star.setPosition(starX, starY);
 		
 		gameViewObjectContainer.update();
@@ -114,17 +115,38 @@ public class GameObjectCanvas {
 
 		for(Sprite sprite : gameViewObjectContainer.getPlanetSprites()) {
 			sprite.draw(liveComponentBatch);
+			
+			// TODO: preferably use InputProcessor.
+			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+				scanMouseClickOnSprite(sprite.getX() - 10, sprite.getY() - 10, sprite.getX() + sprite.getScaleX() + 10, sprite.getY() + sprite.getScaleY() + 10);
+			}
 		}
 		
 		liveComponentBatch.end();
 	}
 	
+	public void scanMouseClickOnSprite(float x1, float y1, float x2, float y2) {
+		int mx = Gdx.input.getX();
+		int my = Gdx.input.getY();
+		
+		//if(MathTools.betweenFloatRangeInclusively((float)mx, x1, x2) && MathTools.betweenFloatRangeInclusively(my, y1, y2)) {
+			if(planetClickListener != null) {
+				firePlanetClickListener();
+			}
+		//}
+	}
+	
+	private void firePlanetClickListener() {
+		planetClickListener.handleEventClassEvent();
+	}
+	
 	public void handleBackgroundBatch() {
 		backgroundBatch.setProjectionMatrix(backgroundCamera.combined);
-		
 		backgroundBatch.begin();
+		
 		space.draw(backgroundBatch);
 		space.setPosition(-1000, -600);
+		
 		backgroundCamera.update();
 		
 		backgroundBatch.end();
