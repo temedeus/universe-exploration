@@ -4,9 +4,12 @@
 package com.universe.exploration.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
@@ -70,5 +73,30 @@ public class GameViewObjectContainer {
 				} catch(NullPointerException e) { }	
 			}
 		}
+	}
+	
+	/**
+	 * Returns null if no matchin planet found.
+	 * @param coordinates
+	 * @return
+	 */
+	public PlanetGfxContainer getPlanetWithCoordinatesWithinBoundaries(Vector3 coordinates) {
+		for(PlanetGfxContainer graphicsGfx : graphicsGfxContainer) {
+			if(graphicsGfx instanceof PlanetGfxContainer) {
+				try {
+					Rectangle planetRectangle = graphicsGfx.getSprite().getBoundingRectangle();
+					planetRectangle.x -= 5;
+					planetRectangle.y -= 5;
+					planetRectangle.width += 10;
+					planetRectangle.height += 10;
+					
+					if(planetRectangle.contains(coordinates.x, coordinates.y)) {
+						return graphicsGfx;
+					}
+				} catch(NullPointerException e) { }	
+			}
+		}
+		
+		return null;
 	}
 }

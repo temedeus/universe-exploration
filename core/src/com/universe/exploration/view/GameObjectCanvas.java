@@ -1,17 +1,22 @@
 package com.universe.exploration.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.universe.exploration.GdxHelper;
 import com.universe.exploration.common.tools.MathTools;
+import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
@@ -41,6 +46,7 @@ public class GameObjectCanvas {
 	private GameViewObjectContainer gameViewObjectContainer;
 	
 	private UEListener planetClickListener;
+	
 	/**
 	 * Generates graphical representation based on given star system
 	 * 
@@ -114,32 +120,29 @@ public class GameObjectCanvas {
 
 		for(Sprite sprite : gameViewObjectContainer.getPlanetSprites()) {
 			sprite.draw(liveComponentBatch);
-
-			// TODO: preferably use InputProcessor.
-			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-				scanMouseClickOnSprite(sprite.getX() - 10, sprite.getY() - 10, sprite.getX() + sprite.getScaleX() + 10, sprite.getY() + sprite.getScaleY() + 10);
-				font.draw(liveComponentBatch, "Mousepos: " + Gdx.input.getX() + Gdx.input.getY(), 200, 200);
-			}
 		}
 		
 		liveComponentBatch.end();
 	}
 	
-	public void scanMouseClickOnSprite(float x1, float y1, float x2, float y2) {
-		int mx = Gdx.input.getX();
-		int my = Gdx.input.getY();
-		
-		System.out.println("mx: " + mx + " my: " + my);
-		System.out.println("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " +y2);
-		if(MathTools.betweenFloatRangeInclusively((float)mx, x1, x2) && MathTools.betweenFloatRangeInclusively(my, y1, y2)) {
-			if(planetClickListener != null) {
-				firePlanetClickListener();
+	public void checkIfHitCoordinatesMatchPlanets() {
+		int x1 = Gdx.input.getX();
+		int y1 = Gdx.input.getY();
+		Vector3 input = new Vector3(x1, y1, 0);
+		camera.unproject(input);
+
+		try {
+			PlanetGfxContainer pgfx = gameViewObjectContainer.getPlanetWithCoordinatesWithinBoundaries(input);
+			if(pgfx != null) {
+				firePlanetClickListener(pgfx);
 			}
+		} catch(NullPointerException e) {
+			
 		}
 	}
 	
-	private void firePlanetClickListener() {
-		planetClickListener.handleEventClassEvent();
+	private void firePlanetClickListener(PlanetGfxContainer pgfx) {
+		planetClickListener.handleEventClassEvent(new UEEvent(pgfx));
 	}
 	
 	public void handleBackgroundBatch() {
