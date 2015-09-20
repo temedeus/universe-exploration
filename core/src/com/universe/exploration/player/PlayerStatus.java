@@ -37,19 +37,54 @@ public class PlayerStatus {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public void updateStatus() {
+		decreaseAirBy((power > 0) ? StatusConsumption.AIR_DECREMENT : StatusConsumption.AIR_DECREMENT * 3);
+		decreaseFoodBy(StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN * crewmen);
+		decreaseWaterBy(StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN * crewmen);
+		decreaseCrewmen();
+	}
+	
+	/**
+	 * Based on available resources, return mortality rate (if all is well, return 0)
+	 * @return float
+	 */
+	private float calculateCrewmenMortalityRate() {	
+		// Return crewmen death rate by what most crucial resource is depleted
+		if(air == 0) {
+			return StatusConsumption.CREWMEN_DECREMENT_AIR_DEPLETED;
+		} else {
+			if(water == 0) {
+				return StatusConsumption.CREWMEN_DECREMENT_WATER_DEPLETED;
+			} else {
+				if(food == 0) {
+					return StatusConsumption.CREWMEN_DECREMENT_FOOD_DEPLETED;
+				}
+			}
+		}
+		
+		return 0f;
+	}
+	/**
 	 * Crewman dies
 	 * @param d
 	 */
-	public void decreaseCrewmenBy(int d) {
-		crewmen = (int)MathTools.decreaseIfResultPositive(crewmen, d);
+	public void decreaseCrewmen() {
+		float dec = calculateCrewmenMortalityRate();
+		
+		if(dec > 0) {
+			crewmen = (int)MathTools.decreaseIfResultPositive(crewmen, dec);
+		}
 	}
 	
 	/**
 	 * Air gets sucked out
 	 * @param d
 	 */
-	public void decreaseAirBy(float d) {
-		air = MathTools.decreaseIfResultPositive(air, d);
+	public boolean decreaseAirBy(float d) {
+		air = MathTools.decreaseIfResultPositive(air, d);return true;
 	}
 	
 	/**

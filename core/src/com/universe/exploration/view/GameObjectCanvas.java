@@ -24,7 +24,7 @@ public class GameObjectCanvas {
 	private BitmapFont font;
 	private Sprite star;
 	private StarSystem starSystem;
-	
+	 
 	/** 
 	 * Camera describing planets etc.
 	 */
@@ -56,7 +56,7 @@ public class GameObjectCanvas {
 
         font = new BitmapFont();
         font.setColor(Color.WHITE);
-
+        
 		// Space background
 		SpaceBackgroundGfxContainer spaceBgGFX = new SpaceBackgroundGfxContainer();
 		space = spaceBgGFX.getSprite();
@@ -73,7 +73,6 @@ public class GameObjectCanvas {
 		for(PlanetCelestialComponent planet : listOfPlanets) {
 			gameViewObjectContainer.addStarSystemObject(planet);
 		}
-
 	}
 	
 	public void destroy() {
@@ -115,10 +114,11 @@ public class GameObjectCanvas {
 
 		for(Sprite sprite : gameViewObjectContainer.getPlanetSprites()) {
 			sprite.draw(liveComponentBatch);
-			
+
 			// TODO: preferably use InputProcessor.
 			if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 				scanMouseClickOnSprite(sprite.getX() - 10, sprite.getY() - 10, sprite.getX() + sprite.getScaleX() + 10, sprite.getY() + sprite.getScaleY() + 10);
+				font.draw(liveComponentBatch, "Mousepos: " + Gdx.input.getX() + Gdx.input.getY(), 200, 200);
 			}
 		}
 		
@@ -129,11 +129,13 @@ public class GameObjectCanvas {
 		int mx = Gdx.input.getX();
 		int my = Gdx.input.getY();
 		
-		//if(MathTools.betweenFloatRangeInclusively((float)mx, x1, x2) && MathTools.betweenFloatRangeInclusively(my, y1, y2)) {
+		System.out.println("mx: " + mx + " my: " + my);
+		System.out.println("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2: " +y2);
+		if(MathTools.betweenFloatRangeInclusively((float)mx, x1, x2) && MathTools.betweenFloatRangeInclusively(my, y1, y2)) {
 			if(planetClickListener != null) {
 				firePlanetClickListener();
 			}
-		//}
+		}
 	}
 	
 	private void firePlanetClickListener() {

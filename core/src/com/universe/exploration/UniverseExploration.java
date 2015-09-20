@@ -50,6 +50,7 @@ public class UniverseExploration extends ApplicationAdapter {
 			@Override
 			public void handleEventClassEvent() {
 				createStarSystem();
+				playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
 			};
 		});
 		
@@ -93,7 +94,8 @@ public class UniverseExploration extends ApplicationAdapter {
 		this.canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
 		this.canvas.drawGameContent();
 		
-		playerStatus.decreaseAirBy(StatusConsumption.AIR_DECREMENT);
+		playerStatus.updateStatus();
+		
 		uiController.updateUI(playerStatus);
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
