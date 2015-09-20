@@ -17,9 +17,11 @@ public enum LocalEn {
 	// Titles
 	TITLE_QUIT_GAME("Quit game"),
 	TITLE_CREWMEN_LEFT("Crewmen left:"),
+	TITLE_SURVEY_PLANET("Survey planet:"),
 	// Descriptions
 	DESC_QUIT_GAME("Are you sure you wish to quit?"),
-	DESC_HYPERSPACE_JUMP("Preparing for hyperspace jump...");
+	DESC_HYPERSPACE_JUMP("Preparing for hyperspace jump..."),
+	DESC_PLANET_TYPE("Planet type:");
 	
 	private final String description;
 

@@ -68,25 +68,22 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			};
 		});
 		
+		playerMonitor = new SpaceshipMonitor();
+		
 		createStarSystem();
 		
-		// Start game canvas. All graphics processing starts from this class.
-		playerMonitor = new SpaceshipMonitor();
-		canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
-		canvas.setPlanetClickListener(new UEListener() {
-			@Override
-			public void handleEventClassEvent(UEEvent e) {
-				
-				uiController.createPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad());
-			};
-		});
-		
+		setupInputProcessors();
+	}
+	
+	
+	private void setupInputProcessors() {
+		// We monitor events from both this ApplicationAdapter and our UI stage
+		// TODO: check if we could work with just one InputProcessor?
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(uiController.getUiStage());
 		inputMultiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
-	
 	/**
 	 * Attempts to create a new star system. Returns boolean result.
 	 * @return
@@ -97,6 +94,19 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		try {
 			ua = uf.makeStarSystem();
 			canvas = new GameObjectCanvas(this.ua);
+			
+			// Start game canvas. All graphics processing starts from this class.
+			
+			canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
+			canvas.setPlanetClickListener(new UEListener() {
+				
+				
+				@Override
+				public void handleEventClassEvent(UEEvent e) {
+					
+					uiController.showPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad());
+				};
+			});
 		} catch(PlanetCountOutOfRangeException e) {
 			return false;
 		} 
@@ -156,7 +166,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		canvas.checkIfHitCoordinatesMatchPlanets();
-		return false;
+		return true;
 	}
 
 	/* (non-Javadoc)

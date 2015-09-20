@@ -14,6 +14,7 @@ public class UEEvent extends java.util.EventObject {
 	
 	public UEEvent(Object source) {
         super(source);
+        setPayload(source);
     }
 	
 	public void setPayload(Object payload) {

@@ -99,6 +99,7 @@ public class StarSystemFactory {
 			planet.setOrbitalRadius(orbitalRadius);
 			planet.setAngle(angle);
 			planet.setSpriteSize(cc.getRandomSpriteSize());
+			planet.setComponentName(cc.getComponentName());
 			// Add planet
 			this.starsystem.addPlanet(planet);
 		}

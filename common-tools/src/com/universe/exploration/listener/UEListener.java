@@ -14,11 +14,7 @@ public class UEListener implements IUEListener {
 	/* (non-Javadoc)
 	 * @see com.universe.exploration.listener.IUEListener#handleEventClassEvent(java.util.EventObject)
 	 */
-	@Override
-	public void handleEventClassEvent(EventObject e) {
-		// TODO Auto-generated method stub
-	}
-	
+
 	public void handleEventClassEvent(UEEvent e) {
 		
 	}
@@ -28,5 +24,13 @@ public class UEListener implements IUEListener {
 	 */
 	@Override
 	public void handleEventClassEvent() {
+	}
+
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.listener.IUEListener#handleEventClassEvent(java.util.EventObject)
+	 */
+	@Override
+	public void handleEventClassEvent(EventObject e) {
+		
 	}
 }
