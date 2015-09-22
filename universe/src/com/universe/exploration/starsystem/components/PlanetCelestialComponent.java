@@ -52,7 +52,14 @@ public class PlanetCelestialComponent extends CelestialComponent {
 	 * Solar mass.
 	 */
 	private double solarMass;
+
+	private String lifeforms;
 	
+	private boolean waterFound;
+	
+	private boolean oxygenFound;
+	
+	private boolean foodFound;
 	
 	/**
 	 * Planet numerical representation (e.g. speed, mass, velocity etc.)
@@ -175,5 +182,61 @@ public class PlanetCelestialComponent extends CelestialComponent {
 	 */
 	public void setOrbitalRadius(double orbitalRadius) {
 		this.orbitalRadius = orbitalRadius;
+	}
+	
+	/**
+	 * @return the lifeforms
+	 */
+	public String getLifeforms() {
+		return lifeforms;
+	}
+
+	/**
+	 * @return the waterFound
+	 */
+	public boolean isWaterFound() {
+		return waterFound;
+	}
+
+	/**
+	 * @return the oxygenFound
+	 */
+	public boolean isOxygenFound() {
+		return oxygenFound;
+	}
+
+	/**
+	 * @return the foodFound
+	 */
+	public boolean isFoodFound() {
+		return foodFound;
+	}
+
+	/**
+	 * @param lifeforms the lifeforms to set
+	 */
+	public void setLifeforms(String lifeforms) {
+		this.lifeforms = lifeforms;
+	}
+
+	/**
+	 * @param waterFound the waterFound to set
+	 */
+	public void setWaterFound(boolean waterFound) {
+		this.waterFound = waterFound;
+	}
+
+	/**
+	 * @param oxygenFound the oxygenFound to set
+	 */
+	public void setOxygenFound(boolean oxygenFound) {
+		this.oxygenFound = oxygenFound;
+	}
+
+	/**
+	 * @param foodFound the foodFound to set
+	 */
+	public void setFoodFound(boolean foodFound) {
+		this.foodFound = foodFound;
 	}
 }

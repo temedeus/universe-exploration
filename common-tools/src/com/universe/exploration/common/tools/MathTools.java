@@ -61,4 +61,13 @@ public class MathTools {
 	public static float decreaseIfResultPositive(float val, float dec) {
 		return (val - dec >= 0) ? val - dec : 0;
 	}
+	
+	/**
+	 * Calculate if odds hit according to given percentage
+	 * @param percentage
+	 * @return
+	 */
+	public static boolean calculateIfOddsHit(float percentage) {
+		return ((float)Math.random() < percentage) ? true : false;
+	}
 }

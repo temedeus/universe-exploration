@@ -1,7 +1,7 @@
 package com.universe.exploration.starsystem;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
-import com.universe.exploration.celestialcomponents.configuration.ComponentType;
+import com.universe.exploration.celestialcomponents.configuration.planets.PlanetComponent;
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
@@ -92,7 +92,21 @@ public class StarSystemFactory {
 			
 			//System.out.println("Min o.rad=" + minOrbitalRadius + " / max o.rad =" + maxOrbitalRadius + " / cur o.rad=" + orbitalRadius);
 			// Set values
-			ComponentType cc = CelestialComponentTypes.valueOf(tmpPlanetType).getComponentType();
+			PlanetComponent cc = (PlanetComponent)CelestialComponentTypes.valueOf(tmpPlanetType).getComponentType();
+			
+			if(MathTools.calculateIfOddsHit(cc.getCHANCE_CIVILIZATION())) {
+				planet.setLifeforms("civilized");
+			} else {
+				if(MathTools.calculateIfOddsHit(cc.getCHANCE_ANIMAL())) {
+					planet.setLifeforms("animal");
+				} else {
+					if(MathTools.calculateIfOddsHit(cc.getChanceForBacterial())) {
+						planet.setLifeforms("bacterial");
+					} else {
+						planet.setLifeforms("none");
+					}
+				}
+			}
 			
 			planet.setGraphicsFile(cc.getRandomGraphicsFile());
 			planet.setOrbitalVelocity(planetOrbitalVelocity);
