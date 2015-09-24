@@ -3,6 +3,8 @@
  */
 package com.universe.exploration.common.tools;
 
+import java.text.DecimalFormat;
+
 import javax.annotation.processing.RoundEnvironment;
 
 /**
@@ -73,11 +75,12 @@ public class MathTools {
 		return ((float)Math.random() < percentage) ? true : false;
 	}
 	
-	public String roundedFloatAsStringDefault(float f) {
-		return roundedFloatAsString(f, 5);
+	public static String roundedFloatAsStringDefault(float f) {
+		return roundedFloatAsString(f, 3);
 	}
 	
 	public static String roundedFloatAsString(float f, int precision) {
-		return String.format("%." + precision + "g%n", f);
+		DecimalFormat df = new DecimalFormat("#.#####");
+		return df.format(f);
 	}
 }
