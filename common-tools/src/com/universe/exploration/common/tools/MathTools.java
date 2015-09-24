@@ -3,6 +3,8 @@
  */
 package com.universe.exploration.common.tools;
 
+import javax.annotation.processing.RoundEnvironment;
+
 /**
  * @author 8.7.2015 Teemu Puurunen 
  *
@@ -69,5 +71,13 @@ public class MathTools {
 	 */
 	public static boolean calculateIfOddsHit(float percentage) {
 		return ((float)Math.random() < percentage) ? true : false;
+	}
+	
+	public String roundedFloatAsStringDefault(float f) {
+		return roundedFloatAsString(f, 5);
+	}
+	
+	public static String roundedFloatAsString(float f, int precision) {
+		return String.format("%." + precision + "g%n", f);
 	}
 }
