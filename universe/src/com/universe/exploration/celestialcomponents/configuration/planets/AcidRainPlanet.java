@@ -4,6 +4,7 @@
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
 import com.universe.exploration.celestialcomponents.configuration.ComponentType;
+import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
 
 /**
  * @author 24.8.2015 Teemu Puurunen 
@@ -21,10 +22,10 @@ public class AcidRainPlanet extends PlanetComponent{
 		
 		chanceForAnimalLife = 0;
 		
-		CHANCE_TO_EXTRACT_WATER = 5f;
+		chanceToExtractWater = 5f;
 		
-		CHANCE_TO_EXTRACT_OXYGEN = 6f;
+		chanceToExtractOxygen = 6f;
 		
-		CHANCE_TO_FIND_FOOD = 0;
+		chanceToFindFood = 0;
 	}
 }

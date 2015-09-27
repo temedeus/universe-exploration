@@ -1,10 +1,17 @@
 package com.universe.exploration.starsystem;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.PrimitiveIterator.OfDouble;
+
+import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
+import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
+import com.universe.exploration.celestialcomponents.configuration.StarComponent;
+
 /**
  * Config
  * 
- * Configuration class for universe generation. Class was not created as static so as not 
- * to show it around elsewhere in the project (to avoid confusion).
+ * Configuration class for universe generation.
  * TODO: create schema and XML configuration based on schema. Config class in future
  * should just read this XML configuration instead of having everything hard-coded.
  * 
@@ -24,31 +31,62 @@ public class StarSystemConfiguration {
 	 */
 	private int minPlanetCount = 0;
 	
-	private String[][] startypeListing = {
-		{"LARGE_STAR", "10"}, 
-		{"MEDIUM_STAR", "3"}, 
-		{"SMALL_STAR", "5"}
-	};
+	private String[][] startypeListing;
 	
 	/**
 	 * Planet types and their weighted probabilities.
 	 * @access private
 	 */
-	private String[][] planettypeListing = {
-		{"ACID_RAIN_PLANET", "6"},
-		{"RED_MINERAL_PLANET", "4"},
-		{"GAS_GIANT_PLANET", "10"},
-		{"COLD_ROCKY_PLANET", "15"},
-		{"EARTLIKE_PLANET", "2"}
-	};
-
+	private String[][] planettypeListing;
+	
 	/**
 	 * Initiate configuration
+	 * TODO: maybe we could ditch the String arrays and utilize
+	 * ArrayList solely? Right now we convert to String[][] for compatibility
+	 * issues with randomizing components. This likely involves creating 
+	 * a new randomization method.
 	 */
 	public StarSystemConfiguration() {
+		ArrayList<String[]> startypes = new ArrayList<String[]>();
+		ArrayList<String[]> planettypes = new ArrayList<String[]>();
+
+		for(CelestialComponentTypes cct : CelestialComponentTypes.values()) {
+			String[] tmp = {cct.name(),"" + cct.getPrevalance()};
+			
+			if(cct.getComponentType() instanceof StarComponent) {
+				startypes.add(tmp);
+			}
+			
+			if(cct.getComponentType() instanceof PlanetComponent) {
+				planettypes.add(tmp);
+			}
+		}
 		
+		startypeListing = populateListing(startypes);
+		planettypeListing = populateListing(planettypes);
 	}
 
+	/**
+	 * Populate String[][] with ArraList items.
+	 * TODO: this is custom work for and extremely stupid implementation
+	 * of how stars and planets are randomly generated.
+	 * Please see {@link StarSystemConfiguration} and try to get rid 
+	 * of this bullshit.
+	 * 
+	 * @param arrList
+	 * @return
+	 */
+	private String[][] populateListing(ArrayList<String[]> arrList) {
+		String[][] listing = new String[arrList.size()][2];
+		int x = 0;
+		
+		for(String[] listItemAsStringArray : arrList) {
+			listing[x++] = listItemAsStringArray;
+		}
+		
+		return listing;
+	}
+	
 	/**
 	 * @return the minPlanetCount
 	 */

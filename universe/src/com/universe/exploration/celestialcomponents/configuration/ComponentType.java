@@ -10,6 +10,15 @@ import com.universe.exploration.common.tools.RandomizationTools;
  *
  */
 public class ComponentType {
+	protected int prevalence;
+	
+	/**
+	 * @return the prevalence
+	 */
+	public int getPrevalence() {
+		return prevalence;
+	}
+
 	protected String componentName;
 
 	protected String[] graphicsFiles;

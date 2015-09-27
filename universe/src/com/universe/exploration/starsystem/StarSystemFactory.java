@@ -1,7 +1,7 @@
 package com.universe.exploration.starsystem;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
-import com.universe.exploration.celestialcomponents.configuration.planets.PlanetComponent;
+import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
@@ -94,26 +94,14 @@ public class StarSystemFactory {
 			// Set values
 			PlanetComponent cc = (PlanetComponent)CelestialComponentTypes.valueOf(tmpPlanetType).getComponentType();
 			
-			if(MathTools.calculateIfOddsHit(cc.getCHANCE_CIVILIZATION())) {
-				planet.setLifeforms("civilized");
-			} else {
-				if(MathTools.calculateIfOddsHit(cc.getCHANCE_ANIMAL())) {
-					planet.setLifeforms("animal");
-				} else {
-					if(MathTools.calculateIfOddsHit(cc.getChanceForBacterial())) {
-						planet.setLifeforms("bacterial");
-					} else {
-						planet.setLifeforms("none");
-					}
-				}
-			}
-			
+			planet.setLifeforms(cc.randomizePlanetLife());
 			planet.setGraphicsFile(cc.getRandomGraphicsFile());
 			planet.setOrbitalVelocity(planetOrbitalVelocity);
 			planet.setOrbitalRadius(orbitalRadius);
 			planet.setAngle(angle);
 			planet.setSpriteSize(cc.getRandomSpriteSize());
 			planet.setComponentName(cc.getComponentName());
+			
 			// Add planet
 			this.starsystem.addPlanet(planet);
 		}

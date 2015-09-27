@@ -3,17 +3,16 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
-import com.universe.exploration.celestialcomponents.configuration.ComponentType;
+import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
 
 /**
  * @author 24.8.2015 Teemu Puurunen 
  *
  */
-public class EarthlikePlanet extends PlanetComponent {
+public class GoldilocksPlanet extends PlanetComponent {
 
-	
-	public EarthlikePlanet() {
-		componentName = "Earthlike planet";
+	public GoldilocksPlanet() {
+		componentName = "Goldilocks planet";
 		graphicsFiles = new String[]{"planet5.png"};
 		spriteSizes = new int[]{25, 32, 64};
 		
@@ -23,10 +22,10 @@ public class EarthlikePlanet extends PlanetComponent {
 		
 		chanceForAnimalLife = 50;
 		
-		CHANCE_TO_EXTRACT_WATER = 90f;
+		chanceToExtractWater = 90f;
 		
-		CHANCE_TO_EXTRACT_OXYGEN = 95f;
+		chanceToExtractOxygen = 95f;
 		
-		CHANCE_TO_FIND_FOOD = 85;
+		chanceToFindFood = 85;
 	}
 }
