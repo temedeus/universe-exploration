@@ -9,8 +9,14 @@ package com.universe.exploration.player;
  */
 public class StatusConsumption {
 
+	/**
+	 * When hyperspace jump is engaged, this final float determines the amount of decrement
+	 */
 	public static final float POWER_DECREMENT_HYPERSPACE_JUMP = 15f;
 	
+	/**
+	 * When planet is surveyed, this final float determines the amount of power decrement.
+	 */
 	public static final float POWER_DECREMENT_PLANETARY_SURVEY = 5f;
 	
 	public static final float WATER_DECREMENT = 0.01f; 

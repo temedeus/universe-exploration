@@ -14,13 +14,7 @@ public class CoreConfiguration {
 	/**
 	 * Background tile width/height (for simplicity tiles are all squares so width equals height)
 	 */
-	public static final int bgSize = 2048;
-	
-	public static final float maxVelocity = 5;
-	
-	public static final float minVelocity = 2;
-	
-	public static final int SYSTEMSTAR_SIZE = 4096;
+	public static final int BACKGROUND_TILE_DEFAULT_WIDTH = 2048;
 	
 	public static final int MAX_CREWMEN = 10;
 	

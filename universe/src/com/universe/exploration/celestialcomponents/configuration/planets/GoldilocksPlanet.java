@@ -17,15 +17,11 @@ public class GoldilocksPlanet extends PlanetComponent {
 		spriteSizes = new int[]{25, 32, 64};
 		
 		chanceForCivilization = 20;
-		
 		chanceForBacterial = 80;
-		
 		chanceForAnimalLife = 50;
-		
 		chanceToExtractWater = 90f;
-		
 		chanceToExtractOxygen = 95f;
-		
 		chanceToFindFood = 85;
+		chanceForVegetation = 95;
 	}
 }

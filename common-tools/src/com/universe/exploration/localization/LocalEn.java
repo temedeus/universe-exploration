@@ -12,6 +12,7 @@ public enum LocalEn {
 	// Buttons
 	BTN_OK("OK"),
 	BTN_CANCEL("Cancel"),
+	BTN_TRY_AGAIN("Try again"),
 	BTN_QUIT_GAME("Quit game"),
 	BTN_HYPERSPACE_JUMP("Hyperspace jump"),
 	BTN_SURVEY("Survey"),
@@ -20,6 +21,12 @@ public enum LocalEn {
 	TITLE_QUIT_GAME("Quit game"),
 	TITLE_CREWMEN_LEFT("Crewmen left: "),
 	TITLE_SURVEY_PLANET("Planetary survey"),
+	TITLE_GAME_OVER("Game over"),
+	TITLE_LIFEFORMS_CIVILIZED("civilized"),
+	TITLE_LIFEFORMS_ANIMAL("animal"),
+	TITLE_LIFEFORMS_VEGETATION("vegetation"),
+	TITLE_LIFEFORMS_BACTERIAL("bacterial"),
+	TITLE_LIFEFORMS_NONE("none"),
 	
 	// Descriptions
 	DESC_QUIT_GAME("Are you sure you wish to quit?"),

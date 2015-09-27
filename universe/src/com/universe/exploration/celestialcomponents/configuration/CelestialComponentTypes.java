@@ -3,11 +3,11 @@
  */
 package com.universe.exploration.celestialcomponents.configuration;
 
-import com.universe.exploration.celestialcomponents.configuration.planets.AcidRainPlanet;
+import com.universe.exploration.celestialcomponents.configuration.planets.InteriorTerrestrialPlanet;
 import com.universe.exploration.celestialcomponents.configuration.planets.ColdRockyPlanet;
 import com.universe.exploration.celestialcomponents.configuration.planets.GoldilocksPlanet;
 import com.universe.exploration.celestialcomponents.configuration.planets.GasGiantPlanet;
-import com.universe.exploration.celestialcomponents.configuration.planets.TerrestrialPlanet;
+import com.universe.exploration.celestialcomponents.configuration.planets.ExteriorTerrestrialPlanet;
 import com.universe.exploration.celestialcomponents.configuration.stars.LargeStar;
 import com.universe.exploration.celestialcomponents.configuration.stars.MediumStar;
 import com.universe.exploration.celestialcomponents.configuration.stars.SmallStar;
@@ -22,8 +22,8 @@ public enum CelestialComponentTypes {
 	MEDIUM_STAR(new MediumStar(), 3),
 	SMALL_STAR(new SmallStar(), 5),
 	// PLANETS
-	ACID_RAIN_PLANET(new AcidRainPlanet(), 6),
-	RED_MINERAL_PLANET(new TerrestrialPlanet(), 4),
+	ACID_RAIN_PLANET(new InteriorTerrestrialPlanet(), 6),
+	RED_MINERAL_PLANET(new ExteriorTerrestrialPlanet(), 4),
 	GAS_GIANT_PLANET(new GasGiantPlanet(), 10),
 	COLD_ROCKY_PLANET(new ColdRockyPlanet(), 15),
 	EARTLIKE_PLANET(new GoldilocksPlanet(), 2);

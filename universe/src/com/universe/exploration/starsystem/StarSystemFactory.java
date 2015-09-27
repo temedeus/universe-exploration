@@ -94,7 +94,9 @@ public class StarSystemFactory {
 			// Set values
 			PlanetComponent cc = (PlanetComponent)CelestialComponentTypes.valueOf(tmpPlanetType).getComponentType();
 			
-			planet.setLifeforms(cc.randomizePlanetLife());
+			planet.setOxygenFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen()));
+			planet.setWaterFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractWater()));
+			planet.setLifeforms(cc.randomizePlanetLife(planet.isWaterFound()));
 			planet.setGraphicsFile(cc.getRandomGraphicsFile());
 			planet.setOrbitalVelocity(planetOrbitalVelocity);
 			planet.setOrbitalRadius(orbitalRadius);

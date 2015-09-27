@@ -1,11 +1,15 @@
 package com.universe.exploration;
+import javafx.scene.Parent;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.camera.SpaceshipMonitor;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
@@ -28,12 +32,12 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	/**
 	 * Controls the camera
 	 */
-	SpaceshipMonitor playerMonitor;
+	private SpaceshipMonitor playerMonitor;
 
 	/**
 	 * Star system
 	 */
-	StarSystem ua;
+	private StarSystem ua;
 	
 	/**
 	 * User interface
@@ -44,8 +48,10 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	 * Contains player spaceship status.
 	 */
 	private PlayerStatus playerStatus;
-
 	
+	private boolean gameStatusPaused = false;
+
+	@SuppressWarnings("unused")
 	private Stage uiStage;
 	
 	@Override
@@ -60,19 +66,59 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		uiController.setHyperspaceJumpListener(new UEListener() {
 			@Override
 			public void handleEventClassEvent() {
-				createStarSystem();
-				playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
+				if(!gameStatusPaused) {
+					createStarSystem();
+					playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
+				}
 			};
 		});
 		
 		playerMonitor = new SpaceshipMonitor();
 		
 		createStarSystem();
-		
 		setupInputProcessors();
+		
+		pauseGame(false);
 	}
 	
+	private void pauseGame(boolean pause) {
+		setGameStatusPaused(pause);
+	}
 	
+	@Override
+	public void dispose() {
+		canvas.destroy();
+	}
+
+	@Override
+	public void render () {	
+		canvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+		canvas.drawGameContent();
+		
+		playerStatus.updateStatus();
+		uiController.updateUI(playerStatus);
+		
+		if(playerStatus.getCrewmen() == 0 && !gameStatusPaused) {
+			pauseGame(true);
+			uiController.showGameOverWindow(new ClickListener() {
+		    	@Override
+		    	public void clicked(InputEvent event, float x, float y) {
+		    		createStarSystem();
+		    		playerStatus = new PlayerStatus();
+		    		pauseGame(false);
+		    	}
+		    });
+		}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
+	}
+	
+	/**
+	 * Both UniverseExploration and UIController use InputProcessors so we must use InputMultiPlexer
+	 * to catch all those events.
+	 */
 	private void setupInputProcessors() {
 		// We monitor events from both this ApplicationAdapter and our UI stage
 		// TODO: check if we could work with just one InputProcessor?
@@ -81,6 +127,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		inputMultiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
+	
 	/**
 	 * Attempts to create a new star system. Returns boolean result.
 	 * @return
@@ -96,11 +143,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			
 			canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
 			canvas.setPlanetClickListener(new UEListener() {
-				
-				
 				@Override
 				public void handleEventClassEvent(UEEvent e) {
-					
 					uiController.showPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad());
 				};
 			});
@@ -109,25 +153,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		} 
 		
 		return true;
-	}
-	
-	@Override
-	public void dispose() {
-		canvas.destroy();
-	}
-
-	@Override
-	public void render () {	
-		this.canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
-		this.canvas.drawGameContent();
-		
-		playerStatus.updateStatus();
-		
-		uiController.updateUI(playerStatus);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-			Gdx.app.exit();
-		}
 	}
 
 	/* (non-Javadoc)
@@ -200,5 +225,19 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	public boolean scrolled(int amount) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	/**
+	 * @return the gameStatusPaused
+	 */
+	public boolean isGameStatusPaused() {
+		return gameStatusPaused;
+	}
+
+	/**
+	 * @param gameStatusPaused the gameStatusPaused to set
+	 */
+	public void setGameStatusPaused(boolean gameStatusPaused) {
+		this.gameStatusPaused = gameStatusPaused;
 	}
 }

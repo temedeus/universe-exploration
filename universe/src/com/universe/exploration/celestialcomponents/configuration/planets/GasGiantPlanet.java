@@ -28,5 +28,6 @@ public class GasGiantPlanet extends PlanetComponent {
 		chanceToExtractOxygen = 40f;
 		
 		chanceToFindFood = 0;
+		chanceForVegetation = 0;
 	}
 }

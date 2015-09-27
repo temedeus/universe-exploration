@@ -41,7 +41,7 @@ public class PlayerStatus {
 	 * @return
 	 */
 	public void updateStatus() {
-		decreaseAirBy((power > 0) ? StatusConsumption.AIR_DECREMENT : StatusConsumption.AIR_DECREMENT * 3);
+		decreaseAirBy((power > 0) ? StatusConsumption.AIR_DECREMENT : StatusConsumption.AIR_DECREMENT * 9);
 		decreaseFoodBy(StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN * crewmen);
 		decreaseWaterBy(StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN * crewmen);
 		decreaseCrewmen();
@@ -83,7 +83,7 @@ public class PlayerStatus {
 	 * Air gets sucked out
 	 * @param d
 	 */
-	public boolean decreaseAirBy(float d) {
+	private boolean decreaseAirBy(float d) {
 		air = MathTools.decreaseIfResultPositive(air, d);return true;
 	}
 	
@@ -91,7 +91,7 @@ public class PlayerStatus {
 	 * Water leaks
 	 * @param d
 	 */
-	public void decreaseWaterBy(float d) {
+	private void decreaseWaterBy(float d) {
 		water = MathTools.decreaseIfResultPositive(water, d);
 	}
 	
@@ -99,7 +99,7 @@ public class PlayerStatus {
 	 * Food gets eaten
 	 * @param d
 	 */
-	public void decreaseFoodBy(float d) {
+	private void decreaseFoodBy(float d) {
 		food = MathTools.decreaseIfResultPositive(food, d);
 	}
 	

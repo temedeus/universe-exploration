@@ -9,10 +9,10 @@ import com.universe.exploration.celestialcomponents.configuration.PlanetComponen
  * @author 24.8.2015 Teemu Puurunen 
  *
  */
-public class TerrestrialPlanet extends PlanetComponent {
+public class ExteriorTerrestrialPlanet extends PlanetComponent {
 
-	public TerrestrialPlanet() {
-		componentName = "Red mineral planet";
+	public ExteriorTerrestrialPlanet() {
+		componentName = "Exterior terrestrial planet";
 		graphicsFiles = new String[]{"planet2.png"};
 		spriteSizes = new int[]{32, 64, 70};
 		
@@ -22,6 +22,6 @@ public class TerrestrialPlanet extends PlanetComponent {
 		chanceToExtractWater = 40f;
 		chanceToExtractOxygen = 30f;
 		chanceToFindFood = 10;
-		
+		chanceForVegetation = 10;
 	}
 }

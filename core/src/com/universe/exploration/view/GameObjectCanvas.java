@@ -24,7 +24,8 @@ public class GameObjectCanvas {
 	private BitmapFont font;
 	private Sprite star;
 	private StarSystem starSystem;
-	 
+	private boolean gameStatusPaused;
+
 	/** 
 	 * Camera describing planets etc.
 	 */
@@ -74,6 +75,8 @@ public class GameObjectCanvas {
 		for(PlanetCelestialComponent planet : listOfPlanets) {
 			gameViewObjectContainer.addStarSystemObject(planet);
 		}
+		
+		gameStatusPaused = false;
 	}
 	
 	public void destroy() {
@@ -173,4 +176,20 @@ public class GameObjectCanvas {
 	public void setPlanetClickListener(UEListener planetClickListener) {
 		this.planetClickListener = planetClickListener;
 	}
+	
+	 
+	/**
+	 * @return the gameStatusPaused
+	 */
+	public boolean isGameStatusPaused() {
+		return gameStatusPaused;
+	}
+
+	/**
+	 * @param gameStatusPaused the gameStatusPaused to set
+	 */
+	public void setGameStatusPaused(boolean gameStatusPaused) {
+		this.gameStatusPaused = gameStatusPaused;
+	}
+
 }

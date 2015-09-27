@@ -4,6 +4,7 @@
 package com.universe.exploration.starsystem.components;
 
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
+import common.universe.exploration.common.Lifeforms;
 
 /**
  * Planet numerical representation (e.g. speed, mass, velocity etc.)
@@ -53,7 +54,7 @@ public class PlanetCelestialComponent extends CelestialComponent {
 	 */
 	private double solarMass;
 
-	private String lifeforms;
+	private Lifeforms lifeform;
 	
 	private boolean waterFound;
 	
@@ -187,8 +188,8 @@ public class PlanetCelestialComponent extends CelestialComponent {
 	/**
 	 * @return the lifeforms
 	 */
-	public String getLifeforms() {
-		return lifeforms;
+	public Lifeforms getLifeforms() {
+		return lifeform;
 	}
 
 	/**
@@ -215,8 +216,8 @@ public class PlanetCelestialComponent extends CelestialComponent {
 	/**
 	 * @param lifeforms the lifeforms to set
 	 */
-	public void setLifeforms(String lifeforms) {
-		this.lifeforms = lifeforms;
+	public void setLifeforms(Lifeforms lifeform) {
+		this.lifeform = lifeform;
 	}
 
 	/**

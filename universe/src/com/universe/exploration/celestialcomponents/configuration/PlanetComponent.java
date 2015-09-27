@@ -4,112 +4,13 @@
 package com.universe.exploration.celestialcomponents.configuration;
 
 import com.universe.exploration.common.tools.MathTools;
+import common.universe.exploration.common.Lifeforms;
 
 /**
  * @author 22.9.2015 Teemu Puurunen 
  *
  */
 public class PlanetComponent extends ComponentType {
-	public String randomizePlanetLife() {
-		if(MathTools.calculateIfOddsHit(getChanceCivilization())) {
-			return "civilized";
-		}
-		
-		if(MathTools.calculateIfOddsHit(getChanceAnimal())) {
-			return "animal";
-		}
-		
-		if(MathTools.calculateIfOddsHit(getChanceForBacterial())) {
-			return "bacterial";
-		} 
-
-		return "none";
-	}
-	
-	/**
-	 * @return the cHANCE_CIVILIZATION
-	 */
-	public float getChanceCivilization() {
-		return chanceForCivilization;
-	}
-
-	/**
-	 * @return the cHANCE_BACTERIAL
-	 */
-	public float getChanceForBacterial() {
-		return chanceForBacterial;
-	}
-
-	/**
-	 * @return the cHANCE_ANIMAL
-	 */
-	public float getChanceAnimal() {
-		return chanceForAnimalLife;
-	}
-
-	/**
-	 * @return the cHANCE_TO_EXTRACT_WATER
-	 */
-	public float getCHANCE_TO_EXTRACT_WATER() {
-		return chanceToExtractWater;
-	}
-
-	/**
-	 * @return the cHANCE_TO_EXTRACT_OXYGEN
-	 */
-	public float getCHANCE_TO_EXTRACT_OXYGEN() {
-		return chanceToExtractOxygen;
-	}
-
-	/**
-	 * @return the cHANCE_TO_FIND_FOOD
-	 */
-	public float getChanceToFindFood() {
-		return chanceToFindFood;
-	}
-
-	/**
-	 * @param cHANCE_CIVILIZATION the cHANCE_CIVILIZATION to set
-	 */
-	public void setCHANCE_CIVILIZATION(float chanceForCivilization) {
-		this.chanceForCivilization = chanceForCivilization;
-	}
-
-	/**
-	 * @param cHANCE_BACTERIAL the cHANCE_BACTERIAL to set
-	 */
-	public void setCHANCE_BACTERIAL(float chanceForBacterial) {
-		this.chanceForBacterial = chanceForBacterial;
-	}
-
-	/**
-	 * @param cHANCE_ANIMAL the cHANCE_ANIMAL to set
-	 */
-	public void setCHANCE_ANIMAL(float chanceForAnimalLife) {
-		this.chanceForAnimalLife = chanceForAnimalLife;
-	}
-
-	/**
-	 * @param cHANCE_TO_EXTRACT_WATER the cHANCE_TO_EXTRACT_WATER to set
-	 */
-	public void setChanceToExtractWater(float chanceToExtractWater) {
-		this.chanceToExtractWater = chanceToExtractWater;
-	}
-
-	/**
-	 * @param cHANCE_TO_EXTRACT_OXYGEN the cHANCE_TO_EXTRACT_OXYGEN to set
-	 */
-	public void setCHANCE_TO_EXTRACT_OXYGEN(float chanceToExtractOxygen) {
-		this.chanceToExtractOxygen = chanceToExtractOxygen;
-	}
-
-	/**
-	 * @param cHANCE_TO_FIND_FOOD the cHANCE_TO_FIND_FOOD to set
-	 */
-	public void setCHANCE_TO_FIND_FOOD(float chanceToFindFood) {
-		this.chanceToFindFood = chanceToFindFood;
-	}
-
 	protected float chanceForCivilization;
 	
 	protected float chanceForBacterial;
@@ -121,4 +22,133 @@ public class PlanetComponent extends ComponentType {
 	protected float chanceToExtractOxygen;
 	
 	protected float chanceToFindFood;
+	
+	protected float chanceForVegetation;
+	
+	
+	/**
+	 * In order to have any life at all, planet needs to contain water.
+	 * @param waterFound
+	 * @return
+	 */
+	public Lifeforms randomizePlanetLife(boolean waterFound) {
+		if(waterFound) {
+			if(MathTools.calculateIfOddsHit(getChanceCivilization())) {
+				return Lifeforms.CIVILIZED;
+			}
+			
+			if(MathTools.calculateIfOddsHit(getChanceAnimal())) {
+				return Lifeforms.ANIMAL;
+			}
+			
+			if(MathTools.calculateIfOddsHit(getChanceForVegetation())) {
+				return Lifeforms.VEGETATION;
+			}
+			
+			if(MathTools.calculateIfOddsHit(getChanceForBacterial())) {
+				return Lifeforms.BACTERIAL;
+			} 
+		}
+
+		return Lifeforms.NONE;
+	}
+	
+	/**
+	 * @return the chanceForCivilization
+	 */
+	public float getChanceCivilization() {
+		return chanceForCivilization;
+	}
+
+	/**
+	 * @return the chanceForBacterial
+	 */
+	public float getChanceForBacterial() {
+		return chanceForBacterial;
+	}
+
+	/**
+	 * @return the chanceForAnimalLife
+	 */
+	public float getChanceAnimal() {
+		return chanceForAnimalLife;
+	}
+
+	/**
+	 * @return the chanceToExtractWater
+	 */
+	public float getChanceToExtractWater() {
+		return chanceToExtractWater;
+	}
+
+	/**
+	 * @return the chanceToExtractOxygen
+	 */
+	public float getChanceToExtractOxygen() {
+		return chanceToExtractOxygen;
+	}
+
+	/**
+	 * @return the chanceToFindFood
+	 */
+	public float getChanceToFindFood() {
+		return chanceToFindFood;
+	}
+
+	/**
+	 * @param chanceForCivilization the chanceForCivilization to set
+	 */
+	public void setChanceForCivilization(float chanceForCivilization) {
+		this.chanceForCivilization = chanceForCivilization;
+	}
+
+	/**
+	 * @param chanceForBacterial the chanceForBacterial to set
+	 */
+	public void setChanceForBacterial(float chanceForBacterial) {
+		this.chanceForBacterial = chanceForBacterial;
+	}
+
+	/**
+	 * @param cHANCE_ANchanceForAnimalLifeIMAL the chanceForAnimalLife to set
+	 */
+	public void setChanceForAnimalLife(float chanceForAnimalLife) {
+		this.chanceForAnimalLife = chanceForAnimalLife;
+	}
+
+	/**
+	 * @param chanceToExtractWater the chanceToExtractWater to set
+	 */
+	public void setChanceToExtractWater(float chanceToExtractWater) {
+		this.chanceToExtractWater = chanceToExtractWater;
+	}
+
+	/**
+	 * @param chanceToExtractOxygen the chanceToExtractOxygen to set
+	 */
+	public void setChanceToExractOxygen(float chanceToExtractOxygen) {
+		this.chanceToExtractOxygen = chanceToExtractOxygen;
+	}
+
+	/**
+	 * @param chanceToFindFood the chanceToFindFood to set
+	 */
+	public void setChanceToFindFood(float chanceToFindFood) {
+		this.chanceToFindFood = chanceToFindFood;
+	}
+	
+
+	/**
+	 * @return the chanceForVegetation
+	 */
+	public float getChanceForVegetation() {
+		return chanceForVegetation;
+	}
+
+	/**
+	 * @param chanceForVegetation the chanceForVegetation to set
+	 */
+	public void setChanceForVegetation(float chanceForVegetation) {
+		this.chanceForVegetation = chanceForVegetation;
+	}
 }

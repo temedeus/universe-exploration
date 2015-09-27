@@ -26,5 +26,7 @@ public class ColdRockyPlanet extends PlanetComponent{
 		chanceToExtractOxygen = 10f;
 		
 		chanceToFindFood = 0;
+		
+		chanceForVegetation = 0;
 	}
 }
