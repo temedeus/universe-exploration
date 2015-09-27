@@ -5,8 +5,6 @@ package com.universe.exploration.common.tools;
 
 import java.text.DecimalFormat;
 
-import javax.annotation.processing.RoundEnvironment;
-
 /**
  * @author 8.7.2015 Teemu Puurunen 
  *

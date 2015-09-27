@@ -3,7 +3,6 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
-import com.universe.exploration.celestialcomponents.configuration.ComponentType;
 import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
 
 /**

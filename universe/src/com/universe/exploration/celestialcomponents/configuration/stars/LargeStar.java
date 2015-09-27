@@ -3,7 +3,6 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.stars;
 
-import com.universe.exploration.celestialcomponents.configuration.ComponentType;
 import com.universe.exploration.celestialcomponents.configuration.StarComponent;
 
 /**

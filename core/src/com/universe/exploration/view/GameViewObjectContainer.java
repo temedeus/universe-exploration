@@ -4,14 +4,13 @@
 package com.universe.exploration.view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.CelestialComponent;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
  * 

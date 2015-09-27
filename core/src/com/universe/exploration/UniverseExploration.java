@@ -1,6 +1,14 @@
 package com.universe.exploration;
-import java.util.EventObject;
-
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.universe.exploration.camera.SpaceshipMonitor;
+import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.player.PlayerStatus;
@@ -10,17 +18,6 @@ import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.ui.UIController;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-import com.universe.exploration.camera.SpaceshipMonitor;
-import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
 	/**

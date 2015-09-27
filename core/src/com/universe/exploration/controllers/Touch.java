@@ -12,7 +12,7 @@ public class Touch implements GestureListener {
 
 	@Override
 	public boolean tap(float x, float y, int count, int button) {
-		Vector3 touchPos = new Vector3(x, y, 0);
+		//Vector3 touchPos = new Vector3(x, y, 0);
 
 		return true;
 	}
@@ -20,7 +20,7 @@ public class Touch implements GestureListener {
 	@Override
 	public boolean longPress(float x, float y) {
 
-		Vector3 touchPos = new Vector3(x,y,0);
+		//Vector3 touchPos = new Vector3(x,y,0);
 
 		return true;
 	}
@@ -32,7 +32,7 @@ public class Touch implements GestureListener {
 
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		Vector3 touchPos = new Vector3(x,y,0);
+		//Vector3 touchPos = new Vector3(x,y,0);
 		
 		return true;
 	}

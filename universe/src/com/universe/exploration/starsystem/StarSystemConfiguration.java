@@ -1,8 +1,6 @@
 package com.universe.exploration.starsystem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.PrimitiveIterator.OfDouble;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
 import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
