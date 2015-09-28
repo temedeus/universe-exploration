@@ -14,7 +14,7 @@ public class ExteriorTerrestrialPlanet extends PlanetComponent {
 	public ExteriorTerrestrialPlanet() {
 		componentName = "Exterior terrestrial planet";
 		graphicsFiles = new String[]{"planet2.png"};
-		spriteSizes = new int[]{32, 64, 70};
+		spriteSizes = new int[]{8, 10, 12};
 		
 		chanceForCivilization = 7;
 		chanceForBacterial = 20;

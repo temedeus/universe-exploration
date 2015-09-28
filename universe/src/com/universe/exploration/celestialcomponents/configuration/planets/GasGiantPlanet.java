@@ -15,7 +15,7 @@ public class GasGiantPlanet extends PlanetComponent {
 	public GasGiantPlanet() {
 		componentName = "Giant gas planet";
 		graphicsFiles = new String[]{"planet3.png"};
-		spriteSizes = new int[]{80, 100, 128, 160};
+		spriteSizes = new int[]{40, 50, 55};
 		
 		chanceForCivilization = 0;
 		

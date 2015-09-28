@@ -13,5 +13,6 @@ public class SmallStar extends StarComponent {
 	public SmallStar() {
 		componentName = "Small star";
 		graphicsFiles = new String[]{"star3.png"};
+		spriteSizes = new int[]{4096};
 	}
 }

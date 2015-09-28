@@ -59,9 +59,21 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
 		uiStage = new Stage(new ScreenViewport());
-
 		playerStatus = new PlayerStatus();
+		playerMonitor = new SpaceshipMonitor();
 		
+		stageSetup();
+		
+		pauseGame(false);
+	}
+	
+	private void stageSetup() {
+		setupUiController();
+		createStarSystem();
+		setupInputProcessors();
+	}
+	
+	private void setupUiController() {
 		uiController = new UIController();
 		uiController.setHyperspaceJumpListener(new UEListener() {
 			@Override
@@ -72,17 +84,11 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				}
 			};
 		});
-		
-		playerMonitor = new SpaceshipMonitor();
-		
-		createStarSystem();
-		setupInputProcessors();
-		
-		pauseGame(false);
 	}
 	
 	private void pauseGame(boolean pause) {
 		setGameStatusPaused(pause);
+		uiController.setGameStatusPaused(pause);
 	}
 	
 	@Override
@@ -103,7 +109,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			uiController.showGameOverWindow(new ClickListener() {
 		    	@Override
 		    	public void clicked(InputEvent event, float x, float y) {
-		    		createStarSystem();
+		    		stageSetup();
 		    		playerStatus = new PlayerStatus();
 		    		pauseGame(false);
 		    	}

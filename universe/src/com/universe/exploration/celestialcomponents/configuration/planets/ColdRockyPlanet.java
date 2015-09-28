@@ -13,7 +13,7 @@ public class ColdRockyPlanet extends PlanetComponent{
 	public ColdRockyPlanet() {
 		componentName = "Cold rocky planet";
 		graphicsFiles = new String[]{"planet4.png"};
-		spriteSizes = new int[]{16, 32, 50};
+		spriteSizes = new int[]{4, 8, 10};
 		
 		chanceForCivilization = 0;
 		

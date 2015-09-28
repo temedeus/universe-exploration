@@ -13,7 +13,7 @@ public class InteriorTerrestrialPlanet extends PlanetComponent{
 	public InteriorTerrestrialPlanet() {
 		componentName = "Interior terrestrial planet";
 		graphicsFiles = new String[]{"planet1.png"};
-		spriteSizes = new int[]{32, 64, 70};
+		spriteSizes = new int[]{10, 12, 14};
 		
 		chanceForCivilization = 0;
 		chanceForBacterial = 1;

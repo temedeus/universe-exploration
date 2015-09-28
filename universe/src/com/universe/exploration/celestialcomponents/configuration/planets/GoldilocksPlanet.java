@@ -14,7 +14,7 @@ public class GoldilocksPlanet extends PlanetComponent {
 	public GoldilocksPlanet() {
 		componentName = "Goldilocks planet";
 		graphicsFiles = new String[]{"planet5.png"};
-		spriteSizes = new int[]{25, 32, 64};
+		spriteSizes = new int[]{10, 12, 14};
 		
 		chanceForCivilization = 20;
 		chanceForBacterial = 80;
