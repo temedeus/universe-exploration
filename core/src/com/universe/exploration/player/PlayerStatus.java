@@ -14,8 +14,14 @@ import com.universe.exploration.common.tools.MathTools;
  *
  */
 public class PlayerStatus {
+	/**
+	 * Count of crewmen alive.
+	 */
 	private int crewmen;
 	
+	/**
+	 * Air left
+	 */
 	private float air;
 	
 	private float water;

@@ -1,6 +1,4 @@
 package com.universe.exploration;
-import javafx.scene.Parent;
-
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -68,8 +66,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	}
 	
 	private void stageSetup() {
-		setupUiController();
 		createStarSystem();
+		setupUiController();
 		setupInputProcessors();
 	}
 	

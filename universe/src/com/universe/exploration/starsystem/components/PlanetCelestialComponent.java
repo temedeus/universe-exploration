@@ -16,6 +16,10 @@ import common.universe.exploration.common.Lifeforms;
  */
 public class PlanetCelestialComponent extends CelestialComponent {
 	/**
+	 * 
+	 */
+	
+	/**
 	 * Aphelion - distance when farthest to star.
 	 * TODO: calculate radius based on periphelion and aphelion
 	 */

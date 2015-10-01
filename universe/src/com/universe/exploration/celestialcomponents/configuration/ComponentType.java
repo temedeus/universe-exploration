@@ -10,13 +10,25 @@ import com.universe.exploration.common.tools.RandomizationTools;
  *
  */
 public class ComponentType {
-	protected int prevalence;
+
+	/**
+	 * Identifier for component so that we can refer
+	 * to it from UI-side.
+	 */
+	protected String ComponentID;
 	
 	/**
-	 * @return the prevalence
+	 * @return the componentID
 	 */
-	public int getPrevalence() {
-		return prevalence;
+	public String getComponentID() {
+		return ComponentID;
+	}
+
+	/**
+	 * @param componentID the componentID to set
+	 */
+	public void setComponentID(String componentID) {
+		ComponentID = componentID;
 	}
 
 	protected String componentName;
