@@ -36,10 +36,9 @@ class DataAndValueContainer implements IDataAndValueContainer {
 	public void update(String id, String newVal) {
 		for(DataAndValuePair pair : pairList) {
 			if(pair.getId() == id) {
-				pair.getValue().setText(newVal);
+				pair.updateValue(newVal);
 			}
 		}
-		
 	}
 	
 	/**
