@@ -17,7 +17,7 @@ import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
-import com.universe.exploration.ui.UIController;
+import com.universe.exploration.ueui.UIController;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
 
