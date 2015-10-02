@@ -11,12 +11,13 @@ class DataAndValueContainer implements IDataAndValueContainer {
 	 */
 	public DataAndValueContainer() {
 		pairList = new ArrayList<DataAndValuePair>();
-		// TODO Auto-generated constructor stub
+		createPairs();
 	}
 	
 	public DataAndValueContainer(Object auxiliaryDataContainer) {
 		pairList = new ArrayList<DataAndValuePair>();
 		this.auxiliaryDataContainer = auxiliaryDataContainer;
+		createPairs();
 	}
 	
 	/* (non-Javadoc)
@@ -32,7 +33,20 @@ class DataAndValueContainer implements IDataAndValueContainer {
 		pairList.add(pair);
 	}
 	
-	public void update() {
+	public void update(String id, String newVal) {
+		for(DataAndValuePair pair : pairList) {
+			if(pair.getId() == id) {
+				pair.getValue().setText(newVal);
+			}
+		}
 		
 	}
+	
+	/**
+	 * @return
+	 */
+	public ArrayList<DataAndValuePair> getPairList() {
+		return pairList;
+	}
+	
 }

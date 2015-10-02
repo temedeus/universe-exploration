@@ -29,5 +29,6 @@ public class PlanetSurvey extends DataAndValueContainer {
 		add(new DataAndValuePair("", Localizer.get("SUBHEADER_PRESENT_LIFEFORMS"), Localizer.get(cc.getLifeforms().getLocalKey())));
 
 	}
-	
+
+
 }
