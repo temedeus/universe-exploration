@@ -4,7 +4,7 @@
 package com.universe.exploration.ueui.data;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.universe.exploration.ui.skins.UEUiSkinBank;
+import com.universe.exploration.ueui.skins.UEUiSkinBank;
 
 /**
  * @author 1.10.2015 Teemu Puurunen 

@@ -23,7 +23,7 @@ import com.universe.exploration.ueui.components.UEWindow;
 import com.universe.exploration.ueui.data.DataAndValuePair;
 import com.universe.exploration.ueui.data.LeftSideHUD;
 import com.universe.exploration.ueui.data.PlanetSurvey;
-import com.universe.exploration.ui.skins.UEUiSkinBank;
+import com.universe.exploration.ueui.skins.UEUiSkinBank;
 import com.universe.exploration.view.PlanetGfxContainer;
 
 

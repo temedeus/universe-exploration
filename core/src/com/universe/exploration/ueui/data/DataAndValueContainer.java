@@ -5,7 +5,9 @@ import java.util.ArrayList;
 class DataAndValueContainer implements IDataAndValueContainer {
 
 	private ArrayList<DataAndValuePair> pairList;
-	Object auxiliaryDataContainer;
+	
+	protected Object auxiliaryDataContainer;
+	
 	/**
 	 * 
 	 */
@@ -25,14 +27,22 @@ class DataAndValueContainer implements IDataAndValueContainer {
 	 */
 	@Override
 	public void createPairs() {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
+	/**
+	 * Add value pair to list.
+	 * @param pair
+	 */
 	public void add(DataAndValuePair pair) {
 		pairList.add(pair);
 	}
-	
+
+	/**
+	 * Update label value according to predetermined ID.
+	 * @param id
+	 * @param newVal
+	 */
 	public void update(String id, String newVal) {
 		for(DataAndValuePair pair : pairList) {
 			if(pair.getId() == id) {
