@@ -11,7 +11,7 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  * @author 1.10.2015 Teemu Puurunen 
  *
  */
-public class PlanetSurvey extends TitleAndValueContainer {
+public class PlanetSurvey extends DataPairContainer {
 	public PlanetSurvey(PlanetCelestialComponent celestialComponent) {
 		super(celestialComponent);
 	}
@@ -24,9 +24,9 @@ public class PlanetSurvey extends TitleAndValueContainer {
 		// TODO: Abstract generating this data? Maybe create another table abstraction?
 		PlanetCelestialComponent cc = (PlanetCelestialComponent) auxiliaryDataContainer; 
 		
-		add(new TitleAndValuePair("", Localizer.get("DESC_PLANET_TYPE"), cc.getComponentName()));
-		add(new TitleAndValuePair("", Localizer.get("SUBHEADER_ORBITAL_RADIUS"), MathTools.roundedFloatAsStringDefault((float)cc.getOrbitalRadius())));
-		add(new TitleAndValuePair("", Localizer.get("SUBHEADER_PRESENT_LIFEFORMS"), Localizer.get(cc.getLifeforms().getLocalKey())));
+		add(new DataPair("", Localizer.get("DESC_PLANET_TYPE"), cc.getComponentName()));
+		add(new DataPair("", Localizer.get("SUBHEADER_ORBITAL_RADIUS"), MathTools.roundedFloatAsStringDefault((float)cc.getOrbitalRadius())));
+		add(new DataPair("", Localizer.get("SUBHEADER_PRESENT_LIFEFORMS"), Localizer.get(cc.getLifeforms().getLocalKey())));
 
 	}
 

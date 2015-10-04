@@ -20,7 +20,7 @@ import com.universe.exploration.player.PlayerStatusItemkeys;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
-import com.universe.exploration.ueui.data.TitleAndValuePair;
+import com.universe.exploration.ueui.data.DataPair;
 import com.universe.exploration.ueui.data.LeftSideHUD;
 import com.universe.exploration.ueui.data.PlanetSurvey;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
@@ -45,6 +45,7 @@ public class UIController {
 	public UIController() {
 		uiStage = new Stage(new ScreenViewport());
 		leftsidePlayerStatus = new LeftSideHUD();
+		leftsidePlayerStatus.createPairs();
 		
 		uiStage.addActor(createLeftHUD());
 		uiStage.addActor(createTopHUDTable());
@@ -81,7 +82,7 @@ public class UIController {
 	}
 	
 	private Table populateWithStatus(Table verticalGroup) {		
-		for(TitleAndValuePair playerStatus : leftsidePlayerStatus.getPairList()) {
+		for(DataPair playerStatus : leftsidePlayerStatus.getPairList()) {
 			verticalGroup.add(playerStatus.getLabel()).left();
 			verticalGroup.add(playerStatus.getValue()).left();
 			verticalGroup.row();
@@ -196,26 +197,24 @@ public class UIController {
 	public void showPlanetarySurveyWindow(PlanetGfxContainer pgfx) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 		
-		
-		BasicTable planetInformationTable = new BasicTable(Align.left | Align.top);
+		Table planetInformationTable = new Table();
 
 		PlanetSurvey planetSurveyLabels = new PlanetSurvey((PlanetCelestialComponent)pgfx.getCelestialBodyGfxModel().getStarSystemComponent());
+		planetSurveyLabels.createPairs();
 		
-		for(TitleAndValuePair planetLabel : planetSurveyLabels.getPairList()) {
-			planetInformationTable.add(planetLabel.getLabel());
-			planetInformationTable.column();
-			planetInformationTable.add(planetLabel.getValue());
+		for(DataPair planetLabel : planetSurveyLabels.getPairList()) {
+			planetInformationTable.add(planetLabel.getLabel()).left();
+			planetInformationTable.add(planetLabel.getValue()).left();
 			planetInformationTable.row();
 		}
 		
 		planetInformationTable.add(new Label("\n\n", UEUiSkinBank.ueUISkin));
-		planetInformationTable.column();
 		planetInformationTable.row();
 		
 		Image planet = new Image(pgfx.getSprite());
 
 		BasicTable planetSurveyTable = new BasicTable(Align.left | Align.top);
-		planetSurveyTable.add(planetInformationTable.getTable());
+		planetSurveyTable.add(planetInformationTable);
 		planetSurveyTable.column();
 		planetSurveyTable.add(planet);
 		planetSurveyTable.row();

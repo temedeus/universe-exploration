@@ -6,6 +6,7 @@ package com.universe.exploration.ueui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -74,7 +75,7 @@ public class WindowFactory {
 	 * @param pgfx
 	 * @return
 	 */
-	public BasicWindow createDescriptionWindow(String caption, BasicTable contentTable, ClickListener okAction) {
+	public <T extends Actor> BasicWindow createDescriptionWindow(String caption, T contentTable, ClickListener okAction) {
 	    final LargeWindow window = new LargeWindow(caption, windowStyle);
 		
 		Table buttontable = new Table();
@@ -90,7 +91,7 @@ public class WindowFactory {
 		buttontable.row();
 	    
 		Table table = new Table();
-		table.add(contentTable.getTable());
+		table.add(contentTable);
 		table.row();
 		table.add(buttontable);
 

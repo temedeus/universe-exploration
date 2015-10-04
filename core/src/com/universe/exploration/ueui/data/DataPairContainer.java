@@ -3,29 +3,27 @@ package com.universe.exploration.ueui.data;
 import java.util.ArrayList;
 
 /**
- * <p>Holds an <tt>ArrayList</tt> of {@link TitleAndValuePair}.</p> 
+ * <p>Holds an <tt>ArrayList</tt> of {@link DataPair}.</p> 
  * 
  * @author 4.10.2015 Teemu Puurunen 
  *
  */
-class TitleAndValueContainer implements ITitleAndValueContainer {
+class DataPairContainer implements IDataPairContainer {
 
-	private ArrayList<TitleAndValuePair> pairList;
+	private ArrayList<DataPair> pairList;
 	
 	protected Object auxiliaryDataContainer;
 	
 	/**
 	 * 
 	 */
-	public TitleAndValueContainer() {
-		pairList = new ArrayList<TitleAndValuePair>();
-		createPairs();
+	public DataPairContainer() {
+		pairList = new ArrayList<DataPair>();
 	}
 	
-	public TitleAndValueContainer(Object auxiliaryDataContainer) {
-		pairList = new ArrayList<TitleAndValuePair>();
+	public DataPairContainer(Object auxiliaryDataContainer) {
+		pairList = new ArrayList<DataPair>();
 		this.auxiliaryDataContainer = auxiliaryDataContainer;
-		createPairs();
 	}
 	
 	/* (non-Javadoc)
@@ -40,7 +38,7 @@ class TitleAndValueContainer implements ITitleAndValueContainer {
 	 * Add value pair to list.
 	 * @param pair
 	 */
-	public void add(TitleAndValuePair pair) {
+	public void add(DataPair pair) {
 		pairList.add(pair);
 	}
 
@@ -50,7 +48,7 @@ class TitleAndValueContainer implements ITitleAndValueContainer {
 	 * @param newVal
 	 */
 	public void update(String id, String newVal) {
-		for(TitleAndValuePair pair : pairList) {
+		for(DataPair pair : pairList) {
 			if(pair.getId() == id) {
 				pair.updateValue(newVal);
 			}
@@ -60,7 +58,7 @@ class TitleAndValueContainer implements ITitleAndValueContainer {
 	/**
 	 * @return
 	 */
-	public ArrayList<TitleAndValuePair> getPairList() {
+	public ArrayList<DataPair> getPairList() {
 		return pairList;
 	}
 	

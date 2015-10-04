@@ -1,26 +1,44 @@
 package com.universe.exploration.ueui.data;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
+
 import common.universe.exploration.common.Lifeforms;
 
 
 public class PlanetSurveyTest {
 
 	@Test
-	public void testPlanetSurveyProvidesProperPairs() throws Exception {
-		PlanetCelestialComponent cc = new PlanetCelestialComponent();
+	public void testDataPairContainerDoesNotCorruptData() throws Exception {
+		String[][] captionValuaPairTable = {
+				new String[] {"Orange: ", "orange"},
+				new String[] {"Apple: ", "red"},
+				new String[] {"Banana: ", "yellow"}
+		};
 		
-		cc.setLifeforms(Lifeforms.ANIMAL);
-		cc.setComponentName("test");
-		cc.setOrbitalRadius(22);
-		
-		PlanetSurvey ps = new PlanetSurvey(cc);
-		for(TitleAndValuePair pair : ps.getPairList()) {
-			System.out.println(pair.getLabel().getText() + " / " + pair.getValue().getText());
+		DataPairContainer ps = new DataPairContainer();
+
+		for(String[] pair : captionValuaPairTable) {
+			ps.add(new TestDataPair("id_" + pair[0].toLowerCase(), pair[0], pair[1]));
 		}
 		
-	}
+		int x=0;
 
+		for(DataPair pair : ps.getPairList()) {
+			String title = ((TestDataPair)pair).getLabelToString();
+			String value =((TestDataPair)pair).getValueToString();
+			
+			try {
+				Assert.assertTrue(title == captionValuaPairTable[x][0] && value == captionValuaPairTable[x][1]);
+				System.out.println(title  + " <SEPARATOR> " + value);
+			} catch(AssertionError e) {
+				System.out.println("Container has corrupt data!");
+				throw e;
+			}
+			
+			x++;
+		}
+	}
 }
