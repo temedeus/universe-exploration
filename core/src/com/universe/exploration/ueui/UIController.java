@@ -18,9 +18,9 @@ import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.PlayerStatusItemkeys;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-import com.universe.exploration.ueui.components.UETable;
-import com.universe.exploration.ueui.components.UEWindow;
-import com.universe.exploration.ueui.data.DataAndValuePair;
+import com.universe.exploration.ueui.components.BasicTable;
+import com.universe.exploration.ueui.components.BasicWindow;
+import com.universe.exploration.ueui.data.TitleAndValuePair;
 import com.universe.exploration.ueui.data.LeftSideHUD;
 import com.universe.exploration.ueui.data.PlanetSurvey;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
@@ -81,7 +81,7 @@ public class UIController {
 	}
 	
 	private Table populateWithStatus(Table verticalGroup) {		
-		for(DataAndValuePair playerStatus : leftsidePlayerStatus.getPairList()) {
+		for(TitleAndValuePair playerStatus : leftsidePlayerStatus.getPairList()) {
 			verticalGroup.add(playerStatus.getLabel()).left();
 			verticalGroup.add(playerStatus.getValue()).left();
 			verticalGroup.row();
@@ -127,7 +127,7 @@ public class UIController {
 	 * @return
 	 */
 	public TextButton createHyperspaceJumpButton() {
-		UEButtonFactory bf = new UEButtonFactory(UEUiSkinBank.ueUISkin);
+		ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
 		
 		return bf.createTextButton(Localizer.get("BTN_HYPERSPACE_JUMP"), new ClickListener(){
 			@Override
@@ -149,9 +149,9 @@ public class UIController {
 	}
 	
 	public void showGameOverWindow(ClickListener tryAgainAction) {
-		final UEWindowFactory wf = new UEWindowFactory(UEUiSkinBank.ueUISkin);
-		UETable gameoverData = new UETable(Align.left | Align.top);
-		UEWindow gameOverWindow = wf.createDescriptionWindow(Localizer.get("TITLE_GAME_OVER"), gameoverData, 
+		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
+		BasicTable gameoverData = new BasicTable(Align.left | Align.top);
+		BasicWindow gameOverWindow = wf.createDescriptionWindow(Localizer.get("TITLE_GAME_OVER"), gameoverData, 
 				Localizer.get("BTN_TRY_AGAIN"),
 				Localizer.get("BTN_QUIT_GAME"), 
 				tryAgainAction, 
@@ -170,8 +170,8 @@ public class UIController {
 	 * @return
 	 */
 	public TextButton createQuitButton() {
-		UEButtonFactory bf = new UEButtonFactory(UEUiSkinBank.ueUISkin);
-		final UEWindowFactory wf = new UEWindowFactory(UEUiSkinBank.ueUISkin);
+		ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
+		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 		
 		return bf.createTextButton(Localizer.get("BTN_QUIT_GAME"), new ClickListener(){
 			@Override
@@ -194,14 +194,14 @@ public class UIController {
 	 * @param pgfx
 	 */
 	public void showPlanetarySurveyWindow(PlanetGfxContainer pgfx) {
-		final UEWindowFactory wf = new UEWindowFactory(UEUiSkinBank.ueUISkin);
+		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 		
 		
-		UETable planetInformationTable = new UETable(Align.left | Align.top);
+		BasicTable planetInformationTable = new BasicTable(Align.left | Align.top);
 
 		PlanetSurvey planetSurveyLabels = new PlanetSurvey((PlanetCelestialComponent)pgfx.getCelestialBodyGfxModel().getStarSystemComponent());
 		
-		for(DataAndValuePair planetLabel : planetSurveyLabels.getPairList()) {
+		for(TitleAndValuePair planetLabel : planetSurveyLabels.getPairList()) {
 			planetInformationTable.add(planetLabel.getLabel());
 			planetInformationTable.column();
 			planetInformationTable.add(planetLabel.getValue());
@@ -214,7 +214,7 @@ public class UIController {
 		
 		Image planet = new Image(pgfx.getSprite());
 
-		UETable planetSurveyTable = new UETable(Align.left | Align.top);
+		BasicTable planetSurveyTable = new BasicTable(Align.left | Align.top);
 		planetSurveyTable.add(planetInformationTable.getTable());
 		planetSurveyTable.column();
 		planetSurveyTable.add(planet);

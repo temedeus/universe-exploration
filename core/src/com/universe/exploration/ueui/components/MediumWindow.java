@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  * @author 20.9.2015 Teemu Puurunen 
  *
  */
-public class MediumWindow extends UEWindow {
+public class MediumWindow extends BasicWindow {
 	/**
 	 * @param title
 	 * @param skin

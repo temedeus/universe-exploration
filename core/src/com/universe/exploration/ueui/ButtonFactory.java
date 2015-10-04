@@ -11,13 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  * @author 25.8.2015 Teemu Puurunen 
  *
  */
-public class UEButtonFactory {
+public class ButtonFactory {
 	Skin uiSkin;
 	
 	/**
 	 * @author teemu.puurunen
 	 */
-	public UEButtonFactory(Skin uiSkin) {
+	public ButtonFactory(Skin uiSkin) {
 		this.uiSkin = uiSkin;
 	}
 	

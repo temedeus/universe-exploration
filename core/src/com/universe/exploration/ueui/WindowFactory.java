@@ -15,24 +15,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.ueui.components.LargeWindow;
 import com.universe.exploration.ueui.components.SmallWindow;
-import com.universe.exploration.ueui.components.UETable;
-import com.universe.exploration.ueui.components.UEWindow;
+import com.universe.exploration.ueui.components.BasicTable;
+import com.universe.exploration.ueui.components.BasicWindow;
 
 /**
- * A lot of these windows are not very abstract by nature. This game probably never requires
+ * <p>A lot of these windows are not very abstract by nature. This game probably never requires
  * any advanced functionality so we'll make do with what we have now. If game complexity
- * increases significantly, let's work on abstraction levels then.
+ * increases significantly, let's work on abstraction levels then.</p>
  * 
  * @author 25.8.2015 Teemu Puurunen 
  */
-public class UEWindowFactory {
+public class WindowFactory {
 	Skin skin;
 	WindowStyle windowStyle;
-	UEButtonFactory bf;
-	public UEWindowFactory(Skin skin) {
+	ButtonFactory bf;
+	public WindowFactory(Skin skin) {
 		this.skin = skin;
 		windowStyle = new WindowStyle(new BitmapFont(), Color.WHITE, skin.newDrawable("white", Color.BLACK));
-		bf = new UEButtonFactory(skin);
+		bf = new ButtonFactory(skin);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class UEWindowFactory {
 	 * @param okAction
 	 * @return UEWindow
 	 */
-	public UEWindow createOkWindow(String caption, ClickListener okAction) {
+	public BasicWindow createOkWindow(String caption, ClickListener okAction) {
 	    final SmallWindow window = new SmallWindow(caption, windowStyle);
 
 	    window.add(bf.createTextButton(Localizer.get("BTN_OK"), okAction));
@@ -74,7 +74,7 @@ public class UEWindowFactory {
 	 * @param pgfx
 	 * @return
 	 */
-	public UEWindow createDescriptionWindow(String caption, UETable contentTable, ClickListener okAction) {
+	public BasicWindow createDescriptionWindow(String caption, BasicTable contentTable, ClickListener okAction) {
 	    final LargeWindow window = new LargeWindow(caption, windowStyle);
 		
 		Table buttontable = new Table();
@@ -104,7 +104,7 @@ public class UEWindowFactory {
 	 * @param pgfx
 	 * @return
 	 */
-	public UEWindow createDescriptionWindow(String caption, UETable contentTable, String okButtonTitle, String secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
+	public BasicWindow createDescriptionWindow(String caption, BasicTable contentTable, String okButtonTitle, String secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
 	    final LargeWindow window = new LargeWindow(caption, windowStyle);
 		
 		Table buttontable = new Table();

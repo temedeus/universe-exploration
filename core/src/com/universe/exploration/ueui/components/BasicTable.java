@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
  * TODO: If only one widgetgroup added, don't create new table for that single cell.
  *
  */
-public class UETable {
+public class BasicTable {
 	/**
 	 * Generic table for containing data.
 	 */
@@ -27,7 +27,7 @@ public class UETable {
 	/**
 	 * 
 	 */
-	public UETable(int align) {
+	public BasicTable(int align) {
 		table = new Table();
 		tempCellTable = new Table();
 		table.align(align);

@@ -7,10 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
 
 /**
+ * <p>Paired up with {@link TitleAndValueContainer} based classes it makes up an easy way
+ * to show data on screen using two labels showing title and value. Value can easily be assigned to different 
+ * styles.</p>
  * @author 1.10.2015 Teemu Puurunen 
  *
  */
-public class DataAndValuePair {
+public class TitleAndValuePair implements ITitleAndValuePair {
 	/**
 	 * Use this ID to identify HUD item
 	 */
@@ -33,7 +36,7 @@ public class DataAndValuePair {
 	 * @param value
 	 * @param skin
 	 */
-	public DataAndValuePair(String id, String label, String value) {
+	public TitleAndValuePair(String id, String label, String value) {
 		this.id = id;
 		this.label = new Label(label, UEUiSkinBank.ueUISkin);
 		this.value = new Label(value, UEUiSkinBank.ueUISkin);

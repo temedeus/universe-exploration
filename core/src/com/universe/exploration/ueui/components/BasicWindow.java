@@ -11,12 +11,12 @@ import com.universe.exploration.GdxHelper;
  * @author 20.9.2015 Teemu Puurunen 
  *
  */
-public class UEWindow extends Window implements IUEWindow {
+public class BasicWindow extends Window implements IBasicWindow {
 	/**
 	 * @param title
 	 * @param skin
 	 */
-	public UEWindow(String title, Skin skin) {
+	public BasicWindow(String title, Skin skin) {
 		super(title, skin);
 		setDefault();
 	}
@@ -26,7 +26,7 @@ public class UEWindow extends Window implements IUEWindow {
 	 * @param skin
 	 * @param styleName
 	 */
-	public UEWindow(String title, Skin skin, String styleName) {
+	public BasicWindow(String title, Skin skin, String styleName) {
 		super(title, skin, styleName);
 		setDefault();
 	}
@@ -35,7 +35,7 @@ public class UEWindow extends Window implements IUEWindow {
 	 * @param title
 	 * @param style
 	 */
-	public UEWindow(String title, WindowStyle style) {
+	public BasicWindow(String title, WindowStyle style) {
 		super(title, style);
 		setDefault();
 	}

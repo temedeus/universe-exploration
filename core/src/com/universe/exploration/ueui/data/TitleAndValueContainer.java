@@ -2,22 +2,28 @@ package com.universe.exploration.ueui.data;
 
 import java.util.ArrayList;
 
-class DataAndValueContainer implements IDataAndValueContainer {
+/**
+ * <p>Holds an <tt>ArrayList</tt> of {@link TitleAndValuePair}.</p> 
+ * 
+ * @author 4.10.2015 Teemu Puurunen 
+ *
+ */
+class TitleAndValueContainer implements ITitleAndValueContainer {
 
-	private ArrayList<DataAndValuePair> pairList;
+	private ArrayList<TitleAndValuePair> pairList;
 	
 	protected Object auxiliaryDataContainer;
 	
 	/**
 	 * 
 	 */
-	public DataAndValueContainer() {
-		pairList = new ArrayList<DataAndValuePair>();
+	public TitleAndValueContainer() {
+		pairList = new ArrayList<TitleAndValuePair>();
 		createPairs();
 	}
 	
-	public DataAndValueContainer(Object auxiliaryDataContainer) {
-		pairList = new ArrayList<DataAndValuePair>();
+	public TitleAndValueContainer(Object auxiliaryDataContainer) {
+		pairList = new ArrayList<TitleAndValuePair>();
 		this.auxiliaryDataContainer = auxiliaryDataContainer;
 		createPairs();
 	}
@@ -34,7 +40,7 @@ class DataAndValueContainer implements IDataAndValueContainer {
 	 * Add value pair to list.
 	 * @param pair
 	 */
-	public void add(DataAndValuePair pair) {
+	public void add(TitleAndValuePair pair) {
 		pairList.add(pair);
 	}
 
@@ -44,7 +50,7 @@ class DataAndValueContainer implements IDataAndValueContainer {
 	 * @param newVal
 	 */
 	public void update(String id, String newVal) {
-		for(DataAndValuePair pair : pairList) {
+		for(TitleAndValuePair pair : pairList) {
 			if(pair.getId() == id) {
 				pair.updateValue(newVal);
 			}
@@ -54,7 +60,7 @@ class DataAndValueContainer implements IDataAndValueContainer {
 	/**
 	 * @return
 	 */
-	public ArrayList<DataAndValuePair> getPairList() {
+	public ArrayList<TitleAndValuePair> getPairList() {
 		return pairList;
 	}
 	

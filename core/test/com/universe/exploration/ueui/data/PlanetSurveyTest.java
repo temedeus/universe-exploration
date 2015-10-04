@@ -17,7 +17,7 @@ public class PlanetSurveyTest {
 		cc.setOrbitalRadius(22);
 		
 		PlanetSurvey ps = new PlanetSurvey(cc);
-		for(DataAndValuePair pair : ps.getPairList()) {
+		for(TitleAndValuePair pair : ps.getPairList()) {
 			System.out.println(pair.getLabel().getText() + " / " + pair.getValue().getText());
 		}
 		
