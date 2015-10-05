@@ -42,7 +42,7 @@ public class RandomizationTools {
 	 * @param string[][] array of values and weights e.g ({{"apple", "3"},{"banana", "6"}})
 	 * @return string
 	 */
-	public static final String getStringFromWeightedRandomArray(String[][]sourceForRandomization) {
+	public static final String getRandomStringFromWeightedArray(String[][]sourceForRandomization) {
 
 		// Compute the total weight of all items together
 		double tw = 0.0d;

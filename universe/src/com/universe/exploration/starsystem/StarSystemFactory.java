@@ -7,6 +7,7 @@ import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.starsystem.components.*;
+import common.universe.exploration.common.Lifeforms;
 
 /**
  * 
@@ -51,7 +52,7 @@ public class StarSystemFactory {
 		
 		populateWithPlanets(planetCount);
 		
-		String tmpStarType = RandomizationTools.getStringFromWeightedRandomArray(uConf.getStartypeListing());
+		String tmpStarType = RandomizationTools.getRandomStringFromWeightedArray(uConf.getStartypeListing());
 
 		StarCelestialComponent systemstar = new StarCelestialComponent();
 		systemstar.setGraphicsFile(CelestialComponentTypes.valueOf(tmpStarType).getComponentType().getRandomGraphicsFile());
@@ -65,48 +66,79 @@ public class StarSystemFactory {
 	 * @param planetCount
 	 */
 	private void populateWithPlanets(int planetCount) {
-		double planetarySpace = 
-				(IngameAstronomicalConstants.MAX_ORBITAL_RADIUS.getValue() - 
-				IngameAstronomicalConstants.MIN_ORBITAL_RADIUS.getValue()) / 
-				(planetCount);
-		
+		double planetarySpace = MathTools.calculatePlaneterySpace(planetCount);
+				
 		double previousOrbitalRadious = 0;
 		
 		// Generate required number of planets.
 		for(int x = 0; x < planetCount; x++) {
+			// Container for our planet data.
 			PlanetCelestialComponent planet = new PlanetCelestialComponent();
 			
-			// Generate all the new values
-			String tmpPlanetType = RandomizationTools.getStringFromWeightedRandomArray(uConf.getPlanettypeListing());
-			double planetOrbitalVelocity = RandomizationTools.getRandomDouble(IngameAstronomicalConstants.MIN_ORBITAL_VELOCITY.getValue(), IngameAstronomicalConstants.MAX_ORBITAL_VELOCITY.getValue());
-			
-			double minOrbitalRadius = x * planetarySpace + IngameAstronomicalConstants.MIN_ORBITAL_RADIUS.getValue();
-			double maxOrbitalRadius = minOrbitalRadius + planetarySpace;
-
-			minOrbitalRadius = verifyDistance(minOrbitalRadius, previousOrbitalRadious);
-			
-			double orbitalRadius = RandomizationTools.getRandomDouble(minOrbitalRadius, maxOrbitalRadius);
-			previousOrbitalRadious = orbitalRadius;
-			
-			double angle = RandomizationTools.getRandomDouble(0, 360);
-			
-			//System.out.println("Min o.rad=" + minOrbitalRadius + " / max o.rad =" + maxOrbitalRadius + " / cur o.rad=" + orbitalRadius);
-			// Set values
+			// Setup planet component ready.
+			String tmpPlanetType = RandomizationTools.getRandomStringFromWeightedArray(uConf.getPlanettypeListing());
 			PlanetComponent cc = (PlanetComponent)CelestialComponentTypes.valueOf(tmpPlanetType).getComponentType();
 			
-			planet.setOxygenFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen()));
-			planet.setWaterFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractWater()));
-			planet.setLifeforms(cc.randomizePlanetLife(planet.isWaterFound()));
-			planet.setGraphicsFile(cc.getRandomGraphicsFile());
-			planet.setOrbitalVelocity(planetOrbitalVelocity);
-			planet.setOrbitalRadius(orbitalRadius);
-			planet.setAngle(angle);
-			planet.setSpriteSize(cc.getRandomSpriteSize());
-			planet.setComponentName(cc.getComponentName());
+			// Generate all the new values
+			planet = calculatePlanetOrbitalData(planet, cc, planetarySpace, previousOrbitalRadious, x);
+			planet = calculatePlanetHabitability(planet, cc);
+			planet = setupPlanetBasicInfo(planet, cc);
+			
+			// Store old orbital radius value so we do not create orbits that cross with previous ones.
+			previousOrbitalRadious = planet.getOrbitalRadius();
 			
 			// Add planet
-			this.starsystem.addPlanet(planet);
+			starsystem.addPlanet(planet);
 		}
+	}
+	
+	private PlanetCelestialComponent calculatePlanetOrbitalData(PlanetCelestialComponent planet, PlanetComponent cc, double planetarySpace, double previousOrbitalRadious, int x) {
+		double planetOrbitalVelocity = RandomizationTools.getRandomDouble(IngameAstronomicalConstants.MIN_ORBITAL_VELOCITY.getValue(), IngameAstronomicalConstants.MAX_ORBITAL_VELOCITY.getValue());
+		
+		double minOrbitalRadius = x * planetarySpace + IngameAstronomicalConstants.MIN_ORBITAL_RADIUS.getValue();
+		double maxOrbitalRadius = minOrbitalRadius + planetarySpace;
+		minOrbitalRadius = verifyDistance(minOrbitalRadius, previousOrbitalRadious);
+		
+		
+		double orbitalRadius = RandomizationTools.getRandomDouble(minOrbitalRadius, maxOrbitalRadius);
+		double angle = MathTools.generateRandomAngle();
+		
+		planet.setOrbitalVelocity(planetOrbitalVelocity);
+		planet.setOrbitalRadius(orbitalRadius);
+		planet.setAngle(angle);
+		
+		return planet;
+	}
+	
+	private PlanetCelestialComponent calculatePlanetHabitability(PlanetCelestialComponent planet, PlanetComponent cc) {
+		planet.setOxygenFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen()));
+		planet.setWaterFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractWater()));
+		planet.setLifeforms(cc.randomizePlanetLife(planet.isWaterFound() && planet.isOxygenFound()));
+		planet = calculateFoodPresence(planet);
+		
+		return planet;
+	}
+	
+	private PlanetCelestialComponent calculateFoodPresence(PlanetCelestialComponent planet) {
+		if(planet.getLifeforms().getRank() >= Lifeforms.VEGETATION.getRank()) {
+			planet.setFoodFound(true);
+		}
+		
+		return planet;
+	}
+	
+	/**
+	 * Sprite configuration and component related data.
+	 * 
+	 * @param planet
+	 * @return
+	 */
+	private PlanetCelestialComponent setupPlanetBasicInfo(PlanetCelestialComponent planet, PlanetComponent cc) {
+		planet.setGraphicsFile(cc.getRandomGraphicsFile());
+		planet.setSpriteSize(cc.getRandomSpriteSize());
+		planet.setComponentName(cc.getComponentName());
+		
+		return planet;
 	}
 	
 	/**

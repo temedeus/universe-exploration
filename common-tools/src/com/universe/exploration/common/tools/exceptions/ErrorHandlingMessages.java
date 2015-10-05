@@ -19,7 +19,6 @@ public enum ErrorHandlingMessages {
 		return errorMessage;
 	}
 
-
 	private final int errorCode;
 	private final String errorMessage;
 	

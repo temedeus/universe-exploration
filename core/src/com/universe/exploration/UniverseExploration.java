@@ -152,6 +152,13 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 					uiController.showPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad());
 				};
 			});
+			
+			uiController.setPlanetSurveyListener(new UEListener() {
+				@Override
+				public void handleEventClassEvent(UEEvent e) {
+					// SHOW PLANET SURVEYED MESSAGE
+				};
+			});
 		} catch(PlanetCountOutOfRangeException e) {
 			return false;
 		} 

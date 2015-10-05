@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -37,6 +36,8 @@ public class UIController {
 	private Stage uiStage;
 	
 	private UEListener hyperspaceJumpListener;
+	
+	private UEListener planetSurveyListener;
 	
 	private boolean gameStatusPaused = false;
 	
@@ -182,14 +183,6 @@ public class UIController {
 		});
 	}
 
-	
-	/**
-	 * @return the hyperspaceJumpListener
-	 */
-	public UEListener getHyperspaceJumpListener() {
-		return hyperspaceJumpListener;
-	}
-
 	/**
 	 * Planetary survey window. 
 	 * @param pgfx
@@ -201,7 +194,7 @@ public class UIController {
 
 		PlanetSurvey planetSurveyLabels = new PlanetSurvey((PlanetCelestialComponent)pgfx.getCelestialBodyGfxModel().getStarSystemComponent());
 		planetSurveyLabels.createPairs();
-		
+	
 		for(DataPair planetLabel : planetSurveyLabels.getPairList()) {
 			planetInformationTable.add(planetLabel.getLabel()).left();
 			planetInformationTable.add(planetLabel.getValue()).left();
@@ -211,26 +204,11 @@ public class UIController {
 		planetInformationTable.add(new Label("\n\n", UEUiSkinBank.ueUISkin));
 		planetInformationTable.row();
 		
-		Image planet = new Image(pgfx.getSprite());
-
-		BasicTable planetSurveyTable = new BasicTable(Align.left | Align.top);
-		planetSurveyTable.add(planetInformationTable);
-		planetSurveyTable.column();
-		planetSurveyTable.add(planet);
-		planetSurveyTable.row();
-		
 		uiStage.addActor(wf.createDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
 	    	}
 	    }));
-	}
-	
-	/**
-	 * @param hyperspaceJumpListener the hyperspaceJumpListener to set
-	 */
-	public void setHyperspaceJumpListener(UEListener hyperspaceJumpListener) {
-		this.hyperspaceJumpListener = hyperspaceJumpListener;
 	}
 
 	/**
@@ -262,5 +240,33 @@ public class UIController {
 	 */
 	public void setGameStatusPaused(boolean gameStatusPaused) {
 		this.gameStatusPaused = gameStatusPaused;
+	}
+	
+	/**
+	 * @return the hyperspaceJumpListener
+	 */
+	public UEListener getHyperspaceJumpListener() {
+		return hyperspaceJumpListener;
+	}
+	
+	/**
+	 * @param hyperspaceJumpListener the hyperspaceJumpListener to set
+	 */
+	public void setHyperspaceJumpListener(UEListener hyperspaceJumpListener) {
+		this.hyperspaceJumpListener = hyperspaceJumpListener;
+	}
+
+	/**
+	 * @return the planetSurveyListener
+	 */
+	public UEListener getPlanetSurveyListener() {
+		return planetSurveyListener;
+	}
+
+	/**
+	 * @param planetSurveyListener the planetSurveyListener to set
+	 */
+	public void setPlanetSurveyListener(UEListener planetSurveyListener) {
+		this.planetSurveyListener = planetSurveyListener;
 	}
 }

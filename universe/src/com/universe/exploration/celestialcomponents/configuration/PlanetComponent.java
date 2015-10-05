@@ -28,11 +28,11 @@ public class PlanetComponent extends ComponentType {
 	
 	/**
 	 * In order to have any life at all, planet needs to contain water.
-	 * @param waterFound
+	 * @param necessitiesMet
 	 * @return
 	 */
-	public Lifeforms randomizePlanetLife(boolean waterFound) {
-		if(waterFound) {
+	public Lifeforms randomizePlanetLife(boolean necessitiesMet) {
+		if(necessitiesMet) {
 			if(MathTools.calculateIfOddsHit(getChanceCivilization())) {
 				return Lifeforms.CIVILIZED;
 			}

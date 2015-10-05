@@ -69,7 +69,41 @@ public class WindowFactory {
 	    
 	    return window; 
 	}
-
+	
+	/**
+	 * Creates a description window.
+	 * @param pgfx
+	 * @return
+	 */
+	public <T extends Actor> BasicWindow createMessageWindow(String caption, T contentTable, ClickListener okAction) {
+	    final SmallWindow window = new SmallWindow(caption, windowStyle);
+		
+		Table buttontable = new Table();
+		buttontable.add(bf.createTextButton(Localizer.get("BTN_SURVEY"), okAction));
+		
+		buttontable.add(bf.createTextButton(Localizer.get("BTN_CANCEL"), new ClickListener() {
+	    	@Override
+	    	public void clicked(InputEvent event, float x, float y) {
+	    		window.remove();
+	    	}
+	    }));
+		
+		buttontable.row();
+	   
+	    window.add(combineDataAndButtonbar((Table)contentTable, buttontable));
+	    
+	    return window; 
+	}
+	
+	private Table combineDataAndButtonbar(Table contentTable, Table buttontable) {
+		Table table = new Table();
+		table.add(contentTable);
+		table.row();
+		table.add(buttontable);
+		
+		return table;
+	}
+	
 	/**
 	 * Creates a description window.
 	 * @param pgfx
@@ -89,13 +123,8 @@ public class WindowFactory {
 	    }));
 		
 		buttontable.row();
-	    
-		Table table = new Table();
-		table.add(contentTable);
-		table.row();
-		table.add(buttontable);
 
-	    window.add(table);
+		window.add(combineDataAndButtonbar((Table)contentTable, buttontable));
 	    
 	    return window; 
 	}

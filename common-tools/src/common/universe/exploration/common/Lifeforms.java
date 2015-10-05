@@ -8,14 +8,15 @@ package common.universe.exploration.common;
  *
  */
 public enum Lifeforms {
-	CIVILIZED("TITLE_LIFEFORMS_CIVILIZED"),
-	ANIMAL("TITLE_LIFEFORMS_ANIMAL"),
-	VEGETATION("TITLE_LIFEFORMS_VEGETATION"),
-	BACTERIAL("TITLE_LIFEFORMS_BACTERIAL"),
-	NONE("TITLE_LIFEFORMS_NONE");
+	CIVILIZED("TITLE_LIFEFORMS_CIVILIZED", 4),
+	ANIMAL("TITLE_LIFEFORMS_ANIMAL", 3),
+	VEGETATION("TITLE_LIFEFORMS_VEGETATION", 2),
+	BACTERIAL("TITLE_LIFEFORMS_BACTERIAL", 1),
+	NONE("TITLE_LIFEFORMS_NONE", 0);
 	
 	private final String localKey;
 	
+	private final int rank;
 	/**
 	 * @return the localKey
 	 */
@@ -23,7 +24,15 @@ public enum Lifeforms {
 		return localKey;
 	}
 
-	Lifeforms(String localKey) {
+	Lifeforms(String localKey, int rank) {
 		this.localKey = localKey;
+		this.rank = rank;
+	}
+
+	/**
+	 * @return the rank
+	 */
+	public int getRank() {
+		return rank;
 	}
 }

@@ -81,4 +81,14 @@ public class MathTools {
 		DecimalFormat df = new DecimalFormat("#.#####");
 		return df.format(f);
 	}
+	
+	public static double generateRandomAngle() {
+		return RandomizationTools.getRandomDouble(0, 360);
+	}
+	
+	public static double calculatePlaneterySpace(int planetCount) {
+		return (IngameAstronomicalConstants.MAX_ORBITAL_RADIUS.getValue() - 
+				IngameAstronomicalConstants.MIN_ORBITAL_RADIUS.getValue()) / 
+				(planetCount);
+	}
 }
