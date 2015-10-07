@@ -18,6 +18,7 @@ import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.ueui.UIController;
+import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
 
@@ -82,6 +83,13 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				}
 			};
 		});
+		
+		uiController.setPlanetSurveyListener(new UEListener() {
+			@Override
+			public void handleEventClassEvent(UEEvent e) {
+				// SHOW PLANET SURVEYED MESSAGE
+			};
+		});
 	}
 	
 	private void pauseGame(boolean pause) {
@@ -104,7 +112,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		
 		if(playerStatus.getCrewmen() == 0 && !gameStatusPaused) {
 			pauseGame(true);
-			uiController.showGameOverWindow(new ClickListener() {
+			BasicWindow gameOverWindow = uiController.createGameOverWindow(new ClickListener() {
 		    	@Override
 		    	public void clicked(InputEvent event, float x, float y) {
 		    		stageSetup();
@@ -112,6 +120,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    		pauseGame(false);
 		    	}
 		    });
+			
+			uiController.show(gameOverWindow);
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
@@ -149,14 +159,14 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			canvas.setPlanetClickListener(new UEListener() {
 				@Override
 				public void handleEventClassEvent(UEEvent e) {
-					uiController.showPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad());
-				};
-			});
-			
-			uiController.setPlanetSurveyListener(new UEListener() {
-				@Override
-				public void handleEventClassEvent(UEEvent e) {
-					// SHOW PLANET SURVEYED MESSAGE
+					BasicWindow surveyWindow = uiController.createPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad(),
+					new ClickListener() {
+				    	@Override
+				    	public void clicked(InputEvent event, float x, float y) {
+				    		stageSetup();
+				    	}
+				    });
+					uiController.show(surveyWindow);
 				};
 			});
 		} catch(PlanetCountOutOfRangeException e) {

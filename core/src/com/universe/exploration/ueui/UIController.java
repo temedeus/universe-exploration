@@ -1,6 +1,7 @@
 package com.universe.exploration.ueui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -150,7 +151,7 @@ public class UIController {
 		});
 	}
 	
-	public void showGameOverWindow(ClickListener tryAgainAction) {
+	public BasicWindow createGameOverWindow(ClickListener tryAgainAction) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 		BasicTable gameoverData = new BasicTable(Align.left | Align.top);
 		BasicWindow gameOverWindow = wf.createDescriptionWindow(Localizer.get("TITLE_GAME_OVER"), gameoverData, 
@@ -164,7 +165,12 @@ public class UIController {
 			    	}
 			    });
 	
-		uiStage.addActor(gameOverWindow);
+		return gameOverWindow;
+	}
+	
+	
+	public <T extends Actor> void show(T actor) {
+		uiStage.addActor(actor);
 	}
 	
 	/**
@@ -187,7 +193,7 @@ public class UIController {
 	 * Planetary survey window. 
 	 * @param pgfx
 	 */
-	public void showPlanetarySurveyWindow(PlanetGfxContainer pgfx) {
+	public BasicWindow createPlanetarySurveyWindow(PlanetGfxContainer pgfx, ClickListener okAction) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 		
 		Table planetInformationTable = new Table();
@@ -204,11 +210,7 @@ public class UIController {
 		planetInformationTable.add(new Label("\n\n", UEUiSkinBank.ueUISkin));
 		planetInformationTable.row();
 		
-		uiStage.addActor(wf.createDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, new ClickListener() {
-	    	@Override
-	    	public void clicked(InputEvent event, float x, float y) {
-	    	}
-	    }));
+		return wf.createDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, okAction);
 	}
 
 	/**
