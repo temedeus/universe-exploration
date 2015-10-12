@@ -22,7 +22,19 @@ public class WindowContainer {
 		windowmap.put(key, window);
 	}
 	
-	public boolean remove(String key) {
-		return (windowmap.remove((String)key) != null) ? true: false;
+	/**
+	 * Closes window based on given key.
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public boolean closeWindow(String key) {
+		BasicWindow window = windowmap.get(key);
+		if(window != null) {
+			window.remove();
+			return (windowmap.remove((String)key) != null) ? true: false;
+		} else {
+			return true;
+		}
 	}
 }

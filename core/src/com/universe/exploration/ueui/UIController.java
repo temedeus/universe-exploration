@@ -43,6 +43,8 @@ public class UIController {
 	private boolean gameStatusPaused = false;
 	
 	private LeftSideHUD leftsidePlayerStatus;
+	
+	private boolean isHyperspaceJumpAllowed = true;
 
 	public UIController() {
 		uiStage = new Stage(new ScreenViewport());
@@ -68,6 +70,11 @@ public class UIController {
 	 */
 	public void updateUI(PlayerStatus ps) {
 		updatePlayerStatusToUI(ps);
+		
+		if((int)ps.getPower() == 0) {
+			isHyperspaceJumpAllowed = false;
+		}
+		
 		uiStage.act(Gdx.graphics.getDeltaTime());
 		uiStage.draw();
 	}
@@ -135,7 +142,7 @@ public class UIController {
 		return bf.createTextButton(Localizer.get("BTN_HYPERSPACE_JUMP"), new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(!gameStatusPaused) {
+				if(!gameStatusPaused && isHyperspaceJumpAllowed) {
 					final Dialog dialog = new Dialog(Localizer.get("DESC_HYPERSPACE_JUMP"),UEUiSkinBank.ueUISkin);
 					dialog.setSize(200, 100);
 					dialog.show(uiStage);
@@ -213,6 +220,26 @@ public class UIController {
 		return wf.createDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, okAction);
 	}
 
+		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
+		public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, ClickListener okAction) {
+		
+		Table planetInformationTable = new Table();
+
+		PlanetSurvey planetSurveyLabels = new PlanetSurvey((PlanetCelestialComponent)pgfx.getCelestialBodyGfxModel().getStarSystemComponent());
+		planetSurveyLabels.createPairs();
+	
+		for(DataPair planetLabel : planetSurveyLabels.getPairList()) {
+			planetInformationTable.add(planetLabel.getLabel()).left();
+			planetInformationTable.add(planetLabel.getValue()).left();
+			planetInformationTable.row();
+		}
+		
+		planetInformationTable.add(new Label("\n\n", UEUiSkinBank.ueUISkin));
+		planetInformationTable.row();
+		
+		return wf.createOkWindow(Localizer.get("TITLE_SURVEYED_PLANET"), okAction);
+	}
+	
 	/**
 	 * Perform int cast to ensure sensible values. (Do not cast until here so that we
 	 * don't lose accuracy apart from what we do using float.)

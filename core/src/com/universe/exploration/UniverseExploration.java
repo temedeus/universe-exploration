@@ -13,11 +13,13 @@ import com.universe.exploration.camera.SpaceshipMonitor;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
+import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.ueui.UIController;
+import com.universe.exploration.ueui.WindowContainer;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
@@ -49,6 +51,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	private PlayerStatus playerStatus;
 	
 	private boolean gameStatusPaused = false;
+	
+	private WindowContainer windowContainer;
 
 	@SuppressWarnings("unused")
 	private Stage uiStage;
@@ -57,13 +61,17 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
-		uiStage = new Stage(new ScreenViewport());
-		playerStatus = new PlayerStatus();
-		playerMonitor = new SpaceshipMonitor();
-		
+		basicSetup();
 		stageSetup();
 		
 		pauseGame(false);
+	}
+	
+	private void basicSetup() {
+		uiStage = new Stage(new ScreenViewport());
+		playerStatus = new PlayerStatus();
+		playerMonitor = new SpaceshipMonitor();
+		windowContainer = new WindowContainer();
 	}
 	
 	private void stageSetup() {
@@ -118,9 +126,11 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    		stageSetup();
 		    		playerStatus = new PlayerStatus();
 		    		pauseGame(false);
+		    		windowContainer.closeWindow("gameOverWindow");
 		    	}
 		    });
 			
+			windowContainer.add("gameOverWindow", gameOverWindow);
 			uiController.show(gameOverWindow);
 		}
 		
@@ -154,6 +164,15 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			canvas = new GameObjectCanvas(this.ua);
 			
 			// Start game canvas. All graphics processing starts from this class.
+			ClickListener planetSurveyedAction = new ClickListener() {
+				/* (non-Javadoc)
+				 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+				 */
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					windowContainer.closeWindow("surveyedWindow");
+				}
+			};
 			
 			canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
 			canvas.setPlanetClickListener(new UEListener() {
@@ -163,9 +182,15 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 					new ClickListener() {
 				    	@Override
 				    	public void clicked(InputEvent event, float x, float y) {
-				    		stageSetup();
+							windowContainer.closeWindow("surveyWindow");
+							BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), planetSurveyedAction);
+							windowContainer.add("surveyedWindow", surveyedWindow);
+							uiController.show(surveyedWindow);
 				    	}
 				    });
+					// TODO: this process must be made smarter
+					
+					windowContainer.add("surveyWindow", surveyWindow);
 					uiController.show(surveyWindow);
 				};
 			});
