@@ -3,9 +3,8 @@ package com.universe.exploration.ueui.data;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.universe.exploration.common.Lifeforms;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-
-import common.universe.exploration.common.Lifeforms;
 
 
 public class PlanetSurveyTest {

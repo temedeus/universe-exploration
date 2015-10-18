@@ -1,7 +1,7 @@
 /**
  * 
  */
-package common.universe.exploration.common;
+package com.universe.exploration.common;
 
 /**
  * @author 27.9.2015 Teemu Puurunen 

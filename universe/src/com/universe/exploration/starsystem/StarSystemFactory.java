@@ -2,12 +2,12 @@ package com.universe.exploration.starsystem;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
 import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
+import com.universe.exploration.common.Lifeforms;
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.starsystem.components.*;
-import common.universe.exploration.common.Lifeforms;
 
 /**
  * 

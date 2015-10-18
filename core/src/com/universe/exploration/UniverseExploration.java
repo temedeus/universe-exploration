@@ -164,7 +164,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			canvas = new GameObjectCanvas(this.ua);
 			
 			// Start game canvas. All graphics processing starts from this class.
-			ClickListener planetSurveyedAction = new ClickListener() {
+			final ClickListener planetSurveyedAction = new ClickListener() {
 				/* (non-Javadoc)
 				 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
 				 */
@@ -177,13 +177,13 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
 			canvas.setPlanetClickListener(new UEListener() {
 				@Override
-				public void handleEventClassEvent(UEEvent e) {
-					BasicWindow surveyWindow = uiController.createPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad(),
+				public void handleEventClassEvent(final UEEvent e) {
+					final BasicWindow surveyWindow = uiController.createPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad(),
 					new ClickListener() {
 				    	@Override
 				    	public void clicked(InputEvent event, float x, float y) {
 							windowContainer.closeWindow("surveyWindow");
-							BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), planetSurveyedAction);
+							final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), planetSurveyedAction);
 							windowContainer.add("surveyedWindow", surveyedWindow);
 							uiController.show(surveyedWindow);
 				    	}

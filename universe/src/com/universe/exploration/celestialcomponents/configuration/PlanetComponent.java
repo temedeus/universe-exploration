@@ -3,8 +3,8 @@
  */
 package com.universe.exploration.celestialcomponents.configuration;
 
+import com.universe.exploration.common.Lifeforms;
 import com.universe.exploration.common.tools.MathTools;
-import common.universe.exploration.common.Lifeforms;
 
 /**
  * @author 22.9.2015 Teemu Puurunen 

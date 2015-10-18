@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -44,6 +45,7 @@ public class UIController {
 	
 	private LeftSideHUD leftsidePlayerStatus;
 	
+	private PlayerStatus playerStatus;
 	private boolean isHyperspaceJumpAllowed = true;
 
 	public UIController() {
@@ -217,27 +219,26 @@ public class UIController {
 		planetInformationTable.add(new Label("\n\n", UEUiSkinBank.ueUISkin));
 		planetInformationTable.row();
 		
-		return wf.createDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, okAction);
+
+		return wf.createLargeDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, okAction);
 	}
 
+		
+	public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, ClickListener okAction) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
-		public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, ClickListener okAction) {
-		
-		Table planetInformationTable = new Table();
 
-		PlanetSurvey planetSurveyLabels = new PlanetSurvey((PlanetCelestialComponent)pgfx.getCelestialBodyGfxModel().getStarSystemComponent());
-		planetSurveyLabels.createPairs();
-	
-		for(DataPair planetLabel : planetSurveyLabels.getPairList()) {
-			planetInformationTable.add(planetLabel.getLabel()).left();
-			planetInformationTable.add(planetLabel.getValue()).left();
-			planetInformationTable.row();
-		}
+		Table planetInformationTable = new Table();
 		
-		planetInformationTable.add(new Label("\n\n", UEUiSkinBank.ueUISkin));
+		
+		planetInformationTable.add(new Label(Localizer.get("LABEL_CREWMEN_COUNT"), UEUiSkinBank.ueUISkin));
 		planetInformationTable.row();
 		
-		return wf.createOkWindow(Localizer.get("TITLE_SURVEYED_PLANET"), okAction);
+
+		
+		planetInformationTable.add(UIComponentFactory.createHorizontalSlider(0, 10, 1));
+		planetInformationTable.row();
+		
+		return wf.createMediumDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), planetInformationTable,  okAction);
 	}
 	
 	/**

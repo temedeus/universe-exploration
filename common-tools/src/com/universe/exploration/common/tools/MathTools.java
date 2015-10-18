@@ -3,8 +3,6 @@
  */
 package com.universe.exploration.common.tools;
 
-import java.text.DecimalFormat;
-
 /**
  * @author 8.7.2015 Teemu Puurunen 
  *
@@ -78,8 +76,7 @@ public class MathTools {
 	}
 	
 	public static String roundedFloatAsString(float f, int precision) {
-		DecimalFormat df = new DecimalFormat("#.#####");
-		return df.format(f);
+	    return "" + Math.round(f);
 	}
 	
 	public static double generateRandomAngle() {

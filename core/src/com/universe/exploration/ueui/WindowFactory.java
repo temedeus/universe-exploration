@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.ueui.components.LargeWindow;
+import com.universe.exploration.ueui.components.MediumWindow;
 import com.universe.exploration.ueui.components.SmallWindow;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
@@ -109,8 +110,33 @@ public class WindowFactory {
 	 * @param pgfx
 	 * @return
 	 */
-	public <T extends Actor> BasicWindow createDescriptionWindow(String caption, T contentTable, ClickListener okAction) {
+	public <T extends Actor> BasicWindow createLargeDescriptionWindow(String caption, T contentTable, ClickListener okAction) {
 	    final LargeWindow window = new LargeWindow(caption, windowStyle);
+		
+		Table buttontable = new Table();
+		buttontable.add(bf.createTextButton(Localizer.get("BTN_SURVEY"), okAction));
+		
+		buttontable.add(bf.createTextButton(Localizer.get("BTN_CANCEL"), new ClickListener() {
+	    	@Override
+	    	public void clicked(InputEvent event, float x, float y) {
+	    		window.remove();
+	    	}
+	    }));
+		
+		buttontable.row();
+
+		window.add(combineDataAndButtonbar((Table)contentTable, buttontable));
+	    
+	    return window; 
+	}
+	
+	/**
+	 * Creates a description window.
+	 * @param pgfx
+	 * @return
+	 */
+	public <T extends Actor> BasicWindow createMediumDescriptionWindow(String caption, T contentTable, ClickListener okAction) {
+	    final MediumWindow window = new MediumWindow(caption, windowStyle);
 		
 		Table buttontable = new Table();
 		buttontable.add(bf.createTextButton(Localizer.get("BTN_SURVEY"), okAction));

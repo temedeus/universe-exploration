@@ -27,6 +27,10 @@ public enum LocalEn {
 	TITLE_LIFEFORMS_VEGETATION("vegetation"),
 	TITLE_LIFEFORMS_BACTERIAL("bacterial"),
 	TITLE_LIFEFORMS_NONE("none"),
+	TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN("Survey team crew members:"),
+	
+	// Labels
+	LABEL_CREWMEN_COUNT("Crewmen count:"),
 	
 	// Descriptions
 	DESC_QUIT_GAME("Are you sure you wish to quit?"),

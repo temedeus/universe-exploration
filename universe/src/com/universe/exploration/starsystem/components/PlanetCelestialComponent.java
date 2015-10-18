@@ -3,8 +3,8 @@
  */
 package com.universe.exploration.starsystem.components;
 
+import com.universe.exploration.common.Lifeforms;
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
-import common.universe.exploration.common.Lifeforms;
 
 /**
  * Planet numerical representation (e.g. speed, mass, velocity etc.)
