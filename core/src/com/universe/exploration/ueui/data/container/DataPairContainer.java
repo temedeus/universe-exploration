@@ -1,6 +1,8 @@
-package com.universe.exploration.ueui.data;
+package com.universe.exploration.ueui.data.container;
 
 import java.util.ArrayList;
+
+import com.universe.exploration.ueui.data.DataPair;
 
 /**
  * <p>Holds an <tt>ArrayList</tt> of {@link DataPair}.</p> 

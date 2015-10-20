@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.ueui.data;
+package com.universe.exploration.ueui.data.container;
 
 
 /**

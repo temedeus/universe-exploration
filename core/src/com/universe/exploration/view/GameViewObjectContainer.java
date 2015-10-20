@@ -86,8 +86,8 @@ public class GameViewObjectContainer {
 					Rectangle planetRectangle = graphicsGfx.getSprite().getBoundingRectangle();
 					planetRectangle.x -= 5;
 					planetRectangle.y -= 5;
-					planetRectangle.width += 10;
-					planetRectangle.height += 10;
+					planetRectangle.width += 50;
+					planetRectangle.height += 50;
 					
 					if(planetRectangle.contains(coordinates.x, coordinates.y)) {
 						return graphicsGfx;

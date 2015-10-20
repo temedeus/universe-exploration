@@ -1,11 +1,11 @@
-package com.universe.exploration.ueui.data;
+package com.universe.exploration.ueui.data.container;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.universe.exploration.common.Lifeforms;
-import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-
+import com.universe.exploration.ueui.data.DataPair;
+import com.universe.exploration.ueui.data.container.DataPairContainer;
+import com.universe.exploration.ueui.data.container.TestDataPair;
 
 public class PlanetSurveyTest {
 

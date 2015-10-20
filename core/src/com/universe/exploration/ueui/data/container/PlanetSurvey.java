@@ -1,12 +1,13 @@
 /**
  * 
  */
-package com.universe.exploration.ueui.data;
+package com.universe.exploration.ueui.data.container;
 
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.Units;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
+import com.universe.exploration.ueui.data.DataPair;
 
 /**
  * @author 1.10.2015 Teemu Puurunen 

@@ -22,8 +22,9 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.data.DataPair;
-import com.universe.exploration.ueui.data.LeftSideHUD;
-import com.universe.exploration.ueui.data.PlanetSurvey;
+import com.universe.exploration.ueui.data.DataPairTableFactory;
+import com.universe.exploration.ueui.data.container.LeftSideHUD;
+import com.universe.exploration.ueui.data.container.PlanetSurvey;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
 import com.universe.exploration.view.PlanetGfxContainer;
 
@@ -46,6 +47,7 @@ public class UIController {
 	private LeftSideHUD leftsidePlayerStatus;
 	
 	private PlayerStatus playerStatus;
+	
 	private boolean isHyperspaceJumpAllowed = true;
 
 	public UIController() {
@@ -82,14 +84,14 @@ public class UIController {
 	}
 	
 	public Table createLeftHUD() {
-		Table playerStatus = new Table();
-		playerStatus.setWidth(uiStage.getWidth());
-		playerStatus.align(Align.left | Align.top);
-		playerStatus.setPosition(0, Gdx.graphics.getHeight());
-		playerStatus.padTop(30);
-		playerStatus.padLeft(30);
+		Table playerStatusTable = new Table();
+		playerStatusTable.setWidth(uiStage.getWidth());
+		playerStatusTable.align(Align.left | Align.top);
+		playerStatusTable.setPosition(0, Gdx.graphics.getHeight());
+		playerStatusTable.padTop(30);
+		playerStatusTable.padLeft(30);
 
-		return populateWithStatus(playerStatus);
+		return populateWithStatus(playerStatusTable);
 	}
 	
 	private Table populateWithStatus(Table verticalGroup) {		
@@ -204,22 +206,10 @@ public class UIController {
 	 */
 	public BasicWindow createPlanetarySurveyWindow(PlanetGfxContainer pgfx, ClickListener okAction) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
+		final DataPairTableFactory dptf = new DataPairTableFactory();
 		
-		Table planetInformationTable = new Table();
-
-		PlanetSurvey planetSurveyLabels = new PlanetSurvey((PlanetCelestialComponent)pgfx.getCelestialBodyGfxModel().getStarSystemComponent());
-		planetSurveyLabels.createPairs();
-	
-		for(DataPair planetLabel : planetSurveyLabels.getPairList()) {
-			planetInformationTable.add(planetLabel.getLabel()).left();
-			planetInformationTable.add(planetLabel.getValue()).left();
-			planetInformationTable.row();
-		}
+		Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
 		
-		planetInformationTable.add(new Label("\n\n", UEUiSkinBank.ueUISkin));
-		planetInformationTable.row();
-		
-
 		return wf.createLargeDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, okAction);
 	}
 
@@ -233,9 +223,7 @@ public class UIController {
 		planetInformationTable.add(new Label(Localizer.get("LABEL_CREWMEN_COUNT"), UEUiSkinBank.ueUISkin));
 		planetInformationTable.row();
 		
-
-		
-		planetInformationTable.add(UIComponentFactory.createHorizontalSlider(0, 10, 1));
+		planetInformationTable.add(UIComponentFactory.createHorizontalSlider(0, playerStatus.getCrewmen(), 1));
 		planetInformationTable.row();
 		
 		return wf.createMediumDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), planetInformationTable,  okAction);
@@ -246,14 +234,20 @@ public class UIController {
 	 * don't lose accuracy apart from what we do using float.)
 	 * @param ps
 	 */
-	private void updatePlayerStatusToUI(PlayerStatus ps) {
-		leftsidePlayerStatus.update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int)ps.getAir()));
-		leftsidePlayerStatus.update(PlayerStatusItemkeys.CREWMEN, playerStatusValueToHUDString("" + (int)ps.getCrewmen()));
-		leftsidePlayerStatus.update(PlayerStatusItemkeys.WATER, playerStatusValueToHUDString("" + (int)ps.getWater()));
-		leftsidePlayerStatus.update(PlayerStatusItemkeys.FOOD, playerStatusValueToHUDString("" + (int)ps.getFood()));
-		leftsidePlayerStatus.update(PlayerStatusItemkeys.POWER, playerStatusValueToHUDString("" + (int)ps.getPower()));
+	private void updatePlayerStatusToUI(PlayerStatus playerStatus) {
+		this.playerStatus = playerStatus;
+		updateValuesToHUD();
 	}
 
+
+	private void updateValuesToHUD() {
+		leftsidePlayerStatus.update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int)playerStatus.getAir()));
+		leftsidePlayerStatus.update(PlayerStatusItemkeys.CREWMEN, playerStatusValueToHUDString("" + (int)playerStatus.getCrewmen()));
+		leftsidePlayerStatus.update(PlayerStatusItemkeys.WATER, playerStatusValueToHUDString("" + (int)playerStatus.getWater()));
+		leftsidePlayerStatus.update(PlayerStatusItemkeys.FOOD, playerStatusValueToHUDString("" + (int)playerStatus.getFood()));
+		leftsidePlayerStatus.update(PlayerStatusItemkeys.POWER, playerStatusValueToHUDString("" + (int)playerStatus.getPower()));
+	}
+	
 	private String playerStatusValueToHUDString(Object val) {
 		return val + " %";
 	}

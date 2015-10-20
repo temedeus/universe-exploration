@@ -1,11 +1,12 @@
 /**
  * 
  */
-package com.universe.exploration.ueui.data;
+package com.universe.exploration.ueui.data.container;
 
 import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatusItemkeys;
+import com.universe.exploration.ueui.data.DataPair;
 
 /**
  * @author 1.10.2015 Teemu Puurunen 
