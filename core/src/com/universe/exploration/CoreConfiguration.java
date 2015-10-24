@@ -27,4 +27,6 @@ public class CoreConfiguration {
 	public static final float MAX_FOOD = 100;
 	
 	public static final String uiSkinSource = "uiskin.json";
+	
+	public static final float TIME_FLOW = 0.001f;
 }

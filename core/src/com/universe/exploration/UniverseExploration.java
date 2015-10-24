@@ -13,7 +13,6 @@ import com.universe.exploration.camera.SpaceshipMonitor;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
-import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
@@ -23,6 +22,7 @@ import com.universe.exploration.ueui.WindowContainer;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
+import common.universe.exploration.logger.MinimalLogger;
 
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
 	/**
@@ -53,6 +53,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	private boolean gameStatusPaused = false;
 	
 	private WindowContainer windowContainer;
+	
+	private MinimalLogger logger;
 
 	@SuppressWarnings("unused")
 	private Stage uiStage;
@@ -63,6 +65,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		
 		basicSetup();
 		stageSetup();
+		logger = new MinimalLogger();
 		
 		pauseGame(false);
 	}
@@ -88,6 +91,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				if(!gameStatusPaused) {
 					createStarSystem();
 					playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
+					updateIngameLog("Hyperspace jump commenced!");
 				}
 			};
 		});
@@ -171,6 +175,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					windowContainer.closeWindow("surveyedWindow");
+					updateIngameLog("Survey team dispatched.");
 				}
 			};
 			
@@ -199,6 +204,11 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		} 
 		
 		return true;
+	}
+	
+	private void updateIngameLog(String message) {
+		logger.add(message);
+		uiController.updateLog(logger.getLog());
 	}
 
 	/* (non-Javadoc)

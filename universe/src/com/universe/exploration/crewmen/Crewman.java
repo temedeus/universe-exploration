@@ -8,5 +8,9 @@ package com.universe.exploration.crewmen;
  *
  */
 public class Crewman {
-
+	private String name;
+	
+	private int age;
+	
+	private String image;
 }

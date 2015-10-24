@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Crew {
 
-	ArrayList<Crewman> crewmen;
+	private ArrayList<Crewman> crewmen;
 	
 	public Crew() {
 		

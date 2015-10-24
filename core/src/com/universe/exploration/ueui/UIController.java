@@ -1,5 +1,7 @@
 package com.universe.exploration.ueui;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -21,6 +23,7 @@ import com.universe.exploration.player.PlayerStatusItemkeys;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
+import com.universe.exploration.ueui.components.LogDisplay;
 import com.universe.exploration.ueui.data.DataPair;
 import com.universe.exploration.ueui.data.DataPairTableFactory;
 import com.universe.exploration.ueui.data.container.LeftSideHUD;
@@ -48,8 +51,17 @@ public class UIController {
 	
 	private PlayerStatus playerStatus;
 	
+	/**
+	 * <p>This flag determines is hyperspace jump is allowed. Jump can be disabled for example when
+	 * game over window is shown.</p>
+	 */
 	private boolean isHyperspaceJumpAllowed = true;
 
+	/**
+	 * <p>Visual representation of game log.</p>
+	 */
+	private final LogDisplay logDisplay = new LogDisplay(10, UEUiSkinBank.ueUISkin);
+	
 	public UIController() {
 		uiStage = new Stage(new ScreenViewport());
 		leftsidePlayerStatus = new LeftSideHUD();
@@ -101,7 +113,14 @@ public class UIController {
 			verticalGroup.row();
 		}
 		
+		verticalGroup.add(logDisplay.getLogDisplayTable());
+		verticalGroup.row();
+		
 		return verticalGroup;
+	}
+	
+	public void updateLog(LinkedList<String> logItems) {
+		logDisplay.updateValuesToTable(logItems);
 	}
 	
 	/**
