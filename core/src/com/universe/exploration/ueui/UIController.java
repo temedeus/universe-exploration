@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -20,14 +19,12 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.PlayerStatusItemkeys;
-import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.components.LogDisplay;
 import com.universe.exploration.ueui.data.DataPair;
 import com.universe.exploration.ueui.data.DataPairTableFactory;
 import com.universe.exploration.ueui.data.container.LeftSideHUD;
-import com.universe.exploration.ueui.data.container.PlanetSurvey;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
 import com.universe.exploration.view.PlanetGfxContainer;
 
@@ -70,7 +67,7 @@ public class UIController {
 		uiStage.addActor(createLeftHUD());
 		uiStage.addActor(createTopHUDTable());
 		uiStage.addActor(createBottomHUDTable());
-	
+		uiStage.addActor(createLogDisplay());
 		gameStatusPaused = false;
 	}
 	
@@ -106,15 +103,26 @@ public class UIController {
 		return populateWithStatus(playerStatusTable);
 	}
 	
+	public Table createLogDisplay() {
+		Table table = new Table();
+		table.setWidth(uiStage.getWidth());
+		table.align(Align.left | Align.bottom);
+		table.setPosition(30, 30);
+		table.padTop(30);
+		table.padLeft(30);
+
+		table.add(logDisplay.getLogDisplayTable());
+		table.row();
+		
+		return table;
+	}
+	
 	private Table populateWithStatus(Table verticalGroup) {		
 		for(DataPair playerStatus : leftsidePlayerStatus.getPairList()) {
 			verticalGroup.add(playerStatus.getLabel()).left();
 			verticalGroup.add(playerStatus.getValue()).left();
 			verticalGroup.row();
 		}
-		
-		verticalGroup.add(logDisplay.getLogDisplayTable());
-		verticalGroup.row();
 		
 		return verticalGroup;
 	}
@@ -260,8 +268,9 @@ public class UIController {
 
 
 	private void updateValuesToHUD() {
+		leftsidePlayerStatus.update(PlayerStatusItemkeys.TIME, "" + (int)playerStatus.getTime() + " days");
 		leftsidePlayerStatus.update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int)playerStatus.getAir()));
-		leftsidePlayerStatus.update(PlayerStatusItemkeys.CREWMEN, playerStatusValueToHUDString("" + (int)playerStatus.getCrewmen()));
+		leftsidePlayerStatus.update(PlayerStatusItemkeys.CREWMEN, "" + (int)playerStatus.getCrewmen());
 		leftsidePlayerStatus.update(PlayerStatusItemkeys.WATER, playerStatusValueToHUDString("" + (int)playerStatus.getWater()));
 		leftsidePlayerStatus.update(PlayerStatusItemkeys.FOOD, playerStatusValueToHUDString("" + (int)playerStatus.getFood()));
 		leftsidePlayerStatus.update(PlayerStatusItemkeys.POWER, playerStatusValueToHUDString("" + (int)playerStatus.getPower()));

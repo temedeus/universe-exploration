@@ -19,6 +19,7 @@ public class LeftSideHUD extends DataPairContainer {
 	 */
 	@Override
 	public void createPairs() {
+		add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.get("TITLE_TIME"), "" + CoreConfiguration.TIME_START + ""));
 		add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.get("TITLE_CREWMEN_LEFT"), "" + CoreConfiguration.MAX_CREWMEN));
 		add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.get("Air:"), "" + CoreConfiguration.MAX_AIR + " %"));
 		add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.get("Water:"), "" + CoreConfiguration.MAX_AIR + " %"));

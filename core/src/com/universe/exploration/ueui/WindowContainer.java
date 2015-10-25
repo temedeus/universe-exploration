@@ -32,7 +32,7 @@ public class WindowContainer {
 		BasicWindow window = windowmap.get(key);
 		if(window != null) {
 			window.remove();
-			return (windowmap.remove((String)key) != null) ? true: false;
+			return (windowmap.remove((String)key) != null) ? true : false;
 		} else {
 			return true;
 		}

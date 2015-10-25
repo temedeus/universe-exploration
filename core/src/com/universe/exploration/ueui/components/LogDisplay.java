@@ -60,7 +60,7 @@ public class LogDisplay {
 
 	private Table createLogDisplayTable() {
 		final Table logDisplayTable = new Table();
-
+		
 		for (Label logEntry : logEntries) {
 			logDisplayTable.add(logEntry).left();
 			logDisplayTable.row();

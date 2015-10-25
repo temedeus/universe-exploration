@@ -30,11 +30,14 @@ public class PlayerStatus {
 	
 	private float power;
 	
+	private float time;
+	
 	/**
 	 * Setup initial values.
 	 * Start with full values
 	 */
 	public PlayerStatus(){
+		time = CoreConfiguration.TIME_START;
 		crewmen = CoreConfiguration.MAX_CREWMEN;
 		air = CoreConfiguration.MAX_AIR;
 		water = CoreConfiguration.MAX_WATER;
@@ -47,6 +50,7 @@ public class PlayerStatus {
 	 * @return
 	 */
 	public void updateStatus() {
+		increaseDaysPassed();
 		decreaseAirBy((power > 0) ? StatusConsumption.AIR_DECREMENT : StatusConsumption.AIR_DECREMENT * 9);
 		decreaseFoodBy(StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN * crewmen);
 		decreaseWaterBy(StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN * crewmen);
@@ -73,6 +77,11 @@ public class PlayerStatus {
 		
 		return 0f;
 	}
+	
+	public void increaseDaysPassed() {
+		time += CoreConfiguration.TIME_FLOW;
+	}
+	
 	/**
 	 * Crewman dies
 	 * @param d
@@ -185,5 +194,19 @@ public class PlayerStatus {
 	 */
 	public void setPower(float power) {
 		this.power = power;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public float getTime() {
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(float time) {
+		this.time = time;
 	}
 }

@@ -8,6 +8,8 @@ package com.universe.exploration.player;
  *
  */
 public class PlayerStatusItemkeys {
+	public static String TIME = "TIME";
+	
 	public static String CREWMEN = "CREWMEN";
 	
 	public static String WATER = "WATER";

@@ -38,7 +38,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	/**
 	 * Star system
 	 */
-	private StarSystem ua;
+	private StarSystem starSystem;
 	
 	/**
 	 * User interface
@@ -55,7 +55,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	private WindowContainer windowContainer;
 	
 	private MinimalLogger logger;
-
+	
 	@SuppressWarnings("unused")
 	private Stage uiStage;
 	
@@ -66,7 +66,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		basicSetup();
 		stageSetup();
 		logger = new MinimalLogger();
-		
+
 		pauseGame(false);
 	}
 	
@@ -124,15 +124,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		
 		if(playerStatus.getCrewmen() == 0 && !gameStatusPaused) {
 			pauseGame(true);
-			BasicWindow gameOverWindow = uiController.createGameOverWindow(new ClickListener() {
-		    	@Override
-		    	public void clicked(InputEvent event, float x, float y) {
-		    		stageSetup();
-		    		playerStatus = new PlayerStatus();
-		    		pauseGame(false);
-		    		windowContainer.closeWindow("gameOverWindow");
-		    	}
-		    });
+			BasicWindow gameOverWindow = uiController.createGameOverWindow(createGameOverClicklistener());
 			
 			windowContainer.add("gameOverWindow", gameOverWindow);
 			uiController.show(gameOverWindow);
@@ -141,6 +133,18 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			Gdx.app.exit();
 		}
+	}
+	
+	private ClickListener createGameOverClicklistener() {
+		return new ClickListener() {
+	    	@Override
+	    	public void clicked(InputEvent event, float x, float y) {
+	    		stageSetup();
+	    		playerStatus = new PlayerStatus();
+	    		pauseGame(false);
+	    		windowContainer.closeWindow("gameOverWindow");
+	    	}
+	    };
 	}
 	
 	/**
@@ -164,41 +168,10 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		StarSystemFactory uf = new StarSystemFactory();
 		
 		try {
-			ua = uf.makeStarSystem();
-			canvas = new GameObjectCanvas(this.ua);
-			
-			// Start game canvas. All graphics processing starts from this class.
-			final ClickListener planetSurveyedAction = new ClickListener() {
-				/* (non-Javadoc)
-				 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-				 */
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					windowContainer.closeWindow("surveyedWindow");
-					updateIngameLog("Survey team dispatched.");
-				}
-			};
-			
-			canvas.updateCameraOnCanvas(this.playerMonitor.getOrthographicCamera());
-			canvas.setPlanetClickListener(new UEListener() {
-				@Override
-				public void handleEventClassEvent(final UEEvent e) {
-					final BasicWindow surveyWindow = uiController.createPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad(),
-					new ClickListener() {
-				    	@Override
-				    	public void clicked(InputEvent event, float x, float y) {
-							windowContainer.closeWindow("surveyWindow");
-							final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), planetSurveyedAction);
-							windowContainer.add("surveyedWindow", surveyedWindow);
-							uiController.show(surveyedWindow);
-				    	}
-				    });
-					// TODO: this process must be made smarter
-					
-					windowContainer.add("surveyWindow", surveyWindow);
-					uiController.show(surveyWindow);
-				};
-			});
+			starSystem = uf.makeStarSystem();
+			canvas = new GameObjectCanvas(starSystem);
+			canvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+			canvas.setPlanetClickListener(createPlanetClickListener());
 		} catch(PlanetCountOutOfRangeException e) {
 			return false;
 		} 
@@ -206,11 +179,60 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		return true;
 	}
 	
+	public UEListener createPlanetClickListener() {
+		return new UEListener() {
+			@Override
+			public void handleEventClassEvent(final UEEvent e) {
+				final BasicWindow surveyWindow = uiController.createPlanetarySurveyWindow((PlanetGfxContainer)e.getPayLoad(),
+				new ClickListener() {
+			    	@Override
+			    	public void clicked(InputEvent event, float x, float y) {
+						windowContainer.closeWindow("surveyWindow");
+						final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), createPlanetSurveyedAction());
+						windowContainer.add("surveyedWindow", surveyedWindow);
+						uiController.show(surveyedWindow);
+			    	}
+			    });
+				// TODO: this process must be made smarter
+				
+				windowContainer.add("surveyWindow", surveyWindow);
+				uiController.show(surveyWindow);
+			};
+		};
+	}
+	
+	private ClickListener createPlanetSurveyedAction() {
+		// Start game canvas. All graphics processing starts from this class.
+		return new ClickListener() {
+			/* (non-Javadoc)
+			 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+			 */
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				windowContainer.closeWindow("surveyedWindow");
+				updateIngameLog("Survey team dispatched.");
+			}
+		};
+	}
 	private void updateIngameLog(String message) {
 		logger.add(message);
 		uiController.updateLog(logger.getLog());
 	}
 
+	/**
+	 * @return the gameStatusPaused
+	 */
+	public boolean isGameStatusPaused() {
+		return gameStatusPaused;
+	}
+
+	/**
+	 * @param gameStatusPaused the gameStatusPaused to set
+	 */
+	public void setGameStatusPaused(boolean gameStatusPaused) {
+		this.gameStatusPaused = gameStatusPaused;
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.badlogic.gdx.InputProcessor#keyDown(int)
 	 */
@@ -281,19 +303,5 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	public boolean scrolled(int amount) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	/**
-	 * @return the gameStatusPaused
-	 */
-	public boolean isGameStatusPaused() {
-		return gameStatusPaused;
-	}
-
-	/**
-	 * @param gameStatusPaused the gameStatusPaused to set
-	 */
-	public void setGameStatusPaused(boolean gameStatusPaused) {
-		this.gameStatusPaused = gameStatusPaused;
 	}
 }

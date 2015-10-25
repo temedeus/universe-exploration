@@ -28,5 +28,7 @@ public class CoreConfiguration {
 	
 	public static final String uiSkinSource = "uiskin.json";
 	
-	public static final float TIME_FLOW = 0.001f;
+	public static final float TIME_FLOW = 0.005f;
+	
+	public static final float TIME_START = 0;
 }

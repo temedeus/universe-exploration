@@ -20,6 +20,7 @@ public enum LocalEn {
 	// Titles
 	TITLE_QUIT_GAME("Quit game"),
 	TITLE_CREWMEN_LEFT("Crewmen left: "),
+	TITLE_TIME("Time: "),
 	TITLE_SURVEY_PLANET("Planetary survey"),
 	TITLE_GAME_OVER("Game over"),
 	TITLE_LIFEFORMS_CIVILIZED("civilized"),
