@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
@@ -241,7 +242,7 @@ public class UIController {
 	}
 
 		
-	public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, ClickListener okAction) {
+	public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 
 		Table planetInformationTable = new Table();
@@ -253,7 +254,23 @@ public class UIController {
 		planetInformationTable.add(UIComponentFactory.createHorizontalSlider(0, playerStatus.getCrewmen(), 1));
 		planetInformationTable.row();
 		
-		return wf.createMediumDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), planetInformationTable,  okAction);
+		BasicWindow window = wf.createMediumDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), planetInformationTable,  createdPlanetSurveyTeamDispatchedClickListener());
+		return window;
+	}
+	
+	private ClickListener createdPlanetSurveyTeamDispatchedClickListener() {
+		return new ClickListener() {
+	    	@Override
+	    	public void clicked(InputEvent event, float x, float y) {
+	    		firePlanetSurveyListener();
+	    	}
+	    };
+	}
+	
+	private void firePlanetSurveyListener() {
+		if(planetSurveyListener != null) {
+			planetSurveyListener.handleEventClassEvent(new UEEvent("e"));
+		}
 	}
 	
 	/**

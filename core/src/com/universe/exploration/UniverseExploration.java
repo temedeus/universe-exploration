@@ -99,7 +99,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		uiController.setPlanetSurveyListener(new UEListener() {
 			@Override
 			public void handleEventClassEvent(UEEvent e) {
-				// SHOW PLANET SURVEYED MESSAGE
+				updateIngameLog("Survey team dispatched.");
+				windowContainer.closeWindow("surveyedWindow");
 			};
 		});
 	}
@@ -188,7 +189,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			    	@Override
 			    	public void clicked(InputEvent event, float x, float y) {
 						windowContainer.closeWindow("surveyWindow");
-						final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), createPlanetSurveyedAction());
+						final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad());
 						windowContainer.add("surveyedWindow", surveyedWindow);
 						uiController.show(surveyedWindow);
 			    	}
@@ -201,19 +202,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		};
 	}
 	
-	private ClickListener createPlanetSurveyedAction() {
-		// Start game canvas. All graphics processing starts from this class.
-		return new ClickListener() {
-			/* (non-Javadoc)
-			 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-			 */
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				windowContainer.closeWindow("surveyedWindow");
-				updateIngameLog("Survey team dispatched.");
-			}
-		};
-	}
 	private void updateIngameLog(String message) {
 		logger.add(message);
 		uiController.updateLog(logger.getLog());
