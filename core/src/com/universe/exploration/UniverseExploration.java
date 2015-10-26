@@ -20,8 +20,11 @@ import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.ueui.UIController;
 import com.universe.exploration.ueui.WindowContainer;
 import com.universe.exploration.ueui.components.BasicWindow;
+import com.universe.exploration.ueui.forms.FormContainer;
+import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
+
 import common.universe.exploration.logger.MinimalLogger;
 
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
@@ -99,8 +102,20 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		uiController.setPlanetSurveyListener(new UEListener() {
 			@Override
 			public void handleEventClassEvent(UEEvent e) {
-				updateIngameLog("Survey team dispatched.");
-				windowContainer.closeWindow("surveyedWindow");
+				if(e.getPayLoad() instanceof PlanetSurveyForm) {
+
+					int surveyTeamSize = (int)(((PlanetSurveyForm)e.getPayLoad())).getCrewmenCount().getValue();
+					if(surveyTeamSize > 0) {
+						if(playerStatus.isSurveyTeamSizeAcceptable(surveyTeamSize)) {
+							updateIngameLog("Survey team of " + surveyTeamSize + " men and women dispatched.");
+						} else {
+							updateIngameLog("Cannot dispatch survey team. Not enough cremen!");
+						}
+						
+					}
+					
+					windowContainer.closeWindow("surveyedWindow");
+				}
 			};
 		});
 	}

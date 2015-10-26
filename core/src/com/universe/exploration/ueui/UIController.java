@@ -1,5 +1,6 @@
 package com.universe.exploration.ueui;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
@@ -26,6 +27,8 @@ import com.universe.exploration.ueui.components.LogDisplay;
 import com.universe.exploration.ueui.data.DataPair;
 import com.universe.exploration.ueui.data.DataPairTableFactory;
 import com.universe.exploration.ueui.data.container.LeftSideHUD;
+import com.universe.exploration.ueui.forms.FormContainer;
+import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
 import com.universe.exploration.view.PlanetGfxContainer;
 
@@ -247,29 +250,30 @@ public class UIController {
 
 		Table planetInformationTable = new Table();
 		
-		
 		planetInformationTable.add(new Label(Localizer.get("LABEL_CREWMEN_COUNT"), UEUiSkinBank.ueUISkin));
 		planetInformationTable.row();
 		
-		planetInformationTable.add(UIComponentFactory.createHorizontalSlider(0, playerStatus.getCrewmen(), 1));
-		planetInformationTable.row();
+		TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, playerStatus.getCrewmen(), 1);
 		
-		BasicWindow window = wf.createMediumDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), planetInformationTable,  createdPlanetSurveyTeamDispatchedClickListener());
+		planetInformationTable.add(pair.getTable());
+		planetInformationTable.row();
+
+		BasicWindow window = wf.createMediumDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), planetInformationTable,  createdPlanetSurveyTeamDispatchedClickListener((PlanetSurveyForm)pair.getFormContainer()));
 		return window;
 	}
 	
-	private ClickListener createdPlanetSurveyTeamDispatchedClickListener() {
+	private ClickListener createdPlanetSurveyTeamDispatchedClickListener(PlanetSurveyForm planetSurveyForm) {
 		return new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
-	    		firePlanetSurveyListener();
+	    		firePlanetSurveyListener(planetSurveyForm);
 	    	}
 	    };
 	}
 	
-	private void firePlanetSurveyListener() {
+	private void firePlanetSurveyListener(FormContainer formContainer) {
 		if(planetSurveyListener != null) {
-			planetSurveyListener.handleEventClassEvent(new UEEvent("e"));
+			planetSurveyListener.handleEventClassEvent(new UEEvent(formContainer));
 		}
 	}
 	

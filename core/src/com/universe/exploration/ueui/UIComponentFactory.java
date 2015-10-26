@@ -3,9 +3,14 @@
  */
 package com.universe.exploration.ueui;
 
+import java.util.HashMap;
+
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.universe.exploration.ueui.forms.FormContainer;
+import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
 
 /**
@@ -13,15 +18,15 @@ import com.universe.exploration.ueui.skins.UEUiSkinBank;
  *
  */
 public class UIComponentFactory {
-	public static Table createHorizontalSlider(float minVal, float maxVal, float interval) {
-		return createHorizontalSlider(minVal, maxVal, interval, false);
+	public static TableFormContainerPair createHorizontalSlider(float minVal, float maxVal, float interval) {
+		return createSliderTableWrapper(minVal, maxVal, interval, false);
 	}
 	
-	public static Table createVerticalSlider(float minVal, float maxVal, float interval) {
-		return createHorizontalSlider(minVal, maxVal, interval, true);
+	public static TableFormContainerPair createVerticalSlider(float minVal, float maxVal, float interval) {
+		return createSliderTableWrapper(minVal, maxVal, interval, true);
 	}
 	
-	private static Table createHorizontalSlider(float minVal, float maxVal, float interval, boolean vertical) {
+	private static TableFormContainerPair createSliderTableWrapper(float minVal, float maxVal, float interval, boolean vertical) {
 		Table sliderTable = new Table();
 		Slider slider = new Slider(0, 10, interval, vertical, UEUiSkinBank.ueUISkin);
 		
@@ -30,6 +35,9 @@ public class UIComponentFactory {
 		sliderTable.add(new Label(""+maxVal, UEUiSkinBank.ueUISkin));
 		sliderTable.row();
 		
-		return sliderTable;
+		PlanetSurveyForm surveyForm = new PlanetSurveyForm();
+		surveyForm.setCrewmenCount(slider);
+		
+		return new TableFormContainerPair(surveyForm, sliderTable);
 	}
 }

@@ -3,8 +3,11 @@
  */
 package com.universe.exploration.player;
 
+import java.util.ArrayList;
+
 import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.common.tools.MathTools;
+import com.universe.exploration.survey.SurveyStatus;
 
 /**
  * 
@@ -32,11 +35,23 @@ public class PlayerStatus {
 	
 	private float time;
 	
+	private ArrayList<SurveyStatus> surveyStatusList;
+	
+	public boolean isSurveyTeamSizeAcceptable(int size) {
+		int crewmenOnSurvey = 0;
+		for(SurveyStatus surveyStatus : surveyStatusList) {
+			crewmenOnSurvey += surveyStatus.getCrewmenInSurveyTeam();
+		}
+		
+		return (size <= crewmen - crewmenOnSurvey) ? true : false;
+	}
+	
 	/**
 	 * Setup initial values.
 	 * Start with full values
 	 */
 	public PlayerStatus(){
+		surveyStatusList = new ArrayList<SurveyStatus>();
 		time = CoreConfiguration.TIME_START;
 		crewmen = CoreConfiguration.MAX_CREWMEN;
 		air = CoreConfiguration.MAX_AIR;
