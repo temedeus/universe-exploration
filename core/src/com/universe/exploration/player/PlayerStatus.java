@@ -35,23 +35,12 @@ public class PlayerStatus {
 	
 	private float time;
 	
-	private ArrayList<SurveyStatus> surveyStatusList;
-	
-	public boolean isSurveyTeamSizeAcceptable(int size) {
-		int crewmenOnSurvey = 0;
-		for(SurveyStatus surveyStatus : surveyStatusList) {
-			crewmenOnSurvey += surveyStatus.getCrewmenInSurveyTeam();
-		}
-		
-		return (size <= crewmen - crewmenOnSurvey) ? true : false;
-	}
-	
 	/**
 	 * Setup initial values.
 	 * Start with full values
 	 */
 	public PlayerStatus(){
-		surveyStatusList = new ArrayList<SurveyStatus>();
+
 		time = CoreConfiguration.TIME_START;
 		crewmen = CoreConfiguration.MAX_CREWMEN;
 		air = CoreConfiguration.MAX_AIR;
@@ -107,6 +96,10 @@ public class PlayerStatus {
 		if(dec > 0) {
 			crewmen = (int)MathTools.decreaseIfResultPositive(crewmen, dec);
 		}
+	}
+	
+	public void decreaseCrewmen(int count) {
+		crewmen -= (crewmen - count >= 0) ?  count : 0; 
 	}
 	
 	/**

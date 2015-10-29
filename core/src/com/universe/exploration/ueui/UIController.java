@@ -1,6 +1,5 @@
 package com.universe.exploration.ueui;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
@@ -21,6 +20,7 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.PlayerStatusItemkeys;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.components.LogDisplay;
@@ -244,8 +244,7 @@ public class UIController {
 		return wf.createLargeDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, okAction);
 	}
 
-		
-	public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx) {
+	public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 
 		Table planetInformationTable = new Table();
@@ -253,12 +252,20 @@ public class UIController {
 		planetInformationTable.add(new Label(Localizer.get("LABEL_CREWMEN_COUNT"), UEUiSkinBank.ueUISkin));
 		planetInformationTable.row();
 		
-		TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, playerStatus.getCrewmen(), 1);
+		TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, surveyTeamSize, 1);
+		((PlanetSurveyForm)pair.getFormContainer()).setPlanet((PlanetCelestialComponent)pgfx.getComponentType());
 		
 		planetInformationTable.add(pair.getTable());
 		planetInformationTable.row();
 
-		BasicWindow window = wf.createMediumDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), planetInformationTable,  createdPlanetSurveyTeamDispatchedClickListener((PlanetSurveyForm)pair.getFormContainer()));
+		BasicWindow window = wf.createMediumDescriptionWindow(
+				Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), 
+				planetInformationTable,  
+				createdPlanetSurveyTeamDispatchedClickListener(
+						(PlanetSurveyForm)pair.getFormContainer()
+			)
+		);
+		
 		return window;
 	}
 	

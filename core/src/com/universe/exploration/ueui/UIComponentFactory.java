@@ -28,7 +28,7 @@ public class UIComponentFactory {
 	
 	private static TableFormContainerPair createSliderTableWrapper(float minVal, float maxVal, float interval, boolean vertical) {
 		Table sliderTable = new Table();
-		Slider slider = new Slider(0, 10, interval, vertical, UEUiSkinBank.ueUISkin);
+		Slider slider = new Slider(minVal, maxVal, interval, vertical, UEUiSkinBank.ueUISkin);
 		
 		sliderTable.add(new Label(""+minVal, UEUiSkinBank.ueUISkin));
 		sliderTable.add(slider);

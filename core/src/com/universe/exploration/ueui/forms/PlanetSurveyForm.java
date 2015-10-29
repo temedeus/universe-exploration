@@ -4,6 +4,7 @@
 package com.universe.exploration.ueui.forms;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
  * @author 26.10.2015 Teemu Puurunen 
@@ -12,6 +13,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 public class PlanetSurveyForm extends FormContainer {
 
 	private Slider crewmenCount;
+
+	private PlanetCelestialComponent planet;
+	
+	/**
+	 * @return the planet
+	 */
+	public PlanetCelestialComponent getPlanet() {
+		return planet;
+	}
+
+	/**
+	 * @param planet the planet to set
+	 */
+	public void setPlanet(PlanetCelestialComponent planet) {
+		this.planet = planet;
+	}
 
 	/**
 	 * @return the crewmenCount

@@ -1,4 +1,6 @@
 package com.universe.exploration;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -17,10 +19,14 @@ import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
+import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
+import com.universe.exploration.survey.Mortality;
+import com.universe.exploration.survey.SurveyStatus;
+import com.universe.exploration.survey.SurveyStatusContainer;
+import com.universe.exploration.survey.SurveyStatusFactory;
 import com.universe.exploration.ueui.UIController;
 import com.universe.exploration.ueui.WindowContainer;
 import com.universe.exploration.ueui.components.BasicWindow;
-import com.universe.exploration.ueui.forms.FormContainer;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
@@ -59,6 +65,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	
 	private MinimalLogger logger;
 	
+	private SurveyStatusContainer surveyStatusContainer;
+	
 	@SuppressWarnings("unused")
 	private Stage uiStage;
 	
@@ -68,16 +76,45 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		
 		basicSetup();
 		stageSetup();
-		logger = new MinimalLogger();
-
+		
 		pauseGame(false);
 	}
 	
+	@Override
+	public void dispose() {
+		canvas.destroy();
+	}
+
+	@Override
+	public void render () {	
+		canvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+		canvas.drawGameContent();
+		
+		playerStatus.updateStatus();
+		uiController.updateUI(playerStatus);
+		
+		if(playerStatus.getCrewmen() == 0 && !gameStatusPaused) {
+			pauseGame(true);
+			BasicWindow gameOverWindow = uiController.createGameOverWindow(createGameOverClicklistener());
+			
+			windowContainer.add("gameOverWindow", gameOverWindow);
+			uiController.show(gameOverWindow);
+		}
+		
+		closeFinishedSurveys();
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
+	}
+	
 	private void basicSetup() {
+		logger = new MinimalLogger();
 		uiStage = new Stage(new ScreenViewport());
 		playerStatus = new PlayerStatus();
 		playerMonitor = new SpaceshipMonitor();
 		windowContainer = new WindowContainer();
+		surveyStatusContainer = new SurveyStatusContainer();
 	}
 	
 	private void stageSetup() {
@@ -103,52 +140,41 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			@Override
 			public void handleEventClassEvent(UEEvent e) {
 				if(e.getPayLoad() instanceof PlanetSurveyForm) {
-
-					int surveyTeamSize = (int)(((PlanetSurveyForm)e.getPayLoad())).getCrewmenCount().getValue();
-					if(surveyTeamSize > 0) {
-						if(playerStatus.isSurveyTeamSizeAcceptable(surveyTeamSize)) {
-							updateIngameLog("Survey team of " + surveyTeamSize + " men and women dispatched.");
-						} else {
-							updateIngameLog("Cannot dispatch survey team. Not enough cremen!");
-						}
-						
-					}
-					
+					startSurvey((PlanetSurveyForm)e.getPayLoad());
 					windowContainer.closeWindow("surveyedWindow");
 				}
 			};
 		});
 	}
 	
+	private void startSurvey(PlanetSurveyForm form) {
+		int surveyTeamSize = (int)form.getCrewmenCount().getValue();
+		if(surveyTeamSize > 0) {
+			if(surveyStatusContainer.isSurveyTeamSizeAcceptable(surveyTeamSize, calculateAvailableMen())) {
+				
+				SurveyStatusFactory ssf = new SurveyStatusFactory();
+				SurveyStatus ss = ssf.createSurveyStatus(
+						(int)playerStatus.getTime(), 
+						surveyTeamSize, 
+						(PlanetCelestialComponent)form.getPlanet()
+					);
+				
+				surveyStatusContainer.add(ss);
+				
+				updateIngameLog("Survey team of " + surveyTeamSize + " men and women dispatched.");
+			} else {
+				updateIngameLog("Cannot dispatch survey team (" + surveyTeamSize + "). Not enough crewmen available!" + playerStatus.getCrewmen());
+			}
+		}
+	}
+	
+	private int calculateAvailableMen() {
+		return playerStatus.getCrewmen() - surveyStatusContainer.crewmenOnSurvey();
+	}
+	
 	private void pauseGame(boolean pause) {
 		setGameStatusPaused(pause);
 		uiController.setGameStatusPaused(pause);
-	}
-	
-	@Override
-	public void dispose() {
-		canvas.destroy();
-	}
-
-	@Override
-	public void render () {	
-		canvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
-		canvas.drawGameContent();
-		
-		playerStatus.updateStatus();
-		uiController.updateUI(playerStatus);
-		
-		if(playerStatus.getCrewmen() == 0 && !gameStatusPaused) {
-			pauseGame(true);
-			BasicWindow gameOverWindow = uiController.createGameOverWindow(createGameOverClicklistener());
-			
-			windowContainer.add("gameOverWindow", gameOverWindow);
-			uiController.show(gameOverWindow);
-		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-			Gdx.app.exit();
-		}
 	}
 	
 	private ClickListener createGameOverClicklistener() {
@@ -204,7 +230,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			    	@Override
 			    	public void clicked(InputEvent event, float x, float y) {
 						windowContainer.closeWindow("surveyWindow");
-						final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad());
+						final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), calculateAvailableMen());
 						windowContainer.add("surveyedWindow", surveyedWindow);
 						uiController.show(surveyedWindow);
 			    	}
@@ -215,6 +241,19 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				uiController.show(surveyWindow);
 			};
 		};
+	}
+	
+	private void closeFinishedSurveys() {
+		SurveyStatus ss = surveyStatusContainer.isSurveyOver((int)playerStatus.getTime());
+		
+		if(ss != null) {
+			ArrayList<Mortality> mc = ss.getMortalities();
+
+			if(mc.size() > 0) {
+				updateIngameLog("You have lost " + mc.size() + " crewmen on survey.");
+				playerStatus.decreaseCrewmen(mc.size());
+			}
+		}
 	}
 	
 	private void updateIngameLog(String message) {

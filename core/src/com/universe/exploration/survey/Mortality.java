@@ -47,4 +47,13 @@ public class Mortality {
 	public void setCauseOfDeath(CauseOfDeath causeOfDeath) {
 		this.causeOfDeath = causeOfDeath;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Mortality [crewmenID=" + crewmenID + ", causeOfDeath="
+				+ causeOfDeath + "]";
+	}
 }

@@ -28,6 +28,7 @@ public class SurveyStatusFactory {
 		
 		int crewmenMortalityCount = calculateHowManyCrewmenWillDie(crewmenCount, planet);
 		
+		surveyStatus.setCrewmenInSurveyTeam(crewmenCount);
 		surveyStatus.setSurveyStartDay(startDay);
 		surveyStatus.setSurveyEndDay(startDay + 2);
 		surveyStatus.setResourcesFound(rff.generateFoundResource(planet));

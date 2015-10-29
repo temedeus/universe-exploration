@@ -29,6 +29,17 @@ public class SurveyStatus {
 
 	private ResourcesFound resourcesFound;
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SurveyStatus [crewmenInSurveyTeam=" + crewmenInSurveyTeam
+				+ ", surveyStartDay=" + surveyStartDay + ", surveyEndDay="
+				+ surveyEndDay + ", mortalities=" + mortalities
+				+ ", resourcesFound=" + resourcesFound + "]";
+	}
+
 	/**
 	 * @return the resourcesFound
 	 */
