@@ -61,9 +61,10 @@ public class UIController {
 	/**
 	 * <p>Visual representation of game log.</p>
 	 */
-	private final LogDisplay logDisplay = new LogDisplay(10, UEUiSkinBank.ueUISkin);
+	private final LogDisplay logDisplay;
 	
 	public UIController() {
+		logDisplay = new LogDisplay(10, UEUiSkinBank.ueUISkin);
 		uiStage = new Stage(new ScreenViewport());
 		leftsidePlayerStatus = new LeftSideHUD();
 		leftsidePlayerStatus.createPairs();
@@ -196,7 +197,7 @@ public class UIController {
 	public BasicWindow createGameOverWindow(ClickListener tryAgainAction) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 		BasicTable gameoverData = new BasicTable(Align.left | Align.top);
-		BasicWindow gameOverWindow = wf.createDescriptionWindow(Localizer.get("TITLE_GAME_OVER"), gameoverData, 
+		BasicWindow gameOverWindow = wf.createDescriptionWindowWithSecondaryAction(Localizer.get("TITLE_GAME_OVER"), gameoverData, 
 				Localizer.get("BTN_TRY_AGAIN"),
 				Localizer.get("BTN_QUIT_GAME"), 
 				tryAgainAction, 
@@ -269,7 +270,7 @@ public class UIController {
 		return window;
 	}
 	
-	private ClickListener createdPlanetSurveyTeamDispatchedClickListener(PlanetSurveyForm planetSurveyForm) {
+	private ClickListener createdPlanetSurveyTeamDispatchedClickListener(final PlanetSurveyForm planetSurveyForm) {
 		return new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {

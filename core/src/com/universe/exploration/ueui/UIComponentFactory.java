@@ -3,13 +3,9 @@
  */
 package com.universe.exploration.ueui;
 
-import java.util.HashMap;
-
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.universe.exploration.ueui.forms.FormContainer;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
 

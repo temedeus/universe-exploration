@@ -6,6 +6,8 @@ package com.universe.exploration.survey;
 import java.util.ArrayList;
 
 import com.universe.exploration.common.tools.MathTools;
+import com.universe.exploration.mortality.Mortality;
+import com.universe.exploration.mortality.MortalityFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -32,6 +34,7 @@ public class SurveyStatusFactory {
 		surveyStatus.setSurveyStartDay(startDay);
 		surveyStatus.setSurveyEndDay(startDay + 2);
 		surveyStatus.setResourcesFound(rff.generateFoundResource(planet));
+		
 		surveyStatus.setMortalities(createMortalityList(crewmenMortalityCount, planet));
 		
 		return surveyStatus;
@@ -40,7 +43,7 @@ public class SurveyStatusFactory {
 	private int calculateHowManyCrewmenWillDie(int crewmenCount, PlanetCelestialComponent planet) {
 		int count = 0;
 		
-		// TODO: implement some sort of logic. The way is added there because there should always be at least
+		// TODO: implement some sort of logic. The way "5" is added there because there should always be at least
 		// some risk of dying on a planet.
 		float chanceToDie = 5 + planet.getLifeforms().getRank() * 2;
 		

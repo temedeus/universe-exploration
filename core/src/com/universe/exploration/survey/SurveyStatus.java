@@ -5,6 +5,8 @@ package com.universe.exploration.survey;
 
 import java.util.ArrayList;
 
+import com.universe.exploration.mortality.Mortality;
+
 /**
  * @author 25.10.2015 Teemu Puurunen 
  *

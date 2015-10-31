@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.survey;
+package com.universe.exploration.mortality;
 
 /**
  * @author 25.10.2015 Teemu Puurunen 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.survey;
+package com.universe.exploration.mortality;
 
 /**
  * @author 25.10.2015 Teemu Puurunen 
@@ -17,6 +17,7 @@ public enum CauseOfDeath {
 	
 	// Civilization present
 	KILLED_BY_LOCALS("KIA_BY_LOCALS", CauseOfDeathCategory.CIVILIZATION),
+	SEDUCED_BY_AMAZONS("SEDUCED_BY_AMAZONS", CauseOfDeathCategory.CIVILIZATION),
 	
 	// General
 	FELL_OFF_CLIFF("FELL_OFF_CLIFF", CauseOfDeathCategory.GENERAL),

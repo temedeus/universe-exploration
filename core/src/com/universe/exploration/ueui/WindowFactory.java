@@ -160,8 +160,8 @@ public class WindowFactory {
 	 * @param pgfx
 	 * @return
 	 */
-	public BasicWindow createDescriptionWindow(String caption, BasicTable contentTable, String okButtonTitle, String secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
-	    final LargeWindow window = new LargeWindow(caption, windowStyle);
+	public BasicWindow createDescriptionWindowWithSecondaryAction(String caption, BasicTable contentTable, String okButtonTitle, String secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
+	    final SmallWindow window = new SmallWindow(caption, windowStyle);
 		
 		Table buttontable = new Table();
 		buttontable.add(bf.createTextButton(okButtonTitle, okAction));

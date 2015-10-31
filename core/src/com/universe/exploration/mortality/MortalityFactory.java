@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.survey;
+package com.universe.exploration.mortality;
 
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
@@ -23,6 +23,10 @@ public class MortalityFactory {
 	public Mortality makeMortality() {
 		Mortality mortality = new Mortality();
 		
+		ApplicableCauseOfDeathFactory acdf = new ApplicableCauseOfDeathFactory();
+		CauseOfDeathFactory codFactory = new CauseOfDeathFactory(acdf.createListofApplicableCauseOfDeath(planet));
+		
+		mortality.setCauseOfDeath(codFactory.createRandomCauseOfDeath());
 		mortality.setCrewmenID(1); // TODO: implement individual crewmen
 		
 		return mortality;

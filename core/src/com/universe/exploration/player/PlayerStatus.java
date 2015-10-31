@@ -3,11 +3,8 @@
  */
 package com.universe.exploration.player;
 
-import java.util.ArrayList;
-
 import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.common.tools.MathTools;
-import com.universe.exploration.survey.SurveyStatus;
 
 /**
  * 
@@ -100,6 +97,21 @@ public class PlayerStatus {
 	
 	public void decreaseCrewmen(int count) {
 		crewmen -= (crewmen - count >= 0) ?  count : 0; 
+	}
+	
+	public void increaseAir(float airInc) {
+		air += airInc;
+		if(air > 100) air = 100;
+	}
+	
+	public void increaseFood(float foodInc) {
+		food += foodInc;
+		if(food > 100) food = 100;
+	}
+	
+	public void increaseWater(float foodInc) {
+		water += foodInc;
+		if(water > 100) water = 100;
 	}
 	
 	/**

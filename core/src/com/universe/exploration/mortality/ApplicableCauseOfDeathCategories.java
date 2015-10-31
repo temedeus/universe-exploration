@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.survey;
+package com.universe.exploration.mortality;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author 25.10.2015 Teemu Puurunen 
  *
  */
-public class ListOfApplicableCauseOfDeath extends ArrayList<CauseOfDeathCategory>{
+public class ApplicableCauseOfDeathCategories extends ArrayList<CauseOfDeathCategory>{
 
 	/**
 	 * 

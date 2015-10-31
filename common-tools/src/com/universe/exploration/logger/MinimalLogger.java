@@ -1,7 +1,7 @@
 /**
  * 
  */
-package common.universe.exploration.logger;
+package com.universe.exploration.logger;
 
 import java.util.LinkedList;
 
@@ -13,7 +13,11 @@ public class MinimalLogger {
 	/**
 	 * Maintains 10 log items
 	 */
-	private LinkedList<String> log = new LinkedList<String>();
+	private LinkedList<String> log;
+	
+	public MinimalLogger() {
+		log = new LinkedList<String>();
+	}
 	
 	private final int logSize = 10;
 	

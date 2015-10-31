@@ -3,6 +3,8 @@
  */
 package com.universe.exploration.localization;
 
+
+
 /**
  * TODO: XML based localization
  * @author 25.8.2015 Teemu Puurunen 
@@ -50,7 +52,25 @@ public enum LocalEn {
 	DESC_PRESENT_LIFEFORMS_BACTERIAL("bacterial"),
 	
 	GENERAL_YES("Yes"),
-	GENERAL_NO("No");
+	GENERAL_NO("No"),
+	
+	
+	// Cause of death
+	HELMET_BREACH("Crewman died because of a helmet breach"),
+	RIP_ON_SUIT("Crewman had a rip on suit."),
+	
+	// Animals present
+	ATTACKED_BY_ANIMALS("Due to unfortunate attack by local wildlife a crewman was lost!"),
+	
+	// Civilization present
+	KILLED_BY_LOCALS("Due to native population a casualty was met!"),
+	SEDUCED_BY_AMAZONS("One of your crew decided to stay on the planet because of he was seduced by a native wildling!"),
+	
+	// General
+	FELL_OFF_CLIFF("Crewman met his early demise because of an unfortunate step into oblivion on a cliff."),
+	MALNUTRITION("Crewman got lost and died of hunger."),
+	CREWMEN_WENT_NUTS("Crewman could no longer take it and took his own life."),
+	WATER_DEPRIVATION("Crewman got lost and died of dehydration");
 	
 	private final String description;
 

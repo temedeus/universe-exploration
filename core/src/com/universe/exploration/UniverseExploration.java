@@ -12,15 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.camera.SpaceshipMonitor;
+import com.universe.exploration.common.tools.TextManipulationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
+import com.universe.exploration.localization.Localizer;
+import com.universe.exploration.logger.MinimalLogger;
+import com.universe.exploration.mortality.Mortality;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-import com.universe.exploration.survey.Mortality;
+import com.universe.exploration.survey.ResourcesFound;
 import com.universe.exploration.survey.SurveyStatus;
 import com.universe.exploration.survey.SurveyStatusContainer;
 import com.universe.exploration.survey.SurveyStatusFactory;
@@ -30,8 +34,6 @@ import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
-
-import common.universe.exploration.logger.MinimalLogger;
 
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
 	/**
@@ -248,11 +250,51 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		
 		if(ss != null) {
 			ArrayList<Mortality> mc = ss.getMortalities();
-
+			
 			if(mc.size() > 0) {
 				updateIngameLog("You have lost " + mc.size() + " crewmen on survey.");
+				printMortalityLog(mc);
 				playerStatus.decreaseCrewmen(mc.size());
+				
+			} else {
+				updateIngameLog("Entire survey team came back alive!");
 			}
+			
+			updateResources(ss.getResourcesFound());
+		}
+	}
+	
+	private void updateResources(ResourcesFound rf) {
+		ArrayList<String> resources = new ArrayList<String>();
+		
+		if(rf.getAir() > 0) {
+			resources.add(Localizer.get("air"));
+			playerStatus.increaseAir(rf.getAir());
+		}		
+		
+		if(rf.getFood() > 0) {
+			resources.add(Localizer.get("food"));
+			playerStatus.increaseFood(rf.getFood());
+		}	
+		
+		if(rf.getWater() > 0) {
+			resources.add(Localizer.get("water"));
+			playerStatus.increaseWater(rf.getWater());
+		}
+		
+		if(resources.size() == 0) {
+			updateIngameLog("You found nothing during your survey!");
+		} else {
+			updateIngameLog("During your survey you found: " + TextManipulationTools.joinArrayListString(resources, ", "));
+		}
+	}
+	
+
+	
+	private void printMortalityLog(ArrayList<Mortality> mc) {
+		for(Mortality mortality : mc) {
+			String localizationKey = mortality.getCauseOfDeath().getLocalizationKey();
+			updateIngameLog(" - " + Localizer.get(localizationKey));
 		}
 	}
 	

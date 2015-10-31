@@ -68,7 +68,7 @@ public class MathTools {
 	 * @return
 	 */
 	public static boolean calculateIfOddsHit(float percentage) {
-		return ((float)Math.random() < percentage) ? true : false;
+		return ((float)Math.random() < (percentage / 100)) ? true : false;
 	}
 	
 	public static String roundedFloatAsStringDefault(float f) {
