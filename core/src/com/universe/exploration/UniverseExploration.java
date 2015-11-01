@@ -30,6 +30,7 @@ import com.universe.exploration.survey.SurveyStatusContainer;
 import com.universe.exploration.survey.SurveyStatusFactory;
 import com.universe.exploration.ueui.UIController;
 import com.universe.exploration.ueui.WindowContainer;
+import com.universe.exploration.ueui.WindowTypes;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.view.GameObjectCanvas;
@@ -72,13 +73,15 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	@SuppressWarnings("unused")
 	private Stage uiStage;
 	
+	private ArrayList<String> planetNames; 
+	
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
 		basicSetup();
 		stageSetup();
-		
+		planetNames = new ArrayList<String>();
 		pauseGame(false);
 	}
 	
@@ -99,7 +102,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			pauseGame(true);
 			BasicWindow gameOverWindow = uiController.createGameOverWindow(createGameOverClicklistener());
 			
-			windowContainer.add("gameOverWindow", gameOverWindow);
+			windowContainer.add(WindowTypes.GAME_OVER, gameOverWindow);
 			uiController.show(gameOverWindow);
 		}
 		
@@ -143,7 +146,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			public void handleEventClassEvent(UEEvent e) {
 				if(e.getPayLoad() instanceof PlanetSurveyForm) {
 					startSurvey((PlanetSurveyForm)e.getPayLoad());
-					windowContainer.closeWindow("surveyedWindow");
+					windowContainer.closeWindow(WindowTypes.SURVEY_WINDOW);
 				}
 			};
 		});
@@ -186,7 +189,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    		stageSetup();
 	    		playerStatus = new PlayerStatus();
 	    		pauseGame(false);
-	    		windowContainer.closeWindow("gameOverWindow");
+	    		windowContainer.closeWindow(WindowTypes.GAME_OVER);
 	    	}
 	    };
 	}
@@ -231,15 +234,15 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				new ClickListener() {
 			    	@Override
 			    	public void clicked(InputEvent event, float x, float y) {
-						windowContainer.closeWindow("surveyWindow");
+						windowContainer.closeWindow(WindowTypes.PLANET_DETAILS);
 						final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), calculateAvailableMen());
-						windowContainer.add("surveyedWindow", surveyedWindow);
+						windowContainer.add(WindowTypes.SURVEY_WINDOW, surveyedWindow);
 						uiController.show(surveyedWindow);
 			    	}
 			    });
 				// TODO: this process must be made smarter
 				
-				windowContainer.add("surveyWindow", surveyWindow);
+				windowContainer.add(WindowTypes.PLANET_DETAILS, surveyWindow);
 				uiController.show(surveyWindow);
 			};
 		};

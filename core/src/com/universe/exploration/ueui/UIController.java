@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -51,7 +52,7 @@ public class UIController {
 	private LeftSideHUD leftsidePlayerStatus;
 	
 	private PlayerStatus playerStatus;
-	
+
 	/**
 	 * <p>This flag determines is hyperspace jump is allowed. Jump can be disabled for example when
 	 * game over window is shown.</p>
@@ -97,15 +98,17 @@ public class UIController {
 		uiStage.draw();
 	}
 	
-	public Table createLeftHUD() {
-		Table playerStatusTable = new Table();
-		playerStatusTable.setWidth(uiStage.getWidth());
-		playerStatusTable.align(Align.left | Align.top);
-		playerStatusTable.setPosition(0, Gdx.graphics.getHeight());
-		playerStatusTable.padTop(30);
-		playerStatusTable.padLeft(30);
+	public VerticalGroup createLeftHUD() {
+		VerticalGroup table = new VerticalGroup();
+		table.padTop(30);
+		table.padLeft(30);
+		table.align(Align.left | Align.top);
+		table.setPosition(0, Gdx.graphics.getHeight());
+		table.addActor(populateWithStatus());
+		
+		table.addActor(createPlanetSelectionTable());
 
-		return populateWithStatus(playerStatusTable);
+		return table;
 	}
 	
 	public Table createLogDisplay() {
@@ -122,14 +125,33 @@ public class UIController {
 		return table;
 	}
 	
-	private Table populateWithStatus(Table verticalGroup) {		
+	private VerticalGroup createPlanetSelectionTable() {
+		VerticalGroup table = new VerticalGroup();
+		table.align(Align.left | Align.bottom);
+		table.addActor(createSpacer());
+		table.addActor(new Label(Localizer.get("LABEL_PLANET_SELECTION"), UEUiSkinBank.ueUISkin));
+		table.addActor(createPlanetSelectBox());
+		table.addActor(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get("BTN_SURVEY"), new ClickListener() {
+			
+		}));
+		return table;
+	}
+	
+	private Table populateWithStatus() {		
+		Table playerStatusTable = new Table();
+		playerStatusTable.align(Align.left | Align.top);
+		
 		for(DataPair playerStatus : leftsidePlayerStatus.getPairList()) {
-			verticalGroup.add(playerStatus.getLabel()).left();
-			verticalGroup.add(playerStatus.getValue()).left();
-			verticalGroup.row();
+			playerStatusTable.add(playerStatus.getLabel()).left();
+			playerStatusTable.add(playerStatus.getValue()).left();
+			playerStatusTable.row();
 		}
 		
-		return verticalGroup;
+		return playerStatusTable;
+	}
+	
+	private Label createSpacer() {
+		return new Label("", UEUiSkinBank.ueUISkin);
 	}
 	
 	public void updateLog(LinkedList<String> logItems) {
@@ -152,6 +174,15 @@ public class UIController {
 		return table;
 	}
 	
+	private SelectBox createPlanetSelectBox() {
+		Object[] blob = new Object[2]; 
+		blob[0] = new Label("Some random text that", UEUiSkinBank.ueUISkin); 
+		blob[1] = new Label("isn't being displayed!", UEUiSkinBank.ueUISkin); 
+		final SelectBox<Object> sb = new SelectBox<Object>(UEUiSkinBank.ueUISkin); 
+		sb.setItems(blob); 
+		
+		return sb;
+	}
 	/**
 	 * Create HUD bottom. Add all the buttons and their actions.
 	 * @return

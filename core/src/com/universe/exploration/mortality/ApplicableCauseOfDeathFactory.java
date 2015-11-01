@@ -35,6 +35,9 @@ public class ApplicableCauseOfDeathFactory {
 			case BACTERIAL:
 				acd.add(CauseOfDeathCategory.BACTERIAL);
 				break;
+			case NONE:
+				// Just wanted to get rid of the warning without suppress. I guess this is cheating.
+				break;
 		}
 		
 		return acd;

@@ -73,6 +73,17 @@ public class GameViewObjectContainer {
 			}
 		}
 	}
+
+	public ArrayList<String> getPlanetNames() {
+		ArrayList<String> names = new ArrayList<String>();
+		
+		for(PlanetGfxContainer graphicsGfx : graphicsGfxContainer) {
+			String tmp = ((PlanetCelestialComponent)graphicsGfx.getCelestialBodyGfxModel().getStarSystemComponent()).getComponentName();
+			names.add(tmp);
+		}
+		
+		return names;
+	}
 	
 	/**
 	 * Returns null if no matchin planet found.
