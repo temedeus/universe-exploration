@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -70,6 +71,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	
 	private SurveyStatusContainer surveyStatusContainer;
 	
+	Sound backgroundMusic;
+	
 	@SuppressWarnings("unused")
 	private Stage uiStage;
 	
@@ -83,6 +86,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		stageSetup();
 		planetNames = new ArrayList<String>();
 		pauseGame(false);
+		
+		backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("space.mp3"));
+		backgroundMusic.loop();
 	}
 	
 	@Override
