@@ -1,6 +1,8 @@
 package com.universe.exploration.ueui;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -52,6 +54,8 @@ public class UIController {
 	private LeftSideHUD leftsidePlayerStatus;
 	
 	private PlayerStatus playerStatus;
+	
+	private List<PlanetCelestialComponent> planetList;
 
 	/**
 	 * <p>This flag determines is hyperspace jump is allowed. Jump can be disabled for example when
@@ -64,7 +68,8 @@ public class UIController {
 	 */
 	private final LogDisplay logDisplay;
 	
-	public UIController() {
+	public UIController(List<PlanetCelestialComponent> planetList) {
+		this.planetList = planetList;
 		logDisplay = new LogDisplay(10, UEUiSkinBank.ueUISkin);
 		uiStage = new Stage(new ScreenViewport());
 		leftsidePlayerStatus = new LeftSideHUD();
@@ -175,11 +180,15 @@ public class UIController {
 	}
 	
 	private SelectBox createPlanetSelectBox() {
-		Object[] blob = new Object[2]; 
-		blob[0] = new Label("Some random text that", UEUiSkinBank.ueUISkin); 
-		blob[1] = new Label("isn't being displayed!", UEUiSkinBank.ueUISkin); 
+		Object[] labelList = new Object[planetList.size()];
+		
+		int x=0;
+		for(PlanetCelestialComponent planet : planetList) {
+			labelList[x++] = "" + x + ": " + planet.getComponentName();
+		}
+		
 		final SelectBox<Object> sb = new SelectBox<Object>(UEUiSkinBank.ueUISkin); 
-		sb.setItems(blob); 
+		sb.setItems(labelList); 
 		
 		return sb;
 	}

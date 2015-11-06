@@ -33,7 +33,7 @@ public class SurveyStatusFactory {
 		surveyStatus.setCrewmenInSurveyTeam(crewmenCount);
 		surveyStatus.setSurveyStartDay(startDay);
 		surveyStatus.setSurveyEndDay(startDay + 2);
-		surveyStatus.setResourcesFound(rff.generateFoundResource(planet));
+		surveyStatus.setResourcesFound(rff.generateFoundResource(crewmenCount, planet));
 		
 		surveyStatus.setMortalities(createMortalityList(crewmenMortalityCount, planet));
 		

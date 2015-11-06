@@ -11,22 +11,21 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  *
  */
 public class ResourcesFoundFactory {
-	public ResourcesFound generateFoundResource(PlanetCelestialComponent planet) {
+	public ResourcesFound generateFoundResource(int crewSize, PlanetCelestialComponent planet) {
 		ResourcesFound r = new ResourcesFound();
 		
 		if(planet.isFoodFound()) {
-			float food = randomizeAmount(ResourcesFoundBoundaries.WATER);
+			float food = crewSize * randomizeAmount(ResourcesFoundBoundaries.WATER);
 			r.setFood(food);
 		}
 		
 		if(planet.isWaterFound()) {
-			float water = randomizeAmount(ResourcesFoundBoundaries.WATER);
+			float water = crewSize * randomizeAmount(ResourcesFoundBoundaries.WATER);
 			r.setWater(water);
 		}
 		
-		
 		if(planet.isOxygenFound()) {
-			float oxygen = randomizeAmount(ResourcesFoundBoundaries.AIR);
+			float oxygen = crewSize * randomizeAmount(ResourcesFoundBoundaries.AIR);
 			r.setAir(oxygen);
 		}
 		

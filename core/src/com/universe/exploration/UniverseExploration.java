@@ -76,15 +76,12 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	@SuppressWarnings("unused")
 	private Stage uiStage;
 	
-	private ArrayList<String> planetNames; 
-	
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		
 		basicSetup();
 		stageSetup();
-		planetNames = new ArrayList<String>();
 		pauseGame(false);
 		
 		backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("space.mp3"));
@@ -135,7 +132,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	}
 	
 	private void setupUiController() {
-		uiController = new UIController();
+		uiController = new UIController(starSystem.getPlanets());
+		
 		uiController.setHyperspaceJumpListener(new UEListener() {
 			@Override
 			public void handleEventClassEvent() {
