@@ -1,6 +1,5 @@
 package com.universe.exploration.ueui;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,8 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -33,6 +34,8 @@ import com.universe.exploration.ueui.data.container.LeftSideHUD;
 import com.universe.exploration.ueui.forms.FormContainer;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
+import com.universe.exploration.view.GameObjectCanvas;
+import com.universe.exploration.view.GameViewObjectContainer;
 import com.universe.exploration.view.PlanetGfxContainer;
 
 
@@ -56,7 +59,17 @@ public class UIController {
 	private PlayerStatus playerStatus;
 	
 	private List<PlanetCelestialComponent> planetList;
+	
+	private UEListener planetClickListener;
 
+	private UEListener volumeListener;
+	
+
+
+	final SelectBox<Object> planetSelectBox = new SelectBox<Object>(UEUiSkinBank.ueUISkin); 
+	
+	private GameViewObjectContainer gameViewObjectContainer = new GameViewObjectContainer();
+	
 	/**
 	 * <p>This flag determines is hyperspace jump is allowed. Jump can be disabled for example when
 	 * game over window is shown.</p>
@@ -68,8 +81,10 @@ public class UIController {
 	 */
 	private final LogDisplay logDisplay;
 	
-	public UIController(List<PlanetCelestialComponent> planetList) {
+	public UIController(GameViewObjectContainer gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
+		this.gameViewObjectContainer = gameViewObjectContainer;
 		this.planetList = planetList;
+		
 		logDisplay = new LogDisplay(10, UEUiSkinBank.ueUISkin);
 		uiStage = new Stage(new ScreenViewport());
 		leftsidePlayerStatus = new LeftSideHUD();
@@ -77,9 +92,48 @@ public class UIController {
 		
 		uiStage.addActor(createLeftHUD());
 		uiStage.addActor(createTopHUDTable());
+		//uiStage.addActor(createTopCenterHUDTable());
 		uiStage.addActor(createBottomHUDTable());
 		uiStage.addActor(createLogDisplay());
+		
 		gameStatusPaused = false;
+	}
+	
+	private HorizontalGroup createTopCenterHUDTable() {
+		ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
+		
+		HorizontalGroup table = new HorizontalGroup();
+		
+		table.align(Align.left | Align.top);
+		table.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
+		
+		table.addActor(createVolumeChangeButton(Localizer.get("BTN_MIN_VOLUME"), 0f));
+		table.addActor(createVolumeSlider());
+		table.addActor(createVolumeChangeButton(Localizer.get("BTN_MAX_VOLUME"), 100f));
+		
+		return table;
+	}
+	
+	private Slider createVolumeSlider() {
+		final Slider volumeSlider = new Slider(1, 100, 1, false, UEUiSkinBank.ueUISkin);
+		volumeSlider.addCaptureListener(new ClickListener() {
+			/* (non-Javadoc)
+			 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+			 */
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				fireVolumeChangedListener(volumeSlider.getValue());
+			}
+		});
+		
+		return volumeSlider;
+	}
+	
+	private void fireVolumeChangedListener(float newVolumeVal) {
+		long val = (long) newVolumeVal / 100;
+		if(val <= 100) {
+			volumeListener.handleEventClassEvent(new UEEvent(val));
+		}
 	}
 	
 	/**
@@ -137,7 +191,13 @@ public class UIController {
 		table.addActor(new Label(Localizer.get("LABEL_PLANET_SELECTION"), UEUiSkinBank.ueUISkin));
 		table.addActor(createPlanetSelectBox());
 		table.addActor(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get("BTN_SURVEY"), new ClickListener() {
-			
+			/* (non-Javadoc)
+			 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+			 */
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				firePlanetClickListener();
+			}
 		}));
 		return table;
 	}
@@ -179,7 +239,19 @@ public class UIController {
 		return table;
 	}
 	
-	private SelectBox createPlanetSelectBox() {
+	/**
+	 * <p>TODO: Fix this logic. We deal with both {@link PlanetGfxContainer} and {@link PlanetCelestialComponent}... wtf?!</p> 
+	 * <p>Check {@link GameObjectCanvas} and the firePlanetClickListener method there.</p>
+	 * <p>Currently the planet is dug out using the number in front of the planet list. This is not very smart
+	 * way to perform this. SelectBox seems to accept Object but I didn't figure out how to setup captions. </p>
+	 */
+	private void firePlanetClickListener() {
+		int planetIndex = Integer.parseInt(((String)planetSelectBox.getSelected()).substring(0,1)) - 1;
+		PlanetCelestialComponent planet = planetList.get(planetIndex);
+		planetClickListener.handleEventClassEvent(new UEEvent(gameViewObjectContainer.getPlanetGfxContainerByComponent(planet)));
+	}
+	
+	private SelectBox<Object> createPlanetSelectBox() {
 		Object[] labelList = new Object[planetList.size()];
 		
 		int x=0;
@@ -187,10 +259,9 @@ public class UIController {
 			labelList[x++] = "" + x + ": " + planet.getComponentName();
 		}
 		
-		final SelectBox<Object> sb = new SelectBox<Object>(UEUiSkinBank.ueUISkin); 
-		sb.setItems(labelList); 
+		planetSelectBox.setItems(labelList); 
 		
-		return sb;
+		return planetSelectBox;
 	}
 	/**
 	 * Create HUD bottom. Add all the buttons and their actions.
@@ -203,9 +274,28 @@ public class UIController {
 		table.setPosition(0,100);
 		table.padTop(30);
 		table.padRight(30);
+		
+		// TODO: Make volume toggle between 0-1.
+		table.addActor(createVolumeChangeButton(Localizer.get("BTN_MAX_VOLUME"), 100f));
+		table.addActor(createVolumeChangeButton(Localizer.get("BTN_MIN_VOLUME"), 0f));
+		
+
 		table.addActor(createQuitButton());
 		
 		return table;
+	}
+	
+	public TextButton createVolumeChangeButton(String caption, final float value) {
+		ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
+		return bf.createTextButton(caption, new ClickListener() {
+			/* (non-Javadoc)
+			 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+			 */
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				fireVolumeChangedListener(value);
+			}
+		});
 	}
 	
 	/**
@@ -389,5 +479,33 @@ public class UIController {
 	 */
 	public void setPlanetSurveyListener(UEListener planetSurveyListener) {
 		this.planetSurveyListener = planetSurveyListener;
+	}
+
+	/**
+	 * @return the planetClickListener
+	 */
+	public UEListener getPlanetClickListener() {
+		return planetClickListener;
+	}
+
+	/**
+	 * @param planetClickListener the planetClickListener to set
+	 */
+	public void setPlanetClickListener(UEListener planetClickListener) {
+		this.planetClickListener = planetClickListener;
+	}
+	
+	/**
+	 * @return the volumeListener
+	 */
+	public UEListener getVolumeListener() {
+		return volumeListener;
+	}
+
+	/**
+	 * @param volumeListener the volumeListener to set
+	 */
+	public void setVolumeListener(UEListener volumeListener) {
+		this.volumeListener = volumeListener;
 	}
 }

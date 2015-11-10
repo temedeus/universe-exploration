@@ -71,7 +71,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	
 	private SurveyStatusContainer surveyStatusContainer;
 	
-	Sound backgroundMusic;
+	private Sound backgroundMusic;
+	private long bgId;
 	
 	@SuppressWarnings("unused")
 	private Stage uiStage;
@@ -85,7 +86,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		pauseGame(false);
 		
 		backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("space.mp3"));
-		backgroundMusic.loop();
+		bgId = backgroundMusic.loop();
 	}
 	
 	@Override
@@ -125,6 +126,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		surveyStatusContainer = new SurveyStatusContainer();
 	}
 	
+	/**
+	 * First setup star system and then UiController because UI uses star system data.
+	 */
 	private void stageSetup() {
 		createStarSystem();
 		setupUiController();
@@ -132,13 +136,14 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	}
 	
 	private void setupUiController() {
-		uiController = new UIController(starSystem.getPlanets());
+		uiController = new UIController(canvas.getGameViewObjectContainer(), starSystem.getPlanets());
 		
+		uiController.setPlanetClickListener(createPlanetClickListener());
 		uiController.setHyperspaceJumpListener(new UEListener() {
 			@Override
 			public void handleEventClassEvent() {
 				if(!gameStatusPaused) {
-					createStarSystem();
+					stageSetup();
 					playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
 					updateIngameLog("Hyperspace jump commenced!");
 				}
@@ -153,6 +158,16 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 					windowContainer.closeWindow(WindowTypes.SURVEY_WINDOW);
 				}
 			};
+		});
+		
+		uiController.setVolumeListener(new UEListener() {
+			/* (non-Javadoc)
+			 * @see com.universe.exploration.listener.UEListener#handleEventClassEvent()
+			 */
+			@Override
+			public void handleEventClassEvent(UEEvent e) {
+				backgroundMusic.setVolume(bgId, ((Long)e.getPayLoad()));
+			}
 		});
 	}
 	

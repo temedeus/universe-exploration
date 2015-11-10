@@ -19,6 +19,9 @@ public enum LocalEn {
 	BTN_HYPERSPACE_JUMP("Hyperspace jump"),
 	BTN_SURVEY("Survey"),
 	
+	BTN_MAX_VOLUME("Max volume"),
+	BTN_MIN_VOLUME("Min volume"),
+	
 	// Titles
 	TITLE_QUIT_GAME("Quit game"),
 	TITLE_CREWMEN_LEFT("Crewmen left: "),

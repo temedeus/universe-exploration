@@ -78,7 +78,7 @@ public class GameObjectCanvas {
 		
 		gameStatusPaused = false;
 	}
-	
+
 	public void destroy() {
 		liveComponentBatch.dispose();
 		backgroundBatch.dispose();
@@ -192,4 +192,10 @@ public class GameObjectCanvas {
 		this.gameStatusPaused = gameStatusPaused;
 	}
 
+	/**
+	 * @return the gameViewObjectContainer
+	 */
+	public GameViewObjectContainer getGameViewObjectContainer() {
+		return gameViewObjectContainer;
+	}
 }

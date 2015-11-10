@@ -85,6 +85,15 @@ public class GameViewObjectContainer {
 		return names;
 	}
 	
+	public PlanetGfxContainer getPlanetGfxContainerByComponent(PlanetCelestialComponent planet) {
+		for(PlanetGfxContainer graphcisGfx : graphicsGfxContainer) {
+			if(graphcisGfx.getComponentType() == planet) {
+				return graphcisGfx;
+			}
+		}
+		
+		return null;
+	}
 	/**
 	 * Returns null if no matchin planet found.
 	 * @param coordinates
