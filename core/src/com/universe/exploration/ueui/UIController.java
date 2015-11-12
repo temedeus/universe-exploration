@@ -190,9 +190,10 @@ public class UIController {
 	private VerticalGroup createPlanetSelectionTable() {
 		VerticalGroup table = new VerticalGroup();
 		table.align(Align.left | Align.bottom);
+		table.addActor(createSpacer());
 		
 		if(planetList.size() > 0) {
-			table.addActor(createSpacer());
+			
 			table.addActor(new Label(Localizer.get("LABEL_PLANET_SELECTION"), UEUiSkinBank.ueUISkin));
 			table.addActor(createPlanetSelectBox());
 			table.addActor(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get("BTN_SURVEY"), new ClickListener() {
@@ -204,6 +205,8 @@ public class UIController {
 					firePlanetClickListener();
 				}
 			}));
+		} else {
+			table.addActor(new Label(Localizer.get(LocalKeys.LABEL_NO_PLANETS_FOUND.getLocalKey()), UEUiSkinBank.ueUISkin));
 		}
 
 		return table;

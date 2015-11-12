@@ -9,7 +9,8 @@ package com.universe.exploration.localization;
  */
 public enum LocalKeys {
 	TITLE_SURVEY_PLANET("TITLE_SURVEY_PLANET"),
-	TITLE_QUIT_GAME("TITLE_QUIT_GAME");
+	TITLE_QUIT_GAME("TITLE_QUIT_GAME"),
+	LABEL_NO_PLANETS_FOUND("LABEL_NO_PLANETS_FOUND");
 	
 	private final String localKey;
 	

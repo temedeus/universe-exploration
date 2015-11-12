@@ -38,6 +38,7 @@ public enum LocalEn {
 	// Labels
 	LABEL_CREWMEN_COUNT("Crewmen count:"),
 	LABEL_PLANET_SELECTION("Select planet:"),
+	LABEL_NO_PLANETS_FOUND("No planets found"),
 	
 	// Descriptions
 	DESC_QUIT_GAME("Are you sure you wish to quit?"),
