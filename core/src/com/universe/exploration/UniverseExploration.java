@@ -113,7 +113,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		closeFinishedSurveys();
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-			Gdx.app.exit();
+			uiController.createQuitDialog();
 		}
 	}
 	

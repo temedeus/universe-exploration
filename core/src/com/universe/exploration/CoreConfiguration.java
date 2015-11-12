@@ -31,4 +31,6 @@ public class CoreConfiguration {
 	public static final float TIME_FLOW = 0.005f;
 	
 	public static final float TIME_START = 0;
+	
+	public static final String WEBSITE_URL = "http://www.universe-exploration.com";
 }

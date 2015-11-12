@@ -4,6 +4,7 @@
 package com.universe.exploration.ueui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.ueui.components.LargeWindow;
 import com.universe.exploration.ueui.components.MediumWindow;
@@ -46,6 +48,10 @@ public class WindowFactory {
 		return createOkWindow(caption, new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
+	    		if(Gdx.app.getType().equals(ApplicationType.WebGL)) {
+	    			Gdx.net.openURI(CoreConfiguration.WEBSITE_URL);
+	    		}
+
 	    		Gdx.app.exit();
 	    	}
 	    });

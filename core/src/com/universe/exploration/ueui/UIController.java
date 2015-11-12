@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,8 +20,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
+import com.universe.exploration.localization.LocalKeys;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.PlayerStatusItemkeys;
@@ -187,18 +190,22 @@ public class UIController {
 	private VerticalGroup createPlanetSelectionTable() {
 		VerticalGroup table = new VerticalGroup();
 		table.align(Align.left | Align.bottom);
-		table.addActor(createSpacer());
-		table.addActor(new Label(Localizer.get("LABEL_PLANET_SELECTION"), UEUiSkinBank.ueUISkin));
-		table.addActor(createPlanetSelectBox());
-		table.addActor(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get("BTN_SURVEY"), new ClickListener() {
-			/* (non-Javadoc)
-			 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-			 */
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				firePlanetClickListener();
-			}
-		}));
+		
+		if(planetList.size() > 0) {
+			table.addActor(createSpacer());
+			table.addActor(new Label(Localizer.get("LABEL_PLANET_SELECTION"), UEUiSkinBank.ueUISkin));
+			table.addActor(createPlanetSelectBox());
+			table.addActor(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get("BTN_SURVEY"), new ClickListener() {
+				/* (non-Javadoc)
+				 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+				 */
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					firePlanetClickListener();
+				}
+			}));
+		}
+
 		return table;
 	}
 	
@@ -334,6 +341,10 @@ public class UIController {
 				new ClickListener() {
 			    	@Override
 			    	public void clicked(InputEvent event, float x, float y) {
+			    		if(Gdx.app.getType().equals(ApplicationType.WebGL)) {
+			    			Gdx.net.openURI(CoreConfiguration.WEBSITE_URL);
+			    		}
+
 			    		Gdx.app.exit();
 			    	}
 			    });
@@ -350,18 +361,22 @@ public class UIController {
 	 * Create quit button
 	 * @return
 	 */
-	public TextButton createQuitButton() {
+	private TextButton createQuitButton() {
 		ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
-		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
-		
+
 		return bf.createTextButton(Localizer.get("BTN_QUIT_GAME"), new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				uiStage.addActor(wf.createQuitWindow(Localizer.get("TITLE_QUIT_GAME")));
+				createQuitDialog();
 			}
 		});
 	}
 
+	public void createQuitDialog() {
+		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
+		uiStage.addActor(wf.createQuitWindow(Localizer.get(LocalKeys.TITLE_QUIT_GAME.getLocalKey())));
+	}
+	
 	/**
 	 * Planetary survey window. 
 	 * @param pgfx
@@ -372,7 +387,7 @@ public class UIController {
 		
 		Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
 		
-		return wf.createLargeDescriptionWindow(Localizer.get("TITLE_SURVEY_PLANET"), planetInformationTable, okAction);
+		return wf.createLargeDescriptionWindow(Localizer.get(LocalKeys.TITLE_SURVEY_PLANET.getLocalKey()), planetInformationTable, okAction);
 	}
 
 	public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {
