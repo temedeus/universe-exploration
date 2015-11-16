@@ -42,8 +42,8 @@ public class CelestialBodyGfxModel  implements IStarsystemBodyGfxModel {
 	}
 	
 	public void updateSpriteData() {
-		this.positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float)Math.cos((float)angle));
-		this.positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float)Math.sin((float)angle));
+		positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float)Math.cos((float)angle));
+		positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float)Math.sin((float)angle));
 		
 		angle += ((PlanetCelestialComponent) starSystemComponent).getOrbitalVelocity();
 	}

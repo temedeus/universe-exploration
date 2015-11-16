@@ -160,6 +160,17 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			};
 		});
 		
+		uiController.setSelectedPlanetChangedListener(new UEListener() {
+			/* (non-Javadoc)
+			 * @see com.universe.exploration.listener.UEListener#handleEventClassEvent(com.universe.exploration.listener.UEEvent)
+			 */
+			@Override
+			public void handleEventClassEvent(UEEvent e) {
+				PlanetCelestialComponent planet = (PlanetCelestialComponent)e.getPayLoad();
+				canvas.setSelectedPlanet(planet);
+			}
+		});
+		
 		uiController.setVolumeListener(new UEListener() {
 			/* (non-Javadoc)
 			 * @see com.universe.exploration.listener.UEListener#handleEventClassEvent()

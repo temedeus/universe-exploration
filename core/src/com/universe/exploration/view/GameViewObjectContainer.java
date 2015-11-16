@@ -9,6 +9,8 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.universe.exploration.model.CelestialBodyGfxModel;
+import com.universe.exploration.model.PlanetGfxModel;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
@@ -17,42 +19,49 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  * Maintains all the views used in the current game scene.
  * Basically works as a controller between model and view.
  * 
+ * TODO: currently deals with planets only :D FIX THIS!!! 
+ * ...or rename it at least :D
+ * 
  * @author 4.8.2015 Teemu Puurunen 
  */
 public class GameViewObjectContainer {
 	/** 
 	 * Planets
 	 */
-	private ArrayList<PlanetGfxContainer> graphicsGfxContainer;
+	private ArrayList<PlanetGfxContainer> planetGfxContainer;
 
 	public GameViewObjectContainer() {
-		graphicsGfxContainer = new ArrayList<PlanetGfxContainer>();
+		planetGfxContainer = new ArrayList<PlanetGfxContainer>();
 	}
 	
 	/**
 	 * Add single star system object into arraylist
 	 * @param starsystemObject
 	 */
-	public void addStarSystemObject(CelestialComponent starSystemComponent) {
+	public void addStarPlanet(CelestialComponent starSystemComponent) {
 
 		if(starSystemComponent instanceof PlanetCelestialComponent) {
-			graphicsGfxContainer.add(new PlanetGfxContainer(starSystemComponent));
+			planetGfxContainer.add(new PlanetGfxContainer(starSystemComponent));
 		}	
+	}
+	
+	public PlanetGfxContainer getPlanetGfxContainerAtIndex(int i) {
+		return planetGfxContainer.get(i);
 	}
 	
 	/**
 	 * Add multiple star system objects into arraylist
 	 * @param starsystemObjects
 	 */
-	public void addMultipleStarSystemObjects(List<CelestialComponent> starSystemComponents) {
+	public void addMultiplePlanets(List<CelestialComponent> starSystemComponents) {
 		for(CelestialComponent starSystemComponent : starSystemComponents) {
-			addStarSystemObject(starSystemComponent);
+			addStarPlanet(starSystemComponent);
 		}
 	}
 	
 	public ArrayList<Sprite> getPlanetSprites() {
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		for(PlanetGfxContainer graphicsGfx : graphicsGfxContainer) {
+		for(PlanetGfxContainer graphicsGfx : planetGfxContainer) {
 			sprites.add(graphicsGfx.getSprite());
 		
 		}
@@ -63,7 +72,7 @@ public class GameViewObjectContainer {
 	 * Draw sprites on screen and update their position and angles
 	 */
 	public void update() {
-		for(PlanetGfxContainer graphicsGfx : graphicsGfxContainer) {
+		for(PlanetGfxContainer graphicsGfx : planetGfxContainer) {
 			if(graphicsGfx instanceof PlanetGfxContainer) {
 				try {
 					graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();
@@ -77,7 +86,7 @@ public class GameViewObjectContainer {
 	public ArrayList<String> getPlanetNames() {
 		ArrayList<String> names = new ArrayList<String>();
 		
-		for(PlanetGfxContainer graphicsGfx : graphicsGfxContainer) {
+		for(PlanetGfxContainer graphicsGfx : planetGfxContainer) {
 			String tmp = ((PlanetCelestialComponent)graphicsGfx.getCelestialBodyGfxModel().getStarSystemComponent()).getComponentName();
 			names.add(tmp);
 		}
@@ -86,7 +95,7 @@ public class GameViewObjectContainer {
 	}
 	
 	public PlanetGfxContainer getPlanetGfxContainerByComponent(PlanetCelestialComponent planet) {
-		for(PlanetGfxContainer graphcisGfx : graphicsGfxContainer) {
+		for(PlanetGfxContainer graphcisGfx : planetGfxContainer) {
 			if(graphcisGfx.getComponentType() == planet) {
 				return graphcisGfx;
 			}
@@ -95,12 +104,12 @@ public class GameViewObjectContainer {
 		return null;
 	}
 	/**
-	 * Returns null if no matchin planet found.
+	 * Returns null if no matching planet found.
 	 * @param coordinates
 	 * @return
 	 */
 	public PlanetGfxContainer getPlanetWithCoordinatesWithinBoundaries(Vector3 coordinates) {
-		for(PlanetGfxContainer graphicsGfx : graphicsGfxContainer) {
+		for(PlanetGfxContainer graphicsGfx : planetGfxContainer) {
 			if(graphicsGfx instanceof PlanetGfxContainer) {
 				try {
 					Rectangle planetRectangle = graphicsGfx.getSprite().getBoundingRectangle();
@@ -112,10 +121,16 @@ public class GameViewObjectContainer {
 					if(planetRectangle.contains(coordinates.x, coordinates.y)) {
 						return graphicsGfx;
 					}
-				} catch(NullPointerException e) { }	
+				} catch(NullPointerException e) { 
+					// Shouldn't happen
+				}
 			}
 		}
 		
 		return null;
+	}
+	
+	public int getPlanetCount() {
+		return planetGfxContainer.size();
 	}
 }

@@ -9,10 +9,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.universe.exploration.GdxHelper;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
+import com.universe.exploration.model.CelestialBodyGfxModel;
+import com.universe.exploration.model.PlanetGfxModel;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
@@ -25,7 +29,9 @@ public class GameObjectCanvas {
 	private Sprite star;
 	private StarSystem starSystem;
 	private boolean gameStatusPaused;
-
+	private ShapeRenderer shapeRenderer;
+	private PlanetGfxContainer selectedPlanet;
+	
 	/** 
 	 * Camera describing planets etc.
 	 */
@@ -43,6 +49,8 @@ public class GameObjectCanvas {
 	
 	private UEListener planetClickListener;
 	
+	private float varyingRadius = 10;
+	
 	/**
 	 * Generates graphical representation based on given star system
 	 * 
@@ -50,6 +58,9 @@ public class GameObjectCanvas {
 	 */
 	public GameObjectCanvas(StarSystem starSystem) {
 		this.starSystem = starSystem;
+		
+		// For drawing miscellaneous shapes.
+		shapeRenderer = new ShapeRenderer();
 		
 		liveComponentBatch = new SpriteBatch();
 		backgroundBatch = new SpriteBatch();
@@ -73,7 +84,12 @@ public class GameObjectCanvas {
 		gameViewObjectContainer = new GameViewObjectContainer();
 		
 		for(PlanetCelestialComponent planet : listOfPlanets) {
-			gameViewObjectContainer.addStarSystemObject(planet);
+			gameViewObjectContainer.addStarPlanet(planet);
+		}
+		
+		// Initially select the first planet (visual borders).
+		if(listOfPlanets.size() > 0) {
+			selectedPlanet = gameViewObjectContainer.getPlanetGfxContainerAtIndex(0);
 		}
 		
 		gameStatusPaused = false;
@@ -97,10 +113,13 @@ public class GameObjectCanvas {
 		
 		handleBackgroundBatch();
 		handleLiveComponentBatch();
+		
+		drawEnhancement();
 	}
 	
 	public void handleLiveComponentBatch() {
 		liveComponentBatch.setProjectionMatrix(camera.combined);
+		shapeRenderer.setProjectionMatrix(camera.combined);
 		liveComponentBatch.begin();
 		
 		// TODO: sort this offset. It likely has something to do with initiating the sprite and its offsets etc.
@@ -123,6 +142,20 @@ public class GameObjectCanvas {
 		liveComponentBatch.end();
 	}
 	
+	private void drawEnhancement() {
+		varyingRadius += 1;
+		if(varyingRadius >= 60) {
+			varyingRadius = 10;
+		}
+		
+		if(gameViewObjectContainer.getPlanetCount() > 0) {
+			shapeRenderer.setColor(Color.BLUE);
+			shapeRenderer.begin(ShapeType.Line);
+			shapeRenderer.circle(selectedPlanet.getSprite().getX()+selectedPlanet.getSprite().getWidth()/2, selectedPlanet.getSprite().getY()+selectedPlanet.getSprite().getHeight()/2 , varyingRadius);
+			shapeRenderer.end();
+		}
+	}
+	
 	public void checkIfHitCoordinatesMatchPlanets() {
 		int x1 = Gdx.input.getX();
 		int y1 = Gdx.input.getY();
@@ -137,6 +170,10 @@ public class GameObjectCanvas {
 		} catch(NullPointerException e) {
 			
 		}
+	}
+	
+	public void setSelectedPlanet(PlanetCelestialComponent planet) {
+		selectedPlanet = gameViewObjectContainer.getPlanetGfxContainerByComponent(planet);
 	}
 	
 	private void firePlanetClickListener(PlanetGfxContainer pgfx) {

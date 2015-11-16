@@ -6,6 +6,8 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -16,7 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -67,9 +71,9 @@ public class UIController {
 
 	private UEListener volumeListener;
 	
+	private UEListener selectedPlanetChangedListener;
 
-
-	final SelectBox<Object> planetSelectBox = new SelectBox<Object>(UEUiSkinBank.ueUISkin); 
+	private final SelectBox<Object> planetSelectBox = new SelectBox<Object>(UEUiSkinBank.ueUISkin); 
 	
 	private GameViewObjectContainer gameViewObjectContainer = new GameViewObjectContainer();
 	
@@ -256,9 +260,13 @@ public class UIController {
 	 * way to perform this. SelectBox seems to accept Object but I didn't figure out how to setup captions. </p>
 	 */
 	private void firePlanetClickListener() {
+
+		planetClickListener.handleEventClassEvent(new UEEvent(gameViewObjectContainer.getPlanetGfxContainerByComponent(parsePlanetFromSelectBox())));
+	}
+	
+	private PlanetCelestialComponent parsePlanetFromSelectBox() {
 		int planetIndex = Integer.parseInt(((String)planetSelectBox.getSelected()).substring(0,1)) - 1;
-		PlanetCelestialComponent planet = planetList.get(planetIndex);
-		planetClickListener.handleEventClassEvent(new UEEvent(gameViewObjectContainer.getPlanetGfxContainerByComponent(planet)));
+		return planetList.get(planetIndex);
 	}
 	
 	private SelectBox<Object> createPlanetSelectBox() {
@@ -270,9 +278,20 @@ public class UIController {
 		}
 		
 		planetSelectBox.setItems(labelList); 
-		
+		planetSelectBox.addCaptureListener(new ChangeListener() {
+			
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				fireSelectedPlanetChangedListener();
+			}
+		});
 		return planetSelectBox;
 	}
+	
+	private void fireSelectedPlanetChangedListener() {
+		selectedPlanetChangedListener.handleEventClassEvent(new UEEvent(parsePlanetFromSelectBox()));
+	}
+	
 	/**
 	 * Create HUD bottom. Add all the buttons and their actions.
 	 * @return
@@ -526,4 +545,21 @@ public class UIController {
 	public void setVolumeListener(UEListener volumeListener) {
 		this.volumeListener = volumeListener;
 	}
+	
+
+	/**
+	 * @return the selectedPlanetChangedListener
+	 */
+	public UEListener getSelectedPlanetChangedListener() {
+		return selectedPlanetChangedListener;
+	}
+
+	/**
+	 * @param selectedPlanetChangedListener the selectedPlanetChangedListener to set
+	 */
+	public void setSelectedPlanetChangedListener(
+			UEListener selectedPlanetChangedListener) {
+		this.selectedPlanetChangedListener = selectedPlanetChangedListener;
+	}
+
 }
