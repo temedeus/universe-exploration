@@ -15,8 +15,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.universe.exploration.GdxHelper;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
-import com.universe.exploration.model.CelestialBodyGfxModel;
-import com.universe.exploration.model.PlanetGfxModel;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 

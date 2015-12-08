@@ -4,7 +4,6 @@
 package com.universe.exploration.ueui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,13 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.localization.Localizer;
+import com.universe.exploration.ueui.components.BasicTable;
+import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.components.LargeWindow;
 import com.universe.exploration.ueui.components.MediumWindow;
 import com.universe.exploration.ueui.components.SmallWindow;
-import com.universe.exploration.ueui.components.BasicTable;
-import com.universe.exploration.ueui.components.BasicWindow;
 
 /**
  * <p>A lot of these windows are not very abstract by nature. This game probably never requires
@@ -48,10 +46,6 @@ public class WindowFactory {
 		return createOkWindow(caption, new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
-	    		if(Gdx.app.getType().equals(ApplicationType.WebGL)) {
-	    			Gdx.net.openURI(CoreConfiguration.WEBSITE_URL);
-	    		}
-
 	    		Gdx.app.exit();
 	    	}
 	    });
@@ -123,6 +117,30 @@ public class WindowFactory {
 		buttontable.add(bf.createTextButton(Localizer.get("BTN_SURVEY"), okAction));
 		
 		buttontable.add(bf.createTextButton(Localizer.get("BTN_CANCEL"), new ClickListener() {
+	    	@Override
+	    	public void clicked(InputEvent event, float x, float y) {
+	    		window.remove();
+	    	}
+	    }));
+		
+		buttontable.row();
+
+		window.add(combineDataAndButtonbar((Table)contentTable, buttontable));
+	    
+	    return window; 
+	}
+	
+	/**
+	 * Creates a description window.
+	 * @param pgfx
+	 * @return
+	 */
+	public <T extends Actor> BasicWindow createOKWindow(String caption, T contentTable) {
+	    final LargeWindow window = new LargeWindow(caption, windowStyle);
+		
+		Table buttontable = new Table();
+
+		buttontable.add(bf.createTextButton(Localizer.get("BTN_OK"), new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
 	    		window.remove();

@@ -34,6 +34,7 @@ public enum LocalEn {
 	TITLE_LIFEFORMS_BACTERIAL("bacterial"),
 	TITLE_LIFEFORMS_NONE("none"),
 	TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN("Survey team crew members:"),
+	TITLE_SURVEY_CLOSED("Survey closed"),
 	
 	// Labels
 	LABEL_CREWMEN_COUNT("Crewmen count:"),

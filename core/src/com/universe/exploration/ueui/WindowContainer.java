@@ -19,6 +19,10 @@ public class WindowContainer {
 	}
 	
 	public void add(WindowTypes key, BasicWindow window) {
+		if(hasWindow(key)) {
+			windowmap.get(key).remove();
+		}
+		
 		windowmap.put(key, window);
 	}
 	

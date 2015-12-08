@@ -8,5 +8,5 @@ package com.universe.exploration.ueui;
  *
  */
 public enum WindowTypes {
-	SURVEY_WINDOW, GAME_OVER, PLANET_DETAILS
+	SURVEY_WINDOW, GAME_OVER, PLANET_DETAILS, SURVEY_CLOSED
 }

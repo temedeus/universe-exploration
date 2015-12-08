@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -73,7 +74,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	
 	private Sound backgroundMusic;
 	private long bgId;
-	
+
 	@SuppressWarnings("unused")
 	private Stage uiStage;
 	
@@ -112,7 +113,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		
 		closeFinishedSurveys();
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && !Gdx.app.getType().equals(ApplicationType.WebGL)) {
+			
 			uiController.createQuitDialog();
 		}
 	}
@@ -177,7 +179,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			 */
 			@Override
 			public void handleEventClassEvent(UEEvent e) {
-				backgroundMusic.setVolume(bgId, ((Long)e.getPayLoad()));
+				Float volume = (Float)e.getPayLoad();
+				backgroundMusic.setVolume(bgId, volume);
 			}
 		});
 	}
@@ -280,25 +283,60 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	
 	private void closeFinishedSurveys() {
 		SurveyStatus ss = surveyStatusContainer.isSurveyOver((int)playerStatus.getTime());
+		showSurveyCompleteNotification(ss);
+	}
+	
+	private void showSurveyCompleteNotification(SurveyStatus ss) {
+		
 		
 		if(ss != null) {
+			String caption = "";
+			Sound announcement = Gdx.audio.newSound(Gdx.files.internal("announcement.ogg"));
+			announcement.play();
 			ArrayList<Mortality> mc = ss.getMortalities();
 			
 			if(mc.size() > 0) {
-				updateIngameLog("You have lost " + mc.size() + " crewmen on survey.");
+				caption = "You have lost " + mc.size() + " crewmen on survey.";
+				updateIngameLog(caption);
 				printMortalityLog(mc);
 				playerStatus.decreaseCrewmen(mc.size());
 				
 			} else {
-				updateIngameLog("Entire survey team came back alive!");
+				caption = "Entire survey team came back alive!";
+				updateIngameLog(caption);
 			}
 			
-			updateResources(ss.getResourcesFound());
+			ResourcesFound rf = ss.getResourcesFound();
+			String resourcesCaption = updateResources(rf);
+			
+			final BasicWindow surveyClosedWindow = uiController.createSurveyClosedWindow(generateSurveyDataRows(caption, resourcesCaption, mc, rf));
+			
+			windowContainer.add(WindowTypes.SURVEY_CLOSED, surveyClosedWindow);
+			
+			uiController.show(surveyClosedWindow);
 		}
 	}
 	
-	private void updateResources(ResourcesFound rf) {
+	private ArrayList<String> generateSurveyDataRows(String caption, String resourcesCaption, ArrayList<Mortality> mc, ResourcesFound rf) {
+		ArrayList<String> surveydata = new ArrayList<String>();
+		
+		surveydata.add(caption);
+		if(mc.size() > 0 ) {
+			for(Mortality mortality : mc) {
+				surveydata.add(Localizer.get(mortality.getCauseOfDeath().getLocalizationKey()));
+			}
+		}
+		
+		surveydata.add("");
+		surveydata.add(resourcesCaption);
+		
+
+		return surveydata;
+	}
+	
+	private String updateResources(ResourcesFound rf) {
 		ArrayList<String> resources = new ArrayList<String>();
+		String caption = "";
 		
 		if(rf.getAir() > 0) {
 			resources.add(Localizer.get("air"));
@@ -316,10 +354,14 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		}
 		
 		if(resources.size() == 0) {
-			updateIngameLog("You found nothing during your survey!");
+			caption = "You found nothing during your survey!";
+			updateIngameLog(caption);
 		} else {
-			updateIngameLog("During your survey you found: " + TextManipulationTools.joinArrayListString(resources, ", "));
+			caption = "During your survey you found: " + TextManipulationTools.joinArrayListString(resources, ", ");
+			updateIngameLog(caption);
 		}
+		
+		return caption;
 	}
 	
 

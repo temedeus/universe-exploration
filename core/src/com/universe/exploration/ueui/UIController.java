@@ -1,13 +1,12 @@
 package com.universe.exploration.ueui;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -20,11 +19,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKeys;
@@ -69,10 +66,19 @@ public class UIController {
 	
 	private UEListener planetClickListener;
 
+	/** 
+	 * Listen for change in volume.
+	 */
 	private UEListener volumeListener;
 	
+	/**
+	 * Listen for selected planet in {@link #planetSelectBox}.
+	 */
 	private UEListener selectedPlanetChangedListener;
 
+	/**
+	 * Planets in the current star system.
+	 */
 	private final SelectBox<Object> planetSelectBox = new SelectBox<Object>(UEUiSkinBank.ueUISkin); 
 	
 	private GameViewObjectContainer gameViewObjectContainer = new GameViewObjectContainer();
@@ -99,7 +105,7 @@ public class UIController {
 		
 		uiStage.addActor(createLeftHUD());
 		uiStage.addActor(createTopHUDTable());
-		//uiStage.addActor(createTopCenterHUDTable());
+		uiStage.addActor(createTopCenterHUDTable());
 		uiStage.addActor(createBottomHUDTable());
 		uiStage.addActor(createLogDisplay());
 		
@@ -107,12 +113,10 @@ public class UIController {
 	}
 	
 	private HorizontalGroup createTopCenterHUDTable() {
-		ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
-		
 		HorizontalGroup table = new HorizontalGroup();
 		
 		table.align(Align.left | Align.top);
-		table.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
+		table.setPosition(Gdx.graphics.getWidth() / 2 - 200, Gdx.graphics.getHeight());
 		
 		table.addActor(createVolumeChangeButton(Localizer.get("BTN_MIN_VOLUME"), 0f));
 		table.addActor(createVolumeSlider());
@@ -123,7 +127,7 @@ public class UIController {
 	
 	private Slider createVolumeSlider() {
 		final Slider volumeSlider = new Slider(1, 100, 1, false, UEUiSkinBank.ueUISkin);
-		volumeSlider.addCaptureListener(new ClickListener() {
+		volumeSlider.addListener(new ClickListener() {
 			/* (non-Javadoc)
 			 * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
 			 */
@@ -137,7 +141,7 @@ public class UIController {
 	}
 	
 	private void fireVolumeChangedListener(float newVolumeVal) {
-		long val = (long) newVolumeVal / 100;
+		float val = newVolumeVal / 100;
 		if(val <= 100) {
 			volumeListener.handleEventClassEvent(new UEEvent(val));
 		}
@@ -302,14 +306,11 @@ public class UIController {
 		table.align(Align.right | Align.bottom);
 		table.setPosition(0,100);
 		table.padTop(30);
-		table.padRight(30);
-		
-		// TODO: Make volume toggle between 0-1.
-		table.addActor(createVolumeChangeButton(Localizer.get("BTN_MAX_VOLUME"), 100f));
-		table.addActor(createVolumeChangeButton(Localizer.get("BTN_MIN_VOLUME"), 0f));
-		
+		table.padRight(30);	
 
-		table.addActor(createQuitButton());
+		if(!Gdx.app.getType().equals(ApplicationType.WebGL)) {
+			table.addActor(createQuitButton());
+		}
 		
 		return table;
 	}
@@ -363,11 +364,9 @@ public class UIController {
 				new ClickListener() {
 			    	@Override
 			    	public void clicked(InputEvent event, float x, float y) {
-			    		if(Gdx.app.getType().equals(ApplicationType.WebGL)) {
-			    			Gdx.net.openURI(CoreConfiguration.WEBSITE_URL);
-			    		}
-
-			    		Gdx.app.exit();
+			    		if(!Gdx.app.getType().equals(ApplicationType.WebGL)) {
+			    			Gdx.app.exit();
+			    		}	
 			    	}
 			    });
 	
@@ -397,6 +396,19 @@ public class UIController {
 	public void createQuitDialog() {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 		uiStage.addActor(wf.createQuitWindow(Localizer.get(LocalKeys.TITLE_QUIT_GAME.getLocalKey())));
+	}
+	
+	public BasicWindow createSurveyClosedWindow(ArrayList<String> surveydata) {
+		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
+	
+		Table table = new Table(UEUiSkinBank.ueUISkin);
+		
+		for(String row : surveydata) {
+			table.add(row);
+			table.row();
+		}
+		
+		return wf.createOKWindow(Localizer.get(LocalKeys.TITLE_SURVEY_CLOSED.getLocalKey()), table);
 	}
 	
 	/**

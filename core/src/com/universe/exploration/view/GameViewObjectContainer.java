@@ -9,8 +9,6 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.universe.exploration.model.CelestialBodyGfxModel;
-import com.universe.exploration.model.PlanetGfxModel;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
@@ -25,6 +23,8 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  * @author 4.8.2015 Teemu Puurunen 
  */
 public class GameViewObjectContainer {
+	private boolean planetaryMovement = true;
+	
 	/** 
 	 * Planets
 	 */
@@ -72,6 +72,9 @@ public class GameViewObjectContainer {
 	 * Draw sprites on screen and update their position and angles
 	 */
 	public void update() {
+		if(!planetaryMovement)
+			return;
+		
 		for(PlanetGfxContainer graphicsGfx : planetGfxContainer) {
 			if(graphicsGfx instanceof PlanetGfxContainer) {
 				try {

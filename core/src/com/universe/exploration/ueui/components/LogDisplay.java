@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
  * Visual representation of ingame log.
  * </p>
  * <p>
- * Update values using method <tt>updateValuesToTable</tt>.
+ * Update values using method {@link #updateValuesToTable}.
  * </p>
  * 
  * @author 22.10.2015 Teemu Puurunen
@@ -40,7 +40,7 @@ public class LogDisplay {
 	}
 
 	/**
-	 * Clear log display table. (In practice set text to "".)
+	 * Clear log display table. (In practice set text to empty string.)
 	 */
 	public void clear() {
 		for (int x = 0; x < logEntries.length; x++) {
@@ -48,6 +48,11 @@ public class LogDisplay {
 		}
 	}
 
+	/**
+	 * <p>Updates values to log. Maximum of {@link #logMax} entries can be used. Past maximum value
+	 * log entries are disposed of.</p>
+	 * @param logItems
+	 */
 	public void updateValuesToTable(LinkedList<String> logItems) {
 		int logItemsSize = logItems.size();
 		int y = logItemsSize - 1;

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+       <head>
+              <title>universe-exploration</title>
+              <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  			  <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
+              <link href="styles.css" rel="stylesheet" type="text/css">
+			  <link href="website.css" rel="stylesheet" type="text/css">
+              <script src="soundmanager2-setup.js"></script>  
+  			  <script src="soundmanager2-jsmin.js"></script> 
+       </head>
+       
+       <body style="background-color: #000000">          
+			<table style="width: 70%;" border="0" style="">
+	
+				<tr>
+					<td style="padding-right: 50px;" valign="top"><div class="banner" style="text-align: left;"><a href="http://www.universe-exploration.com"><img src="banner_small.png" alt="Universe Exploration" /></a></div><br /><p><a href="/">Home</a></p><p><a href="game.html">Play</a></p></td>
+					<td><div align="center" id="embed-html"></div></td>
+				</tr>
+			</table>
+            <script type="text/javascript" src="html/html.nocache.js"></script>
+       </body>
+       
+       <script>
+              function handleMouseDown(evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                evt.target.style.cursor = 'default';
+              }
+              
+              function handleMouseUp(evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                evt.target.style.cursor = '';
+              }
+              document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
+              document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
+       </script>
+</html>

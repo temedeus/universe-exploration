@@ -17,8 +17,8 @@ public class Crew {
 		
 	}
 	
-	public void addCrewman() {
-		
+	public void addCrewman(Crewman crewman) {
+		crewmen.add(crewman);
 	}
 	
 	public void removeCrewman(Crewman c) {
