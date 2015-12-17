@@ -24,7 +24,7 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  */
 public class GameViewObjectContainer {
 	private boolean planetaryMovement = true;
-	
+
 	/** 
 	 * Planets
 	 */
@@ -135,5 +135,19 @@ public class GameViewObjectContainer {
 	
 	public int getPlanetCount() {
 		return planetGfxContainer.size();
+	}
+	
+	/**
+	 * @return the planetaryMovement
+	 */
+	public boolean isPlanetaryMovement() {
+		return planetaryMovement;
+	}
+
+	/**
+	 * @param planetaryMovement the planetaryMovement to set
+	 */
+	public void setPlanetaryMovement(boolean planetaryMovement) {
+		this.planetaryMovement = planetaryMovement;
 	}
 }

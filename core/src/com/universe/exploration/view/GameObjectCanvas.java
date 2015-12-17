@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 import com.universe.exploration.GdxHelper;
+import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.starsystem.StarSystem;
@@ -127,6 +128,8 @@ public class GameObjectCanvas {
 		star.rotate((float)0.1);
 		star.setPosition(starX, starY);
 		
+	
+		gameViewObjectContainer.setPlanetaryMovement(UniverseExploration.planetaryMovement);
 		gameViewObjectContainer.update();
 		
 		// Background first, next star and then planets.

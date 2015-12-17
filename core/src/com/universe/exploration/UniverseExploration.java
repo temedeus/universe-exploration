@@ -32,7 +32,7 @@ import com.universe.exploration.survey.SurveyStatusContainer;
 import com.universe.exploration.survey.SurveyStatusFactory;
 import com.universe.exploration.ueui.UIController;
 import com.universe.exploration.ueui.WindowContainer;
-import com.universe.exploration.ueui.WindowTypes;
+import com.universe.exploration.ueui.WindowType;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.view.GameObjectCanvas;
@@ -42,7 +42,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	/**
 	 * Game objects are handled here
 	 */
-	private GameObjectCanvas canvas;
+	private GameObjectCanvas gameObjectCanvas;
 	
 	/**
 	 * Controls the camera
@@ -57,16 +57,22 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	/**
 	 * User interface
 	 */
+	
 	private UIController uiController;
+	public GameStatus gameStatus;
 	
 	/**
 	 * Contains player spaceship status.
 	 */
 	private PlayerStatus playerStatus;
 	
-	private boolean gameStatusPaused = false;
+	private static boolean gameStatusPaused = false;
 	
-	private WindowContainer windowContainer;
+	public static boolean planetaryMovement = true;
+	
+	public static boolean zoomIn = false;
+	
+	public static WindowContainer windowContainer;
 	
 	private MinimalLogger logger;
 	
@@ -92,26 +98,41 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	
 	@Override
 	public void dispose() {
-		canvas.destroy();
+		gameObjectCanvas.destroy();
 	}
 
 	@Override
 	public void render () {	
-		canvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
-		canvas.drawGameContent();
+		gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+		gameObjectCanvas.drawGameContent();
 		
 		playerStatus.updateStatus();
 		uiController.updateUI(playerStatus);
 		
 		if(playerStatus.getCrewmen() == 0 && !gameStatusPaused) {
 			pauseGame(true);
-			BasicWindow gameOverWindow = uiController.createGameOverWindow(createGameOverClicklistener());
+			BasicWindow gameOverWindow = uiController.createGameOverWindow(WindowType.GAME_OVER, createGameOverClicklistener());
 			
-			windowContainer.add(WindowTypes.GAME_OVER, gameOverWindow);
+			windowContainer.add(WindowType.GAME_OVER, gameOverWindow);
 			uiController.show(gameOverWindow);
 		}
 		
 		closeFinishedSurveys();
+		
+		if(windowContainer.hasWindow(WindowType.PLANET_DETAILS) || windowContainer.hasWindow(WindowType.SURVEY_WINDOW)) {
+			UniverseExploration.planetaryMovement = false;
+			UniverseExploration.zoomIn = true;
+			
+		} else {
+			UniverseExploration.planetaryMovement = true;
+			UniverseExploration.zoomIn = false;
+		}
+
+		if(UniverseExploration.zoomIn) {
+			playerMonitor.zoomIn();
+		} else {
+			playerMonitor.zoomOut();
+		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && !Gdx.app.getType().equals(ApplicationType.WebGL)) {
 			
@@ -138,7 +159,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	}
 	
 	private void setupUiController() {
-		uiController = new UIController(canvas.getGameViewObjectContainer(), starSystem.getPlanets());
+		uiController = new UIController(gameObjectCanvas.getGameViewObjectContainer(), starSystem.getPlanets());
 		
 		uiController.setPlanetClickListener(createPlanetClickListener());
 		uiController.setHyperspaceJumpListener(new UEListener() {
@@ -157,7 +178,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			public void handleEventClassEvent(UEEvent e) {
 				if(e.getPayLoad() instanceof PlanetSurveyForm) {
 					startSurvey((PlanetSurveyForm)e.getPayLoad());
-					windowContainer.closeWindow(WindowTypes.SURVEY_WINDOW);
+					windowContainer.closeWindow(WindowType.SURVEY_WINDOW);
 				}
 			};
 		});
@@ -169,7 +190,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			@Override
 			public void handleEventClassEvent(UEEvent e) {
 				PlanetCelestialComponent planet = (PlanetCelestialComponent)e.getPayLoad();
-				canvas.setSelectedPlanet(planet);
+				gameObjectCanvas.setSelectedPlanet(planet);
 			}
 		});
 		
@@ -222,7 +243,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    		stageSetup();
 	    		playerStatus = new PlayerStatus();
 	    		pauseGame(false);
-	    		windowContainer.closeWindow(WindowTypes.GAME_OVER);
+	    		windowContainer.closeWindow(WindowType.GAME_OVER);
 	    	}
 	    };
 	}
@@ -249,9 +270,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		
 		try {
 			starSystem = uf.makeStarSystem();
-			canvas = new GameObjectCanvas(starSystem);
-			canvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
-			canvas.setPlanetClickListener(createPlanetClickListener());
+			gameObjectCanvas = new GameObjectCanvas(starSystem);
+			gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+			gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
 		} catch(PlanetCountOutOfRangeException e) {
 			return false;
 		} 
@@ -267,15 +288,15 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				new ClickListener() {
 			    	@Override
 			    	public void clicked(InputEvent event, float x, float y) {
-						windowContainer.closeWindow(WindowTypes.PLANET_DETAILS);
+						windowContainer.closeWindow(WindowType.PLANET_DETAILS);
 						final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow((PlanetGfxContainer)e.getPayLoad(), calculateAvailableMen());
-						windowContainer.add(WindowTypes.SURVEY_WINDOW, surveyedWindow);
+						windowContainer.add(WindowType.SURVEY_WINDOW, surveyedWindow);
 						uiController.show(surveyedWindow);
 			    	}
 			    });
 				// TODO: this process must be made smarter
 				
-				windowContainer.add(WindowTypes.PLANET_DETAILS, surveyWindow);
+				windowContainer.add(WindowType.PLANET_DETAILS, surveyWindow);
 				uiController.show(surveyWindow);
 			};
 		};
@@ -311,7 +332,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			
 			final BasicWindow surveyClosedWindow = uiController.createSurveyClosedWindow(generateSurveyDataRows(caption, resourcesCaption, mc, rf));
 			
-			windowContainer.add(WindowTypes.SURVEY_CLOSED, surveyClosedWindow);
+			windowContainer.add(WindowType.SURVEY_CLOSED, surveyClosedWindow);
 			
 			uiController.show(surveyClosedWindow);
 		}
@@ -363,9 +384,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		
 		return caption;
 	}
-	
 
-	
 	private void printMortalityLog(ArrayList<Mortality> mc) {
 		for(Mortality mortality : mc) {
 			String localizationKey = mortality.getCauseOfDeath().getLocalizationKey();
@@ -389,7 +408,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	 * @param gameStatusPaused the gameStatusPaused to set
 	 */
 	public void setGameStatusPaused(boolean gameStatusPaused) {
-		this.gameStatusPaused = gameStatusPaused;
+		UniverseExploration.gameStatusPaused = gameStatusPaused;
 	}
 	
 	/* (non-Javadoc)
@@ -424,7 +443,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	 */
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		canvas.checkIfHitCoordinatesMatchPlanets();
+		gameObjectCanvas.checkIfHitCoordinatesMatchPlanets();
 		return true;
 	}
 

@@ -12,13 +12,13 @@ import com.universe.exploration.ueui.components.BasicWindow;
  *
  */
 public class WindowContainer {
-	HashMap<WindowTypes, BasicWindow> windowmap;
+	HashMap<WindowType, BasicWindow> windowmap;
 	
 	public WindowContainer() {
-		windowmap = new HashMap<WindowTypes, BasicWindow>();
+		windowmap = new HashMap<WindowType, BasicWindow>();
 	}
 	
-	public void add(WindowTypes key, BasicWindow window) {
+	public void add(WindowType key, BasicWindow window) {
 		if(hasWindow(key)) {
 			windowmap.get(key).remove();
 		}
@@ -32,17 +32,17 @@ public class WindowContainer {
 	 * @param key
 	 * @return
 	 */
-	public boolean closeWindow(WindowTypes key) {
+	public boolean closeWindow(WindowType key) {
 		BasicWindow window = windowmap.get(key);
 		if(window != null) {
 			window.remove();
-			return (windowmap.remove((WindowTypes)key) != null) ? true : false;
+			return (windowmap.remove((WindowType)key) != null) ? true : false;
 		} else {
 			return true;
 		}
 	}
 	
-	public boolean hasWindow(WindowTypes key) {
+	public boolean hasWindow(WindowType key) {
 		BasicWindow window = windowmap.get(key);
 		return (window != null) ? true : false;
 	}

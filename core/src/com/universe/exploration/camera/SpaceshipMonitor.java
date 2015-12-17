@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 public class SpaceshipMonitor {
 	private OrthographicCamera camera;
 	
-	private static final float ZOOM_MAX = 0;
+	private static final float ZOOM_MAX = -0.2f;
 	
 	private static final float ZOOM_MIN = -5;
 	
@@ -22,7 +22,7 @@ public class SpaceshipMonitor {
 	public void zoomIn()
 	{
 		if(camera.zoom <= ZOOM_MAX) {
-			camera.zoom += .01;
+			camera.zoom += .06;
 			camera.update();
 		}
 	}
@@ -30,7 +30,7 @@ public class SpaceshipMonitor {
 	public void zoomOut()
 	{
 		if(camera.zoom >= ZOOM_MIN) {
-		    camera.zoom -= .01;
+		    camera.zoom -= .06;
 		    camera.update();
 		}
 	}

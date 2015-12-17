@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKeys;
@@ -45,6 +46,7 @@ import com.universe.exploration.view.PlanetGfxContainer;
 
 
 /**
+ * {@link UniverseExploration} and no other class should have an instance of UIController.
  * @author 25.8.2015 Teemu Puurunen 
  *
  */
@@ -163,6 +165,8 @@ public class UIController {
 		if((int)ps.getPower() == 0) {
 			isHyperspaceJumpAllowed = false;
 		}
+		
+		
 		
 		uiStage.act(Gdx.graphics.getDeltaTime());
 		uiStage.draw();
@@ -354,11 +358,10 @@ public class UIController {
 		});
 	}
 	
-	public BasicWindow createGameOverWindow(ClickListener tryAgainAction) {
+	public BasicWindow createGameOverWindow(WindowType windowType, ClickListener tryAgainAction) {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 		BasicTable gameoverData = new BasicTable(Align.left | Align.top);
-		BasicWindow gameOverWindow = wf.createDescriptionWindowWithSecondaryAction(Localizer.get("TITLE_GAME_OVER"), gameoverData, 
-				Localizer.get("BTN_TRY_AGAIN"),
+		BasicWindow gameOverWindow = wf.createDescriptionWindowWithSecondaryAction(windowType, gameoverData, 
 				Localizer.get("BTN_QUIT_GAME"), 
 				tryAgainAction, 
 				new ClickListener() {
@@ -421,7 +424,7 @@ public class UIController {
 		
 		Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
 		
-		return wf.createLargeDescriptionWindow(Localizer.get(LocalKeys.TITLE_SURVEY_PLANET.getLocalKey()), planetInformationTable, okAction);
+		return wf.createLargeDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable, okAction);
 	}
 
 	public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {
@@ -439,7 +442,7 @@ public class UIController {
 		planetInformationTable.row();
 
 		BasicWindow window = wf.createMediumDescriptionWindow(
-				Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), 
+				WindowType.PLANET_DETAILS,
 				planetInformationTable,  
 				createdPlanetSurveyTeamDispatchedClickListener(
 						(PlanetSurveyForm)pair.getFormContainer()
