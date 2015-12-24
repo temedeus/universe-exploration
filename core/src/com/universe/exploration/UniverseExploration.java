@@ -75,8 +75,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	public static WindowContainer windowContainer;
 	
 	private MinimalLogger logger;
-	
 	private SurveyStatusContainer surveyStatusContainer;
+	
 	
 	private Sound backgroundMusic;
 	private long bgId;
@@ -129,9 +129,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		}
 
 		if(UniverseExploration.zoomIn) {
-			playerMonitor.zoomIn();
+			playerMonitor.zoomInOnCoordinates();
 		} else {
-			playerMonitor.zoomOut();
+			playerMonitor.zoomOutOnOriginal();
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && !Gdx.app.getType().equals(ApplicationType.WebGL)) {

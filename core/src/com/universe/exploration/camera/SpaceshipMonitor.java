@@ -1,6 +1,7 @@
 package com.universe.exploration.camera;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 
 public class SpaceshipMonitor {
 	private OrthographicCamera camera;
@@ -9,9 +10,12 @@ public class SpaceshipMonitor {
 	
 	private static final float ZOOM_MIN = -5;
 	
+	private Vector3 originalPosition;
+	
 	public SpaceshipMonitor() {
 		camera = new OrthographicCamera(1920, 1080);
 		camera.zoom = ZOOM_MIN;
+		originalPosition = camera.position;
 		camera.update();
 	}
 	
@@ -19,7 +23,7 @@ public class SpaceshipMonitor {
 		return camera;
 	}
 	
-	public void zoomIn()
+	public void zoomInOnCoordinates()
 	{
 		if(camera.zoom <= ZOOM_MAX) {
 			camera.zoom += .06;
@@ -27,7 +31,7 @@ public class SpaceshipMonitor {
 		}
 	}
 	
-	public void zoomOut()
+	public void zoomOutOnOriginal()
 	{
 		if(camera.zoom >= ZOOM_MIN) {
 		    camera.zoom -= .06;

@@ -25,7 +25,7 @@ public class GameObjectCanvas {
 	private SpriteBatch backgroundBatch;
 	private Sprite space;
 	private BitmapFont font;
-	private Sprite star;
+	
 	private StarSystem starSystem;
 	private boolean gameStatusPaused;
 	private ShapeRenderer shapeRenderer;
@@ -49,6 +49,10 @@ public class GameObjectCanvas {
 	private UEListener planetClickListener;
 	
 	private float varyingRadius = 10;
+	
+	// TODO: Make star class
+	private float starAlpha;
+	private Sprite star;
 	
 	/**
 	 * Generates graphical representation based on given star system
@@ -77,6 +81,7 @@ public class GameObjectCanvas {
 		SystemStarGfxContainer ss = new SystemStarGfxContainer(this.starSystem.getSystemstar());
 		
 		star = ss.getSprite();
+		starAlpha = 1.0f;
 
 		List<PlanetCelestialComponent> listOfPlanets = starSystem.getPlanets();
 
@@ -127,7 +132,17 @@ public class GameObjectCanvas {
 		
 		star.rotate((float)0.1);
 		star.setPosition(starX, starY);
+		star.setAlpha(starAlpha);
 		
+		if(!UniverseExploration.planetaryMovement) {
+			if(starAlpha > 0.0f) {
+				starAlpha -= 0.05f;
+			}
+		} else {
+			if(starAlpha < 1.0f) {
+				starAlpha += 0.05f;
+			}
+		}
 	
 		gameViewObjectContainer.setPlanetaryMovement(UniverseExploration.planetaryMovement);
 		gameViewObjectContainer.update();
@@ -143,6 +158,9 @@ public class GameObjectCanvas {
 		liveComponentBatch.end();
 	}
 	
+	/**
+	 * Emphasize planet. (Create a pulsating circle around it.)
+	 */
 	private void drawEnhancement() {
 		varyingRadius += 1;
 		if(varyingRadius >= 60) {
