@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.universe.exploration.GdxHelper;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
@@ -180,7 +181,7 @@ public class UIController {
 			isHyperspaceJumpAllowed = false;
 		}
 
-		uiStage.act(Gdx.graphics.getDeltaTime());
+		uiStage.act(GdxHelper.getDeltaTime());
 		uiStage.draw();
 	}
 

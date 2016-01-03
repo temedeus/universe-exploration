@@ -27,5 +27,14 @@ public class GdxHelper {
         float h = Gdx.graphics.getHeight();
         return (h/2);
 	}
+	
+	/**
+	 * Get delta time. Let's create an abstraction layer before Gdx's own mechanism in case there's something to add
+	 * in the calculation mechanism later on.
+	 * @return
+	 */
+	public static float getDeltaTime() {
+		return Gdx.graphics.getDeltaTime();
+	}
 }
 

@@ -10,11 +10,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.universe.exploration.camera.SpaceshipMonitor;
+import com.universe.exploration.camera.CameraMonitor;
 import com.universe.exploration.common.tools.TextManipulationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.listener.UEEvent;
@@ -33,14 +34,14 @@ import com.universe.exploration.survey.SurveyStatusContainer;
 import com.universe.exploration.survey.SurveyStatusFactory;
 import com.universe.exploration.ueui.UIController;
 import com.universe.exploration.ueui.WindowContainer;
+import com.universe.exploration.ueui.WindowContainerEvent;
 import com.universe.exploration.ueui.WindowType;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
 
-public class UniverseExploration extends ApplicationAdapter implements
-		InputProcessor {
+public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
 	/**
 	 * Game objects are handled here
 	 */
@@ -49,7 +50,7 @@ public class UniverseExploration extends ApplicationAdapter implements
 	/**
 	 * Controls the camera
 	 */
-	private SpaceshipMonitor playerMonitor;
+	private CameraMonitor playerMonitor;
 
 	/**
 	 * Star system
@@ -103,8 +104,10 @@ public class UniverseExploration extends ApplicationAdapter implements
 
 	@Override
 	public void render() {
-		gameObjectCanvas.updateCameraOnCanvas(playerMonitor
-				.getOrthographicCamera());
+		playerMonitor.update();
+		playerMonitor.zoom(zoomIn);
+		
+		gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
 		gameObjectCanvas.drawGameContent();
 
 		playerStatus.updateStatus();
@@ -112,34 +115,15 @@ public class UniverseExploration extends ApplicationAdapter implements
 
 		if (playerStatus.getCrewmen() == 0 && !gameStatusPaused) {
 			pauseGame(true);
-			BasicWindow gameOverWindow = uiController.createGameOverWindow(
-					WindowType.GAME_OVER, createGameOverClicklistener());
+			BasicWindow gameOverWindow = uiController.createGameOverWindow(WindowType.GAME_OVER, createGameOverClicklistener());
 
 			windowContainer.add(WindowType.GAME_OVER, gameOverWindow);
 			uiController.show(gameOverWindow);
 		}
 
 		closeFinishedSurveys();
-
-		if (windowContainer.hasWindow(WindowType.PLANET_DETAILS)
-				|| windowContainer.hasWindow(WindowType.SURVEY_WINDOW)) {
-			UniverseExploration.planetaryMovement = false;
-			UniverseExploration.zoomIn = true;
-
-		} else {
-			UniverseExploration.planetaryMovement = true;
-			UniverseExploration.zoomIn = false;
-		}
-
-		if (UniverseExploration.zoomIn) {
-			playerMonitor.zoomInOnCoordinates();
-		} else {
-			playerMonitor.zoomOutOnOriginal();
-		}
-
-		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)
-				&& !Gdx.app.getType().equals(ApplicationType.WebGL)) {
-
+			
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && !Gdx.app.getType().equals(ApplicationType.WebGL)) {
 			uiController.createQuitDialog();
 		}
 	}
@@ -148,11 +132,35 @@ public class UniverseExploration extends ApplicationAdapter implements
 		logger = new MinimalLogger();
 		uiStage = new Stage(new ScreenViewport());
 		playerStatus = new PlayerStatus();
-		playerMonitor = new SpaceshipMonitor();
+		playerMonitor = new CameraMonitor();
 		windowContainer = new WindowContainer();
+		windowContainer.setWindowsThatMustAlert(WindowType.PLANET_DETAILS, WindowType.SURVEY_WINDOW);
+		windowContainer.setSpecificedWindowChangeListener(createWindowChangeListener());
 		surveyStatusContainer = new SurveyStatusContainer();
 	}
 
+	private UEListener createWindowChangeListener() {
+		return new UEListener() {
+			/* (non-Javadoc)
+			 * @see com.universe.exploration.listener.UEListener#handleEventClassEvent(com.universe.exploration.listener.UEEvent)
+			 */
+			@Override
+			public void handleEventClassEvent(UEEvent e) {
+				WindowContainerEvent event = (WindowContainerEvent) e.getPayLoad();
+				if(event.equals(WindowContainerEvent.ADD)) {
+					UniverseExploration.planetaryMovement = false;
+					UniverseExploration.zoomIn = true;
+					
+					Vector2 selectedPlanetVector = new Vector2(100, 100);
+					playerMonitor.setupVelocityVector(selectedPlanetVector);
+				} else {
+					UniverseExploration.planetaryMovement = true;
+					UniverseExploration.zoomIn = false;
+					playerMonitor.setupVelocityVectorToOriginal();
+				}
+			}
+		};
+	}
 	/**
 	 * First setup star system and then UiController because UI uses star system
 	 * data.
@@ -247,8 +255,7 @@ public class UniverseExploration extends ApplicationAdapter implements
 	}
 
 	private int calculateAvailableMen() {
-		return playerStatus.getCrewmen()
-				- surveyStatusContainer.crewmenOnSurvey();
+		return playerStatus.getCrewmen() - surveyStatusContainer.crewmenOnSurvey();
 	}
 
 	private void pauseGame(boolean pause) {
@@ -292,10 +299,8 @@ public class UniverseExploration extends ApplicationAdapter implements
 		try {
 			starSystem = uf.makeStarSystem();
 			gameObjectCanvas = new GameObjectCanvas(starSystem);
-			gameObjectCanvas.updateCameraOnCanvas(playerMonitor
-					.getOrthographicCamera());
-			gameObjectCanvas
-					.setPlanetClickListener(createPlanetClickListener());
+			gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+			gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
 		} catch (PlanetCountOutOfRangeException e) {
 			return false;
 		}
@@ -451,6 +456,8 @@ public class UniverseExploration extends ApplicationAdapter implements
 		UniverseExploration.gameStatusPaused = gameStatusPaused;
 	}
 
+	//*************** PAST THIS GENERATED METHODS FOR INPUT PROCESSOR  ***************//
+	
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -34,7 +34,7 @@ public class UEUiSkinBank {
 	 * Common skin used most of the time.
 	 * @static
 	 */
-	public static Skin ueUISkin = new Skin(Gdx.files.internal(CoreConfiguration.uiSkinSource));
+	public static Skin ueUISkin = new Skin(Gdx.files.internal(CoreConfiguration.UISKINSOURCE));
 	
 	
 }

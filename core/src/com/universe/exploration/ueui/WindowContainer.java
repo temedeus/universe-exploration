@@ -3,8 +3,11 @@
  */
 package com.universe.exploration.ueui;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
+import com.universe.exploration.listener.UEEvent;
+import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.ueui.components.BasicWindow;
 
 /**
@@ -12,7 +15,12 @@ import com.universe.exploration.ueui.components.BasicWindow;
  *
  */
 public class WindowContainer {
-	HashMap<WindowType, BasicWindow> windowmap;
+	private HashMap<WindowType, BasicWindow> windowmap;
+	
+	private WindowType[] windowTypes;
+	
+	// TODO: maybe this could be moved apart from this class? I dont think this should be responsible of such abstract things.
+	private UEListener notifyOfSpecifiedWindowsChanged;
 	
 	public WindowContainer() {
 		windowmap = new HashMap<WindowType, BasicWindow>();
@@ -23,7 +31,16 @@ public class WindowContainer {
 			windowmap.get(key).remove();
 		}
 		
+		checkIfNeedToAlert(key, WindowContainerEvent.ADD);
 		windowmap.put(key, window);
+	}
+
+	/**
+	 * If following windows are added, {@link #notifyOfSpecifiedWindowsChanged} will
+	 * be fired.
+	 */
+	public void setWindowsThatMustAlert(WindowType... windowTypes) {
+		this.windowTypes = windowTypes;
 	}
 	
 	/**
@@ -36,9 +53,16 @@ public class WindowContainer {
 		BasicWindow window = windowmap.get(key);
 		if(window != null) {
 			window.remove();
+			checkIfNeedToAlert(key, WindowContainerEvent.REMOVE);
 			return (windowmap.remove((WindowType)key) != null) ? true : false;
 		} else {
 			return true;
+		}
+	}
+	
+	private void checkIfNeedToAlert(WindowType key, WindowContainerEvent event) {
+		if(Arrays.asList(windowTypes).contains(key)) {
+			fireSpecificedWindowChangeListener(event);
 		}
 	}
 	
@@ -46,4 +70,15 @@ public class WindowContainer {
 		BasicWindow window = windowmap.get(key);
 		return (window != null) ? true : false;
 	}
+	
+	private void fireSpecificedWindowChangeListener(WindowContainerEvent windowContainerEvent) {
+		notifyOfSpecifiedWindowsChanged.handleEventClassEvent(new UEEvent(windowContainerEvent));
+	}
+	/**
+	 * @param specificedWindowChangeListener the specificedWindowChangeListener to set
+	 */
+	public void setSpecificedWindowChangeListener(UEListener specificedWindowChangeListener) {
+		this.notifyOfSpecifiedWindowsChanged = specificedWindowChangeListener;
+	}
+
 }
