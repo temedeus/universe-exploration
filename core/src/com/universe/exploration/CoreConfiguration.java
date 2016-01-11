@@ -16,6 +16,8 @@ public class CoreConfiguration {
 	 */
 	public static final int BACKGROUND_TILE_DEFAULT_WIDTH = 2048;
 	
+	public static final float ENLARGED_PLANET_SPRITE_SIZE = 800;
+	
 	public static final int MAX_CREWMEN = 10;
 	
 	public static final float MAX_AIR = 100;

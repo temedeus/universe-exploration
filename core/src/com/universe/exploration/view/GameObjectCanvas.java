@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -116,10 +117,6 @@ public class GameObjectCanvas {
 
 		handleBackgroundBatch();
 		handleLiveComponentBatch();
-
-		if (UniverseExploration.planetaryMovement) {
-			drawEnhancement();
-		}
 	}
 
 	public void handleLiveComponentBatch() {
@@ -140,6 +137,10 @@ public class GameObjectCanvas {
 			sprite.draw(liveComponentBatch);
 		}
 
+		if (UniverseExploration.planetaryMovement) {
+			drawEnhancement();
+		}
+		
 		liveComponentBatch.end();
 	}
 
@@ -197,10 +198,23 @@ public class GameObjectCanvas {
 		space.draw(backgroundBatch);
 		space.setPosition(-1000, -600);
 
+		if(!UniverseExploration.planetaryMovement) {
+			selectedPlanet.getEnlarged().draw(backgroundBatch);
+		}
+		
 		backgroundCamera.update();
 		backgroundBatch.end();
 	}
 
+	private void setupZoomedInPlanet() {
+		float x = 800;
+		float y = 600;
+		Texture texture = new Texture(Gdx.files.internal(selectedPlanet.getGraphicsSource()));
+		Sprite sprite = new Sprite(texture);
+		sprite.setSize(x, y);
+		sprite.setOrigin(x / 2, y / 2);
+		sprite.setPosition(50, 50);
+	}
 	/**
 	 * Update camera on canvas
 	 * 

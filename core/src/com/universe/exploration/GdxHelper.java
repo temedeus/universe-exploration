@@ -34,7 +34,7 @@ public class GdxHelper {
 	 * @return
 	 */
 	public static float getDeltaTime() {
-		return Gdx.graphics.getDeltaTime();
+		return Gdx.graphics.getDeltaTime() * 100;
 	}
 }
 

@@ -3,6 +3,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.model.CelestialBodyGfxModel;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
@@ -28,7 +29,9 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	/**
 	 * Sprite containing graphics item
 	 */
-	protected Sprite sprite;
+	protected Sprite smallVersion;
+	
+	protected Sprite enlarged;
 
 	/**
 	 * Sprite size
@@ -49,35 +52,44 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 		// Empty constructor if one does not wish to install component yet
 	}
 	
+	public GraphicsGfxContainer(CelestialComponent starSystemComponent) {
+		this(starSystemComponent.getSpriteSize(), starSystemComponent.getGraphicsFile());
+		this.starSystemComponent = starSystemComponent;
+		celestialBodyGfxModel = new CelestialBodyGfxModel();
+		celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
+	}
+	
 	public GraphicsGfxContainer(int spriteSize, String graphicsSource) {
 		this.spriteSize = spriteSize;
 		this.graphicsSource = graphicsSource;
 		
-		setupSprite();
-	}
-	
-	public GraphicsGfxContainer(CelestialComponent starSystemComponent) {
-		this.starSystemComponent = starSystemComponent;
-		celestialBodyGfxModel = new CelestialBodyGfxModel();
-		celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
-		graphicsSource = this.starSystemComponent.getGraphicsFile();
-		spriteSize = this.starSystemComponent.getSpriteSize();
-		
-		setupSprite();
+		setupSmallVersion();
+		setupDetailed();
 	}
 	
 	/**
 	 * Initialize sprite and set its basic properties
 	 */
-	public void setupSprite() {
+	public void setupSmallVersion() {
 		Texture texture = new Texture(Gdx.files.internal(graphicsSource));
-		sprite = new Sprite(texture);
-		sprite.setSize(this.spriteSize, this.spriteSize);
-		sprite.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
+		smallVersion = new Sprite(texture);
+		smallVersion.setSize(this.spriteSize, this.spriteSize);
+		smallVersion.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
+	}
+	
+	/**
+	 * Initialize sprite and set its basic properties
+	 */
+	public void setupDetailed() {
+		Texture texture = new Texture(Gdx.files.internal(graphicsSource));
+		enlarged = new Sprite(texture);
+		enlarged.setSize(CoreConfiguration.ENLARGED_PLANET_SPRITE_SIZE, CoreConfiguration.ENLARGED_PLANET_SPRITE_SIZE);
+		enlarged.setOrigin(enlarged.getWidth() / 2, enlarged.getHeight() / 2);
+		enlarged.setPosition(- (enlarged.getWidth() / 2), - (enlarged.getWidth() / 2));
 	}
 
 	public void updateSpritePosition() {
-		sprite.setPosition(celestialBodyGfxModel.getPositionX(), celestialBodyGfxModel.getPositionY());
+		smallVersion.setPosition(celestialBodyGfxModel.getPositionX(), celestialBodyGfxModel.getPositionY());
 	}
 	
 	/**
@@ -128,14 +140,14 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	 * @return the sprite
 	 */
 	public Sprite getSprite() {
-		return sprite;
+		return smallVersion;
 	}
 
 	/**
 	 * @param sprite the sprite to set
 	 */
 	public void setSprite(Sprite sprite) {
-		this.sprite = sprite;
+		this.smallVersion = sprite;
 	}
 	
 	/**
@@ -150,5 +162,19 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	 */
 	public void setCelestialBodyGfxModel(CelestialBodyGfxModel startBodyGfxModel) {
 		this.celestialBodyGfxModel = startBodyGfxModel;
+	}
+
+	/**
+	 * @return the enlarged
+	 */
+	public Sprite getEnlarged() {
+		return enlarged;
+	}
+
+	/**
+	 * @param enlarged the enlarged to set
+	 */
+	public void setEnlarged(Sprite enlarged) {
+		this.enlarged = enlarged;
 	}
 }

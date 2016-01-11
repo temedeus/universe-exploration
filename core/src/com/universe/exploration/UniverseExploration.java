@@ -10,7 +10,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -104,7 +103,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	@Override
 	public void render() {
-		playerMonitor.update();
 		playerMonitor.zoom(zoomIn);
 		
 		gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
@@ -149,14 +147,10 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				WindowContainerEvent event = (WindowContainerEvent) e.getPayLoad();
 				if(event.equals(WindowContainerEvent.ADD)) {
 					UniverseExploration.planetaryMovement = false;
-					UniverseExploration.zoomIn = true;
-					
-					Vector2 selectedPlanetVector = new Vector2(100, 100);
-					playerMonitor.setupVelocityVector(selectedPlanetVector);
+					UniverseExploration.zoomIn = true;		
 				} else {
 					UniverseExploration.planetaryMovement = true;
 					UniverseExploration.zoomIn = false;
-					playerMonitor.setupVelocityVectorToOriginal();
 				}
 			}
 		};
