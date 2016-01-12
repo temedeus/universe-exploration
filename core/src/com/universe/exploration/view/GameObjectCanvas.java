@@ -6,13 +6,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
+import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
@@ -28,8 +28,8 @@ public class GameObjectCanvas {
 	private StarSystem starSystem;
 	private boolean gameStatusPaused;
 	private ShapeRenderer shapeRenderer;
-	private PlanetGfxContainer selectedPlanet;
 
+	private SelectedPlanet selectedPlanet;
 	/**
 	 * Camera describing planets etc.
 	 */
@@ -57,19 +57,10 @@ public class GameObjectCanvas {
 	 * @param iua
 	 */
 	public GameObjectCanvas(StarSystem starSystem) {
+		initBasicSetup();
+
 		this.starSystem = starSystem;
-
-		// For drawing miscellaneous shapes.
-		shapeRenderer = new ShapeRenderer();
-
-		liveComponentBatch = new SpriteBatch();
-		backgroundBatch = new SpriteBatch();
-
-		backgroundCamera = new OrthographicCamera(1920, 1080);
-
-		font = new BitmapFont();
-		font.setColor(Color.WHITE);
-
+		
 		// Space background
 		SpaceBackgroundGfxContainer spaceBgGFX = new SpaceBackgroundGfxContainer();
 		space = spaceBgGFX.getSprite();
@@ -90,11 +81,24 @@ public class GameObjectCanvas {
 
 		// Initially select the first planet (visual borders).
 		if (listOfPlanets.size() > 0) {
-			selectedPlanet = gameViewObjectContainer
-					.getPlanetGfxContainerAtIndex(0);
+			selectedPlanet = new SelectedPlanet();
+			selectedPlanet.setSelectedPlanet(gameViewObjectContainer.getPlanetGfxContainerAtIndex(0));
 		}
 
 		gameStatusPaused = false;
+	}
+	
+	private void initBasicSetup() {
+		// For drawing miscellaneous shapes.
+		shapeRenderer = new ShapeRenderer();
+
+		liveComponentBatch = new SpriteBatch();
+		backgroundBatch = new SpriteBatch();
+
+		backgroundCamera = new OrthographicCamera(1920, 1080);
+
+		font = new BitmapFont();
+		font.setColor(Color.WHITE);
 	}
 
 	public void destroy() {
@@ -140,7 +144,7 @@ public class GameObjectCanvas {
 		if (UniverseExploration.planetaryMovement) {
 			drawEnhancement();
 		}
-		
+
 		liveComponentBatch.end();
 	}
 
@@ -157,11 +161,8 @@ public class GameObjectCanvas {
 			shapeRenderer.setColor(Color.BLUE);
 			shapeRenderer.begin(ShapeType.Line);
 			shapeRenderer
-					.circle(selectedPlanet.getSprite().getX()
-							+ selectedPlanet.getSprite().getWidth() / 2,
-							selectedPlanet.getSprite().getY()
-									+ selectedPlanet.getSprite().getHeight()
-									/ 2, varyingRadius);
+					.circle(selectedPlanet.getSelectedPlanet().getSprite().getX() + selectedPlanet.getSelectedPlanet().getSprite().getWidth() / 2,
+							selectedPlanet.getSelectedPlanet().getSprite().getY() + selectedPlanet.getSelectedPlanet().getSprite().getHeight() / 2, varyingRadius);
 			shapeRenderer.end();
 		}
 	}
@@ -184,10 +185,11 @@ public class GameObjectCanvas {
 	}
 
 	public void setSelectedPlanet(PlanetCelestialComponent planet) {
-		selectedPlanet = gameViewObjectContainer.getPlanetGfxContainerByComponent(planet);
+		selectedPlanet.setSelectedPlanet(gameViewObjectContainer.getPlanetGfxContainerByComponent(planet));
 	}
 
 	private void firePlanetClickListener(PlanetGfxContainer pgfx) {
+		selectedPlanet.setSelectedPlanet(pgfx);
 		planetClickListener.handleEventClassEvent(new UEEvent(pgfx));
 	}
 
@@ -196,25 +198,24 @@ public class GameObjectCanvas {
 		backgroundBatch.begin();
 
 		space.draw(backgroundBatch);
-		space.setPosition(-1000, -600);
-
-		if(!UniverseExploration.planetaryMovement) {
-			selectedPlanet.getEnlarged().draw(backgroundBatch);
-		}
+		space.setPosition(CoreConfiguration.SPACE_BACKGROUND_POSITION_X, CoreConfiguration.SPACE_BACKGROUND_POSITION_Y);
+		
+		drawSelectedPlanetWhenValid();
 		
 		backgroundCamera.update();
 		backgroundBatch.end();
 	}
-
-	private void setupZoomedInPlanet() {
-		float x = 800;
-		float y = 600;
-		Texture texture = new Texture(Gdx.files.internal(selectedPlanet.getGraphicsSource()));
-		Sprite sprite = new Sprite(texture);
-		sprite.setSize(x, y);
-		sprite.setOrigin(x / 2, y / 2);
-		sprite.setPosition(50, 50);
+	
+	private void drawSelectedPlanetWhenValid() {
+		// It is perfectly normal scenario that there is no selected planet (no one ever instantiates it - hence the null check).
+		if(selectedPlanet != null) {
+			boolean hidePlanet = !UniverseExploration.planetaryMovement && starWrapper.isAlphaReachedMinimum();
+			
+			selectedPlanet.handleAlpha((hidePlanet) ? false : true);
+			selectedPlanet.getSelectedPlanet().getEnlarged().draw(backgroundBatch);
+		}
 	}
+
 	/**
 	 * Update camera on canvas
 	 * 

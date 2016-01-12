@@ -34,11 +34,11 @@ public class DataPair {
 	}
 	
 	/**
-	 * Holds a pair of labels for displaying data/value pair.
+	 * <p>Holds a pair of {@link Label} displaying data/value pair.</p>
 	 * 
-	 * @param label
-	 * @param value
-	 * @param skin
+	 * @param id ID in case you need to modify this data later on.
+	 * @param label Label for the data.
+	 * @param value Value of the given label.
 	 */
 	public DataPair(String id, String label, String value) {
 		this.id = id;
