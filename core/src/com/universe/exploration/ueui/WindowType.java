@@ -7,23 +7,24 @@ import com.universe.exploration.localization.LocalKeys;
 import com.universe.exploration.localization.Localizer;
 
 /**
+ * <p>Contains window caption and ok button text. Referenced as {@link LocalKeys}, not direct strings.</p>
  * @author 1.11.2015 Teemu Puurunen 
  *
  */
 public enum WindowType {
-	SURVEY_WINDOW(LocalKeys.TITLE_SURVEY_PLANET.getLocalKey(), Localizer.get("BTN_SURVEY")), 
-	GAME_OVER(Localizer.get("TITLE_GAME_OVER"), Localizer.get("BTN_TRY_AGAIN")),
-	PLANET_DETAILS(Localizer.get("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN"), Localizer.get("BTN_SURVEY")), 
-	SURVEY_CLOSED("Survey", "Survey");
+	SURVEY_WINDOW(LocalKeys.TITLE_SURVEY_PLANET, LocalKeys.BTN_SURVEY), 
+	GAME_OVER(LocalKeys.TITLE_GAME_OVER, LocalKeys.BTN_TRY_AGAIN),
+	PLANET_DETAILS(LocalKeys.TITLE_SURVEY_CONFIGURATION_SCREEN, LocalKeys.BTN_SURVEY), 
+	SURVEY_CLOSED(LocalKeys.TITLE_SURVEY, LocalKeys.BTN_SURVEY);
 	
-	private final String caption;
+	private final LocalKeys caption;
 	
-	private final String okButtonCaption; 
+	private final LocalKeys okButtonCaption; 
 	
 	/**
-	 * 
+	 *  Contains window caption and ok button text.
 	 */
-	private WindowType(String caption, String okButtonCaption) {
+	private WindowType(LocalKeys caption, LocalKeys okButtonCaption) {
 		this.caption = caption;
 		this.okButtonCaption = okButtonCaption;
 	}
@@ -31,14 +32,14 @@ public enum WindowType {
 	/**
 	 * @return the caption
 	 */
-	public String getCaption() {
-		return caption;
+	public String getLocalizedCaption() {
+		return Localizer.get(caption.getLocalKey());
 	}
 
 	/**
 	 * @return the okButtonCaption
 	 */
-	public String getOkButtonCaption() {
-		return okButtonCaption;
+	public String getLocalizedOkButtonCaption() {
+		return Localizer.get(okButtonCaption.getLocalKey());
 	}
 }

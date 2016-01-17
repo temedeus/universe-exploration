@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.localization.LocalKeys;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
@@ -87,10 +88,10 @@ public class WindowFactory {
 	 * @return
 	 */
 	public <T extends Actor> BasicWindow createLargeDescriptionWindow(final WindowType windowType, T contentTable, ClickListener okAction) {
-	    final LargeWindow window = new LargeWindow(windowType.getCaption(), windowStyle);
+	    final LargeWindow window = new LargeWindow(windowType.getLocalizedCaption(), windowStyle);
 		
 		Table buttontable = new Table();
-		buttontable.add(bf.createTextButton(windowType.getOkButtonCaption(), okAction));
+		buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 		
 		buttontable.add(bf.createTextButton(Localizer.get("BTN_CANCEL"), new ClickListener() {
 	    	@Override
@@ -136,12 +137,12 @@ public class WindowFactory {
 	 * @return
 	 */
 	public <T extends Actor> BasicWindow createMediumDescriptionWindow(WindowType windowType, T contentTable, ClickListener okAction) {
-	    final MediumWindow window = new MediumWindow(windowType.getCaption(), windowStyle);
+	    final MediumWindow window = new MediumWindow(windowType.getLocalizedCaption(), windowStyle);
 		
 		Table buttontable = new Table();
-		buttontable.add(bf.createTextButton(windowType.getOkButtonCaption(), okAction));
+		buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 		
-		buttontable.add(bf.createTextButton(Localizer.get("BTN_CANCEL"), new ClickListener() {
+		buttontable.add(bf.createTextButton(Localizer.get(LocalKeys.BTN_CANCEL), new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
 	    		UniverseExploration.windowContainer.closeWindow(windowType);
@@ -161,10 +162,10 @@ public class WindowFactory {
 	 * @return
 	 */
 	public BasicWindow createDescriptionWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable, String secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
-	    final SmallWindow window = new SmallWindow(windowType.getCaption(), windowStyle);
+	    final SmallWindow window = new SmallWindow(windowType.getLocalizedCaption(), windowStyle);
 		
 		Table buttontable = new Table();
-		buttontable.add(bf.createTextButton(windowType.getOkButtonCaption(), okAction));
+		buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 		buttontable.add(bf.createTextButton(secondaryButtonTitle, secondaryAction));
 		
 		buttontable.row();

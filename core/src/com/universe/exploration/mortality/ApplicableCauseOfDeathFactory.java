@@ -6,6 +6,8 @@ package com.universe.exploration.mortality;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
+ * <p>Create possible causes of death. See {@link ApplicableCauseOfDeathCategories}.</p>
+ * 
  * @author 30.10.2015 Teemu Puurunen 
  *
  */

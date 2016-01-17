@@ -24,7 +24,7 @@ public class StarWrapper {
 	
 	private static float incrementRate = 0.05f;
 	
-	private final AlphaFader starFader = new AlphaFader(alphaMin, alphaMax, decrementRate, incrementRate);
+	private final Fader starFader = new Fader(alphaMin, alphaMax, decrementRate, incrementRate);
 	/**
 	 * 
 	 */

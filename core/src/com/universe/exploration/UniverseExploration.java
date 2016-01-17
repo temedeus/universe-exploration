@@ -328,6 +328,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				// TODO: this process must be made smarter
 
 				windowContainer.add(WindowType.PLANET_DETAILS, surveyWindow);
+				surveyWindow.setPosition(Gdx.graphics.getWidth() / 2 + 100, Gdx.graphics.getHeight() / 2 - 300);
 				uiController.show(surveyWindow);
 			};
 		};

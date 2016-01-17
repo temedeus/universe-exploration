@@ -21,4 +21,13 @@ public class Localizer {
 			return key;
 		}
 	}
+	
+	public static String get(LocalKeys local) {
+		try {
+			String result = LocalEn.valueOf(local.getLocalKey()).getDescription();
+			return result;
+		} catch(Exception e) {
+			return local.getLocalKey();
+		}
+	}
 }

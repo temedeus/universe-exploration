@@ -390,7 +390,7 @@ public class UIController {
 					public void clicked(InputEvent event, float x, float y) {
 						if (!gameStatusPaused && isHyperspaceJumpAllowed) {
 							final Dialog dialog = new Dialog(Localizer
-									.get("DESC_HYPERSPACE_JUMP"),
+									.get(LocalKeys.DESC_HYPERSPACE_JUMP),
 									UEUiSkinBank.ueUISkin);
 							dialog.setSize(200, 100);
 							dialog.show(uiStage);
@@ -413,7 +413,7 @@ public class UIController {
 		BasicTable gameoverData = new BasicTable(Align.left | Align.top);
 		BasicWindow gameOverWindow = wf
 				.createDescriptionWindowWithSecondaryAction(windowType,
-						gameoverData, Localizer.get("BTN_QUIT_GAME"),
+						gameoverData, LocalKeys.BTN_QUIT_GAME.getLocalKey(),
 						tryAgainAction, new ClickListener() {
 							@Override
 							public void clicked(InputEvent event, float x,
@@ -451,8 +451,7 @@ public class UIController {
 
 	public void createQuitDialog() {
 		final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
-		uiStage.addActor(wf.createQuitWindow(Localizer
-				.get(LocalKeys.TITLE_QUIT_GAME.getLocalKey())));
+		uiStage.addActor(wf.createQuitWindow(Localizer.get(LocalKeys.TITLE_QUIT_GAME.getLocalKey())));
 	}
 
 	public BasicWindow createSurveyClosedWindow(ArrayList<String> surveydata) {
@@ -465,9 +464,7 @@ public class UIController {
 			table.row();
 		}
 
-		return wf.createOKWindow(
-				Localizer.get(LocalKeys.TITLE_SURVEY_CLOSED.getLocalKey()),
-				table);
+		return wf.createOKWindow(Localizer.get(LocalKeys.TITLE_SURVEY_CLOSED.getLocalKey()), table);
 	}
 
 	/**
@@ -492,14 +489,11 @@ public class UIController {
 
 		Table planetInformationTable = new Table();
 
-		planetInformationTable.add(new Label(Localizer
-				.get("LABEL_CREWMEN_COUNT"), UEUiSkinBank.ueUISkin));
+		planetInformationTable.add(new Label(Localizer.get("LABEL_CREWMEN_COUNT"), UEUiSkinBank.ueUISkin));
 		planetInformationTable.row();
 
-		TableFormContainerPair pair = UIComponentFactory
-				.createHorizontalSlider(0, surveyTeamSize, 1);
-		((PlanetSurveyForm) pair.getFormContainer())
-				.setPlanet((PlanetCelestialComponent) pgfx.getComponentType());
+		TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, surveyTeamSize, 1);
+		((PlanetSurveyForm) pair.getFormContainer()).setPlanet((PlanetCelestialComponent) pgfx.getComponentType());
 
 		planetInformationTable.add(pair.getTable());
 		planetInformationTable.row();

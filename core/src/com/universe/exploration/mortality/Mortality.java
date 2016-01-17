@@ -5,6 +5,8 @@ package com.universe.exploration.mortality;
 
 
 /**
+ * <p>Bean describing crewmans death, reason of fatality etc.</p>
+ * 
  * @author 25.10.2015 Teemu Puurunen 
  *
  */

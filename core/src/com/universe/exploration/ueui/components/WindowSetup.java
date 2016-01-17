@@ -10,7 +10,7 @@ package com.universe.exploration.ueui.components;
 public enum WindowSetup {
 	WINDOW_SMALL(210, 105),
 	WINDOW_MEDIUM(315, 140),
-	WINDOW_LARGE(560,420);
+	WINDOW_LARGE(560,600);
 	
 	private final int width;
 

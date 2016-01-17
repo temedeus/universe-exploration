@@ -14,7 +14,7 @@ public class SelectedPlanet {
 	private static final float alphaMax = 1.0f;
 	private static final float decrementRate = 0.05f;
 	private static final float incrementRate = 0.05f;
-	private static final AlphaFader planetFader = new AlphaFader(alphaMin, alphaMax, decrementRate, incrementRate);
+	private static final Fader planetFader = new Fader(alphaMin, alphaMax, decrementRate, incrementRate);
 	
 	/**
 	 * 
