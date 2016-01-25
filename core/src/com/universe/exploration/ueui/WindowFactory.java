@@ -136,7 +136,7 @@ public class WindowFactory {
 	 * @param pgfx
 	 * @return
 	 */
-	public <T extends Actor> BasicWindow createMediumDescriptionWindow(WindowType windowType, T contentTable, ClickListener okAction) {
+	public <T extends Actor> BasicWindow createMediumDescriptionWindow(final WindowType windowType, T contentTable, ClickListener okAction) {
 	    final MediumWindow window = new MediumWindow(windowType.getLocalizedCaption(), windowStyle);
 		
 		Table buttontable = new Table();
