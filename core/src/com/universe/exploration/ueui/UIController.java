@@ -391,7 +391,7 @@ public class UIController {
 	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 	BasicTable gameoverData = new BasicTable(Align.left | Align.top);
 	BasicWindow gameOverWindow = wf.createDescriptionWindowWithSecondaryAction(windowType, gameoverData,
-		LocalKeys.BTN_QUIT_GAME.getLocalKey(), tryAgainAction, new ClickListener() {
+		LocalKeys.BTN_QUIT_GAME, tryAgainAction, new ClickListener() {
 		    @Override
 		    public void clicked(InputEvent event, float x, float y) {
 			if (!Gdx.app.getType().equals(ApplicationType.WebGL)) {

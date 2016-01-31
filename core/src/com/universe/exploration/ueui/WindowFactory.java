@@ -161,12 +161,12 @@ public class WindowFactory {
 	 * @param pgfx
 	 * @return
 	 */
-	public BasicWindow createDescriptionWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable, String secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
+	public BasicWindow createDescriptionWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable, LocalKeys secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
 	    final SmallWindow window = new SmallWindow(windowType.getLocalizedCaption(), windowStyle);
 		
 		Table buttontable = new Table();
 		buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
-		buttontable.add(bf.createTextButton(secondaryButtonTitle, secondaryAction));
+		buttontable.add(bf.createTextButton(Localizer.get(secondaryButtonTitle), secondaryAction));
 		
 		buttontable.row();
 	    

@@ -16,7 +16,6 @@ public class LargeWindow extends BasicWindow {
 	 */
 	public LargeWindow(String title, Skin skin) {
 		super(title, skin);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
@@ -26,7 +25,6 @@ public class LargeWindow extends BasicWindow {
 	 */
 	public LargeWindow(String title, Skin skin, String styleName) {
 		super(title, skin, styleName);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

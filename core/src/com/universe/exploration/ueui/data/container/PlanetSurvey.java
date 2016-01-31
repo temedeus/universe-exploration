@@ -23,7 +23,7 @@ public class PlanetSurvey extends DataPairContainer {
 	 */
 	@Override
 	public void createPairs() {
-		// TODO: Abstract generating this data? Maybe create another table abstraction?
+		// TODO: Abstracize generating this data? Maybe create another table abstraction?
 		PlanetCelestialComponent cc = (PlanetCelestialComponent) auxiliaryDataContainer; 
 		
 		String water = (cc.isWaterFound()) ? "Liquid water" : "None";

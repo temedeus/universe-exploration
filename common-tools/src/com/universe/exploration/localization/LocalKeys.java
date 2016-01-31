@@ -26,9 +26,9 @@ public enum LocalKeys {
 	
 	// Buttons.
 	BTN_SURVEY("BTN_SURVEY"),
-	BTN_TRY_AGAIN("BUTTON_TRY_AGAIN"),
+	BTN_TRY_AGAIN("BTN_TRY_AGAIN"),
 	BTN_CANCEL("BTN_CANCEL"),
-	BTN_QUIT_GAME("BTN_QUIT_GME");
+	BTN_QUIT_GAME("BTN_QUIT_GAME");
 	
 	private final String localKey;
 	
