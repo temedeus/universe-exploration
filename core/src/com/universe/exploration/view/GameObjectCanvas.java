@@ -130,7 +130,7 @@ public class GameObjectCanvas {
 
 		starWrapper.update();
 
-		gameViewObjectContainer.setPlanetaryMovement(UniverseExploration.planetaryMovement);
+		gameViewObjectContainer.setPlanetaryMovement(UniverseExploration.gameStatus.isPlanetaryMovementActive());
 		gameViewObjectContainer.update();
 
 		// Background first, next star and then planets.
@@ -141,7 +141,7 @@ public class GameObjectCanvas {
 			sprite.draw(liveComponentBatch);
 		}
 
-		if (UniverseExploration.planetaryMovement) {
+		if (UniverseExploration.gameStatus.isPlanetaryMovementActive()) {
 			drawEnhancement();
 		}
 
@@ -209,7 +209,7 @@ public class GameObjectCanvas {
 	private void drawSelectedPlanetWhenValid() {
 		// It is perfectly normal scenario that there is no selected planet (no one ever instantiates it - hence the null check).
 		if(selectedPlanet != null) {
-			boolean hidePlanet = !UniverseExploration.planetaryMovement && starWrapper.isAlphaReachedMinimum();
+			boolean hidePlanet = !UniverseExploration.gameStatus.isPlanetaryMovementActive() && starWrapper.isAlphaReachedMinimum();
 			
 			selectedPlanet.handleAlpha((hidePlanet) ? false : true);
 			selectedPlanet.getSelectedPlanet().getEnlarged().draw(backgroundBatch);

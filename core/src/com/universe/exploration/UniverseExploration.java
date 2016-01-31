@@ -41,503 +41,475 @@ import com.universe.exploration.view.GameObjectCanvas;
 import com.universe.exploration.view.PlanetGfxContainer;
 
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
-	/**
-	 * Game objects are handled here
-	 */
-	private GameObjectCanvas gameObjectCanvas;
+    /**
+     * Game objects are handled here
+     */
+    private GameObjectCanvas gameObjectCanvas;
 
-	/**
-	 * Controls the camera
-	 */
-	private CameraMonitor playerMonitor;
+    /**
+     * Controls the camera
+     */
+    private CameraMonitor playerMonitor;
 
-	/**
-	 * Star system
-	 */
-	private StarSystem starSystem;
+    /**
+     * Star system
+     */
+    private StarSystem starSystem;
 
-	/**
-	 * User interface.
-	 */
-	private UIController uiController;
-	public GameStatus gameStatus;
+    /**
+     * User interface.
+     */
+    private UIController uiController;
+    public static GameStatus gameStatus;
 
-	/**
-	 * Contains player spaceship status.
-	 */
-	private PlayerStatus playerStatus;
+    /**
+     * Contains player spaceship status.
+     */
+    private PlayerStatus playerStatus;
 
-	private static boolean gameStatusPaused = false;
+    public static WindowContainer windowContainer;
 
-	public static boolean planetaryMovement = true;
+    private MinimalLogger logger;
+    private SurveyStatusContainer surveyStatusContainer;
 
-	public static boolean zoomIn = false;
+    private Sound backgroundMusic;
+    private long bgId;
 
-	public static WindowContainer windowContainer;
+    @SuppressWarnings("unused")
+    private Stage uiStage;
 
-	private MinimalLogger logger;
-	private SurveyStatusContainer surveyStatusContainer;
+    @Override
+    public void create() {
+	Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
-	private Sound backgroundMusic;
-	private long bgId;
+	basicSetup();
+	stageSetup();
+	pauseGame(false);
 
-	@SuppressWarnings("unused")
-	private Stage uiStage;
+	backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("space.mp3"));
+	bgId = backgroundMusic.loop();
+    }
 
-	@Override
-	public void create() {
-		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+    @Override
+    public void dispose() {
+	gameObjectCanvas.destroy();
+    }
 
-		basicSetup();
+    @Override
+    public void render() {
+	playerMonitor.zoom(gameStatus.isZoomIn());
+
+	gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+	gameObjectCanvas.drawGameContent();
+
+	playerStatus.updateStatus();
+	uiController.updateUI(playerStatus);
+
+	if (playerStatus.getCrewmen() == 0 && !gameStatus.isPaused()) {
+	    pauseGame(true);
+	    BasicWindow gameOverWindow = uiController.createGameOverWindow(WindowType.GAME_OVER, createGameOverClicklistener());
+
+	    windowContainer.add(WindowType.GAME_OVER, gameOverWindow);
+	    uiController.show(gameOverWindow);
+	}
+
+	closeFinishedSurveys();
+
+	if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && !Gdx.app.getType().equals(ApplicationType.WebGL)) {
+	    uiController.createQuitDialog();
+	}
+    }
+
+    /**
+     * Basic setup to be run only at initial game start.
+     */
+    private void basicSetup() {
+	gameStatus = new GameStatus();
+	logger = new MinimalLogger();
+	uiStage = new Stage(new ScreenViewport());
+	playerStatus = new PlayerStatus();
+	playerMonitor = new CameraMonitor();
+	windowContainerSetup();
+	surveyStatusContainer = new SurveyStatusContainer();
+    }
+
+    private void windowContainerSetup() {
+	windowContainer = new WindowContainer();
+	windowContainer.setWindowsThatMustAlert(WindowType.PLANET_DETAILS);
+	windowContainer.setSpecificedWindowChangeListener(createWindowChangeListener());
+    }
+
+    private UEListener createWindowChangeListener() {
+	return new UEListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.universe.exploration.listener.UEListener#handleEventClassEvent
+	     * (com.universe.exploration.listener.UEEvent)
+	     */
+	    @Override
+	    public void handleEventClassEvent(UEEvent e) {
+		WindowContainerEvent event = (WindowContainerEvent) e.getPayLoad();
+		gameStatus.enableSurveyMode(event.equals(WindowContainerEvent.ADD));
+	    }
+	};
+    }
+
+    /**
+     * First setup star system and then UiController because UI uses star system
+     * data.
+     */
+    private void stageSetup() {
+	createStarSystem();
+	setupUiController();
+	setupInputProcessors();
+    }
+
+    private void setupUiController() {
+	uiController = new UIController(gameObjectCanvas.getGameViewObjectContainer(), starSystem.getPlanets());
+
+	uiController.setPlanetClickListener(createPlanetClickListener());
+	uiController.setHyperspaceJumpListener(new UEListener() {
+	    @Override
+	    public void handleEventClassEvent() {
+		if (!gameStatus.isPaused()) {
+		    windowContainerSetup();
+		    stageSetup();
+		    gameStatus.enableSurveyMode(false);
+		    playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
+		    updateIngameLog("Hyperspace jump commenced!");
+		}
+	    };
+	});
+
+	uiController.setPlanetSurveyListener(new UEListener() {
+	    @Override
+	    public void handleEventClassEvent(UEEvent e) {
+		if (e.getPayLoad() instanceof PlanetSurveyForm) {
+		    startSurvey((PlanetSurveyForm) e.getPayLoad());
+		    windowContainer.closeWindow(WindowType.SURVEY_WINDOW);
+		}
+	    };
+	});
+
+	uiController.setSelectedPlanetChangedListener(new UEListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.universe.exploration.listener.UEListener#handleEventClassEvent
+	     * (com.universe.exploration.listener.UEEvent)
+	     */
+	    @Override
+	    public void handleEventClassEvent(UEEvent e) {
+		PlanetCelestialComponent planet = (PlanetCelestialComponent) e.getPayLoad();
+		gameObjectCanvas.setSelectedPlanet(planet);
+	    }
+	});
+
+	uiController.setVolumeListener(new UEListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.universe.exploration.listener.UEListener#handleEventClassEvent
+	     * ()
+	     */
+	    @Override
+	    public void handleEventClassEvent(UEEvent e) {
+		Float volume = (Float) e.getPayLoad();
+		backgroundMusic.setVolume(bgId, volume);
+	    }
+	});
+    }
+
+    private void startSurvey(PlanetSurveyForm form) {
+	int surveyTeamSize = (int) form.getCrewmenCount().getValue();
+	if (surveyTeamSize > 0) {
+	    if (surveyStatusContainer.isSurveyTeamSizeAcceptable(surveyTeamSize, calculateAvailableMen())) {
+
+		SurveyStatusFactory ssf = new SurveyStatusFactory();
+		SurveyStatus ss = ssf.createSurveyStatus((int) playerStatus.getTime(), surveyTeamSize,
+			(PlanetCelestialComponent) form.getPlanet());
+
+		surveyStatusContainer.add(ss);
+
+		updateIngameLog("Survey team of " + surveyTeamSize + " men and women dispatched.");
+	    } else {
+		updateIngameLog("Cannot dispatch survey team (" + surveyTeamSize + "). Not enough crewmen available!"
+			+ playerStatus.getCrewmen());
+	    }
+	}
+    }
+
+    private int calculateAvailableMen() {
+	return playerStatus.getCrewmen() - surveyStatusContainer.crewmenOnSurvey();
+    }
+
+    private void pauseGame(boolean pause) {
+	setGameStatusPaused(pause);
+	uiController.setGameStatusPaused(pause);
+    }
+
+    private ClickListener createGameOverClicklistener() {
+	return new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
 		stageSetup();
-		pauseGame(false);
-
-		backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("space.mp3"));
-		bgId = backgroundMusic.loop();
-	}
-
-	@Override
-	public void dispose() {
-		gameObjectCanvas.destroy();
-	}
-
-	@Override
-	public void render() {
-		playerMonitor.zoom(zoomIn);
-		
-		gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
-		gameObjectCanvas.drawGameContent();
-
-		playerStatus.updateStatus();
-		uiController.updateUI(playerStatus);
-
-		if (playerStatus.getCrewmen() == 0 && !gameStatusPaused) {
-			pauseGame(true);
-			BasicWindow gameOverWindow = uiController.createGameOverWindow(WindowType.GAME_OVER, createGameOverClicklistener());
-
-			windowContainer.add(WindowType.GAME_OVER, gameOverWindow);
-			uiController.show(gameOverWindow);
-		}
-
-		closeFinishedSurveys();
-			
-		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && !Gdx.app.getType().equals(ApplicationType.WebGL)) {
-			uiController.createQuitDialog();
-		}
-	}
-
-	private void basicSetup() {
-		logger = new MinimalLogger();
-		uiStage = new Stage(new ScreenViewport());
 		playerStatus = new PlayerStatus();
-		playerMonitor = new CameraMonitor();
-		windowContainer = new WindowContainer();
-		windowContainer.setWindowsThatMustAlert(WindowType.PLANET_DETAILS, WindowType.SURVEY_WINDOW);
-		windowContainer.setSpecificedWindowChangeListener(createWindowChangeListener());
-		surveyStatusContainer = new SurveyStatusContainer();
+		pauseGame(false);
+		windowContainer.closeWindow(WindowType.GAME_OVER);
+	    }
+	};
+    }
+
+    /**
+     * Both UniverseExploration and UIController use InputProcessors so we must
+     * use InputMultiPlexer to catch all those events.
+     */
+    private void setupInputProcessors() {
+	// We monitor events from both this ApplicationAdapter and our UI stage
+	// TODO: check if we could work with just one InputProcessor?
+	InputMultiplexer inputMultiplexer = new InputMultiplexer();
+	inputMultiplexer.addProcessor(uiController.getUiStage());
+	inputMultiplexer.addProcessor(this);
+	Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    /**
+     * Attempts to create a new star system. Returns boolean result.
+     * 
+     * @return
+     */
+    private boolean createStarSystem() {
+	StarSystemFactory uf = new StarSystemFactory();
+
+	try {
+	    starSystem = uf.makeStarSystem();
+	    gameObjectCanvas = new GameObjectCanvas(starSystem);
+	    gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+	    gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
+	} catch (PlanetCountOutOfRangeException e) {
+	    return false;
 	}
 
-	private UEListener createWindowChangeListener() {
-		return new UEListener() {
-			/* (non-Javadoc)
-			 * @see com.universe.exploration.listener.UEListener#handleEventClassEvent(com.universe.exploration.listener.UEEvent)
-			 */
-			@Override
-			public void handleEventClassEvent(UEEvent e) {
-				WindowContainerEvent event = (WindowContainerEvent) e.getPayLoad();
-				if(event.equals(WindowContainerEvent.ADD)) {
-					UniverseExploration.planetaryMovement = false;
-					UniverseExploration.zoomIn = true;		
-				} else {
-					UniverseExploration.planetaryMovement = true;
-					UniverseExploration.zoomIn = false;
-				}
-			}
-		};
+	return true;
+    }
+
+    public UEListener createPlanetClickListener() {
+	return new UEListener() {
+	    @Override
+	    public void handleEventClassEvent(final UEEvent e) {
+		final BasicWindow surveyWindow = uiController.createPlanetarySurveyWindow((PlanetGfxContainer) e.getPayLoad(),
+			new ClickListener() {
+			    @Override
+			    public void clicked(InputEvent event, float x, float y) {
+				final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow(
+					(PlanetGfxContainer) e.getPayLoad(), calculateAvailableMen());
+				windowContainer.add(WindowType.SURVEY_WINDOW, surveyedWindow);
+				uiController.show(surveyedWindow);
+			    }
+			});
+		// TODO: this process must be made smarter
+
+		windowContainer.add(WindowType.PLANET_DETAILS, surveyWindow);
+		surveyWindow.setPosition(Gdx.graphics.getWidth() / 2 + 100, Gdx.graphics.getHeight() / 2 - 300);
+		uiController.show(surveyWindow);
+	    };
+	};
+    }
+
+    private void closeFinishedSurveys() {
+	SurveyStatus ss = surveyStatusContainer.isSurveyOver((int) playerStatus.getTime());
+	showSurveyCompleteNotification(ss);
+    }
+
+    private void showSurveyCompleteNotification(SurveyStatus ss) {
+
+	if (ss != null) {
+	    String caption = "";
+	    Sound announcement = Gdx.audio.newSound(Gdx.files.internal("announcement.ogg"));
+	    announcement.play();
+	    ArrayList<Mortality> mc = ss.getMortalities();
+
+	    if (mc.size() > 0) {
+		caption = "You have lost " + mc.size() + " crewmen on survey.";
+		updateIngameLog(caption);
+		printMortalityLog(mc);
+		playerStatus.decreaseCrewmen(mc.size());
+
+	    } else {
+		caption = "Entire survey team came back alive!";
+		updateIngameLog(caption);
+	    }
+
+	    ResourcesFound rf = ss.getResourcesFound();
+	    String resourcesCaption = updateResources(rf);
+
+	    final BasicWindow surveyClosedWindow = uiController.createSurveyClosedWindow(generateSurveyDataRows(caption, resourcesCaption,
+		    mc, rf));
+
+	    windowContainer.add(WindowType.SURVEY_CLOSED, surveyClosedWindow);
+
+	    uiController.show(surveyClosedWindow);
 	}
-	/**
-	 * First setup star system and then UiController because UI uses star system
-	 * data.
-	 */
-	private void stageSetup() {
-		createStarSystem();
-		setupUiController();
-		setupInputProcessors();
-	}
+    }
 
-	private void setupUiController() {
-		uiController = new UIController(
-				gameObjectCanvas.getGameViewObjectContainer(),
-				starSystem.getPlanets());
+    private ArrayList<String> generateSurveyDataRows(String caption, String resourcesCaption, ArrayList<Mortality> mc, ResourcesFound rf) {
+	ArrayList<String> surveydata = new ArrayList<String>();
 
-		uiController.setPlanetClickListener(createPlanetClickListener());
-		uiController.setHyperspaceJumpListener(new UEListener() {
-			@Override
-			public void handleEventClassEvent() {
-				if (!gameStatusPaused) {
-					stageSetup();
-					playerStatus
-							.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
-					updateIngameLog("Hyperspace jump commenced!");
-				}
-			};
-		});
-
-		uiController.setPlanetSurveyListener(new UEListener() {
-			@Override
-			public void handleEventClassEvent(UEEvent e) {
-				if (e.getPayLoad() instanceof PlanetSurveyForm) {
-					startSurvey((PlanetSurveyForm) e.getPayLoad());
-					windowContainer.closeWindow(WindowType.SURVEY_WINDOW);
-				}
-			};
-		});
-
-		uiController.setSelectedPlanetChangedListener(new UEListener() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * com.universe.exploration.listener.UEListener#handleEventClassEvent
-			 * (com.universe.exploration.listener.UEEvent)
-			 */
-			@Override
-			public void handleEventClassEvent(UEEvent e) {
-				PlanetCelestialComponent planet = (PlanetCelestialComponent) e
-						.getPayLoad();
-				gameObjectCanvas.setSelectedPlanet(planet);
-			}
-		});
-
-		uiController.setVolumeListener(new UEListener() {
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * com.universe.exploration.listener.UEListener#handleEventClassEvent
-			 * ()
-			 */
-			@Override
-			public void handleEventClassEvent(UEEvent e) {
-				Float volume = (Float) e.getPayLoad();
-				backgroundMusic.setVolume(bgId, volume);
-			}
-		});
+	surveydata.add(caption);
+	if (mc.size() > 0) {
+	    for (Mortality mortality : mc) {
+		surveydata.add(Localizer.get(mortality.getCauseOfDeath().getLocalizationKey()));
+	    }
 	}
 
-	private void startSurvey(PlanetSurveyForm form) {
-		int surveyTeamSize = (int) form.getCrewmenCount().getValue();
-		if (surveyTeamSize > 0) {
-			if (surveyStatusContainer.isSurveyTeamSizeAcceptable(
-					surveyTeamSize, calculateAvailableMen())) {
+	surveydata.add("");
+	surveydata.add(resourcesCaption);
 
-				SurveyStatusFactory ssf = new SurveyStatusFactory();
-				SurveyStatus ss = ssf.createSurveyStatus(
-						(int) playerStatus.getTime(), surveyTeamSize,
-						(PlanetCelestialComponent) form.getPlanet());
+	return surveydata;
+    }
 
-				surveyStatusContainer.add(ss);
+    private String updateResources(ResourcesFound rf) {
+	ArrayList<String> resources = new ArrayList<String>();
+	String caption = "";
 
-				updateIngameLog("Survey team of " + surveyTeamSize
-						+ " men and women dispatched.");
-			} else {
-				updateIngameLog("Cannot dispatch survey team ("
-						+ surveyTeamSize + "). Not enough crewmen available!"
-						+ playerStatus.getCrewmen());
-			}
-		}
+	if (rf.getAir() > 0) {
+	    resources.add(Localizer.get("air"));
+	    playerStatus.increaseAir(rf.getAir());
 	}
 
-	private int calculateAvailableMen() {
-		return playerStatus.getCrewmen() - surveyStatusContainer.crewmenOnSurvey();
+	if (rf.getFood() > 0) {
+	    resources.add(Localizer.get("food"));
+	    playerStatus.increaseFood(rf.getFood());
 	}
 
-	private void pauseGame(boolean pause) {
-		setGameStatusPaused(pause);
-		uiController.setGameStatusPaused(pause);
+	if (rf.getWater() > 0) {
+	    resources.add(Localizer.get("water"));
+	    playerStatus.increaseWater(rf.getWater());
 	}
 
-	private ClickListener createGameOverClicklistener() {
-		return new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				stageSetup();
-				playerStatus = new PlayerStatus();
-				pauseGame(false);
-				windowContainer.closeWindow(WindowType.GAME_OVER);
-			}
-		};
+	if (resources.size() == 0) {
+	    caption = "You found nothing during your survey!";
+	    updateIngameLog(caption);
+	} else {
+	    caption = "During your survey you found: " + TextManipulationTools.joinArrayListString(resources, ", ");
+	    updateIngameLog(caption);
 	}
 
-	/**
-	 * Both UniverseExploration and UIController use InputProcessors so we must
-	 * use InputMultiPlexer to catch all those events.
-	 */
-	private void setupInputProcessors() {
-		// We monitor events from both this ApplicationAdapter and our UI stage
-		// TODO: check if we could work with just one InputProcessor?
-		InputMultiplexer inputMultiplexer = new InputMultiplexer();
-		inputMultiplexer.addProcessor(uiController.getUiStage());
-		inputMultiplexer.addProcessor(this);
-		Gdx.input.setInputProcessor(inputMultiplexer);
+	return caption;
+    }
+
+    private void printMortalityLog(ArrayList<Mortality> mc) {
+	for (Mortality mortality : mc) {
+	    String localizationKey = mortality.getCauseOfDeath().getLocalizationKey();
+	    updateIngameLog(" - " + Localizer.get(localizationKey));
 	}
+    }
 
-	/**
-	 * Attempts to create a new star system. Returns boolean result.
-	 * 
-	 * @return
-	 */
-	private boolean createStarSystem() {
-		StarSystemFactory uf = new StarSystemFactory();
+    private void updateIngameLog(String message) {
+	logger.add(message);
+	uiController.updateLog(logger.getLog());
+    }
 
-		try {
-			starSystem = uf.makeStarSystem();
-			gameObjectCanvas = new GameObjectCanvas(starSystem);
-			gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
-			gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
-		} catch (PlanetCountOutOfRangeException e) {
-			return false;
-		}
+    /**
+     * @param gameStatusPaused
+     *            the gameStatusPaused to set
+     */
+    public void setGameStatusPaused(boolean gameStatusPaused) {
+	gameStatus.setPaused(gameStatusPaused);
+    }
 
-		return true;
-	}
+    // *************** PAST THIS GENERATED METHODS FOR INPUT PROCESSOR
+    // ***************//
 
-	public UEListener createPlanetClickListener() {
-		return new UEListener() {
-			@Override
-			public void handleEventClassEvent(final UEEvent e) {
-				final BasicWindow surveyWindow = uiController
-						.createPlanetarySurveyWindow(
-								(PlanetGfxContainer) e.getPayLoad(),
-								new ClickListener() {
-									@Override
-									public void clicked(InputEvent event,
-											float x, float y) {
-										windowContainer
-												.closeWindow(WindowType.PLANET_DETAILS);
-										final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow(
-												(PlanetGfxContainer) e
-														.getPayLoad(),
-												calculateAvailableMen());
-										windowContainer.add(
-												WindowType.SURVEY_WINDOW,
-												surveyedWindow);
-										uiController.show(surveyedWindow);
-									}
-								});
-				// TODO: this process must be made smarter
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.badlogic.gdx.InputProcessor#keyDown(int)
+     */
+    @Override
+    public boolean keyDown(int keycode) {
+	// TODO Auto-generated method stub
+	return false;
+    }
 
-				windowContainer.add(WindowType.PLANET_DETAILS, surveyWindow);
-				surveyWindow.setPosition(Gdx.graphics.getWidth() / 2 + 100, Gdx.graphics.getHeight() / 2 - 300);
-				uiController.show(surveyWindow);
-			};
-		};
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.badlogic.gdx.InputProcessor#keyUp(int)
+     */
+    @Override
+    public boolean keyUp(int keycode) {
+	// TODO Auto-generated method stub
+	return false;
+    }
 
-	private void closeFinishedSurveys() {
-		SurveyStatus ss = surveyStatusContainer.isSurveyOver((int) playerStatus
-				.getTime());
-		showSurveyCompleteNotification(ss);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.badlogic.gdx.InputProcessor#keyTyped(char)
+     */
+    @Override
+    public boolean keyTyped(char character) {
+	// TODO Auto-generated method stub
+	return false;
+    }
 
-	private void showSurveyCompleteNotification(SurveyStatus ss) {
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.badlogic.gdx.InputProcessor#touchDown(int, int, int, int)
+     */
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+	gameObjectCanvas.checkIfHitCoordinatesMatchPlanets();
+	return true;
+    }
 
-		if (ss != null) {
-			String caption = "";
-			Sound announcement = Gdx.audio.newSound(Gdx.files
-					.internal("announcement.ogg"));
-			announcement.play();
-			ArrayList<Mortality> mc = ss.getMortalities();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.badlogic.gdx.InputProcessor#touchUp(int, int, int, int)
+     */
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	// TODO Auto-generated method stub
+	return false;
+    }
 
-			if (mc.size() > 0) {
-				caption = "You have lost " + mc.size() + " crewmen on survey.";
-				updateIngameLog(caption);
-				printMortalityLog(mc);
-				playerStatus.decreaseCrewmen(mc.size());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.badlogic.gdx.InputProcessor#touchDragged(int, int, int)
+     */
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+	// TODO Auto-generated method stub
+	return false;
+    }
 
-			} else {
-				caption = "Entire survey team came back alive!";
-				updateIngameLog(caption);
-			}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.badlogic.gdx.InputProcessor#mouseMoved(int, int)
+     */
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+	// TODO Auto-generated method stub
+	return false;
+    }
 
-			ResourcesFound rf = ss.getResourcesFound();
-			String resourcesCaption = updateResources(rf);
-
-			final BasicWindow surveyClosedWindow = uiController
-					.createSurveyClosedWindow(generateSurveyDataRows(caption,
-							resourcesCaption, mc, rf));
-
-			windowContainer.add(WindowType.SURVEY_CLOSED, surveyClosedWindow);
-
-			uiController.show(surveyClosedWindow);
-		}
-	}
-
-	private ArrayList<String> generateSurveyDataRows(String caption,
-			String resourcesCaption, ArrayList<Mortality> mc, ResourcesFound rf) {
-		ArrayList<String> surveydata = new ArrayList<String>();
-
-		surveydata.add(caption);
-		if (mc.size() > 0) {
-			for (Mortality mortality : mc) {
-				surveydata.add(Localizer.get(mortality.getCauseOfDeath()
-						.getLocalizationKey()));
-			}
-		}
-
-		surveydata.add("");
-		surveydata.add(resourcesCaption);
-
-		return surveydata;
-	}
-
-	private String updateResources(ResourcesFound rf) {
-		ArrayList<String> resources = new ArrayList<String>();
-		String caption = "";
-
-		if (rf.getAir() > 0) {
-			resources.add(Localizer.get("air"));
-			playerStatus.increaseAir(rf.getAir());
-		}
-
-		if (rf.getFood() > 0) {
-			resources.add(Localizer.get("food"));
-			playerStatus.increaseFood(rf.getFood());
-		}
-
-		if (rf.getWater() > 0) {
-			resources.add(Localizer.get("water"));
-			playerStatus.increaseWater(rf.getWater());
-		}
-
-		if (resources.size() == 0) {
-			caption = "You found nothing during your survey!";
-			updateIngameLog(caption);
-		} else {
-			caption = "During your survey you found: "
-					+ TextManipulationTools
-							.joinArrayListString(resources, ", ");
-			updateIngameLog(caption);
-		}
-
-		return caption;
-	}
-
-	private void printMortalityLog(ArrayList<Mortality> mc) {
-		for (Mortality mortality : mc) {
-			String localizationKey = mortality.getCauseOfDeath()
-					.getLocalizationKey();
-			updateIngameLog(" - " + Localizer.get(localizationKey));
-		}
-	}
-
-	private void updateIngameLog(String message) {
-		logger.add(message);
-		uiController.updateLog(logger.getLog());
-	}
-
-	/**
-	 * @return the gameStatusPaused
-	 */
-	public boolean isGameStatusPaused() {
-		return gameStatusPaused;
-	}
-
-	/**
-	 * @param gameStatusPaused
-	 *            the gameStatusPaused to set
-	 */
-	public void setGameStatusPaused(boolean gameStatusPaused) {
-		UniverseExploration.gameStatusPaused = gameStatusPaused;
-	}
-
-	//*************** PAST THIS GENERATED METHODS FOR INPUT PROCESSOR  ***************//
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.InputProcessor#keyDown(int)
-	 */
-	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.InputProcessor#keyUp(int)
-	 */
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.InputProcessor#keyTyped(char)
-	 */
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.InputProcessor#touchDown(int, int, int, int)
-	 */
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		gameObjectCanvas.checkIfHitCoordinatesMatchPlanets();
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.InputProcessor#touchUp(int, int, int, int)
-	 */
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.InputProcessor#touchDragged(int, int, int)
-	 */
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.InputProcessor#mouseMoved(int, int)
-	 */
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.badlogic.gdx.InputProcessor#scrolled(int)
-	 */
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.badlogic.gdx.InputProcessor#scrolled(int)
+     */
+    @Override
+    public boolean scrolled(int amount) {
+	// TODO Auto-generated method stub
+	return false;
+    }
 }

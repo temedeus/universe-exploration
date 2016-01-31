@@ -4,14 +4,30 @@
 package com.universe.exploration;
 
 /**
- * @author 17.12.2015 Teemu Puurunen 
+ * <p>
+ * Container for general game status.
+ * </p>
+ * 
+ * @author 17.12.2015 Teemu Puurunen
  *
  */
 public class GameStatus {
 	private boolean paused = false;
-	
+
 	private boolean planetaryMovementActive = true;
-	
+
+	private boolean zoomIn = false;
+
+	public void enableSurveyMode(boolean enable) {
+		if (enable) {
+			setPlanetaryMovementActive(false);
+			setZoomIn(true);
+		} else {
+			setPlanetaryMovementActive(true);
+			setZoomIn(false);
+		}
+	}
+
 	/**
 	 * @return the paused
 	 */
@@ -27,16 +43,31 @@ public class GameStatus {
 	}
 
 	/**
-	 * @param paused the paused to set
+	 * @param paused
+	 *            the paused to set
 	 */
 	public void setPaused(boolean paused) {
 		this.paused = paused;
 	}
 
 	/**
-	 * @param planetaryMovementActive the planetaryMovementActive to set
+	 * @param planetaryMovementActive
+	 *            the planetaryMovementActive to set
 	 */
 	public void setPlanetaryMovementActive(boolean planetaryMovementActive) {
 		this.planetaryMovementActive = planetaryMovementActive;
+	}
+	/**
+	 * @return the zoomIn
+	 */
+	public boolean isZoomIn() {
+		return zoomIn;
+	}
+	/**
+	 * @param zoomIn
+	 *            the zoomIn to set
+	 */
+	public void setZoomIn(boolean zoomIn) {
+		this.zoomIn = zoomIn;
 	}
 }

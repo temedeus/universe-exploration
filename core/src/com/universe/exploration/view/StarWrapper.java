@@ -41,7 +41,7 @@ public class StarWrapper {
 
 		star.rotate((float) 0.1);
 		star.setPosition(starX, starY);
-		star.setAlpha(starFader.updateAlpha(!UniverseExploration.planetaryMovement));
+		star.setAlpha(starFader.updateAlpha(!UniverseExploration.gameStatus.isPlanetaryMovementActive()));
 		alphaReachedMinimum = starFader.isAlphaMinimized();
 	}
 

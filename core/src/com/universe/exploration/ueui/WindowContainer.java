@@ -5,6 +5,7 @@ package com.universe.exploration.ueui;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
@@ -49,14 +50,21 @@ public class WindowContainer {
 	 * @param key
 	 * @return
 	 */
-	public boolean closeWindow(WindowType key) {
+	public void closeWindow(WindowType key) {
 		BasicWindow window = windowmap.get(key);
 		if(window != null) {
 			window.remove();
 			checkIfNeedToAlert(key, WindowContainerEvent.REMOVE);
-			return (windowmap.remove((WindowType)key) != null) ? true : false;
-		} else {
-			return true;
+			closeChildren(key.retreiveChildWindows());
+			windowmap.remove(key);
+		}
+	}
+	
+	private void closeChildren(List<WindowType> dependencies) {
+		if(dependencies != null) {
+			for(WindowType dependency : dependencies) {
+				closeWindow(dependency);
+			}
 		}
 	}
 	

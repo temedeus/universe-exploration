@@ -4,48 +4,52 @@
 package com.universe.exploration.survey;
 
 /**
- * @author 25.10.2015 Teemu Puurunen 
+ * <p>
+ * Determines boundaries for potentially found resources.
+ * </p>
+ * 
+ * @author 25.10.2015 Teemu Puurunen
  *
  */
 public enum ResourcesFoundBoundaries {
 
-	WATER(0, 8),
-	AIR(0, 8),
-	FOOD(0, 8);
-	
-	private float min;
-	private float max;
-	
-	ResourcesFoundBoundaries(float min, float max) {
-		this.min = min;
-		this.max = max;
-	}
+    WATER(0, 8), AIR(0, 8), FOOD(0, 8);
 
-	/**
-	 * @return the min
-	 */
-	public float getMin() {
-		return min;
-	}
+    private float min;
+    private float max;
 
-	/**
-	 * @return the max
-	 */
-	public float getMax() {
-		return max;
-	}
+    ResourcesFoundBoundaries(float min, float max) {
+	this.min = min;
+	this.max = max;
+    }
 
-	/**
-	 * @param min the min to set
-	 */
-	public void setMin(float min) {
-		this.min = min;
-	}
+    /**
+     * @return the min
+     */
+    public float getMin() {
+	return min;
+    }
 
-	/**
-	 * @param max the max to set
-	 */
-	public void setMax(float max) {
-		this.max = max;
-	}
+    /**
+     * @return the max
+     */
+    public float getMax() {
+	return max;
+    }
+
+    /**
+     * @param min
+     *            the min to set
+     */
+    public void setMin(float min) {
+	this.min = min;
+    }
+
+    /**
+     * @param max
+     *            the max to set
+     */
+    public void setMax(float max) {
+	this.max = max;
+    }
 }
