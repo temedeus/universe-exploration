@@ -1,4 +1,4 @@
-package com.universe.exploration.view;
+package com.universe.exploration.gamegraphics;
 
 import com.universe.exploration.starsystem.components.CelestialComponent;
 public class PlanetGfxContainer extends GraphicsGfxContainer {

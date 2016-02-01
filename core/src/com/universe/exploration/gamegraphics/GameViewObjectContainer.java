@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.view;
+package com.universe.exploration.gamegraphics;
 
 import java.util.ArrayList;
 import java.util.List;

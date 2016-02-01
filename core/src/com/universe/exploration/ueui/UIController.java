@@ -12,18 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.GdxHelper;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.gamegraphics.GameViewObjectContainer;
+import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
@@ -34,15 +34,13 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.components.LogDisplay;
+import com.universe.exploration.ueui.components.PlanetSelection;
 import com.universe.exploration.ueui.data.DataPair;
 import com.universe.exploration.ueui.data.DataPairTableFactory;
 import com.universe.exploration.ueui.data.container.LeftSideHUD;
 import com.universe.exploration.ueui.forms.FormContainer;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 import com.universe.exploration.ueui.skins.UEUiSkinBank;
-import com.universe.exploration.view.GameObjectCanvas;
-import com.universe.exploration.view.GameViewObjectContainer;
-import com.universe.exploration.view.PlanetGfxContainer;
 
 /**
  * {@link UniverseExploration} and no other class should have an instance of
@@ -65,26 +63,13 @@ public class UIController {
 
     private PlayerStatus playerStatus;
 
-    private List<PlanetCelestialComponent> planetList;
-
-    private UEListener planetClickListener;
+    private PlanetSelection planetSelection;
 
     /**
      * Listen for change in volume.
      */
     private UEListener volumeListener;
 
-    /**
-     * Listen for selected planet in {@link #planetSelectBox}.
-     */
-    private UEListener selectedPlanetChangedListener;
-
-    /**
-     * Planets in the current star system.
-     */
-    private final SelectBox<Object> planetSelectBox = new SelectBox<Object>(UEUiSkinBank.ueUISkin);
-
-    private GameViewObjectContainer gameViewObjectContainer = new GameViewObjectContainer();
 
     /**
      * <p>
@@ -102,8 +87,8 @@ public class UIController {
     private final LogDisplay logDisplay;
 
     public UIController(GameViewObjectContainer gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
-	this.gameViewObjectContainer = gameViewObjectContainer;
-	this.planetList = planetList;
+
+	planetSelection = new PlanetSelection(gameViewObjectContainer, planetList);
 
 	logDisplay = new LogDisplay(10, UEUiSkinBank.ueUISkin);
 	uiStage = new Stage(new ScreenViewport());
@@ -176,6 +161,7 @@ public class UIController {
 	    isHyperspaceJumpAllowed = false;
 	}
 
+	planetSelection.disablePlanetSelection(UniverseExploration.gameStatus.isZoomIn());
 	uiStage.act(GdxHelper.getDeltaTime());
 	uiStage.draw();
     }
@@ -188,7 +174,7 @@ public class UIController {
 	table.setPosition(0, Gdx.graphics.getHeight());
 	table.addActor(populateWithStatus());
 
-	table.addActor(createPlanetSelectionTable());
+	table.addActor(planetSelection.createPlanetSelectionTable());
 
 	return table;
     }
@@ -207,35 +193,6 @@ public class UIController {
 	return table;
     }
 
-    private VerticalGroup createPlanetSelectionTable() {
-	VerticalGroup table = new VerticalGroup();
-	table.align(Align.left | Align.bottom);
-	table.addActor(createSpacer());
-
-	if (planetList.size() > 0) {
-
-	    table.addActor(new Label(Localizer.get(LocalKey.LABEL_PLANET_SELECTION), UEUiSkinBank.ueUISkin));
-	    table.addActor(createPlanetSelectBox());
-	    table.addActor(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get(LocalKey.BTN_SURVEY), new ClickListener() {
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see com.badlogic.gdx.scenes.scene2d.utils. ClickListener
-		 * #clicked(com.badlogic.gdx.scenes. scene2d.InputEvent, float,
-		 * float)
-		 */
-		@Override
-		public void clicked(InputEvent event, float x, float y) {
-		    firePlanetClickListener();
-		}
-	    }));
-	} else {
-	    table.addActor(new Label(Localizer.get(LocalKey.LABEL_NO_PLANETS_FOUND), UEUiSkinBank.ueUISkin));
-	}
-
-	return table;
-    }
-
     private Table populateWithStatus() {
 	Table playerStatusTable = new Table();
 	playerStatusTable.align(Align.left | Align.top);
@@ -247,10 +204,6 @@ public class UIController {
 	}
 
 	return playerStatusTable;
-    }
-
-    private Label createSpacer() {
-	return new Label("", UEUiSkinBank.ueUISkin);
     }
 
     public void updateLog(LinkedList<String> logItems) {
@@ -272,55 +225,6 @@ public class UIController {
 	table.addActor(createHyperspaceJumpButton());
 
 	return table;
-    }
-
-    /**
-     * <p>
-     * TODO: Fix this logic. We deal with both {@link PlanetGfxContainer} and
-     * {@link PlanetCelestialComponent}... wtf?!
-     * </p>
-     * <p>
-     * Check {@link GameObjectCanvas} and the firePlanetClickListener method
-     * there.
-     * </p>
-     * <p>
-     * Currently the planet is dug out using the number in front of the planet
-     * list. This is not very smart way to perform this. SelectBox seems to
-     * accept Object but I didn't figure out how to setup captions.
-     * </p>
-     */
-    private void firePlanetClickListener() {
-
-	planetClickListener.handleEventClassEvent(new UEEvent(gameViewObjectContainer
-		.getPlanetGfxContainerByComponent(parsePlanetFromSelectBox())));
-    }
-
-    private PlanetCelestialComponent parsePlanetFromSelectBox() {
-	int planetIndex = Integer.parseInt(((String) planetSelectBox.getSelected()).substring(0, 1)) - 1;
-	return planetList.get(planetIndex);
-    }
-
-    private SelectBox<Object> createPlanetSelectBox() {
-	Object[] labelList = new Object[planetList.size()];
-
-	int x = 0;
-	for (PlanetCelestialComponent planet : planetList) {
-	    labelList[x++] = "" + x + ": " + planet.getComponentName();
-	}
-
-	planetSelectBox.setItems(labelList);
-	planetSelectBox.addCaptureListener(new ChangeListener() {
-
-	    @Override
-	    public void changed(ChangeEvent event, Actor actor) {
-		fireSelectedPlanetChangedListener();
-	    }
-	});
-	return planetSelectBox;
-    }
-
-    private void fireSelectedPlanetChangedListener() {
-	selectedPlanetChangedListener.handleEventClassEvent(new UEEvent(parsePlanetFromSelectBox()));
     }
 
     /**
@@ -560,18 +464,11 @@ public class UIController {
     }
 
     /**
-     * @return the planetClickListener
-     */
-    public UEListener getPlanetClickListener() {
-	return planetClickListener;
-    }
-
-    /**
      * @param planetClickListener
      *            the planetClickListener to set
      */
     public void setPlanetClickListener(UEListener planetClickListener) {
-	this.planetClickListener = planetClickListener;
+	planetSelection.setPlanetClickListener(planetClickListener);
     }
 
     /**
@@ -590,18 +487,11 @@ public class UIController {
     }
 
     /**
-     * @return the selectedPlanetChangedListener
-     */
-    public UEListener getSelectedPlanetChangedListener() {
-	return selectedPlanetChangedListener;
-    }
-
-    /**
      * @param selectedPlanetChangedListener
      *            the selectedPlanetChangedListener to set
      */
     public void setSelectedPlanetChangedListener(UEListener selectedPlanetChangedListener) {
-	this.selectedPlanetChangedListener = selectedPlanetChangedListener;
+	planetSelection.setSelectedPlanetChangedListener(selectedPlanetChangedListener);
     }
 
 }

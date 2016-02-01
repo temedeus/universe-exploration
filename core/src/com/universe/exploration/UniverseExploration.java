@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.camera.CameraMonitor;
 import com.universe.exploration.common.tools.TextManipulationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
+import com.universe.exploration.gamegraphics.GameObjectCanvas;
+import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
@@ -38,8 +40,6 @@ import com.universe.exploration.ueui.WindowContainerEvent;
 import com.universe.exploration.ueui.WindowType;
 import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
-import com.universe.exploration.view.GameObjectCanvas;
-import com.universe.exploration.view.PlanetGfxContainer;
 
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
     /**
@@ -312,7 +312,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 				uiController.show(surveyedWindow);
 			    }
 			});
-		// TODO: this process must be made smarter
 
 		windowContainer.add(WindowType.PLANET_DETAILS, surveyWindow);
 		surveyWindow.setPosition(Gdx.graphics.getWidth() / 2 + 100, Gdx.graphics.getHeight() / 2 - 300);
@@ -341,15 +340,15 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		playerStatus.decreaseCrewmen(mc.size());
 
 	    } else {
-		caption = "Entire survey team came back alive!";
+		caption = Localizer.get(LocalKey.TITLE_SURVEY_TEAM_SURVIVED);
 		updateIngameLog(caption);
 	    }
 
 	    ResourcesFound rf = ss.getResourcesFound();
 	    String resourcesCaption = updateResources(rf);
 
-	    final BasicWindow surveyClosedWindow = uiController.createSurveyClosedWindow(generateSurveyDataRows(caption, resourcesCaption,
-		    mc, rf));
+	    ArrayList<String> surveyData = generateSurveyDataRows(caption, resourcesCaption, mc, rf);
+	    final BasicWindow surveyClosedWindow = uiController.createSurveyClosedWindow(surveyData);
 
 	    windowContainer.add(WindowType.SURVEY_CLOSED, surveyClosedWindow);
 

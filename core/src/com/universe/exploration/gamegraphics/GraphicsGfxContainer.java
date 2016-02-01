@@ -1,4 +1,4 @@
-package com.universe.exploration.view;
+package com.universe.exploration.gamegraphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

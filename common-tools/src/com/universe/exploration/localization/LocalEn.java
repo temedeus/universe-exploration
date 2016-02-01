@@ -39,6 +39,8 @@ public enum LocalEn {
 	TITLE_AIR("Air:"),
 	TITLE_WATER("Water: "),
 	TITLE_POWER("Power: "),
+	TITLE_SURVEY_TEAM_SURVIVED("Entire survey team came back alive!"),
+	TITLE_FOOD("Food: "),
 	
 	// Labels
 	LABEL_CREWMEN_COUNT("Crewmen count:"),

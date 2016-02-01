@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.view;
+package com.universe.exploration.gamegraphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.universe.exploration.GdxHelper;
