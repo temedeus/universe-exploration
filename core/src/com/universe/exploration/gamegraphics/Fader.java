@@ -43,6 +43,7 @@ public class Fader {
 	if (decreaseAlphaValue) {
 	    if (currentValue > minimumValue) {
 		currentValue -= decrementRate;
+		atMinimum = false;
 	    } else {
 		atMinimum = true;
 	    }

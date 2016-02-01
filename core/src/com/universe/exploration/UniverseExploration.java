@@ -87,7 +87,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	stageSetup();
 	pauseGame(false);
 
-	backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("space.mp3"));
+	backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("music/space.mp3"));
 	bgId = backgroundMusic.loop();
     }
 
@@ -190,6 +190,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		if (e.getPayLoad() instanceof PlanetSurveyForm) {
 		    startSurvey((PlanetSurveyForm) e.getPayLoad());
 		    windowContainer.closeWindow(WindowType.SURVEY_WINDOW);
+		    windowContainer.closeWindow(WindowType.PLANET_DETAILS);
 		}
 	    };
 	});
@@ -209,7 +210,11 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    }
 	});
 
-	uiController.setVolumeListener(new UEListener() {
+	uiController.setVolumeListener(createVolumeListener());
+    }
+    
+    private UEListener createVolumeListener() {
+	return new UEListener() {
 	    /*
 	     * (non-Javadoc)
 	     * 
@@ -222,7 +227,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		Float volume = (Float) e.getPayLoad();
 		backgroundMusic.setVolume(bgId, volume);
 	    }
-	});
+	};
     }
 
     private void startSurvey(PlanetSurveyForm form) {
@@ -329,7 +334,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	if (ss != null) {
 	    String caption = "";
-	    Sound announcement = Gdx.audio.newSound(Gdx.files.internal("announcement.ogg"));
+	    Sound announcement = Gdx.audio.newSound(Gdx.files.internal("soundeffects/announcement.ogg"));
 	    announcement.play();
 	    ArrayList<Casualty> mc = ss.getMortalities();
 

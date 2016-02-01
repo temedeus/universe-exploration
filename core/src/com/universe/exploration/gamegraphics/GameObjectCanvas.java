@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -23,10 +22,9 @@ public class GameObjectCanvas {
     private SpriteBatch liveComponentBatch;
     private SpriteBatch backgroundBatch;
     private Sprite space;
-    private BitmapFont font;
 
     private StarSystem starSystem;
-    private boolean gameStatusPaused;
+
     private ShapeRenderer shapeRenderer;
 
     private SelectedPlanet selectedPlanet;
@@ -83,8 +81,6 @@ public class GameObjectCanvas {
 	    selectedPlanet = new SelectedPlanet();
 	    selectedPlanet.setSelectedPlanet(gameViewObjectContainer.getPlanetGfxContainerAtIndex(0));
 	}
-
-	gameStatusPaused = false;
     }
 
     private void initBasicSetup() {
@@ -96,14 +92,11 @@ public class GameObjectCanvas {
 
 	backgroundCamera = new OrthographicCamera(1920, 1080);
 
-	font = new BitmapFont();
-	font.setColor(Color.WHITE);
     }
 
     public void destroy() {
 	liveComponentBatch.dispose();
 	backgroundBatch.dispose();
-	font.dispose();
     }
 
     /**
@@ -237,21 +230,6 @@ public class GameObjectCanvas {
      */
     public void setPlanetClickListener(UEListener planetClickListener) {
 	this.planetClickListener = planetClickListener;
-    }
-
-    /**
-     * @return the gameStatusPaused
-     */
-    public boolean isGameStatusPaused() {
-	return gameStatusPaused;
-    }
-
-    /**
-     * @param gameStatusPaused
-     *            the gameStatusPaused to set
-     */
-    public void setGameStatusPaused(boolean gameStatusPaused) {
-	this.gameStatusPaused = gameStatusPaused;
     }
 
     /**
