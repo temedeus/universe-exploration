@@ -6,8 +6,8 @@ package com.universe.exploration.survey;
 import java.util.ArrayList;
 
 import com.universe.exploration.common.tools.MathTools;
-import com.universe.exploration.mortality.Mortality;
-import com.universe.exploration.mortality.MortalityFactory;
+import com.universe.exploration.mortality.Casualty;
+import com.universe.exploration.mortality.CasualtyFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -35,14 +35,14 @@ public class SurveyStatusFactory {
 	ResourcesFoundFactory rff = new ResourcesFoundFactory();
 	SurveyStatus surveyStatus = new SurveyStatus();
 
-	int crewmenMortalityCount = calculateHowManyCrewmenWillDie(crewmenCount, planet);
+	int crewmenCasualtyCount = calculateHowManyCrewmenWillDie(crewmenCount, planet);
 
 	surveyStatus.setCrewmenInSurveyTeam(crewmenCount);
 	surveyStatus.setSurveyStartDay(startDay);
 	surveyStatus.setSurveyEndDay(startDay + 2);
 	surveyStatus.setResourcesFound(rff.generateFoundResource(crewmenCount, planet));
 
-	surveyStatus.setMortalities(createMortalityList(crewmenMortalityCount, planet));
+	surveyStatus.setMortalities(createCasualtyList(crewmenCasualtyCount, planet));
 
 	return surveyStatus;
     }
@@ -64,15 +64,15 @@ public class SurveyStatusFactory {
 	return count;
     }
 
-    private ArrayList<Mortality> createMortalityList(int count, PlanetCelestialComponent planet) {
-	MortalityFactory mf = new MortalityFactory(planet);
-	ArrayList<Mortality> mortalities = new ArrayList<Mortality>();
+    private ArrayList<Casualty> createCasualtyList(int count, PlanetCelestialComponent planet) {
+	CasualtyFactory mf = new CasualtyFactory(planet);
+	ArrayList<Casualty> casualties = new ArrayList<Casualty>();
 
 	for (int x = 0; x < count; x++) {
-	    mortalities.add(mf.makeMortality());
+	    casualties.add(mf.createCasualty());
 	}
 
-	return mortalities;
+	return casualties;
     }
 
 }

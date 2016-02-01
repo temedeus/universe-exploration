@@ -11,7 +11,8 @@ import java.util.ArrayList;
  * that should end.
  * </p>
  * 
- * <p>De facfo maintains a list of {@link SurveyStatus}.
+ * <p>
+ * De facfo maintains a list of {@link SurveyStatus}.
  * 
  * @author 28.10.2015 Teemu Puurunen
  *

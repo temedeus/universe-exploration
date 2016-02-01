@@ -11,7 +11,7 @@ package com.universe.exploration.mortality;
  * @author 25.10.2015 Teemu Puurunen
  *
  */
-public class Mortality {
+public class Casualty {
 
     /**
      * Determine which crewmen died. TODO: no individual crewmen still exist.
@@ -60,6 +60,6 @@ public class Mortality {
      */
     @Override
     public String toString() {
-	return "Mortality [crewmenID=" + crewmenID + ", causeOfDeath=" + causeOfDeath + "]";
+	return "Casualty [crewmenID=" + crewmenID + ", causeOfDeath=" + causeOfDeath + "]";
     }
 }

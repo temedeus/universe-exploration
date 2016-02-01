@@ -37,11 +37,6 @@ public class Localizer {
      * @return
      */
     public static String get(LocalKey local) {
-	try {
-	    String result = LocalEn.valueOf(local.getLocalKey()).getDescription();
-	    return result;
-	} catch (Exception e) {
-	    return local.getLocalKey();
-	}
+	return get(local.getLocalKey());
     }
 }

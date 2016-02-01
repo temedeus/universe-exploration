@@ -24,7 +24,7 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.logger.MinimalLogger;
-import com.universe.exploration.mortality.Mortality;
+import com.universe.exploration.mortality.Casualty;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
@@ -179,7 +179,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    stageSetup();
 		    gameStatus.enableSurveyMode(false);
 		    playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
-		    updateIngameLog("Hyperspace jump commenced!");
+		    updateIngameLog(Localizer.get(LocalKey.DESC_HYPERSPACE_JUMP_COMMENCED));
 		}
 	    };
 	});
@@ -331,7 +331,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    String caption = "";
 	    Sound announcement = Gdx.audio.newSound(Gdx.files.internal("announcement.ogg"));
 	    announcement.play();
-	    ArrayList<Mortality> mc = ss.getMortalities();
+	    ArrayList<Casualty> mc = ss.getMortalities();
 
 	    if (mc.size() > 0) {
 		caption = "You have lost " + mc.size() + " crewmen on survey.";
@@ -356,12 +356,12 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	}
     }
 
-    private ArrayList<String> generateSurveyDataRows(String caption, String resourcesCaption, ArrayList<Mortality> mc, ResourcesFound rf) {
+    private ArrayList<String> generateSurveyDataRows(String caption, String resourcesCaption, ArrayList<Casualty> mc, ResourcesFound rf) {
 	ArrayList<String> surveydata = new ArrayList<String>();
 
 	surveydata.add(caption);
 	if (mc.size() > 0) {
-	    for (Mortality mortality : mc) {
+	    for (Casualty mortality : mc) {
 		surveydata.add(Localizer.get(mortality.getCauseOfDeath().getLocalizationKey()));
 	    }
 	}
@@ -402,8 +402,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	return caption;
     }
 
-    private void printMortalityLog(ArrayList<Mortality> mc) {
-	for (Mortality mortality : mc) {
+    private void printMortalityLog(ArrayList<Casualty> mc) {
+	for (Casualty mortality : mc) {
 	    String localizationKey = mortality.getCauseOfDeath().getLocalizationKey();
 	    updateIngameLog(" - " + Localizer.get(localizationKey));
 	}

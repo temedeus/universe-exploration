@@ -62,7 +62,7 @@ public enum LocalEn {
 	DESC_PRESENT_LIFEFORMS_CIVILIZED("civilized"),
 	DESC_PRESENT_LIFEFORMS_ANIMAL("animal"),
 	DESC_PRESENT_LIFEFORMS_BACTERIAL("bacterial"),
-	
+	DESC_HYPERSPACE_JUMP_COMMENCED("Hyperspace jump commenced!"),
 	
 	// General terms. Should be safe to use all around as these should not change (or you are attempting to do something wrong).
 	GENERAL_YES("Yes"),

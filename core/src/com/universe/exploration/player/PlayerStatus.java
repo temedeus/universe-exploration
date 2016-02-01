@@ -10,223 +10,239 @@ import com.universe.exploration.common.tools.MathTools;
  * 
  * General container for supply and crew status
  * 
- * @author 31.8.2015 Teemu Puurunen 
+ * @author 31.8.2015 Teemu Puurunen
  *
  */
 public class PlayerStatus {
-	/**
-	 * Count of crewmen alive.
-	 */
-	private int crewmen;
-	
-	/**
-	 * Air left
-	 */
-	private float air;
-	
-	private float water;
-	
-	private float food;
-	
-	private float power;
-	
-	private float time;
-	
-	/**
-	 * Setup initial values.
-	 * Start with full values
-	 */
-	public PlayerStatus(){
+    /**
+     * Count of crewmen alive.
+     */
+    private int crewmen;
 
-		time = CoreConfiguration.TIME_START;
-		crewmen = CoreConfiguration.MAX_CREWMEN;
-		air = CoreConfiguration.MAX_AIR;
-		water = CoreConfiguration.MAX_WATER;
-		food = CoreConfiguration.MAX_FOOD;
-		power = CoreConfiguration.MAX_POWER;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public void updateStatus() {
-		increaseDaysPassed();
-		decreaseAirBy((power > 0) ? StatusConsumption.AIR_DECREMENT : StatusConsumption.AIR_DECREMENT * 9);
-		decreaseFoodBy(StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN * crewmen);
-		decreaseWaterBy(StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN * crewmen);
-		decreaseCrewmen();
-	}
-	
-	/**
-	 * Based on available resources, return mortality rate (if all is well, return 0)
-	 * @return float
-	 */
-	private float calculateCrewmenMortalityRate() {	
-		// Return crewmen death rate by what most crucial resource is depleted
-		if(air == 0) {
-			return StatusConsumption.CREWMEN_DECREMENT_AIR_DEPLETED;
-		} else {
-			if(water == 0) {
-				return StatusConsumption.CREWMEN_DECREMENT_WATER_DEPLETED;
-			} else {
-				if(food == 0) {
-					return StatusConsumption.CREWMEN_DECREMENT_FOOD_DEPLETED;
-				}
-			}
+    /**
+     * Air left
+     */
+    private float air;
+
+    private float water;
+
+    private float food;
+
+    private float power;
+
+    private float time;
+
+    /**
+     * Setup initial values. Start with full values
+     */
+    public PlayerStatus() {
+
+	time = CoreConfiguration.TIME_START;
+	crewmen = CoreConfiguration.MAX_CREWMEN;
+	air = CoreConfiguration.MAX_AIR;
+	water = CoreConfiguration.MAX_WATER;
+	food = CoreConfiguration.MAX_FOOD;
+	power = CoreConfiguration.MAX_POWER;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public void updateStatus() {
+	increaseDaysPassed();
+	decreaseAirBy((power > 0) ? StatusConsumption.AIR_DECREMENT : StatusConsumption.AIR_DECREMENT * 9);
+	decreaseFoodBy(StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN * crewmen);
+	decreaseWaterBy(StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN * crewmen);
+	decreaseCrewmen();
+    }
+
+    /**
+     * Based on available resources, return mortality rate (if all is well,
+     * return 0)
+     * 
+     * @return float
+     */
+    private float calculateCrewmenMortalityRate() {
+	// Return crewmen death rate by what most crucial resource is depleted
+	if (air == 0) {
+	    return StatusConsumption.CREWMEN_DECREMENT_AIR_DEPLETED;
+	} else {
+	    if (water == 0) {
+		return StatusConsumption.CREWMEN_DECREMENT_WATER_DEPLETED;
+	    } else {
+		if (food == 0) {
+		    return StatusConsumption.CREWMEN_DECREMENT_FOOD_DEPLETED;
 		}
-		
-		return 0f;
-	}
-	
-	public void increaseDaysPassed() {
-		time += CoreConfiguration.TIME_FLOW;
-	}
-	
-	/**
-	 * Crewman dies
-	 * @param d
-	 */
-	public void decreaseCrewmen() {
-		float dec = calculateCrewmenMortalityRate();
-		
-		if(dec > 0) {
-			crewmen = (int)MathTools.decreaseIfResultPositive(crewmen, dec);
-		}
-	}
-	
-	public void decreaseCrewmen(int count) {
-		crewmen -= (crewmen - count >= 0) ?  count : 0; 
-	}
-	
-	public void increaseAir(float airInc) {
-		air += airInc;
-		if(air > 100) air = 100;
-	}
-	
-	public void increaseFood(float foodInc) {
-		food += foodInc;
-		if(food > 100) food = 100;
-	}
-	
-	public void increaseWater(float foodInc) {
-		water += foodInc;
-		if(water > 100) water = 100;
-	}
-	
-	/**
-	 * Air gets sucked out
-	 * @param d
-	 */
-	private boolean decreaseAirBy(float d) {
-		air = MathTools.decreaseIfResultPositive(air, d);return true;
-	}
-	
-	/**
-	 * Water leaks
-	 * @param d
-	 */
-	private void decreaseWaterBy(float d) {
-		water = MathTools.decreaseIfResultPositive(water, d);
-	}
-	
-	/**
-	 * Food gets eaten
-	 * @param d
-	 */
-	private void decreaseFoodBy(float d) {
-		food = MathTools.decreaseIfResultPositive(food, d);
-	}
-	
-	/**
-	 * Someones charging their phones
-	 * @param d
-	 */
-	public void decreasePowerBy(float d) {
-		power = MathTools.decreaseIfResultPositive(power, d);
-	}
-	
-	/**
-	 * @return the crewmen
-	 */
-	public int getCrewmen() {
-		return crewmen;
+	    }
 	}
 
-	/**
-	 * @return the air
-	 */
-	public float getAir() {
-		return air;
-	}
+	return 0f;
+    }
 
-	/**
-	 * @return the water
-	 */
-	public float getWater() {
-		return water;
-	}
+    public void increaseDaysPassed() {
+	time += CoreConfiguration.TIME_FLOW;
+    }
 
-	/**
-	 * @return the food
-	 */
-	public float getFood() {
-		return food;
-	}
+    /**
+     * Crewman dies
+     * 
+     * @param d
+     */
+    public void decreaseCrewmen() {
+	float dec = calculateCrewmenMortalityRate();
 
-	/**
-	 * @return the power
-	 */
-	public float getPower() {
-		return power;
+	if (dec > 0) {
+	    crewmen = (int) MathTools.decreaseIfResultPositive(crewmen, dec);
 	}
+    }
 
-	/**
-	 * @param crewmen the crewmen to set
-	 */
-	public void setCrewmen(int crewmen) {
-		this.crewmen = crewmen;
-	}
+    public void decreaseCrewmen(int count) {
+	crewmen -= (crewmen - count >= 0) ? count : 0;
+    }
 
-	/**
-	 * @param air the air to set
-	 */
-	public void setAir(float air) {
-		this.air = air;
-	}
+    public void increaseAir(float airInc) {
+	air += airInc;
+	if (air > 100)
+	    air = 100;
+    }
 
-	/**
-	 * @param water the water to set
-	 */
-	public void setWater(float water) {
-		this.water = water;
-	}
+    public void increaseFood(float foodInc) {
+	food += foodInc;
+	if (food > 100)
+	    food = 100;
+    }
 
-	/**
-	 * @param food the food to set
-	 */
-	public void setFood(float food) {
-		this.food = food;
-	}
+    public void increaseWater(float foodInc) {
+	water += foodInc;
+	if (water > 100)
+	    water = 100;
+    }
 
-	/**
-	 * @param power the power to set
-	 */
-	public void setPower(float power) {
-		this.power = power;
-	}
+    /**
+     * Air gets sucked out
+     * 
+     * @param d
+     */
+    private boolean decreaseAirBy(float d) {
+	air = MathTools.decreaseIfResultPositive(air, d);
+	return true;
+    }
 
-	/**
-	 * @return the time
-	 */
-	public float getTime() {
-		return time;
-	}
+    /**
+     * Water leaks
+     * 
+     * @param d
+     */
+    private void decreaseWaterBy(float d) {
+	water = MathTools.decreaseIfResultPositive(water, d);
+    }
 
-	/**
-	 * @param time the time to set
-	 */
-	public void setTime(float time) {
-		this.time = time;
-	}
+    /**
+     * Food gets eaten
+     * 
+     * @param d
+     */
+    private void decreaseFoodBy(float d) {
+	food = MathTools.decreaseIfResultPositive(food, d);
+    }
+
+    /**
+     * Someones charging their phones
+     * 
+     * @param d
+     */
+    public void decreasePowerBy(float d) {
+	power = MathTools.decreaseIfResultPositive(power, d);
+    }
+
+    /**
+     * @return the crewmen
+     */
+    public int getCrewmen() {
+	return crewmen;
+    }
+
+    /**
+     * @return the air
+     */
+    public float getAir() {
+	return air;
+    }
+
+    /**
+     * @return the water
+     */
+    public float getWater() {
+	return water;
+    }
+
+    /**
+     * @return the food
+     */
+    public float getFood() {
+	return food;
+    }
+
+    /**
+     * @return the power
+     */
+    public float getPower() {
+	return power;
+    }
+
+    /**
+     * @param crewmen
+     *            the crewmen to set
+     */
+    public void setCrewmen(int crewmen) {
+	this.crewmen = crewmen;
+    }
+
+    /**
+     * @param air
+     *            the air to set
+     */
+    public void setAir(float air) {
+	this.air = air;
+    }
+
+    /**
+     * @param water
+     *            the water to set
+     */
+    public void setWater(float water) {
+	this.water = water;
+    }
+
+    /**
+     * @param food
+     *            the food to set
+     */
+    public void setFood(float food) {
+	this.food = food;
+    }
+
+    /**
+     * @param power
+     *            the power to set
+     */
+    public void setPower(float power) {
+	this.power = power;
+    }
+
+    /**
+     * @return the time
+     */
+    public float getTime() {
+	return time;
+    }
+
+    /**
+     * @param time
+     *            the time to set
+     */
+    public void setTime(float time) {
+	this.time = time;
+    }
 }

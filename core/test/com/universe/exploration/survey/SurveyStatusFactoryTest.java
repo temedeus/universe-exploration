@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.universe.exploration.common.Lifeforms;
-import com.universe.exploration.mortality.Mortality;
+import com.universe.exploration.mortality.Casualty;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 
@@ -26,7 +26,7 @@ public class SurveyStatusFactoryTest {
 		System.out.println(ss.toString());
 		System.out.println("Mortalities:\n");
 		
-		for(Mortality mortality : ss.getMortalities()) {
+		for(Casualty mortality : ss.getMortalities()) {
 			System.out.println(mortality.toString());
 		}
 	}
