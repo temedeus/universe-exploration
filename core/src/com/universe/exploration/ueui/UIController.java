@@ -26,7 +26,7 @@ import com.universe.exploration.GdxHelper;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
-import com.universe.exploration.localization.LocalKeys;
+import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.PlayerStatusItemkeys;
@@ -125,9 +125,9 @@ public class UIController {
 	table.align(Align.left | Align.top);
 	table.setPosition(Gdx.graphics.getWidth() / 2 - 200, Gdx.graphics.getHeight());
 
-	table.addActor(createVolumeChangeButton(Localizer.get("BTN_MIN_VOLUME"), 0f));
+	table.addActor(createVolumeChangeButton(Localizer.get(LocalKey.BTN_MIN_VOLUME), 0f));
 	table.addActor(createVolumeSlider());
-	table.addActor(createVolumeChangeButton(Localizer.get("BTN_MAX_VOLUME"), 100f));
+	table.addActor(createVolumeChangeButton(Localizer.get(LocalKey.BTN_MAX_VOLUME), 100f));
 
 	return table;
     }
@@ -214,9 +214,9 @@ public class UIController {
 
 	if (planetList.size() > 0) {
 
-	    table.addActor(new Label(Localizer.get("LABEL_PLANET_SELECTION"), UEUiSkinBank.ueUISkin));
+	    table.addActor(new Label(Localizer.get(LocalKey.LABEL_PLANET_SELECTION), UEUiSkinBank.ueUISkin));
 	    table.addActor(createPlanetSelectBox());
-	    table.addActor(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get("BTN_SURVEY"), new ClickListener() {
+	    table.addActor(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get(LocalKey.BTN_SURVEY), new ClickListener() {
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -230,7 +230,7 @@ public class UIController {
 		}
 	    }));
 	} else {
-	    table.addActor(new Label(Localizer.get(LocalKeys.LABEL_NO_PLANETS_FOUND.getLocalKey()), UEUiSkinBank.ueUISkin));
+	    table.addActor(new Label(Localizer.get(LocalKey.LABEL_NO_PLANETS_FOUND), UEUiSkinBank.ueUISkin));
 	}
 
 	return table;
@@ -368,11 +368,11 @@ public class UIController {
     public TextButton createHyperspaceJumpButton() {
 	ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
 
-	return bf.createTextButton(Localizer.get("BTN_HYPERSPACE_JUMP"), new ClickListener() {
+	return bf.createTextButton(Localizer.get(LocalKey.BTN_HYPERSPACE_JUMP), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		if (!gameStatusPaused && isHyperspaceJumpAllowed) {
-		    final Dialog dialog = new Dialog(Localizer.get(LocalKeys.DESC_HYPERSPACE_JUMP), UEUiSkinBank.ueUISkin);
+		    final Dialog dialog = new Dialog(Localizer.get(LocalKey.DESC_HYPERSPACE_JUMP), UEUiSkinBank.ueUISkin);
 		    dialog.setSize(200, 100);
 		    dialog.show(uiStage);
 		    Timer.schedule(new Timer.Task() {
@@ -390,8 +390,8 @@ public class UIController {
     public BasicWindow createGameOverWindow(WindowType windowType, ClickListener tryAgainAction) {
 	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 	BasicTable gameoverData = new BasicTable(Align.left | Align.top);
-	BasicWindow gameOverWindow = wf.createDescriptionWindowWithSecondaryAction(windowType, gameoverData,
-		LocalKeys.BTN_QUIT_GAME, tryAgainAction, new ClickListener() {
+	BasicWindow gameOverWindow = wf.createDescriptionWindowWithSecondaryAction(windowType, gameoverData, LocalKey.BTN_QUIT_GAME,
+		tryAgainAction, new ClickListener() {
 		    @Override
 		    public void clicked(InputEvent event, float x, float y) {
 			if (!Gdx.app.getType().equals(ApplicationType.WebGL)) {
@@ -415,7 +415,7 @@ public class UIController {
     private TextButton createQuitButton() {
 	ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
 
-	return bf.createTextButton(Localizer.get("BTN_QUIT_GAME"), new ClickListener() {
+	return bf.createTextButton(Localizer.get(LocalKey.BTN_QUIT_GAME), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		createQuitDialog();
@@ -425,7 +425,7 @@ public class UIController {
 
     public void createQuitDialog() {
 	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
-	uiStage.addActor(wf.createQuitWindow(Localizer.get(LocalKeys.TITLE_QUIT_GAME.getLocalKey())));
+	uiStage.addActor(wf.createQuitWindow(Localizer.get(LocalKey.TITLE_QUIT_GAME)));
     }
 
     public BasicWindow createSurveyClosedWindow(ArrayList<String> surveydata) {
@@ -438,7 +438,7 @@ public class UIController {
 	    table.row();
 	}
 
-	return wf.createOKWindow(Localizer.get(LocalKeys.TITLE_SURVEY_CLOSED.getLocalKey()), table);
+	return wf.createOKWindow(Localizer.get(LocalKey.TITLE_SURVEY_CLOSED), table);
     }
 
     /**
@@ -460,7 +460,7 @@ public class UIController {
 
 	Table planetInformationTable = new Table();
 
-	planetInformationTable.add(new Label(Localizer.get("LABEL_CREWMEN_COUNT"), UEUiSkinBank.ueUISkin));
+	planetInformationTable.add(new Label(Localizer.get(LocalKey.LABEL_CREWMEN_COUNT), UEUiSkinBank.ueUISkin));
 	planetInformationTable.row();
 
 	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, surveyTeamSize, 1);

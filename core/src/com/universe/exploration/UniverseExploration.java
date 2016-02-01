@@ -19,6 +19,7 @@ import com.universe.exploration.common.tools.TextManipulationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
+import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.logger.MinimalLogger;
 import com.universe.exploration.mortality.Mortality;
@@ -377,17 +378,17 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	String caption = "";
 
 	if (rf.getAir() > 0) {
-	    resources.add(Localizer.get("air"));
+	    resources.add(Localizer.get(LocalKey.GENERIC_AIR));
 	    playerStatus.increaseAir(rf.getAir());
 	}
 
 	if (rf.getFood() > 0) {
-	    resources.add(Localizer.get("food"));
+	    resources.add(Localizer.get(LocalKey.GENERIC_FOOD));
 	    playerStatus.increaseFood(rf.getFood());
 	}
 
 	if (rf.getWater() > 0) {
-	    resources.add(Localizer.get("water"));
+	    resources.add(Localizer.get(LocalKey.GENERIC_WATER));
 	    playerStatus.increaseWater(rf.getWater());
 	}
 

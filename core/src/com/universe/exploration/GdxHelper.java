@@ -6,6 +6,10 @@ package com.universe.exploration;
 import com.badlogic.gdx.Gdx;
 
 /**
+ * <p>
+ * LibGdx specific helper methods
+ * </p>
+ * 
  * @author 25.8.2015 Teemu Puurunen
  *
  */

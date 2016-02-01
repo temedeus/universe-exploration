@@ -3,60 +3,63 @@
  */
 package com.universe.exploration.mortality;
 
-
 /**
- * <p>Bean describing crewmans death, reason of fatality etc.</p>
+ * <p>
+ * Bean describing crewmans death, reason of fatality etc.
+ * </p>
  * 
- * @author 25.10.2015 Teemu Puurunen 
+ * @author 25.10.2015 Teemu Puurunen
  *
  */
 public class Mortality {
 
-	/**
-	 * Determine which crewmen died.
-	 * TODO: no individual crewmen still exist.
-	 */
-	private int crewmenID;
+    /**
+     * Determine which crewmen died. TODO: no individual crewmen still exist.
+     */
+    private int crewmenID;
 
-	/**
-	 * Determine cause of death.
-	 */
-	private CauseOfDeath causeOfDeath;
-	
-	/**
-	 * @return the crewmenID
-	 */
-	public int getCrewmenID() {
-		return crewmenID;
-	}
+    /**
+     * Determine cause of death.
+     */
+    private CauseOfDeath causeOfDeath;
 
-	/**
-	 * @return the causeOfDeath
-	 */
-	public CauseOfDeath getCauseOfDeath() {
-		return causeOfDeath;
-	}
- 
-	/**
-	 * @param crewmenID the crewmenID to set
-	 */
-	public void setCrewmenID(int crewmenID) {
-		this.crewmenID = crewmenID;
-	}
+    /**
+     * @return the crewmenID
+     */
+    public int getCrewmenID() {
+	return crewmenID;
+    }
 
-	/**
-	 * @param causeOfDeath the causeOfDeath to set
-	 */
-	public void setCauseOfDeath(CauseOfDeath causeOfDeath) {
-		this.causeOfDeath = causeOfDeath;
-	}
+    /**
+     * @return the causeOfDeath
+     */
+    public CauseOfDeath getCauseOfDeath() {
+	return causeOfDeath;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Mortality [crewmenID=" + crewmenID + ", causeOfDeath="
-				+ causeOfDeath + "]";
-	}
+    /**
+     * @param crewmenID
+     *            the crewmenID to set
+     */
+    public void setCrewmenID(int crewmenID) {
+	this.crewmenID = crewmenID;
+    }
+
+    /**
+     * @param causeOfDeath
+     *            the causeOfDeath to set
+     */
+    public void setCauseOfDeath(CauseOfDeath causeOfDeath) {
+	this.causeOfDeath = causeOfDeath;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	return "Mortality [crewmenID=" + crewmenID + ", causeOfDeath=" + causeOfDeath + "]";
+    }
 }

@@ -66,7 +66,7 @@ public class StarSystemFactory {
 	 * @param planetCount
 	 */
 	private void populateWithPlanets(int planetCount) {
-		double planetarySpace = MathTools.calculatePlaneterySpace(planetCount);
+		double planetarySpace = MathTools.calculatePlanetarySpace(planetCount);
 				
 		double previousOrbitalRadious = 0;
 		

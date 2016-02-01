@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.localization.LocalKeys;
+import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
@@ -61,9 +61,9 @@ public class WindowFactory {
 	public BasicWindow createOkWindow(String caption, ClickListener okAction) {
 	    final SmallWindow window = new SmallWindow(caption, windowStyle);
 
-	    window.add(bf.createTextButton(Localizer.get("BTN_OK"), okAction));
+	    window.add(bf.createTextButton(Localizer.get(LocalKey.BTN_OK), okAction));
 	    
-	    window.add(bf.createTextButton(Localizer.get("BTN_CANCEL"), new ClickListener() {
+	    window.add(bf.createTextButton(Localizer.get(LocalKey.BTN_CANCEL), new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
 	    		window.remove();
@@ -93,7 +93,7 @@ public class WindowFactory {
 		Table buttontable = new Table();
 		buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 		
-		buttontable.add(bf.createTextButton(Localizer.get("BTN_CANCEL"), new ClickListener() {
+		buttontable.add(bf.createTextButton(Localizer.get(LocalKey.BTN_CANCEL), new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
 	    		UniverseExploration.windowContainer.closeWindow(windowType);
@@ -117,7 +117,7 @@ public class WindowFactory {
 		
 		Table buttontable = new Table();
 
-		buttontable.add(bf.createTextButton(Localizer.get("BTN_OK"), new ClickListener() {
+		buttontable.add(bf.createTextButton(Localizer.get(LocalKey.BTN_OK), new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
 	    		window.remove();
@@ -142,7 +142,7 @@ public class WindowFactory {
 		Table buttontable = new Table();
 		buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 		
-		buttontable.add(bf.createTextButton(Localizer.get(LocalKeys.BTN_CANCEL), new ClickListener() {
+		buttontable.add(bf.createTextButton(Localizer.get(LocalKey.BTN_CANCEL), new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
 	    		UniverseExploration.windowContainer.closeWindow(windowType);
@@ -161,7 +161,7 @@ public class WindowFactory {
 	 * @param pgfx
 	 * @return
 	 */
-	public BasicWindow createDescriptionWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable, LocalKeys secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
+	public BasicWindow createDescriptionWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable, LocalKey secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
 	    final SmallWindow window = new SmallWindow(windowType.getLocalizedCaption(), windowStyle);
 		
 		Table buttontable = new Table();

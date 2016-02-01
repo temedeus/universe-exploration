@@ -4,6 +4,7 @@
 package com.universe.exploration.ueui.data.container;
 
 import com.universe.exploration.CoreConfiguration;
+import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatusItemkeys;
 import com.universe.exploration.ueui.data.DataPair;
@@ -19,11 +20,11 @@ public class LeftSideHUD extends DataPairContainer {
 	 */
 	@Override
 	public void createPairs() {
-		add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.get("TITLE_TIME"), "" + CoreConfiguration.TIME_START + ""));
-		add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.get("TITLE_CREWMEN_LEFT"), "" + CoreConfiguration.MAX_CREWMEN));
-		add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.get("Air:"), "" + CoreConfiguration.MAX_AIR + " %"));
-		add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.get("Water:"), "" + CoreConfiguration.MAX_AIR + " %"));
-		add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.get("Food:"), "" + CoreConfiguration.MAX_FOOD + " %"));
-		add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.get("Power"), "" + CoreConfiguration.MAX_POWER + " %"));
+		add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.get(LocalKey.TITLE_TIME), "" + CoreConfiguration.TIME_START + ""));
+		add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.get(LocalKey.TITLE_CREWMEN_LEFT), "" + CoreConfiguration.MAX_CREWMEN));
+		add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.get(LocalKey.TITLE_AIR), "" + CoreConfiguration.MAX_AIR + " %"));
+		add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.get(LocalKey.TITLE_WATER), "" + CoreConfiguration.MAX_AIR + " %"));
+		add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.get(LocalKey.TITLE_FOOD), "" + CoreConfiguration.MAX_FOOD + " %"));
+		add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.get(LocalKey.TITLE_POWER), "" + CoreConfiguration.MAX_POWER + " %"));
 	}
 }

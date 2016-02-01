@@ -3,7 +3,12 @@
  */
 package com.universe.exploration.mortality;
 
+
 /**
+ * <p>
+ * A cause of deaath of a crewman.
+ * </p>
+ * TODO: Perhaps KIAs could be configured in database and in code they would be used via beans?
  * @author 25.10.2015 Teemu Puurunen 
  *
  */

@@ -36,6 +36,9 @@ public enum LocalEn {
 	TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN("Survey team crew members:"),
 	TITLE_SURVEY_CLOSED("Survey closed"),
 	TITLE_SURVEY("Survey"),
+	TITLE_AIR("Air:"),
+	TITLE_WATER("Water: "),
+	TITLE_POWER("Power: "),
 	
 	// Labels
 	LABEL_CREWMEN_COUNT("Crewmen count:"),
@@ -58,9 +61,11 @@ public enum LocalEn {
 	DESC_PRESENT_LIFEFORMS_ANIMAL("animal"),
 	DESC_PRESENT_LIFEFORMS_BACTERIAL("bacterial"),
 	
+	
+	// General terms. Should be safe to use all around as these should not change (or you are attempting to do something wrong).
 	GENERAL_YES("Yes"),
 	GENERAL_NO("No"),
-	
+	GENERAL_NONE("None"),
 	
 	// Cause of death
 	HELMET_BREACH("Crewman died because of a helmet breach"),
@@ -77,7 +82,13 @@ public enum LocalEn {
 	FELL_OFF_CLIFF("Crewman met his early demise because of an unfortunate step into oblivion on a cliff."),
 	MALNUTRITION("Crewman got lost and died of hunger."),
 	CREWMEN_WENT_NUTS("Crewman could no longer take it and took his own life."),
-	WATER_DEPRIVATION("Crewman got lost and died of dehydration");
+	WATER_DEPRIVATION("Crewman got lost and died of dehydration"),
+	
+	// Generic air
+	GENERIC_AIR("air"),
+	GENERIC_FOOD("food"),
+	GENERIC_WATER("water"),
+	GENERIC_LIQUID_WATER("Liquid water");
 	
 	private final String description;
 

@@ -6,11 +6,11 @@ package com.universe.exploration.ueui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.universe.exploration.localization.LocalKeys;
+import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 
 /**
- * <p>Contains window caption and ok button text. Referenced as {@link LocalKeys}, not direct strings.</p>
+ * <p>Contains window caption and ok button text. Referenced as {@link LocalKey}, not direct strings.</p>
  * @author 1.11.2015 Teemu Puurunen 
  *
  */
@@ -18,17 +18,17 @@ public enum WindowType {
 	/**
 	 * Open up details for sending a survey team.
 	 */
-	SURVEY_WINDOW(LocalKeys.TITLE_SURVEY_PLANET, LocalKeys.BTN_SURVEY),
+	SURVEY_WINDOW(LocalKey.TITLE_SURVEY_PLANET, LocalKey.BTN_SURVEY),
 	
 	/**
 	 * Game over window.
 	 */
-	GAME_OVER(LocalKeys.TITLE_GAME_OVER, LocalKeys.BTN_TRY_AGAIN),
+	GAME_OVER(LocalKey.TITLE_GAME_OVER, LocalKey.BTN_TRY_AGAIN),
 	
 	/**
 	 * List of planet general details. Allows to open up e.g. {@link #SURVEY_WINDOW}. 
 	 */
-	PLANET_DETAILS(LocalKeys.TITLE_SURVEY_CONFIGURATION_SCREEN, LocalKeys.BTN_SURVEY) {
+	PLANET_DETAILS(LocalKey.TITLE_SURVEY_CONFIGURATION_SCREEN, LocalKey.BTN_SURVEY) {
 		/* (non-Javadoc)
 		 * @see com.universe.exploration.ueui.WindowType#retreiveDependencies()
 		 */
@@ -44,16 +44,16 @@ public enum WindowType {
 	/**
 	 * Notification of a closed survey.
 	 */
-	SURVEY_CLOSED(LocalKeys.TITLE_SURVEY, LocalKeys.BTN_SURVEY);
+	SURVEY_CLOSED(LocalKey.TITLE_SURVEY, LocalKey.BTN_SURVEY);
 	
-	private final LocalKeys caption;
+	private final LocalKey caption;
 	
-	private final LocalKeys okButtonCaption; 
+	private final LocalKey okButtonCaption; 
 	
 	/**
 	 *  Contains window caption and ok button text.
 	 */
-	private WindowType(LocalKeys caption, LocalKeys okButtonCaption) {
+	private WindowType(LocalKey caption, LocalKey okButtonCaption) {
 		this.caption = caption;
 		this.okButtonCaption = okButtonCaption;
 	}
@@ -71,13 +71,13 @@ public enum WindowType {
 	 * @return the caption
 	 */
 	public String getLocalizedCaption() {
-		return Localizer.get(caption.getLocalKey());
+		return Localizer.get(caption);
 	}
 
 	/**
 	 * @return the okButtonCaption
 	 */
 	public String getLocalizedOkButtonCaption() {
-		return Localizer.get(okButtonCaption.getLocalKey());
+		return Localizer.get(okButtonCaption);
 	}
 }
