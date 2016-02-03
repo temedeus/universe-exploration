@@ -33,7 +33,7 @@ public enum WindowType {
      * List of planet general details. Allows to open up e.g.
      * {@link #SURVEY_WINDOW}.
      */
-    PLANET_DETAILS(LocalKey.TITLE_SURVEY_CONFIGURATION_SCREEN, LocalKey.BTN_SURVEY) {
+    PLANET_DETAILS(LocalKey.TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN, LocalKey.BTN_SURVEY) {
 	/*
 	 * (non-Javadoc)
 	 * 
