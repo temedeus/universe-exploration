@@ -37,6 +37,6 @@ public class Localizer {
      * @return
      */
     public static String get(LocalKey local) {
-	return get(local.getLocalKey());
+	return get(local.toString());
     }
 }

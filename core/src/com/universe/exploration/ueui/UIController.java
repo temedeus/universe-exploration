@@ -223,7 +223,8 @@ public class UIController {
 	table.padTop(30);
 	table.padRight(30);
 	table.addActor(createHyperspaceJumpButton());
-
+	table.addActor(createCrewControlButton());
+	
 	return table;
     }
 
@@ -291,6 +292,22 @@ public class UIController {
 	});
     }
 
+    /**
+     * Create hyperspace jump button
+     * 
+     * @return
+     */
+    public TextButton createCrewControlButton() {
+	ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
+
+	return bf.createTextButton(Localizer.get(LocalKey.BTN_CREW_CONTROL), new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+
+	    }
+	});
+    }
+    
     public BasicWindow createGameOverWindow(WindowType windowType, ClickListener tryAgainAction) {
 	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 	BasicTable gameoverData = new BasicTable(Align.left | Align.top);
@@ -409,8 +426,8 @@ public class UIController {
 	leftsidePlayerStatus.update(PlayerStatusItemkeys.TIME, "" + (int) playerStatus.getTime() + " days");
 	leftsidePlayerStatus.update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int) playerStatus.getAir()));
 	leftsidePlayerStatus.update(PlayerStatusItemkeys.CREWMEN, "" + (int) playerStatus.getCrewmen());
-	leftsidePlayerStatus.update(PlayerStatusItemkeys.WATER, playerStatusValueToHUDString("" + (int) playerStatus.getWater()));
-	leftsidePlayerStatus.update(PlayerStatusItemkeys.FOOD, playerStatusValueToHUDString("" + (int) playerStatus.getFood()));
+	leftsidePlayerStatus.update(PlayerStatusItemkeys.WATER, "" + (int) playerStatus.getWater() + " litres");
+	leftsidePlayerStatus.update(PlayerStatusItemkeys.FOOD, "" + (int) playerStatus.getFood() + " kcal");
 	leftsidePlayerStatus.update(PlayerStatusItemkeys.POWER, playerStatusValueToHUDString("" + (int) playerStatus.getPower()));
     }
 

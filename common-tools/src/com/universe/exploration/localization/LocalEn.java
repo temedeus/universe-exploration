@@ -22,6 +22,8 @@ public enum LocalEn {
 	BTN_MAX_VOLUME("Max volume"),
 	BTN_MIN_VOLUME("Min volume"),
 	
+	BTN_CREW_CONTROL("Crew control"),
+	
 	// Titles
 	TITLE_QUIT_GAME("Quit game"),
 	TITLE_CREWMEN_LEFT("Crewmen left: "),
