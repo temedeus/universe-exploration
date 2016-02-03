@@ -255,7 +255,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
     private void pauseGame(boolean pause) {
 	setGameStatusPaused(pause);
-	uiController.setGameStatusPaused(pause);
     }
 
     private ClickListener createGameOverClicklistener() {

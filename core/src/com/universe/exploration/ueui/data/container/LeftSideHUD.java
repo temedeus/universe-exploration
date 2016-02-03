@@ -6,6 +6,7 @@ package com.universe.exploration.ueui.data.container;
 import com.universe.exploration.CoreConfiguration;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
+import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.PlayerStatusItemkeys;
 import com.universe.exploration.ueui.data.DataPair;
 
@@ -28,5 +29,19 @@ public class LeftSideHUD extends DataPairContainer {
 	add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.get(LocalKey.TITLE_WATER), "" + CoreConfiguration.MAX_AIR + " %"));
 	add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.get(LocalKey.TITLE_FOOD), "" + CoreConfiguration.MAX_FOOD + " %"));
 	add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.get(LocalKey.TITLE_POWER), "" + CoreConfiguration.MAX_POWER + " %"));
+    }
+    
+
+    public void updateValuesToHUD(PlayerStatus playerStatus) {
+	update(PlayerStatusItemkeys.TIME, "" + (int) playerStatus.getTime() + " days");
+	update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int) playerStatus.getAir()));
+	update(PlayerStatusItemkeys.CREWMEN, "" + (int) playerStatus.getCrewmen());
+	update(PlayerStatusItemkeys.WATER, "" + (int) playerStatus.getWater() + " litres");
+	update(PlayerStatusItemkeys.FOOD, "" + (int) playerStatus.getFood() + " kcal");
+	update(PlayerStatusItemkeys.POWER, playerStatusValueToHUDString("" + (int) playerStatus.getPower()));
+    }
+
+    private String playerStatusValueToHUDString(Object val) {
+	return val + " %";
     }
 }

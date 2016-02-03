@@ -29,7 +29,6 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
-import com.universe.exploration.player.PlayerStatusItemkeys;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.ueui.components.BasicTable;
 import com.universe.exploration.ueui.components.BasicWindow;
@@ -57,11 +56,7 @@ public class UIController {
 
     private UEListener planetSurveyListener;
 
-    private boolean gameStatusPaused = false;
-
     private LeftSideHUD leftsidePlayerStatus;
-
-    private PlayerStatus playerStatus;
 
     private PlanetSelection planetSelection;
 
@@ -69,7 +64,6 @@ public class UIController {
      * Listen for change in volume.
      */
     private UEListener volumeListener;
-
 
     /**
      * <p>
@@ -100,8 +94,6 @@ public class UIController {
 	uiStage.addActor(createTopCenterHUDTable());
 	uiStage.addActor(createBottomHUDTable());
 	uiStage.addActor(createLogDisplay());
-
-	gameStatusPaused = false;
     }
 
     private HorizontalGroup createTopCenterHUDTable() {
@@ -224,7 +216,7 @@ public class UIController {
 	table.padRight(30);
 	table.addActor(createHyperspaceJumpButton());
 	table.addActor(createCrewControlButton());
-	
+
 	return table;
     }
 
@@ -276,7 +268,7 @@ public class UIController {
 	return bf.createTextButton(Localizer.get(LocalKey.BTN_HYPERSPACE_JUMP), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		if (!gameStatusPaused && isHyperspaceJumpAllowed) {
+		if (!UniverseExploration.gameStatus.isPaused() && isHyperspaceJumpAllowed) {
 		    final Dialog dialog = new Dialog(Localizer.get(LocalKey.DESC_HYPERSPACE_JUMP), UEUiSkinBank.ueUISkin);
 		    dialog.setSize(200, 100);
 		    dialog.show(uiStage);
@@ -307,7 +299,7 @@ public class UIController {
 	    }
 	});
     }
-    
+
     public BasicWindow createGameOverWindow(WindowType windowType, ClickListener tryAgainAction) {
 	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 	BasicTable gameoverData = new BasicTable(Align.left | Align.top);
@@ -418,36 +410,7 @@ public class UIController {
      * @param ps
      */
     private void updatePlayerStatusToUI(PlayerStatus playerStatus) {
-	this.playerStatus = playerStatus;
-	updateValuesToHUD();
-    }
-
-    private void updateValuesToHUD() {
-	leftsidePlayerStatus.update(PlayerStatusItemkeys.TIME, "" + (int) playerStatus.getTime() + " days");
-	leftsidePlayerStatus.update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int) playerStatus.getAir()));
-	leftsidePlayerStatus.update(PlayerStatusItemkeys.CREWMEN, "" + (int) playerStatus.getCrewmen());
-	leftsidePlayerStatus.update(PlayerStatusItemkeys.WATER, "" + (int) playerStatus.getWater() + " litres");
-	leftsidePlayerStatus.update(PlayerStatusItemkeys.FOOD, "" + (int) playerStatus.getFood() + " kcal");
-	leftsidePlayerStatus.update(PlayerStatusItemkeys.POWER, playerStatusValueToHUDString("" + (int) playerStatus.getPower()));
-    }
-
-    private String playerStatusValueToHUDString(Object val) {
-	return val + " %";
-    }
-
-    /**
-     * @return the gameStatusPaused
-     */
-    public boolean isGameStatusPaused() {
-	return gameStatusPaused;
-    }
-
-    /**
-     * @param gameStatusPaused
-     *            the gameStatusPaused to set
-     */
-    public void setGameStatusPaused(boolean gameStatusPaused) {
-	this.gameStatusPaused = gameStatusPaused;
+	leftsidePlayerStatus.updateValuesToHUD(playerStatus);
     }
 
     /**
