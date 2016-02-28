@@ -18,7 +18,12 @@ public class GameStatus {
 
     private boolean zoomIn = false;
 
-    public void enableSurveyMode(boolean enable) {
+    /**
+     * Ensures game parameters are proper for creating a survey window.
+     * 
+     * @param enable
+     */
+    public void activateSurveyMode(boolean enable) {
 	if (enable) {
 	    setPlanetaryMovementActive(false);
 	    setZoomIn(true);

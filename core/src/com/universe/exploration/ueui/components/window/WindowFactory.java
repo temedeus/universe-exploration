@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.ueui;
+package com.universe.exploration.ueui.components.window;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,11 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
+import com.universe.exploration.ueui.ButtonFactory;
 import com.universe.exploration.ueui.components.BasicTable;
-import com.universe.exploration.ueui.components.BasicWindow;
-import com.universe.exploration.ueui.components.LargeWindow;
-import com.universe.exploration.ueui.components.MediumWindow;
-import com.universe.exploration.ueui.components.SmallWindow;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package com.universe.exploration;
+package com.universe.exploration.common;
 
 /**
  * GameConfiguration.java

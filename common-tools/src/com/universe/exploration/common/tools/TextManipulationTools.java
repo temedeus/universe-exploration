@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  */
 public class TextManipulationTools {
-    public static String joinArrayListString(ArrayList<String> list, String separator) {
+    public static String implodeListAsString(ArrayList<String> list, String separator) {
 	String returnVal = "";
 
 	for (String str : list) {

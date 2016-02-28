@@ -35,7 +35,7 @@ public enum LocalEn {
 	TITLE_LIFEFORMS_VEGETATION("vegetation"),
 	TITLE_LIFEFORMS_BACTERIAL("bacterial"),
 	TITLE_LIFEFORMS_NONE("none"),
-	TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN("Survey team crew members:"),
+	TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN("Planet details:"),
 	TITLE_SURVEY_CLOSED("Survey closed"),
 	TITLE_SURVEY("Survey"),
 	TITLE_AIR("Air:"),
@@ -43,6 +43,7 @@ public enum LocalEn {
 	TITLE_POWER("Power: "),
 	TITLE_SURVEY_TEAM_SURVIVED("Entire survey team came back alive!"),
 	TITLE_FOOD("Food: "),
+	TITLE_CREW_MANAGEMENT("Crew management"),
 	
 	// Labels
 	LABEL_CREWMEN_COUNT("Crewmen count:"),

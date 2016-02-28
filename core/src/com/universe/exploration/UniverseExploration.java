@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.camera.CameraMonitor;
+import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.common.tools.TextManipulationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.gamegraphics.GameObjectCanvas;
@@ -24,7 +25,6 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.logger.MinimalLogger;
-import com.universe.exploration.mortality.Casualty;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
@@ -37,8 +37,8 @@ import com.universe.exploration.survey.SurveyStatusFactory;
 import com.universe.exploration.ueui.UIController;
 import com.universe.exploration.ueui.WindowContainer;
 import com.universe.exploration.ueui.WindowContainerEvent;
-import com.universe.exploration.ueui.WindowType;
-import com.universe.exploration.ueui.components.BasicWindow;
+import com.universe.exploration.ueui.components.window.BasicWindow;
+import com.universe.exploration.ueui.components.window.WindowType;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
@@ -152,7 +152,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    @Override
 	    public void handleEventClassEvent(UEEvent e) {
 		WindowContainerEvent event = (WindowContainerEvent) e.getPayLoad();
-		gameStatus.enableSurveyMode(event.equals(WindowContainerEvent.ADD));
+		gameStatus.activateSurveyMode(event.equals(WindowContainerEvent.ADD));
 	    }
 	};
     }
@@ -177,7 +177,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		if (!gameStatus.isPaused()) {
 		    windowContainerSetup();
 		    stageSetup();
-		    gameStatus.enableSurveyMode(false);
+		    gameStatus.activateSurveyMode(false);
 		    playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
 		    updateIngameLog(Localizer.get(LocalKey.DESC_HYPERSPACE_JUMP_COMMENCED));
 		}
@@ -325,7 +325,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     }
 
     private void closeFinishedSurveys() {
-	SurveyStatus ss = surveyStatusContainer.isSurveyOver((int) playerStatus.getTime());
+	SurveyStatus ss = surveyStatusContainer.findAndRemoveOpenSurvey((int) playerStatus.getTime());
 	showSurveyCompleteNotification(ss);
     }
 
@@ -399,7 +399,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    caption = "You found nothing during your survey!";
 	    updateIngameLog(caption);
 	} else {
-	    caption = "During your survey you found: " + TextManipulationTools.joinArrayListString(resources, ", ");
+	    caption = "During your survey you found: " + TextManipulationTools.implodeListAsString(resources, ", ");
 	    updateIngameLog(caption);
 	}
 

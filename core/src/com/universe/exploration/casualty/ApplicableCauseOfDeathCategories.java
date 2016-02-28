@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.mortality;
+package com.universe.exploration.casualty;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @author 25.10.2015 Teemu Puurunen
  *
  */
-public class ApplicableCauseOfDeathCategories extends ArrayList<CauseOfDeathCategory> {
+class ApplicableCauseOfDeathCategories extends ArrayList<CauseOfDeathCategory> {
 
     /**
      * Generated serial ID.

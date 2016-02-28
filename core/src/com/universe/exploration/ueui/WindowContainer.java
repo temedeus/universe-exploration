@@ -9,7 +9,8 @@ import java.util.List;
 
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
-import com.universe.exploration.ueui.components.BasicWindow;
+import com.universe.exploration.ueui.components.window.BasicWindow;
+import com.universe.exploration.ueui.components.window.WindowType;
 
 /**
  * @author 7.10.2015 Teemu Puurunen

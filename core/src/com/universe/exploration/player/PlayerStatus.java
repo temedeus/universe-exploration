@@ -3,7 +3,7 @@
  */
 package com.universe.exploration.player;
 
-import com.universe.exploration.CoreConfiguration;
+import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.MathTools;
 
 /**

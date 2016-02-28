@@ -1,12 +1,14 @@
 /**
  * 
  */
-package com.universe.exploration.mortality;
+package com.universe.exploration.casualty;
 
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
- * Factory for {@link Casualty}. We need {@link PlanetCelestialComponent} to properly generate the reason for death.
+ * Factory for {@link Casualty}. We need {@link PlanetCelestialComponent} to
+ * properly generate the reason for death.
+ * 
  * @author 25.10.2015 Teemu Puurunen
  *
  */

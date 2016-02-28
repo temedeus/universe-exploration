@@ -1,5 +1,5 @@
 package com.universe.exploration.gamegraphics;
-import com.universe.exploration.CoreConfiguration;
+import com.universe.exploration.common.CoreConfiguration;
 
 
 public class SpaceBackgroundGfxContainer extends GraphicsGfxContainer {

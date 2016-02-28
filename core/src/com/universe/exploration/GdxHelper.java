@@ -3,7 +3,10 @@
  */
 package com.universe.exploration;
 
+import java.io.BufferedReader;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 /**
  * <p>
@@ -22,6 +25,14 @@ public class GdxHelper {
     public static float getScreenCenterX() {
 	float w = Gdx.graphics.getWidth();
 	return (w / 2);
+    }
+    
+    public static BufferedReader provideAssetReader(String path) {
+	return new BufferedReader(Gdx.files.internal(path).reader());
+    }
+    
+    public static FileHandle provideFileHandle(String path) {
+	return Gdx.files.external(path);
     }
 
     /**

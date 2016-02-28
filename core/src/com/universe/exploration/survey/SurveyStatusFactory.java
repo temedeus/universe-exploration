@@ -5,9 +5,9 @@ package com.universe.exploration.survey;
 
 import java.util.ArrayList;
 
+import com.universe.exploration.casualty.Casualty;
+import com.universe.exploration.casualty.CasualtyFactory;
 import com.universe.exploration.common.tools.MathTools;
-import com.universe.exploration.mortality.Casualty;
-import com.universe.exploration.mortality.CasualtyFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**

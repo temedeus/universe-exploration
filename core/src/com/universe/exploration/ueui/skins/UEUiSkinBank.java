@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.universe.exploration.CoreConfiguration;
+import com.universe.exploration.common.CoreConfiguration;
 
 /**
  * @author 1.10.2015 Teemu Puurunen TODO: right now I just made a duplicate font

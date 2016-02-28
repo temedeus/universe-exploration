@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.ueui;
+package com.universe.exploration.ueui.components.window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +40,15 @@ public enum WindowType {
 	 * @see com.universe.exploration.ueui.WindowType#retreiveDependencies()
 	 */
 	@Override
-	protected List<WindowType> retreiveChildWindows() {
+	public List<WindowType> retreiveChildWindows() {
 	    ArrayList<WindowType> dependencies = new ArrayList<WindowType>();
 	    dependencies.add(SURVEY_WINDOW);
 
 	    return dependencies;
 	}
     },
+    
+    CREW_MANAGEMENT(LocalKey.TITLE_CREW_MANAGEMENT, LocalKey.BTN_OK),
 
     /**
      * Notification of a closed survey.
@@ -71,7 +73,7 @@ public enum WindowType {
      * @return List<WindowType> list of windows that this WindowType is
      *         dependent of.
      */
-    protected List<WindowType> retreiveChildWindows() {
+    public List<WindowType> retreiveChildWindows() {
 	return null;
     }
 

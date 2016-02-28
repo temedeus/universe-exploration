@@ -31,9 +31,11 @@ import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.ueui.components.BasicTable;
-import com.universe.exploration.ueui.components.BasicWindow;
 import com.universe.exploration.ueui.components.LogDisplay;
 import com.universe.exploration.ueui.components.PlanetSelection;
+import com.universe.exploration.ueui.components.window.BasicWindow;
+import com.universe.exploration.ueui.components.window.WindowFactory;
+import com.universe.exploration.ueui.components.window.WindowType;
 import com.universe.exploration.ueui.data.DataPair;
 import com.universe.exploration.ueui.data.DataPairTableFactory;
 import com.universe.exploration.ueui.data.container.LeftSideHUD;
@@ -295,7 +297,18 @@ public class UIController {
 	return bf.createTextButton(Localizer.get(LocalKey.BTN_CREW_CONTROL), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-
+		BasicWindow window = createCrewManagementWindow(new ClickListener() {
+		    /* (non-Javadoc)
+		     * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+		     */
+		    @Override
+		    public void clicked(InputEvent event, float x, float y) {
+			UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
+		    }
+		});
+		
+		UniverseExploration.windowContainer.add(WindowType.CREW_MANAGEMENT, window);
+		show(window);
 	    }
 	});
     }
@@ -366,6 +379,17 @@ public class UIController {
 	Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
 
 	return wf.createLargeDescriptionWindow(WindowType.PLANET_DETAILS, planetInformationTable, okAction);
+    }
+    
+    /**
+     * Planetary survey window.
+     * 
+     * @param pgfx
+     */
+    public BasicWindow createCrewManagementWindow(ClickListener okAction) {
+	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
+
+	return wf.createLargeDescriptionWindow(WindowType.CREW_MANAGEMENT, new Table(), okAction);
     }
 
     public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {

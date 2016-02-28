@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.mortality;
+package com.universe.exploration.casualty;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ import com.universe.exploration.common.tools.RandomizationTools;
  * @author 30.10.2015 Teemu Puurunen
  *
  */
-public class CauseOfDeathRandomPicker {
+class CauseOfDeathRandomPicker {
 
     private ArrayList<CauseOfDeath> listOfApplicableCauseOfDeaths;
 

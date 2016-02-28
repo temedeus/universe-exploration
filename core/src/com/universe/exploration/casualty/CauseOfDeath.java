@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.mortality;
+package com.universe.exploration.casualty;
 
 
 /**

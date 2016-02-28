@@ -3,7 +3,7 @@
  */
 package com.universe.exploration.ueui.data.container;
 
-import com.universe.exploration.CoreConfiguration;
+import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.PlayerStatus;

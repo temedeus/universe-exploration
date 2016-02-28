@@ -3,8 +3,8 @@ package com.universe.exploration.survey;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.common.Lifeforms;
-import com.universe.exploration.mortality.Casualty;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 

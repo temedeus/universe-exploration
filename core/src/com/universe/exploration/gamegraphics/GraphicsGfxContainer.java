@@ -3,7 +3,7 @@ package com.universe.exploration.gamegraphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.universe.exploration.CoreConfiguration;
+import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.model.CelestialBodyGfxModel;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 

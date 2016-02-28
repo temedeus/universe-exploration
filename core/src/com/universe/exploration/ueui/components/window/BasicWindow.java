@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.ueui.components;
+package com.universe.exploration.ueui.components.window;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;

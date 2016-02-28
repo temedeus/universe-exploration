@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.ueui.components;
+package com.universe.exploration.ueui.components.window;
 
 /**
  * @author 18.9.2015 Teemu Puurunen

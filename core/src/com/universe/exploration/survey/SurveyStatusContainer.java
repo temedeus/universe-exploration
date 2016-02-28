@@ -19,20 +19,21 @@ import java.util.ArrayList;
  */
 public class SurveyStatusContainer extends ArrayList<SurveyStatus> {
 
-    /**
-	 * 
-	 */
     private static final long serialVersionUID = -3335075506066292326L;
 
     /**
      * <p>
-     * Removes surveyStatus from ArrayList if survey is over.
+     * Removes surveyStatus from ArrayList if survey is over. We immediately
+     * return a {@link SurveyStatus} because this check is run in a loop. In a
+     * normal scenario surveys should not end simultaneously anyway.
      * </p>
      * 
      * @param currentDay
-     * @return
+     *            Day the player is currently at.
+     * @return {@link SurveyStatus} Info on the ended survey and team status.
+     * 
      */
-    public SurveyStatus isSurveyOver(int currentDay) {
+    public SurveyStatus findAndRemoveOpenSurvey(int currentDay) {
 	for (SurveyStatus surveyStatus : this) {
 	    if (currentDay >= surveyStatus.getSurveyEndDay()) {
 		remove(surveyStatus);
