@@ -7,11 +7,12 @@ package com.universe.exploration.crewmen;
  * @author 21.2.2016 Teemu Puurunen
  *
  */
-public class Name {
+public class CrewmemberProfile {
     private CrewmemberSex sex;
+    private Nationality nationality;
     private String name;
 
-    public Name(CrewmemberSex sex, String name) {
+    public CrewmemberProfile(CrewmemberSex sex, Nationality nationality, String name) {
 	this.sex = sex;
 	this.name = name;
     }
@@ -44,5 +45,19 @@ public class Name {
      */
     public void setName(String name) {
 	this.name = name;
+    }
+
+    /**
+     * @return the nationality
+     */
+    public Nationality getNationality() {
+        return nationality;
+    }
+
+    /**
+     * @param nationality the nationality to set
+     */
+    public void setNationality(Nationality nationality) {
+        this.nationality = nationality;
     }
 }

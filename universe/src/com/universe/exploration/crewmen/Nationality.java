@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration;
+package com.universe.exploration.crewmen;
 
 /**
  * @author 28.2.2016 Teemu Puurunen 

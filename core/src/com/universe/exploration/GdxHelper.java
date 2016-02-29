@@ -29,6 +29,7 @@ public class GdxHelper {
     
     public static BufferedReader provideAssetReader(String path) {
 	return new BufferedReader(Gdx.files.internal(path).reader());
+	
     }
     
     public static FileHandle provideFileHandle(String path) {

@@ -17,9 +17,9 @@ import com.universe.exploration.common.tools.RandomizationTools;
  */
 public class CrewFactory {
 
-    private List<Name> names;
+    private List<CrewmemberProfile> names;
 
-    public CrewFactory(List<Name> names) {
+    public CrewFactory(List<CrewmemberProfile> names) {
 	this.names = names;
     }
 
@@ -33,21 +33,21 @@ public class CrewFactory {
 
     private Crewman createRandomCrewman() {
 	int random = RandomizationTools.getRandomInteger(0, names.size());
-	Name name = names.get(random);
+	CrewmemberProfile name = names.get(random);
 	Crewman crewman = new Crewman();
 	crewman.setSex(name.getSex());
 	crewman.setName(name.getName());
 	return new Crewman();
     }
 
-    public void addToNames(CrewmemberSex sex, String name) {
-	names.add(new Name(sex, name));
+    public void addToNames(CrewmemberSex sex, Nationality nationality, String name) {
+	names.add(new CrewmemberProfile(sex, nationality, name));
     }
 
     /**
      * @return the names
      */
-    public List<Name> getNames() {
+    public List<CrewmemberProfile> getNames() {
 	return names;
     }
 }
