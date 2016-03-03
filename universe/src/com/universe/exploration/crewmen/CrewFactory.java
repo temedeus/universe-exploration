@@ -9,18 +9,21 @@ import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.RandomizationTools;
 
 /**
- * Before utilizing this factory you must first populate the {@link #names}
- * using {@link #addToNames(CrewmemberSex, String)}. Otherwise you will get zero crewmen.
+ * Before utilizing this factory you must first populate the
+ * {@link #maleProfiles} using {@link #addToNames(CrewmemberSex, String)}.
+ * Otherwise you will get zero crewmen.
  * 
  * @author 21.2.2016 Teemu Puurunen
  *
  */
 public class CrewFactory {
 
-    private List<CrewmemberProfile> names;
+    private List<CrewmemberProfile> maleProfiles;
+    private List<CrewmemberProfile> femaleProfiles;
 
-    public CrewFactory(List<CrewmemberProfile> names) {
-	this.names = names;
+    public CrewFactory(List<CrewmemberProfile> maleProfiles, List<CrewmemberProfile> femaleProfiles) {
+	this.maleProfiles = maleProfiles;
+	this.femaleProfiles = femaleProfiles;
     }
 
     public Crew createRandomizedCrew() {
@@ -32,22 +35,30 @@ public class CrewFactory {
     }
 
     private Crewman createRandomCrewman() {
-	int random = RandomizationTools.getRandomInteger(0, names.size());
-	CrewmemberProfile name = names.get(random);
+	boolean male = RandomizationTools.randomBoolean();
+	List<CrewmemberProfile> selectedSexList = (male) ? maleProfiles : femaleProfiles;
+	
+	int random = RandomizationTools.getRandomInteger(0, selectedSexList.size());
+	CrewmemberProfile profile = selectedSexList.get(random);
 	Crewman crewman = new Crewman();
-	crewman.setSex(name.getSex());
-	crewman.setName(name.getName());
-	return new Crewman();
-    }
-
-    public void addToNames(CrewmemberSex sex, Nationality nationality, String name) {
-	names.add(new CrewmemberProfile(sex, nationality, name));
+	crewman.setSex(profile.getSex());
+	crewman.setName(profile.getName());
+	return crewman;
     }
 
     /**
-     * @return the names
+     * @param maleProfiles
+     *            the maleProfiles to set
      */
-    public List<CrewmemberProfile> getNames() {
-	return names;
+    public void setMaleProfiles(List<CrewmemberProfile> maleProfiles) {
+	this.maleProfiles = maleProfiles;
+    }
+
+    /**
+     * @param femaleProfiles
+     *            the femaleProfiles to set
+     */
+    public void setFemaleProfiles(List<CrewmemberProfile> femaleProfiles) {
+	this.femaleProfiles = femaleProfiles;
     }
 }

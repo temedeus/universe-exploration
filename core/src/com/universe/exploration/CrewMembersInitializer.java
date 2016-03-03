@@ -13,23 +13,41 @@ import com.universe.exploration.crewmen.CrewmemberSex;
 import com.universe.exploration.crewmen.Nationality;
 
 /**
+ * <p>
+ * Creates all the possible profiles for crewmembers.
+ * </p>
+ * <p>
+ * In case new files for potential crewmember names appear, see
+ * {@link #createNameProfileFilepathList()} and make appropriate updates to
+ * match the newly created file.
+ * </p>
+ * 
  * @author 28.2.2016 Teemu Puurunen
  *
  */
 public class CrewMembersInitializer {
-
-    private static final String ROOT_PATH_MALE = "crewmemberprofiles" + File.separator + "male" + File.separator;
-    private static final String ROOT_PATH_FEMALE = "crewmemberprofiles" + File.separator + "female" + File.separator;
+    private static final String ROOT = "crewmemberprofiles";
+    private static final String ROOT_PATH_MALE = ROOT + File.separator + "male" + File.separator;
+    private static final String ROOT_PATH_FEMALE = ROOT + File.separator + "female" + File.separator;
 
     private static final List<CrewmemberProfileFilepath> CREWMEMBER_PROFILE_FILES = createNameProfileFilepathList();
-    private List<CrewmemberProfile> names = new ArrayList<CrewmemberProfile>();
-    
+
+    private List<CrewmemberProfile> maleProfiles = new ArrayList<CrewmemberProfile>();
+    private List<CrewmemberProfile> femaleProfiles = new ArrayList<CrewmemberProfile>();
+
     public CrewMembersInitializer() throws IOException {
-	
 	FileReader fh = new FileReader();
 	for (CrewmemberProfileFilepath filepath : CREWMEMBER_PROFILE_FILES) {
 	    fh.readTextFile(filepath.getTemplatePath()).forEach(
-		    name -> names.add(new CrewmemberProfile(filepath.getCrewmemberSex(), filepath.getNationality(), name)));
+		    name -> add(new CrewmemberProfile(filepath.getCrewmemberSex(), filepath.getNationality(), name)));
+	}
+    }
+
+    private void add(CrewmemberProfile profile) {
+	if (profile.getSex().equals(CrewmemberSex.MALE)) {
+	    maleProfiles.add(profile);
+	} else {
+	    femaleProfiles.add(profile);
 	}
     }
 
@@ -52,11 +70,40 @@ public class CrewMembersInitializer {
     }
 
     /**
-     * @return the names
+     * @return the rootPathMale
      */
-    public List<CrewmemberProfile> getNames() {
-        return names;
+    public static String getRootPathMale() {
+	return ROOT_PATH_MALE;
     }
+
+    /**
+     * @return the rootPathFemale
+     */
+    public static String getRootPathFemale() {
+	return ROOT_PATH_FEMALE;
+    }
+
+    /**
+     * @return the crewmemberProfileFiles
+     */
+    public static List<CrewmemberProfileFilepath> getCrewmemberProfileFiles() {
+	return CREWMEMBER_PROFILE_FILES;
+    }
+
+    /**
+     * @return the maleProfiles
+     */
+    public List<CrewmemberProfile> getMaleProfiles() {
+	return maleProfiles;
+    }
+
+    /**
+     * @return the femaleProfiles
+     */
+    public List<CrewmemberProfile> getFemaleProfiles() {
+	return femaleProfiles;
+    }
+
 }
 
 class CrewmemberProfileFilepath {

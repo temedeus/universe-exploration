@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.GdxHelper;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.crewmen.Crewman;
 import com.universe.exploration.gamegraphics.GameViewObjectContainer;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
@@ -389,7 +390,36 @@ public class UIController {
     public BasicWindow createCrewManagementWindow(ClickListener okAction) {
 	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 
-	return wf.createLargeDescriptionWindow(WindowType.CREW_MANAGEMENT, new Table(), okAction);
+	return wf.createLargeDescriptionWindow(WindowType.CREW_MANAGEMENT, createCrewTable(), okAction);
+    }
+    
+    private Table createCrewTable() {
+	Table table = new Table();
+	table.add(createCrewManTable());
+	return table;
+    }
+    
+    private Table createCrewManTable() {
+	Table table = new Table();
+
+	int x = 0;
+	
+	for(Crewman crewmember : UniverseExploration.crew.getCrewmen()) {
+	    x++;
+	    Table cell = new Table();
+	    cell.padBottom(15);
+	    cell.padRight(15);
+	    cell.add(new Label(crewmember.getName(), UEUiSkinBank.ueUISkin));
+	    cell.row();
+	    cell.add(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton("Details", new ClickListener()));
+	    table.add(cell);
+	    
+	    if(x == 5) {
+		table.row();
+	    }
+	}
+	
+	return table;
     }
 
     public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {

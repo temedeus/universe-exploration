@@ -1,9 +1,8 @@
 /**
  * 
  */
-package com.universe.exploration.ueui.data.container;
+package com.universe.exploration.ueui.data;
 
-import com.universe.exploration.ueui.data.DataPair;
 
 /**
  * <p>

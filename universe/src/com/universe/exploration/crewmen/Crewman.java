@@ -111,4 +111,13 @@ public class Crewman {
     public void setStrength(int strength) {
 	this.strength = strength;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	return "Crewman [name=" + name + ", age=" + age + ", sex=" + sex + ", morale=" + morale + ", intelligence=" + intelligence
+		+ ", strength=" + strength + "]";
+    }
 }

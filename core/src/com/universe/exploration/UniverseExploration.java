@@ -1,5 +1,6 @@
 package com.universe.exploration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Application;
@@ -18,6 +19,8 @@ import com.universe.exploration.camera.CameraMonitor;
 import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.common.tools.TextManipulationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
+import com.universe.exploration.crewmen.Crew;
+import com.universe.exploration.crewmen.CrewFactory;
 import com.universe.exploration.gamegraphics.GameObjectCanvas;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
@@ -41,6 +44,19 @@ import com.universe.exploration.ueui.components.window.BasicWindow;
 import com.universe.exploration.ueui.components.window.WindowType;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
 
+/**
+ * Main game class.
+ * <p>
+ * In order to start game, the order of calling various is methods is as
+ * follows:
+ * </p>
+ * <ol>
+ * <li>{@link #create()}</li>
+ * </ol>
+ * 
+ * @author 2.3.2016 Teemu Puurunen
+ *
+ */
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
     /**
      * Game objects are handled here
@@ -57,6 +73,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      */
     private StarSystem starSystem;
 
+    public static Crew crew;
     /**
      * User interface.
      */
@@ -85,8 +102,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	basicSetup();
 	stageSetup();
+	
 	pauseGame(false);
-
+	
 	backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("music/space.mp3"));
 	bgId = backgroundMusic.loop();
     }
@@ -160,11 +178,25 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     /**
      * First setup star system and then UiController because UI uses star system
      * data.
+     * @throws IOException 
      */
     private void stageSetup() {
 	createStarSystem();
+	createCrew();
 	setupUiController();
 	setupInputProcessors();
+    }
+    
+    private void createCrew() {
+	this.crew = null;
+	CrewMembersInitializer initializer;
+	try {
+	    initializer = new CrewMembersInitializer();
+	    CrewFactory cf = new CrewFactory(initializer.getMaleProfiles(), initializer.getFemaleProfiles());
+	    this.crew = cf.createRandomizedCrew();
+	} catch (IOException e) {
+	    // TODO: error handling
+	}
     }
 
     private void setupUiController() {
@@ -212,7 +244,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	uiController.setVolumeListener(createVolumeListener());
     }
-    
+
     private UEListener createVolumeListener() {
 	return new UEListener() {
 	    /*

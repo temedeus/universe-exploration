@@ -24,6 +24,10 @@ public class RandomizationTools {
 
 	return randomNumber;
     }
+    
+    public static final boolean randomBoolean() {
+	return (getRandomInteger(0, 1) == 1) ? true : false;
+    }
 
     /**
      * Generate random double using given limits

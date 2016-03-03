@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.universe.exploration.ueui.data.DataPair;
+import com.universe.exploration.ueui.data.TestDataPair;
 import com.universe.exploration.ueui.data.container.DataPairContainer;
-import com.universe.exploration.ueui.data.container.TestDataPair;
 
 public class PlanetSurveyTest {
 
