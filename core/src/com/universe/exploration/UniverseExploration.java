@@ -188,12 +188,12 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     }
     
     private void createCrew() {
-	this.crew = null;
+	crew = null;
 	CrewMembersInitializer initializer;
 	try {
 	    initializer = new CrewMembersInitializer();
 	    CrewFactory cf = new CrewFactory(initializer.getMaleProfiles(), initializer.getFemaleProfiles());
-	    this.crew = cf.createRandomizedCrew();
+	    crew = cf.createRandomizedCrew();
 	} catch (IOException e) {
 	    // TODO: error handling
 	}

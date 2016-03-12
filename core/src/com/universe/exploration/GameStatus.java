@@ -21,10 +21,10 @@ public class GameStatus {
     /**
      * Ensures game parameters are proper for creating a survey window.
      * 
-     * @param enable
+     * @param activate
      */
-    public void activateSurveyMode(boolean enable) {
-	if (enable) {
+    public void activateSurveyMode(boolean activate) {
+	if (activate) {
 	    setPlanetaryMovementActive(false);
 	    setZoomIn(true);
 	} else {

@@ -4,20 +4,18 @@
 package com.universe.exploration.ueui.components.window;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.ueui.ButtonFactory;
 import com.universe.exploration.ueui.components.BasicTable;
+import com.universe.exploration.ueui.skins.UEUiSkinBank;
 
 /**
  * <p>
@@ -31,12 +29,12 @@ import com.universe.exploration.ueui.components.BasicTable;
  */
 public class WindowFactory {
     Skin skin;
-    WindowStyle windowStyle;
     ButtonFactory bf;
+    private static final String STYLE = "default";
+    
+    public WindowFactory() {
+	this.skin = UEUiSkinBank.ueUISkin;
 
-    public WindowFactory(Skin skin) {
-	this.skin = skin;
-	windowStyle = new WindowStyle(new BitmapFont(), Color.WHITE, skin.newDrawable("white", Color.BLACK));
 	bf = new ButtonFactory(skin);
     }
 
@@ -62,7 +60,7 @@ public class WindowFactory {
      * @return UEWindow
      */
     public BasicWindow createOkWindow(String caption, ClickListener okAction) {
-	final SmallWindow window = new SmallWindow(caption, windowStyle);
+	final SmallWindow window = new SmallWindow(caption, skin, STYLE);
 
 	window.add(bf.createTextButton(Localizer.get(LocalKey.BTN_OK), okAction));
 
@@ -92,7 +90,7 @@ public class WindowFactory {
      * @return
      */
     public <T extends Actor> BasicWindow createLargeDescriptionWindow(final WindowType windowType, T contentTable, ClickListener okAction) {
-	final LargeWindow window = new LargeWindow(windowType.getLocalizedCaption(), windowStyle);
+	final LargeWindow window = new LargeWindow(windowType.getLocalizedCaption(), skin, STYLE);
 
 	Table buttontable = new Table();
 	buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
@@ -118,7 +116,7 @@ public class WindowFactory {
      * @return
      */
     public <T extends Actor> BasicWindow createOKWindow(String caption, T contentTable) {
-	final LargeWindow window = new LargeWindow(caption, windowStyle);
+	final LargeWindow window = new LargeWindow(caption, skin, STYLE);
 
 	Table buttontable = new Table();
 
@@ -143,7 +141,7 @@ public class WindowFactory {
      * @return
      */
     public <T extends Actor> BasicWindow createMediumDescriptionWindow(final WindowType windowType, T contentTable, ClickListener okAction) {
-	final MediumWindow window = new MediumWindow(windowType.getLocalizedCaption(), windowStyle);
+	final MediumWindow window = new MediumWindow(windowType.getLocalizedCaption(), skin, STYLE);
 
 	Table buttontable = new Table();
 	buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
@@ -170,7 +168,7 @@ public class WindowFactory {
      */
     public BasicWindow createDescriptionWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable,
 	    LocalKey secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
-	final SmallWindow window = new SmallWindow(windowType.getLocalizedCaption(), windowStyle);
+	final SmallWindow window = new SmallWindow(windowType.getLocalizedCaption(), skin, STYLE);
 
 	Table buttontable = new Table();
 	buttontable.add(bf.createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));

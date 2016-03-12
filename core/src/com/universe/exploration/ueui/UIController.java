@@ -299,15 +299,20 @@ public class UIController {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		BasicWindow window = createCrewManagementWindow(new ClickListener() {
-		    /* (non-Javadoc)
-		     * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+		    /*
+		     * (non-Javadoc)
+		     * 
+		     * @see
+		     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked
+		     * (com.badlogic.gdx.scenes.scene2d.InputEvent, float,
+		     * float)
 		     */
 		    @Override
 		    public void clicked(InputEvent event, float x, float y) {
 			UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
 		    }
 		});
-		
+
 		UniverseExploration.windowContainer.add(WindowType.CREW_MANAGEMENT, window);
 		show(window);
 	    }
@@ -315,10 +320,9 @@ public class UIController {
     }
 
     public BasicWindow createGameOverWindow(WindowType windowType, ClickListener tryAgainAction) {
-	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 	BasicTable gameoverData = new BasicTable(Align.left | Align.top);
-	BasicWindow gameOverWindow = wf.createDescriptionWindowWithSecondaryAction(windowType, gameoverData, LocalKey.BTN_QUIT_GAME,
-		tryAgainAction, new ClickListener() {
+	BasicWindow gameOverWindow = new WindowFactory().createDescriptionWindowWithSecondaryAction(windowType, gameoverData,
+		LocalKey.BTN_QUIT_GAME, tryAgainAction, new ClickListener() {
 		    @Override
 		    public void clicked(InputEvent event, float x, float y) {
 			if (!Gdx.app.getType().equals(ApplicationType.WebGL)) {
@@ -351,13 +355,10 @@ public class UIController {
     }
 
     public void createQuitDialog() {
-	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
-	uiStage.addActor(wf.createQuitWindow(Localizer.get(LocalKey.TITLE_QUIT_GAME)));
+	uiStage.addActor(new WindowFactory().createQuitWindow(Localizer.get(LocalKey.TITLE_QUIT_GAME)));
     }
 
     public BasicWindow createSurveyClosedWindow(ArrayList<String> surveydata) {
-	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
-
 	Table table = new Table(UEUiSkinBank.ueUISkin);
 
 	for (String row : surveydata) {
@@ -365,7 +366,7 @@ public class UIController {
 	    table.row();
 	}
 
-	return wf.createOKWindow(Localizer.get(LocalKey.TITLE_SURVEY_CLOSED), table);
+	return new WindowFactory().createOKWindow(Localizer.get(LocalKey.TITLE_SURVEY_CLOSED), table);
     }
 
     /**
@@ -374,37 +375,34 @@ public class UIController {
      * @param pgfx
      */
     public BasicWindow createPlanetarySurveyWindow(PlanetGfxContainer pgfx, ClickListener okAction) {
-	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
 	final DataPairTableFactory dptf = new DataPairTableFactory();
 
 	Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
 
-	return wf.createLargeDescriptionWindow(WindowType.PLANET_DETAILS, planetInformationTable, okAction);
+	return new WindowFactory().createLargeDescriptionWindow(WindowType.PLANET_DETAILS, planetInformationTable, okAction);
     }
-    
+
     /**
      * Planetary survey window.
      * 
      * @param pgfx
      */
     public BasicWindow createCrewManagementWindow(ClickListener okAction) {
-	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
-
-	return wf.createLargeDescriptionWindow(WindowType.CREW_MANAGEMENT, createCrewTable(), okAction);
+	return new WindowFactory().createMediumDescriptionWindow(WindowType.CREW_MANAGEMENT, createCrewTable(), okAction);
     }
-    
+
     private Table createCrewTable() {
 	Table table = new Table();
 	table.add(createCrewManTable());
 	return table;
     }
-    
+
     private Table createCrewManTable() {
 	Table table = new Table();
 
 	int x = 0;
-	
-	for(Crewman crewmember : UniverseExploration.crew.getCrewmen()) {
+
+	for (Crewman crewmember : UniverseExploration.crew.getCrewmen()) {
 	    x++;
 	    Table cell = new Table();
 	    cell.padBottom(15);
@@ -413,18 +411,16 @@ public class UIController {
 	    cell.row();
 	    cell.add(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton("Details", new ClickListener()));
 	    table.add(cell);
-	    
-	    if(x == 5) {
+
+	    if (x == 5) {
 		table.row();
 	    }
 	}
-	
+
 	return table;
     }
 
     public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {
-	final WindowFactory wf = new WindowFactory(UEUiSkinBank.ueUISkin);
-
 	Table planetInformationTable = new Table();
 
 	planetInformationTable.add(new Label(Localizer.get(LocalKey.LABEL_CREWMEN_COUNT), UEUiSkinBank.ueUISkin));
@@ -436,7 +432,7 @@ public class UIController {
 	planetInformationTable.add(pair.getTable());
 	planetInformationTable.row();
 
-	BasicWindow window = wf.createMediumDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
+	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
 		createdPlanetSurveyTeamDispatchedClickListener((PlanetSurveyForm) pair.getFormContainer()));
 
 	return window;

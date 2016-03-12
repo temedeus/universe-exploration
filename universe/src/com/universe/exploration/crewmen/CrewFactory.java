@@ -38,7 +38,7 @@ public class CrewFactory {
 	boolean male = RandomizationTools.randomBoolean();
 	List<CrewmemberProfile> selectedSexList = (male) ? maleProfiles : femaleProfiles;
 	
-	int random = RandomizationTools.getRandomInteger(0, selectedSexList.size());
+	int random = RandomizationTools.getRandomInteger(0, selectedSexList.size()-1);
 	CrewmemberProfile profile = selectedSexList.get(random);
 	Crewman crewman = new Crewman();
 	crewman.setSex(profile.getSex());
