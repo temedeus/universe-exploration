@@ -16,7 +16,7 @@ public class CrewMember {
     private int agility;
 
     private int strength;
-    
+
     private Nationality nationality;
 
     /**
@@ -154,13 +154,14 @@ public class CrewMember {
      * @return the nationality
      */
     public Nationality getNationality() {
-        return nationality;
+	return nationality;
     }
 
     /**
-     * @param nationality the nationality to set
+     * @param nationality
+     *            the nationality to set
      */
     public void setNationality(Nationality nationality) {
-        this.nationality = nationality;
+	this.nationality = nationality;
     }
 }

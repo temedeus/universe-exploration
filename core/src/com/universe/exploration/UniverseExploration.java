@@ -37,12 +37,12 @@ import com.universe.exploration.survey.ResourcesFound;
 import com.universe.exploration.survey.SurveyStatus;
 import com.universe.exploration.survey.SurveyStatusContainer;
 import com.universe.exploration.survey.SurveyStatusFactory;
-import com.universe.exploration.ueui.UIController;
-import com.universe.exploration.ueui.WindowContainer;
-import com.universe.exploration.ueui.WindowContainerEvent;
-import com.universe.exploration.ueui.components.window.BasicWindow;
-import com.universe.exploration.ueui.components.window.WindowType;
-import com.universe.exploration.ueui.forms.PlanetSurveyForm;
+import com.universe.exploration.userinterface.UIController;
+import com.universe.exploration.userinterface.WindowContainer;
+import com.universe.exploration.userinterface.WindowContainerEvent;
+import com.universe.exploration.userinterface.components.window.BasicWindow;
+import com.universe.exploration.userinterface.components.window.WindowType;
+import com.universe.exploration.userinterface.forms.PlanetSurveyForm;
 
 /**
  * Main game class.
