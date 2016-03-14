@@ -69,8 +69,8 @@ public class StarSystemConfiguration {
     /**
      * Populate String[][] with ArraList items. TODO: this is custom work for
      * and extremely stupid implementation of how stars and planets are randomly
-     * generated. of this bullshit. Please see {@link StarSystemConfiguration}
-     * and try to get rid
+     * generated. Please see {@link StarSystemConfiguration} and try to get rid
+     * of this bullshit.
      * 
      * @param arrList
      * @return

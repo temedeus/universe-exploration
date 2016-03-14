@@ -3,10 +3,6 @@
  */
 package com.universe.exploration.crewmen;
 
-/**
- * @author 21.2.2016 Teemu Puurunen
- *
- */
 public class CrewmemberProfile {
     private CrewmemberSex sex;
     private Nationality nationality;
@@ -15,6 +11,7 @@ public class CrewmemberProfile {
     public CrewmemberProfile(CrewmemberSex sex, Nationality nationality, String name) {
 	this.sex = sex;
 	this.name = name;
+	this.nationality = nationality;
     }
 
     /**
@@ -51,13 +48,14 @@ public class CrewmemberProfile {
      * @return the nationality
      */
     public Nationality getNationality() {
-        return nationality;
+	return nationality;
     }
 
     /**
-     * @param nationality the nationality to set
+     * @param nationality
+     *            the nationality to set
      */
     public void setNationality(Nationality nationality) {
-        this.nationality = nationality;
+	this.nationality = nationality;
     }
 }

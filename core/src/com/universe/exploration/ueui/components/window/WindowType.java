@@ -48,7 +48,20 @@ public enum WindowType {
 	}
     },
     
-    CREW_MANAGEMENT(LocalKey.TITLE_CREW_MANAGEMENT, LocalKey.BTN_OK),
+    CREW_MANAGEMENT(LocalKey.TITLE_CREW_MANAGEMENT, LocalKey.BTN_OK) {
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.ueui.components.window.WindowType#retreiveChildWindows()
+	 */
+	@Override
+	public List<WindowType> retreiveChildWindows() {
+	    ArrayList<WindowType> dependencies = new ArrayList<WindowType>();
+	    dependencies.add(CREWMEMBER_DETAILS);
+
+	    return dependencies;
+	}
+    },
+    
+    CREWMEMBER_DETAILS(LocalKey.TITLE_CREWMEMBER_DETAILS, LocalKey.BTN_OK),
 
     /**
      * Notification of a closed survey.

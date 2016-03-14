@@ -6,21 +6,15 @@ package com.universe.exploration.ueui;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.universe.exploration.ueui.skins.UEUiSkinBank;
 
 /**
  * @author 25.8.2015 Teemu Puurunen
  *
  */
 public class ButtonFactory {
-    Skin uiSkin;
-
-    /**
-     * @author teemu.puurunen
-     */
-    public ButtonFactory(Skin uiSkin) {
-	this.uiSkin = uiSkin;
-    }
-
+    private Skin uiSkin = UEUiSkinBank.ueUISkin;
+    
     /**
      * Create standardized button
      * 

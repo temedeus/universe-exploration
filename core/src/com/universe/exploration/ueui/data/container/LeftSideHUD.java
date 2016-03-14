@@ -30,9 +30,8 @@ public class LeftSideHUD extends DataPairContainer {
 	add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.get(LocalKey.TITLE_FOOD), "" + CoreConfiguration.MAX_FOOD + " %"));
 	add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.get(LocalKey.TITLE_POWER), "" + CoreConfiguration.MAX_POWER + " %"));
     }
-    
 
-    public void updateValuesToHUD(PlayerStatus playerStatus) {
+    public void updateHUDValues(PlayerStatus playerStatus) {
 	update(PlayerStatusItemkeys.TIME, "" + (int) playerStatus.getTime() + " days");
 	update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int) playerStatus.getAir()));
 	update(PlayerStatusItemkeys.CREWMEN, "" + (int) playerStatus.getCrewmen());

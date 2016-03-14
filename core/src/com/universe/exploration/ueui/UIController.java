@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.GdxHelper;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.crewmen.Crewman;
+import com.universe.exploration.crewmen.CrewMember;
 import com.universe.exploration.gamegraphics.GameViewObjectContainer;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
@@ -39,6 +39,7 @@ import com.universe.exploration.ueui.components.window.WindowFactory;
 import com.universe.exploration.ueui.components.window.WindowType;
 import com.universe.exploration.ueui.data.DataPair;
 import com.universe.exploration.ueui.data.DataPairTableFactory;
+import com.universe.exploration.ueui.data.container.DataPairContainer;
 import com.universe.exploration.ueui.data.container.LeftSideHUD;
 import com.universe.exploration.ueui.forms.FormContainer;
 import com.universe.exploration.ueui.forms.PlanetSurveyForm;
@@ -167,7 +168,7 @@ public class UIController {
 	table.padLeft(30);
 	table.align(Align.left | Align.top);
 	table.setPosition(0, Gdx.graphics.getHeight());
-	table.addActor(populateWithStatus());
+	table.addActor(populateWithStatus(leftsidePlayerStatus));
 
 	table.addActor(planetSelection.createPlanetSelectionTable());
 
@@ -188,17 +189,17 @@ public class UIController {
 	return table;
     }
 
-    private Table populateWithStatus() {
-	Table playerStatusTable = new Table();
-	playerStatusTable.align(Align.left | Align.top);
+    private Table populateWithStatus(DataPairContainer dataPairContainer) {
+	Table tableRepresentation = new Table();
+	tableRepresentation.align(Align.left | Align.top);
 
-	for (DataPair playerStatus : leftsidePlayerStatus.getPairList()) {
-	    playerStatusTable.add(playerStatus.getLabel()).left();
-	    playerStatusTable.add(playerStatus.getValue()).left();
-	    playerStatusTable.row();
+	for (DataPair dataPair : dataPairContainer.getPairList()) {
+	    tableRepresentation.add(dataPair.getLabel()).left();
+	    tableRepresentation.add(dataPair.getValue()).left();
+	    tableRepresentation.row();
 	}
 
-	return playerStatusTable;
+	return tableRepresentation;
     }
 
     public void updateLog(LinkedList<String> logItems) {
@@ -244,8 +245,7 @@ public class UIController {
     }
 
     public TextButton createVolumeChangeButton(String caption, final float value) {
-	ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
-	return bf.createTextButton(caption, new ClickListener() {
+	return new ButtonFactory().createTextButton(caption, new ClickListener() {
 	    /*
 	     * (non-Javadoc)
 	     * 
@@ -266,9 +266,7 @@ public class UIController {
      * @return
      */
     public TextButton createHyperspaceJumpButton() {
-	ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
-
-	return bf.createTextButton(Localizer.get(LocalKey.BTN_HYPERSPACE_JUMP), new ClickListener() {
+	return new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_HYPERSPACE_JUMP), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		if (!UniverseExploration.gameStatus.isPaused() && isHyperspaceJumpAllowed) {
@@ -293,9 +291,7 @@ public class UIController {
      * @return
      */
     public TextButton createCrewControlButton() {
-	ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
-
-	return bf.createTextButton(Localizer.get(LocalKey.BTN_CREW_CONTROL), new ClickListener() {
+	return new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_CREW_CONTROL), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		BasicWindow window = createCrewManagementWindow(new ClickListener() {
@@ -344,9 +340,7 @@ public class UIController {
      * @return
      */
     private TextButton createQuitButton() {
-	ButtonFactory bf = new ButtonFactory(UEUiSkinBank.ueUISkin);
-
-	return bf.createTextButton(Localizer.get(LocalKey.BTN_QUIT_GAME), new ClickListener() {
+	return new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_QUIT_GAME), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		createQuitDialog();
@@ -393,31 +387,74 @@ public class UIController {
 
     private Table createCrewTable() {
 	Table table = new Table();
-	table.add(createCrewManTable());
-	return table;
-    }
-
-    private Table createCrewManTable() {
-	Table table = new Table();
 
 	int x = 0;
 
-	for (Crewman crewmember : UniverseExploration.crew.getCrewmen()) {
+	for (CrewMember crewmember : UniverseExploration.crew.getCrewmen()) {
 	    x++;
 	    Table cell = new Table();
 	    cell.padBottom(15);
 	    cell.padRight(15);
 	    cell.add(new Label(crewmember.getName(), UEUiSkinBank.ueUISkin));
 	    cell.row();
-	    cell.add(new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton("Details", new ClickListener()));
+	    cell.add(new ButtonFactory().createTextButton("Details", createCrewmemberDetailsClickListerener(crewmember)));
 	    table.add(cell);
 
+	    // 5 per row seems good.
 	    if (x == 5) {
 		table.row();
 	    }
 	}
 
 	return table;
+    }
+
+    private ClickListener createCrewmemberDetailsClickListerener(final CrewMember crewMember) {
+	return new ClickListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
+	     * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+	     */
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+
+		BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.CREWMEMBER_DETAILS,
+			populateWithStatus(createCrewMemberDetailsDataPairs(crewMember)), createNewCrewMemberDetailsCLickListener());
+
+		UniverseExploration.windowContainer.add(WindowType.CREWMEMBER_DETAILS, window);
+		show(window);
+	    }
+	};
+    }
+
+    /**
+     * {@link DataPair} keys are hard-coded as they are not really used anywhere
+     * outside this context. If things change, they should be somewhere else.
+     * 
+     * @param crewMember
+     * @return
+     */
+    private DataPairContainer createCrewMemberDetailsDataPairs(CrewMember crewMember) {
+	DataPairContainer dataPairContainer = new DataPairContainer();
+	dataPairContainer.add(new DataPair("name", "Name:", crewMember.getName()));
+	dataPairContainer.add(new DataPair("age", "Age: ", "" + crewMember.getAge()));
+	dataPairContainer.add(new DataPair("sex", "Sex: ", "" + crewMember.getSex().toString()));
+	dataPairContainer.add(new DataPair("nationality", "Nationality: ", "" + crewMember.getNationality().toString()));
+	dataPairContainer.add(new DataPair("agility", "Agility:", "" + crewMember.getAgility()));
+	dataPairContainer.add(new DataPair("intelligence", "Intelligence: ", "" + crewMember.getIntelligence()));
+	dataPairContainer.add(new DataPair("morale", "Morale: ", "" + crewMember.getMorale()));
+	dataPairContainer.add(new DataPair("strength", "Strength: ", "" + crewMember.getStrength()));
+
+	return dataPairContainer;
+    }
+
+    private ClickListener createNewCrewMemberDetailsCLickListener() {
+	return new ClickListener() {
+
+	};
     }
 
     public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {
@@ -453,14 +490,8 @@ public class UIController {
 	}
     }
 
-    /**
-     * Perform int cast to ensure sensible values. (Do not cast until here so
-     * that we don't lose accuracy apart from what we do using float.)
-     * 
-     * @param ps
-     */
     private void updatePlayerStatusToUI(PlayerStatus playerStatus) {
-	leftsidePlayerStatus.updateValuesToHUD(playerStatus);
+	leftsidePlayerStatus.updateHUDValues(playerStatus);
     }
 
     /**

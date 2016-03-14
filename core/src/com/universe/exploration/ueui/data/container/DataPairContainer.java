@@ -12,8 +12,11 @@ import com.universe.exploration.ueui.data.DataPair;
  * @author 4.10.2015 Teemu Puurunen
  *
  */
-class DataPairContainer implements IDataPairContainer {
+public class DataPairContainer implements IDataPairContainer {
 
+    // TODO: this would have likely been wiser as HashMap. However the
+    // implementation is kind of goofy so this would result in redundant
+    // information (id as key for HashMap and also in DataPair).
     private ArrayList<DataPair> pairList;
 
     protected Object auxiliaryDataContainer;

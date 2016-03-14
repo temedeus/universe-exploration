@@ -8,20 +8,20 @@ import java.util.List;
 
 public class Crew {
 
-    private List<Crewman> crewmen = new ArrayList<Crewman>();
+    private List<CrewMember> crewmen = new ArrayList<CrewMember>();
 
-    public void addCrewman(Crewman crewman) {
+    public void addCrewman(CrewMember crewman) {
 	crewmen.add(crewman);
     }
 
-    public void removeCrewman(Crewman c) {
+    public void removeCrewman(CrewMember c) {
 	crewmen.remove(c);
     }
 
     /**
      * @return the crewmen
      */
-    public List<Crewman> getCrewmen() {
+    public List<CrewMember> getCrewmen() {
         return crewmen;
     }
 }

@@ -7,12 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
- * Note: this class does not extend Table, but it utilizes Table.
+ * Note: this class does not extend {@link Table} but rather wraps one.
  * 
  * @author 24.9.2015 Teemu Puurunen
- * 
- *         TODO: If only one widgetgroup added, don't create new table for that
- *         single cell.
  *
  */
 public class BasicTable {

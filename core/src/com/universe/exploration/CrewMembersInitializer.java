@@ -30,14 +30,14 @@ public class CrewMembersInitializer {
     private static final String ROOT_PATH_MALE = ROOT + File.separator + "male" + File.separator;
     private static final String ROOT_PATH_FEMALE = ROOT + File.separator + "female" + File.separator;
 
-    private static final List<CrewmemberProfileFilepath> CREWMEMBER_PROFILE_FILES = createNameProfileFilepathList();
+    private static final List<CrewmemberProfileSource> CREWMEMBER_PROFILE_FILES = createNameProfileFilepathList();
 
     private List<CrewmemberProfile> maleProfiles = new ArrayList<CrewmemberProfile>();
     private List<CrewmemberProfile> femaleProfiles = new ArrayList<CrewmemberProfile>();
 
     public CrewMembersInitializer() throws IOException {
 	FileReader fh = new FileReader();
-	for (CrewmemberProfileFilepath filepath : CREWMEMBER_PROFILE_FILES) {
+	for (CrewmemberProfileSource filepath : CREWMEMBER_PROFILE_FILES) {
 	    fh.readTextFile(filepath.getTemplatePath()).forEach(
 		    name -> add(new CrewmemberProfile(filepath.getCrewmemberSex(), filepath.getNationality(), name)));
 	}
@@ -51,20 +51,20 @@ public class CrewMembersInitializer {
 	}
     }
 
-    private static List<CrewmemberProfileFilepath> createNameProfileFilepathList() {
-	List<CrewmemberProfileFilepath> profileFilepathList = new ArrayList<CrewmemberProfileFilepath>();
+    private static List<CrewmemberProfileSource> createNameProfileFilepathList() {
+	List<CrewmemberProfileSource> profileFilepathList = new ArrayList<CrewmemberProfileSource>();
 
 	// Male profiles.
-	profileFilepathList.add(new CrewmemberProfileFilepath(CrewmemberSex.MALE, Nationality.AMERICAN, ROOT_PATH_MALE + "american"));
-	profileFilepathList.add(new CrewmemberProfileFilepath(CrewmemberSex.MALE, Nationality.ENGLISH, ROOT_PATH_MALE + "english"));
-	profileFilepathList.add(new CrewmemberProfileFilepath(CrewmemberSex.MALE, Nationality.FINNISH, ROOT_PATH_MALE + "finnish"));
+	profileFilepathList.add(new CrewmemberProfileSource(CrewmemberSex.MALE, Nationality.AMERICAN, ROOT_PATH_MALE + "american"));
+	profileFilepathList.add(new CrewmemberProfileSource(CrewmemberSex.MALE, Nationality.ENGLISH, ROOT_PATH_MALE + "english"));
+	profileFilepathList.add(new CrewmemberProfileSource(CrewmemberSex.MALE, Nationality.FINNISH, ROOT_PATH_MALE + "finnish"));
 
 	// Female profiles.
-	profileFilepathList.add(new CrewmemberProfileFilepath(CrewmemberSex.FEMALE, Nationality.AMERICAN, ROOT_PATH_FEMALE + "american"));
-	profileFilepathList.add(new CrewmemberProfileFilepath(CrewmemberSex.FEMALE, Nationality.CHINESE, ROOT_PATH_FEMALE + "chinese"));
-	profileFilepathList.add(new CrewmemberProfileFilepath(CrewmemberSex.FEMALE, Nationality.ENGLISH, ROOT_PATH_FEMALE + "english"));
-	profileFilepathList.add(new CrewmemberProfileFilepath(CrewmemberSex.FEMALE, Nationality.FINNISH, ROOT_PATH_FEMALE + "finnish"));
-	profileFilepathList.add(new CrewmemberProfileFilepath(CrewmemberSex.FEMALE, Nationality.RUSSIAN, ROOT_PATH_FEMALE + "russian"));
+	profileFilepathList.add(new CrewmemberProfileSource(CrewmemberSex.FEMALE, Nationality.AMERICAN, ROOT_PATH_FEMALE + "american"));
+	profileFilepathList.add(new CrewmemberProfileSource(CrewmemberSex.FEMALE, Nationality.CHINESE, ROOT_PATH_FEMALE + "chinese"));
+	profileFilepathList.add(new CrewmemberProfileSource(CrewmemberSex.FEMALE, Nationality.ENGLISH, ROOT_PATH_FEMALE + "english"));
+	profileFilepathList.add(new CrewmemberProfileSource(CrewmemberSex.FEMALE, Nationality.FINNISH, ROOT_PATH_FEMALE + "finnish"));
+	profileFilepathList.add(new CrewmemberProfileSource(CrewmemberSex.FEMALE, Nationality.RUSSIAN, ROOT_PATH_FEMALE + "russian"));
 
 	return profileFilepathList;
     }
@@ -86,7 +86,7 @@ public class CrewMembersInitializer {
     /**
      * @return the crewmemberProfileFiles
      */
-    public static List<CrewmemberProfileFilepath> getCrewmemberProfileFiles() {
+    public static List<CrewmemberProfileSource> getCrewmemberProfileFiles() {
 	return CREWMEMBER_PROFILE_FILES;
     }
 
@@ -106,8 +106,8 @@ public class CrewMembersInitializer {
 
 }
 
-class CrewmemberProfileFilepath {
 
+class CrewmemberProfileSource {
     private CrewmemberSex crewmemberSex;
     private Nationality nationality;
     private String templatePath;
@@ -117,7 +117,7 @@ class CrewmemberProfileFilepath {
      * @param nationality
      * @param templatePath
      */
-    public CrewmemberProfileFilepath(CrewmemberSex crewmemberSex, Nationality nationality, String templatePath) {
+    public CrewmemberProfileSource(CrewmemberSex crewmemberSex, Nationality nationality, String templatePath) {
 	this.crewmemberSex = crewmemberSex;
 	this.nationality = nationality;
 	this.templatePath = templatePath;

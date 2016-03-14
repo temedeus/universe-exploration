@@ -17,6 +17,16 @@ import com.badlogic.gdx.files.FileHandle;
  *
  */
 public class GdxHelper {
+
+    public static BufferedReader provideAssetReader(String path) {
+	return new BufferedReader(Gdx.files.internal(path).reader());
+
+    }
+
+    public static FileHandle provideFileHandle(String path) {
+	return Gdx.files.external(path);
+    }
+
     /**
      * Get screen center X
      * 
@@ -26,33 +36,12 @@ public class GdxHelper {
 	float w = Gdx.graphics.getWidth();
 	return (w / 2);
     }
-    
-    public static BufferedReader provideAssetReader(String path) {
-	return new BufferedReader(Gdx.files.internal(path).reader());
-	
-    }
-    
-    public static FileHandle provideFileHandle(String path) {
-	return Gdx.files.external(path);
-    }
 
-    /**
-     * Get screen center Y
-     * 
-     * @return float
-     */
     public static float getScreenCenterY() {
 	float h = Gdx.graphics.getHeight();
 	return (h / 2);
     }
 
-    /**
-     * Get delta time. Let's create an abstraction layer before Gdx's own
-     * mechanism in case there's something to add in the calculation mechanism
-     * later on.
-     * 
-     * @return
-     */
     public static float getDeltaTime() {
 	return Gdx.graphics.getDeltaTime() * 100;
     }

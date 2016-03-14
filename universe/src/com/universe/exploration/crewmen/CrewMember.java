@@ -1,15 +1,8 @@
-/**
- * 
- */
 package com.universe.exploration.crewmen;
 
-/**
- * Crewman bean.
- * 
- * @author 25.8.2015 Teemu Puurunen
- *
- */
-public class Crewman {
+public class CrewMember {
+    private int id;
+
     private String name;
 
     private int age;
@@ -20,7 +13,11 @@ public class Crewman {
 
     private int intelligence;
 
+    private int agility;
+
     private int strength;
+    
+    private Nationality nationality;
 
     /**
      * @return the name
@@ -112,12 +109,58 @@ public class Crewman {
 	this.strength = strength;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
 	return "Crewman [name=" + name + ", age=" + age + ", sex=" + sex + ", morale=" + morale + ", intelligence=" + intelligence
 		+ ", strength=" + strength + "]";
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+	return id;
+    }
+
+    /**
+     * @param id
+     *            the id to set
+     */
+    public void setId(int id) {
+	this.id = id;
+    }
+
+    /**
+     * @return the agility
+     */
+    public int getAgility() {
+	return agility;
+    }
+
+    /**
+     * @param agility
+     *            the agility to set
+     */
+    public void setAgility(int agility) {
+	this.agility = agility;
+    }
+
+    /**
+     * @return the nationality
+     */
+    public Nationality getNationality() {
+        return nationality;
+    }
+
+    /**
+     * @param nationality the nationality to set
+     */
+    public void setNationality(Nationality nationality) {
+        this.nationality = nationality;
     }
 }

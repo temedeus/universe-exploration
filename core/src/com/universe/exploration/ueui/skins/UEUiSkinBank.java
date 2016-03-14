@@ -11,10 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.universe.exploration.common.CoreConfiguration;
 
 /**
- * @author 1.10.2015 Teemu Puurunen TODO: right now I just made a duplicate font
- *         with large size and orange color. Maybe this could be performed
- *         smarter? Either include this in the current skin JSON. (Maybe stop
- *         using BitMapFonts altogether?)
+ * TODO: get rid of this class. Utilize uiskin.json.
  */
 public class UEUiSkinBank {
 

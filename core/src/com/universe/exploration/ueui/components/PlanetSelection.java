@@ -60,7 +60,7 @@ public class PlanetSelection {
 	this.gameViewObjectContainer = gameViewObjectContainer;
 	this.planetList = planetList;
 
-	surveyButton = new ButtonFactory(UEUiSkinBank.ueUISkin).createTextButton(Localizer.get(LocalKey.BTN_SURVEY), new ClickListener() {
+	surveyButton = new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_SURVEY), new ClickListener() {
 	    /*
 	     * (non-Javadoc)
 	     * 

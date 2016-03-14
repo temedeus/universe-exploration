@@ -9,8 +9,8 @@ import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.RandomizationTools;
 
 /**
- * Before utilizing this factory you must first populate the
- * {@link #maleProfiles} using {@link #addToNames(CrewmemberSex, String)}.
+ * Before utilizing this factory you must first populate {@link #maleProfiles}
+ * and {@link #femaleProfiles} using {@link #addToNames(CrewmemberSex, String)}.
  * Otherwise you will get zero crewmen.
  * 
  * @author 21.2.2016 Teemu Puurunen
@@ -29,21 +29,46 @@ public class CrewFactory {
     public Crew createRandomizedCrew() {
 	Crew crew = new Crew();
 	for (int x = 0; x < CoreConfiguration.MAX_CREWMEN; x++) {
-	    crew.addCrewman(createRandomCrewman());
+	    crew.addCrewman(createRandomCrewman(x));
 	}
 	return crew;
     }
 
-    private Crewman createRandomCrewman() {
+    private CrewMember createRandomCrewman(int id) {
 	boolean male = RandomizationTools.randomBoolean();
 	List<CrewmemberProfile> selectedSexList = (male) ? maleProfiles : femaleProfiles;
-	
-	int random = RandomizationTools.getRandomInteger(0, selectedSexList.size()-1);
+
+	int random = RandomizationTools.getRandomInteger(0, selectedSexList.size() - 1);
 	CrewmemberProfile profile = selectedSexList.get(random);
-	Crewman crewman = new Crewman();
-	crewman.setSex(profile.getSex());
-	crewman.setName(profile.getName());
-	return crewman;
+
+	CrewMember crewmember = new CrewMember();
+
+	// Basic setup
+	crewmember.setId(id);
+	crewmember.setSex(profile.getSex());
+	crewmember.setName(profile.getName());
+	crewmember
+		.setAge(RandomizationTools.getRandomInteger(CrewCharacteristicsBoundaries.MIN_AGE, CrewCharacteristicsBoundaries.MAX_AGE));
+	crewmember.setNationality(profile.getNationality());
+
+	// Crewman characteristics
+	setupCrewmanCharacteristics(crewmember);
+
+	return crewmember;
+    }
+
+    private void setupCrewmanCharacteristics(CrewMember crewmember) {
+	crewmember.setAgility(RandomizationTools.getRandomInteger(CrewCharacteristicsBoundaries.MIN_AGILITY,
+		CrewCharacteristicsBoundaries.MAX_AGILITY));
+
+	crewmember.setMorale(RandomizationTools.getRandomInteger(CrewCharacteristicsBoundaries.MIN_INITIAL_MORALE,
+		CrewCharacteristicsBoundaries.MAX_MORALE));
+
+	crewmember.setIntelligence(RandomizationTools.getRandomInteger(CrewCharacteristicsBoundaries.MIN_INTELLIGENCE,
+		CrewCharacteristicsBoundaries.MAX_INTELLIGENCE));
+
+	crewmember.setStrength(RandomizationTools.getRandomInteger(CrewCharacteristicsBoundaries.MIN_STRENGTH,
+		CrewCharacteristicsBoundaries.MAX_STRENGTH));
     }
 
     /**
