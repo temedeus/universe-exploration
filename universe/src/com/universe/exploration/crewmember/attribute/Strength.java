@@ -9,4 +9,12 @@ package com.universe.exploration.crewmember.attribute;
  */
 public class Strength extends CrewMemberAttribute {
 
+    /**
+     * @param value
+     */
+    public Strength(int value) {
+	super(value);
+	// TODO Auto-generated constructor stub
+    }
+
 }

@@ -9,4 +9,12 @@ package com.universe.exploration.crewmember.attribute;
  */
 public class Agility extends CrewMemberAttribute {
 
+    /**
+     * @param value
+     */
+    public Agility(int value) {
+	super(value);
+	// TODO Auto-generated constructor stub
+    }
+
 }

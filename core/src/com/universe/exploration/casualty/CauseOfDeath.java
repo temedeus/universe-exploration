@@ -3,6 +3,13 @@
  */
 package com.universe.exploration.casualty;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
+import com.universe.exploration.crewmember.attribute.ICrewMemberAttribute;
+import com.universe.exploration.crewmember.attribute.Strength;
+
 
 /**
  * <p>
@@ -30,10 +37,11 @@ public enum CauseOfDeath {
 	     * @see com.universe.exploration.casualty.CauseOfDeath#listOfContributingAttributes()
 	     */
 	    @Override
-	    public void listOfContributingAttributes() {
-	        // TODO Auto-generated method stub
-	        super.listOfContributingAttributes();
+	    public List<ICrewMemberAttribute> listOfContributingAttributes() {
+	        List<CrewMemberAttribute> attributes = new ArrayList<CrewMemberAttribute>();
+	        attributes.add(Strength.class);
 	    }
+
 	},
 	MALNUTRION("MALNUTRITION", CauseOfDeathCategory.GENERAL),
 	CREWMEN_WENT_NUTS("CREWMEN_WENT_NUTS", CauseOfDeathCategory.GENERAL),
@@ -48,8 +56,8 @@ public enum CauseOfDeath {
 		this.causeOfDeathCategory = causeOfDeathCategory;
 	}
 	
-	public void listOfContributingAttributes() {
-	    
+	public List<ICrewMemberAttribute> listOfContributingAttributes() {
+	    return null;
 	}
 	
 	/**

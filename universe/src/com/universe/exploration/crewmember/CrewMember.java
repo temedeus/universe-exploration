@@ -1,5 +1,10 @@
 package com.universe.exploration.crewmember;
 
+import com.universe.exploration.crewmember.attribute.Agility;
+import com.universe.exploration.crewmember.attribute.Intelligence;
+import com.universe.exploration.crewmember.attribute.Morale;
+import com.universe.exploration.crewmember.attribute.Strength;
+
 public class CrewMember {
     private int id;
 
@@ -9,13 +14,13 @@ public class CrewMember {
 
     private CrewmemberSex sex;
 
-    private int morale;
+    private Morale morale;
 
-    private int intelligence;
+    private Intelligence intelligence;
 
-    private int agility;
+    private Agility agility;
 
-    private int strength;
+    private Strength strength;
 
     private Nationality nationality;
 
@@ -43,21 +48,21 @@ public class CrewMember {
     /**
      * @return the morale
      */
-    public int getMorale() {
+    public Morale getMorale() {
 	return morale;
     }
 
     /**
      * @return the intelligence
      */
-    public int getIntelligence() {
+    public Intelligence getIntelligence() {
 	return intelligence;
     }
 
     /**
      * @return the strength
      */
-    public int getStrength() {
+    public Strength getStrength() {
 	return strength;
     }
 
@@ -90,7 +95,7 @@ public class CrewMember {
      *            the morale to set
      */
     public void setMorale(int morale) {
-	this.morale = morale;
+	this.morale = new Morale(morale);
     }
 
     /**
@@ -98,7 +103,7 @@ public class CrewMember {
      *            the intelligence to set
      */
     public void setIntelligence(int intelligence) {
-	this.intelligence = intelligence;
+	this.intelligence = new Intelligence(intelligence);
     }
 
     /**
@@ -106,7 +111,7 @@ public class CrewMember {
      *            the strength to set
      */
     public void setStrength(int strength) {
-	this.strength = strength;
+	this.strength = new Strength(strength);
     }
 
     /*
@@ -138,7 +143,7 @@ public class CrewMember {
     /**
      * @return the agility
      */
-    public int getAgility() {
+    public Agility getAgility() {
 	return agility;
     }
 
@@ -147,7 +152,7 @@ public class CrewMember {
      *            the agility to set
      */
     public void setAgility(int agility) {
-	this.agility = agility;
+	this.agility = new Agility(agility);
     }
 
     /**

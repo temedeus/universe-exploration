@@ -9,4 +9,12 @@ package com.universe.exploration.crewmember.attribute;
  */
 public class Intelligence extends CrewMemberAttribute {
 
+    /**
+     * @param value
+     */
+    public Intelligence(int value) {
+	super(value);
+	// TODO Auto-generated constructor stub
+    }
+
 }
