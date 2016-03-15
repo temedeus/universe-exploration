@@ -4,15 +4,17 @@
 package com.universe.exploration.survey;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.universe.exploration.casualty.Casualty;
+import com.universe.exploration.crewmember.Crew;
 
 /**
  * @author 25.10.2015 Teemu Puurunen
  *
  */
 public class SurveyStatus {
-    private int crewmenInSurveyTeam;
+    private List<Crew> surveyTeam;
 
     /**
      * The day survey started.
@@ -30,17 +32,6 @@ public class SurveyStatus {
     private ArrayList<Casualty> mortalities;
 
     private ResourcesFound resourcesFound;
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-	return "SurveyStatus [crewmenInSurveyTeam=" + crewmenInSurveyTeam + ", surveyStartDay=" + surveyStartDay + ", surveyEndDay="
-		+ surveyEndDay + ", mortalities=" + mortalities + ", resourcesFound=" + resourcesFound + "]";
-    }
 
     /**
      * @return the resourcesFound
@@ -73,21 +64,6 @@ public class SurveyStatus {
     }
 
     /**
-     * @return the crewmenInSurveyTeam
-     */
-    public int getCrewmenInSurveyTeam() {
-	return crewmenInSurveyTeam;
-    }
-
-    /**
-     * @param crewmenInSurveyTeam
-     *            the crewmenInSurveyTeam to set
-     */
-    public void setCrewmenInSurveyTeam(int crewmenInSurveyTeam) {
-	this.crewmenInSurveyTeam = crewmenInSurveyTeam;
-    }
-
-    /**
      * @return the surveyStartDay
      */
     public int getSurveyStartDay() {
@@ -115,6 +91,28 @@ public class SurveyStatus {
      */
     public void setSurveyEndDay(int surveyEndDay) {
 	this.surveyEndDay = surveyEndDay;
+    }
+
+    /**
+     * @return the surveyTeam
+     */
+    public List<Crew> getSurveyTeam() {
+        return surveyTeam;
+    }
+
+    /**
+     * @param surveyTeam the surveyTeam to set
+     */
+    public void setSurveyTeam(List<Crew> surveyTeam) {
+        this.surveyTeam = surveyTeam;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int getCrewmenInSurveyTeam() {
+	return surveyTeam.size();
     }
 
 }

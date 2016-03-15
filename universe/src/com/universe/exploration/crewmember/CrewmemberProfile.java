@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.crewmen;
+package com.universe.exploration.crewmember;
 
 public class CrewmemberProfile {
     private CrewmemberSex sex;

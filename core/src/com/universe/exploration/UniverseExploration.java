@@ -19,8 +19,9 @@ import com.universe.exploration.camera.CameraMonitor;
 import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.common.tools.TextManipulationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
-import com.universe.exploration.crewmen.Crew;
-import com.universe.exploration.crewmen.CrewFactory;
+import com.universe.exploration.crewmember.Crew;
+import com.universe.exploration.crewmember.CrewFactory;
+import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.gamegraphics.GameObjectCanvas;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
@@ -268,7 +269,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    if (surveyStatusContainer.isSurveyTeamSizeAcceptable(surveyTeamSize, calculateAvailableMen())) {
 
 		SurveyStatusFactory ssf = new SurveyStatusFactory();
-		SurveyStatus ss = ssf.createSurveyStatus((int) playerStatus.getTime(), surveyTeamSize,
+		SurveyStatus ss = ssf.createSurveyStatus((int) playerStatus.getTime(), new ArrayList<CrewMember>(),
 			(PlanetCelestialComponent) form.getPlanet());
 
 		surveyStatusContainer.add(ss);

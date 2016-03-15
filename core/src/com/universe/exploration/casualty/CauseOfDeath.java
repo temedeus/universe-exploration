@@ -25,7 +25,16 @@ public enum CauseOfDeath {
 	SEDUCED_BY_AMAZONS("SEDUCED_BY_AMAZONS", CauseOfDeathCategory.CIVILIZATION),
 	
 	// General
-	FELL_OFF_CLIFF("FELL_OFF_CLIFF", CauseOfDeathCategory.GENERAL),
+	FELL_OFF_CLIFF("FELL_OFF_CLIFF", CauseOfDeathCategory.GENERAL) {
+	    /* (non-Javadoc)
+	     * @see com.universe.exploration.casualty.CauseOfDeath#listOfContributingAttributes()
+	     */
+	    @Override
+	    public void listOfContributingAttributes() {
+	        // TODO Auto-generated method stub
+	        super.listOfContributingAttributes();
+	    }
+	},
 	MALNUTRION("MALNUTRITION", CauseOfDeathCategory.GENERAL),
 	CREWMEN_WENT_NUTS("CREWMEN_WENT_NUTS", CauseOfDeathCategory.GENERAL),
 	WATER_DEPRIVATION("WATER_DEPRIVATION", CauseOfDeathCategory.GENERAL);
@@ -34,13 +43,15 @@ public enum CauseOfDeath {
 	
 	private CauseOfDeathCategory causeOfDeathCategory;
 	
-	/**
-	 * 
-	 */
 	private CauseOfDeath(String localizationKey, CauseOfDeathCategory causeOfDeathCategory) {
 		this.localizationKey = localizationKey;
 		this.causeOfDeathCategory = causeOfDeathCategory;
 	}
+	
+	public void listOfContributingAttributes() {
+	    
+	}
+	
 	/**
 	 * @return the localizationKey
 	 */

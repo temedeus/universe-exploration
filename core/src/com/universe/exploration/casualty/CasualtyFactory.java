@@ -3,6 +3,7 @@
  */
 package com.universe.exploration.casualty;
 
+import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -23,14 +24,14 @@ public class CasualtyFactory {
 	this.planet = planet;
     }
 
-    public Casualty createCasualty() {
+    public Casualty createCasualty(CrewMember crewMember) {
 	Casualty casualty = new Casualty();
 
 	ApplicableCauseOfDeathFactory acdf = new ApplicableCauseOfDeathFactory();
 	CauseOfDeathRandomPicker codFactory = new CauseOfDeathRandomPicker(acdf.createListofApplicableCauseOfDeath(planet));
 
 	casualty.setCauseOfDeath(codFactory.pickRandomCauseOfDeath());
-	casualty.setCrewmenID(1); // TODO: implement individual crewmen
+	casualty.setCrewmenID(crewMember.getId());
 
 	return casualty;
     }

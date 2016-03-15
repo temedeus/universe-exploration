@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.GdxHelper;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.crewmen.CrewMember;
+import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.gamegraphics.GameViewObjectContainer;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;

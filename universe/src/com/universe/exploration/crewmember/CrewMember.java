@@ -1,4 +1,4 @@
-package com.universe.exploration.crewmen;
+package com.universe.exploration.crewmember;
 
 public class CrewMember {
     private int id;

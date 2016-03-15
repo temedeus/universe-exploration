@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.crewmen;
+package com.universe.exploration.crewmember;
 
 import com.sun.xml.internal.ws.util.StringUtils;
 
