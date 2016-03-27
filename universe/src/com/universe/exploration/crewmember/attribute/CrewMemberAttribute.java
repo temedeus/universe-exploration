@@ -10,9 +10,6 @@ package com.universe.exploration.crewmember.attribute;
 public abstract class CrewMemberAttribute implements ICrewMemberAttribute {
     int value;
 
-    /**
-     * 
-     */
     public CrewMemberAttribute(int value) {
 	this.value = value;
     }
@@ -20,7 +17,7 @@ public abstract class CrewMemberAttribute implements ICrewMemberAttribute {
     public void setValue(int value) {
 	this.value = value;
     }
-    
+
     public int getValue() {
 	return value;
     }

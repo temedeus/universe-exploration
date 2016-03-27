@@ -1,6 +1,10 @@
 package com.universe.exploration.crewmember;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.universe.exploration.crewmember.attribute.Agility;
+import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
 import com.universe.exploration.crewmember.attribute.Intelligence;
 import com.universe.exploration.crewmember.attribute.Morale;
 import com.universe.exploration.crewmember.attribute.Strength;
@@ -13,6 +17,8 @@ public class CrewMember {
     private int age;
 
     private CrewmemberSex sex;
+    
+    private List<CrewMemberAttribute> crewMemberAttributes = new ArrayList<CrewMemberAttribute>();
 
     private Morale morale;
 

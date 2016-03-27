@@ -28,6 +28,12 @@ public class Localizer {
 
     private LanguageCode languageCode = LanguageCode.ENG;
 
+    /**
+     * Initialize once. If localizations change in the middle of the game...
+     * well, boohoo.
+     * 
+     * @return
+     */
     public static Localizer getInstance() {
 	if (localizer == null) {
 	    localizer = new Localizer();
@@ -36,6 +42,11 @@ public class Localizer {
 	return localizer;
     }
 
+    /**
+     * We read all the localizations at once to avoid repetetive IO. There is
+     * not so many localization items so far that we couldn't load them all into
+     * memory right now. We'll see if we have to change this in the future.
+     */
     private Localizer() {
 	FileReader fileReader = new FileReader();
 	for (LanguageCode code : LanguageCode.values()) {
@@ -60,7 +71,7 @@ public class Localizer {
 	}
     }
 
-    public void resetLanguageTo(LanguageCode languageCode) {
+    public void setLanguage(LanguageCode languageCode) {
 	this.languageCode = languageCode;
     }
 
