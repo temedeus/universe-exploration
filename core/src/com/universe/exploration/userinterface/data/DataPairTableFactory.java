@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.data.container.PlanetSurvey;
-import com.universe.exploration.userinterface.skins.UEUiSkinBank;
+import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
  * @author 20.10.2015 Teemu Puurunen
@@ -28,7 +28,7 @@ public class DataPairTableFactory {
 	    planetInformationTable.row();
 	}
 
-	planetInformationTable.add(new Label("\n\n", UEUiSkinBank.ueUISkin));
+	planetInformationTable.add(new Label("\n\n", UserInterfaceBank.userInterfaceSkin));
 	planetInformationTable.row();
 
 	return planetInformationTable;

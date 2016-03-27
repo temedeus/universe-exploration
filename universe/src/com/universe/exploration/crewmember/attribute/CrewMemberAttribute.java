@@ -20,4 +20,8 @@ public abstract class CrewMemberAttribute implements ICrewMemberAttribute {
     public void setValue(int value) {
 	this.value = value;
     }
+    
+    public int getValue() {
+	return value;
+    }
 }

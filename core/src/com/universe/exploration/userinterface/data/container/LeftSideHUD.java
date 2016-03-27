@@ -23,12 +23,12 @@ public class LeftSideHUD extends DataPairContainer {
      */
     @Override
     public void createPairs() {
-	add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.get(LocalKey.TITLE_TIME), "" + CoreConfiguration.TIME_START + ""));
-	add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.get(LocalKey.TITLE_CREWMEN_LEFT), "" + CoreConfiguration.MAX_CREWMEN));
-	add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.get(LocalKey.TITLE_AIR), "" + CoreConfiguration.MAX_AIR + " %"));
-	add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.get(LocalKey.TITLE_WATER), "" + CoreConfiguration.MAX_AIR + " %"));
-	add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.get(LocalKey.TITLE_FOOD), "" + CoreConfiguration.MAX_FOOD + " %"));
-	add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.get(LocalKey.TITLE_POWER), "" + CoreConfiguration.MAX_POWER + " %"));
+	add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.getInstance().get(LocalKey.TITLE_TIME), "" + CoreConfiguration.TIME_START + ""));
+	add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.getInstance().get(LocalKey.TITLE_CREWMEN_LEFT), "" + CoreConfiguration.MAX_CREWMEN));
+	add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.getInstance().get(LocalKey.TITLE_AIR), "" + CoreConfiguration.MAX_AIR + " %"));
+	add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.getInstance().get(LocalKey.TITLE_WATER), "" + CoreConfiguration.MAX_AIR + " %"));
+	add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.getInstance().get(LocalKey.TITLE_FOOD), "" + CoreConfiguration.MAX_FOOD + " %"));
+	add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.getInstance().get(LocalKey.TITLE_POWER), "" + CoreConfiguration.MAX_POWER + " %"));
     }
 
     public void updateHUDValues(PlayerStatus playerStatus) {

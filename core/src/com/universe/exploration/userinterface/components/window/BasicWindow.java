@@ -5,7 +5,7 @@ package com.universe.exploration.userinterface.components.window;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.universe.exploration.GdxHelper;
+import com.universe.exploration.common.tools.GdxHelper;
 
 /**
  * @author 20.9.2015 Teemu Puurunen

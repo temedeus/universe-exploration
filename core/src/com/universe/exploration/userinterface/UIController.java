@@ -20,8 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.universe.exploration.GdxHelper;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.common.tools.GdxHelper;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.gamegraphics.GameViewObjectContainer;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
@@ -43,7 +43,7 @@ import com.universe.exploration.userinterface.data.container.DataPairContainer;
 import com.universe.exploration.userinterface.data.container.LeftSideHUD;
 import com.universe.exploration.userinterface.forms.FormContainer;
 import com.universe.exploration.userinterface.forms.PlanetSurveyForm;
-import com.universe.exploration.userinterface.skins.UEUiSkinBank;
+import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
  * {@link UniverseExploration} and no other class should have an instance of
@@ -88,7 +88,7 @@ public class UIController {
 
 	planetSelection = new PlanetSelection(gameViewObjectContainer, planetList);
 
-	logDisplay = new LogDisplay(10, UEUiSkinBank.ueUISkin);
+	logDisplay = new LogDisplay(10, UserInterfaceBank.userInterfaceSkin);
 	uiStage = new Stage(new ScreenViewport());
 	leftsidePlayerStatus = new LeftSideHUD();
 	leftsidePlayerStatus.createPairs();
@@ -106,15 +106,15 @@ public class UIController {
 	table.align(Align.left | Align.top);
 	table.setPosition(Gdx.graphics.getWidth() / 2 - 200, Gdx.graphics.getHeight());
 
-	table.addActor(createVolumeChangeButton(Localizer.get(LocalKey.BTN_MIN_VOLUME), 0f));
+	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MIN_VOLUME), 0f));
 	table.addActor(createVolumeSlider());
-	table.addActor(createVolumeChangeButton(Localizer.get(LocalKey.BTN_MAX_VOLUME), 100f));
+	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MAX_VOLUME), 100f));
 
 	return table;
     }
 
     private Slider createVolumeSlider() {
-	final Slider volumeSlider = new Slider(1, 100, 1, false, UEUiSkinBank.ueUISkin);
+	final Slider volumeSlider = new Slider(1, 100, 1, false, UserInterfaceBank.userInterfaceSkin);
 	volumeSlider.addListener(new ClickListener() {
 	    /*
 	     * (non-Javadoc)
@@ -266,11 +266,11 @@ public class UIController {
      * @return
      */
     public TextButton createHyperspaceJumpButton() {
-	return new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_HYPERSPACE_JUMP), new ClickListener() {
+	return new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_HYPERSPACE_JUMP), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		if (!UniverseExploration.gameStatus.isPaused() && isHyperspaceJumpAllowed) {
-		    final Dialog dialog = new Dialog(Localizer.get(LocalKey.DESC_HYPERSPACE_JUMP), UEUiSkinBank.ueUISkin);
+		    final Dialog dialog = new Dialog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP), UserInterfaceBank.userInterfaceSkin);
 		    dialog.setSize(200, 100);
 		    dialog.show(uiStage);
 		    Timer.schedule(new Timer.Task() {
@@ -291,7 +291,7 @@ public class UIController {
      * @return
      */
     public TextButton createCrewControlButton() {
-	return new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_CREW_CONTROL), new ClickListener() {
+	return new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_CREW_CONTROL), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		BasicWindow window = createCrewManagementWindow(new ClickListener() {
@@ -340,7 +340,7 @@ public class UIController {
      * @return
      */
     private TextButton createQuitButton() {
-	return new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_QUIT_GAME), new ClickListener() {
+	return new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_QUIT_GAME), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		createQuitDialog();
@@ -349,18 +349,18 @@ public class UIController {
     }
 
     public void createQuitDialog() {
-	uiStage.addActor(new WindowFactory().createQuitWindow(Localizer.get(LocalKey.TITLE_QUIT_GAME)));
+	uiStage.addActor(new WindowFactory().createQuitWindow(Localizer.getInstance().get(LocalKey.TITLE_QUIT_GAME)));
     }
 
     public BasicWindow createSurveyClosedWindow(ArrayList<String> surveydata) {
-	Table table = new Table(UEUiSkinBank.ueUISkin);
+	Table table = new Table(UserInterfaceBank.userInterfaceSkin);
 
 	for (String row : surveydata) {
 	    table.add(row);
 	    table.row();
 	}
 
-	return new WindowFactory().createOKWindow(Localizer.get(LocalKey.TITLE_SURVEY_CLOSED), table);
+	return new WindowFactory().createOKWindow(Localizer.getInstance().get(LocalKey.TITLE_SURVEY_CLOSED), table);
     }
 
     /**
@@ -395,7 +395,7 @@ public class UIController {
 	    Table cell = new Table();
 	    cell.padBottom(15);
 	    cell.padRight(15);
-	    cell.add(new Label(crewmember.getName(), UEUiSkinBank.ueUISkin));
+	    cell.add(new Label(crewmember.getName(), UserInterfaceBank.userInterfaceSkin));
 	    cell.row();
 	    cell.add(new ButtonFactory().createTextButton("Details", createCrewmemberDetailsClickListerener(crewmember)));
 	    table.add(cell);
@@ -441,12 +441,12 @@ public class UIController {
 	DataPairContainer dataPairContainer = new DataPairContainer();
 	dataPairContainer.add(new DataPair("name", "Name:", crewMember.getName()));
 	dataPairContainer.add(new DataPair("age", "Age: ", "" + crewMember.getAge()));
-	dataPairContainer.add(new DataPair("sex", "Sex: ", "" + crewMember.getSex().toString()));
-	dataPairContainer.add(new DataPair("nationality", "Nationality: ", "" + crewMember.getNationality().toString()));
-	dataPairContainer.add(new DataPair("agility", "Agility:", "" + crewMember.getAgility()));
-	dataPairContainer.add(new DataPair("intelligence", "Intelligence: ", "" + crewMember.getIntelligence()));
-	dataPairContainer.add(new DataPair("morale", "Morale: ", "" + crewMember.getMorale()));
-	dataPairContainer.add(new DataPair("strength", "Strength: ", "" + crewMember.getStrength()));
+	dataPairContainer.add(new DataPair("sex", "Sex: ", "" + Localizer.getInstance().get(crewMember.getSex())));
+	dataPairContainer.add(new DataPair("nationality", "Nationality: ", "" + Localizer.getInstance().get(crewMember.getNationality())));
+	dataPairContainer.add(new DataPair("agility", "Agility:", "" + crewMember.getAgility().getValue()));
+	dataPairContainer.add(new DataPair("intelligence", "Intelligence: ", "" + crewMember.getIntelligence().getValue()));
+	dataPairContainer.add(new DataPair("morale", "Morale: ", "" + crewMember.getMorale().getValue()));
+	dataPairContainer.add(new DataPair("strength", "Strength: ", "" + crewMember.getStrength().getValue()));
 
 	return dataPairContainer;
     }
@@ -460,7 +460,7 @@ public class UIController {
     public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {
 	Table planetInformationTable = new Table();
 
-	planetInformationTable.add(new Label(Localizer.get(LocalKey.LABEL_CREWMEN_COUNT), UEUiSkinBank.ueUISkin));
+	planetInformationTable.add(new Label(Localizer.getInstance().get(LocalKey.LABEL_CREWMEN_COUNT), UserInterfaceBank.userInterfaceSkin));
 	planetInformationTable.row();
 
 	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, surveyTeamSize, 1);

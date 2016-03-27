@@ -37,12 +37,12 @@ public class PlanetSurvey extends DataPairContainer {
 	float orbitalRadius = ((float) cc.getOrbitalRadius() / 1000);
 	String orbitalRadiusToString = MathTools.roundedFloatAsString(orbitalRadius) + " " + Units.AU.getUnit();
 
-	add(new DataPair("", Localizer.get(LocalKey.DESC_PLANET_TYPE), cc.getComponentName()));
-	add(new DataPair("", Localizer.get(LocalKey.SUBHEADER_ORBITAL_RADIUS), orbitalRadiusToString));
-	add(new DataPair("", Localizer.get(LocalKey.SUBHEADER_PRESENT_LIFEFORMS), Localizer.get(cc.getLifeforms().getLocalKey())));
-	add(new DataPair("", Localizer.get(LocalKey.SUBHEADER_WATER_FOUND), Localizer.get(waterFound)));
-	add(new DataPair("", Localizer.get(LocalKey.SUBHEADER_FOOD_FOUND), Localizer.get(foodFound)));
-	add(new DataPair("", Localizer.get(LocalKey.SUBHEADER_OXYGEN_PRESENT), Localizer.get(oxygenFound)));
+	add(new DataPair("", Localizer.getInstance().get(LocalKey.DESC_PLANET_TYPE), cc.getComponentName()));
+	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_ORBITAL_RADIUS), orbitalRadiusToString));
+	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_PRESENT_LIFEFORMS), Localizer.getInstance().get(cc.getLifeforms().getLocalKey())));
+	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_WATER_FOUND), Localizer.getInstance().get(waterFound)));
+	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_FOOD_FOUND), Localizer.getInstance().get(foodFound)));
+	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_OXYGEN_PRESENT), Localizer.getInstance().get(oxygenFound)));
     }
 
 }

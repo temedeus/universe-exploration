@@ -23,7 +23,7 @@ import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.ButtonFactory;
-import com.universe.exploration.userinterface.skins.UEUiSkinBank;
+import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
  * @author 1.2.2016 Teemu Puurunen
@@ -47,7 +47,7 @@ public class PlanetSelection {
     /**
      * Planets in the current star system.
      */
-    private final SelectBox<Object> planetSelectBox = new SelectBox<Object>(UEUiSkinBank.ueUISkin);
+    private final SelectBox<Object> planetSelectBox = new SelectBox<Object>(UserInterfaceBank.userInterfaceSkin);
 
     /**
      * <p>
@@ -60,7 +60,7 @@ public class PlanetSelection {
 	this.gameViewObjectContainer = gameViewObjectContainer;
 	this.planetList = planetList;
 
-	surveyButton = new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_SURVEY), new ClickListener() {
+	surveyButton = new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_SURVEY), new ClickListener() {
 	    /*
 	     * (non-Javadoc)
 	     * 
@@ -115,11 +115,11 @@ public class PlanetSelection {
 
 	if (planetList.size() > 0) {
 
-	    table.addActor(new Label(Localizer.get(LocalKey.LABEL_PLANET_SELECTION), UEUiSkinBank.ueUISkin));
+	    table.addActor(new Label(Localizer.getInstance().get(LocalKey.LABEL_PLANET_SELECTION), UserInterfaceBank.userInterfaceSkin));
 	    table.addActor(createPlanetSelectBox());
 	    table.addActor(surveyButton);
 	} else {
-	    table.addActor(new Label(Localizer.get(LocalKey.LABEL_NO_PLANETS_FOUND), UEUiSkinBank.ueUISkin));
+	    table.addActor(new Label(Localizer.getInstance().get(LocalKey.LABEL_NO_PLANETS_FOUND), UserInterfaceBank.userInterfaceSkin));
 	}
 
 	return table;

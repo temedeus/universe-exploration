@@ -3,13 +3,8 @@
  */
 package com.universe.exploration.crewmember;
 
-import com.sun.xml.internal.ws.util.StringUtils;
+import com.universe.exploration.common.TranslatableEnum;
 
-public enum Nationality {
+public enum Nationality implements TranslatableEnum {
     AMERICAN, CHINESE, ENGLISH, FINNISH, RUSSIAN;
-
-    @Override
-    public String toString() {
-	return StringUtils.decapitalize(super.toString());
-    }
 }

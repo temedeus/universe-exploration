@@ -94,8 +94,18 @@ public enum LocalEn {
     GENERIC_AIR("air"),
     GENERIC_FOOD("food"),
     GENERIC_WATER("water"),
-    GENERIC_LIQUID_WATER("Liquid water");
-
+    GENERIC_LIQUID_WATER("Liquid water"),
+ 
+    // Nationalities
+    AMERICAN("American"), 
+    CHINESE("Chinese"), 
+    ENGLISH("English"), 
+    FINNISH("Finnish"), 
+    RUSSIAN("Russian"),
+    
+    // Sexes
+    MALE("Male"),
+    FEMALE("Female");
     private final String description;
 
     LocalEn(String description) {

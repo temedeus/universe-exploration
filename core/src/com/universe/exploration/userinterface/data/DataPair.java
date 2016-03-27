@@ -4,7 +4,7 @@
 package com.universe.exploration.userinterface.data;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.universe.exploration.userinterface.skins.UEUiSkinBank;
+import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
  * <p>
@@ -50,9 +50,9 @@ public class DataPair {
      */
     public DataPair(String id, String label, String value) {
 	this.id = id;
-	this.label = new Label(label, UEUiSkinBank.ueUISkin);
-	this.value = new Label(value, UEUiSkinBank.ueUISkin);
-	this.value.setStyle(UEUiSkinBank.valueStyle);
+	this.label = new Label(label, UserInterfaceBank.userInterfaceSkin);
+	this.value = new Label(value, UserInterfaceBank.userInterfaceSkin);
+	this.value.setStyle(UserInterfaceBank.valueStyle);
     }
 
     /**

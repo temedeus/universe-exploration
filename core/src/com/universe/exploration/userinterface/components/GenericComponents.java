@@ -4,7 +4,7 @@
 package com.universe.exploration.userinterface.components;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.universe.exploration.userinterface.skins.UEUiSkinBank;
+import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
  * @author 1.2.2016 Teemu Puurunen
@@ -27,6 +27,6 @@ public class GenericComponents {
     }
 
     public Label createSpacer() {
-	return new Label("", UEUiSkinBank.ueUISkin);
+	return new Label("", UserInterfaceBank.userInterfaceSkin);
     }
 }

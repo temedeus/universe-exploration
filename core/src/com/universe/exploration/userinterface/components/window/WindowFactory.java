@@ -15,7 +15,7 @@ import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.userinterface.ButtonFactory;
 import com.universe.exploration.userinterface.components.BasicTable;
-import com.universe.exploration.userinterface.skins.UEUiSkinBank;
+import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
  * <p>
@@ -28,7 +28,7 @@ import com.universe.exploration.userinterface.skins.UEUiSkinBank;
  * @author 25.8.2015 Teemu Puurunen
  */
 public class WindowFactory {
-    private Skin skin = UEUiSkinBank.ueUISkin;
+    private Skin skin = UserInterfaceBank.userInterfaceSkin;
 
     private static final String STYLE = "default";
 
@@ -56,9 +56,9 @@ public class WindowFactory {
     public BasicWindow createOkWindow(String caption, ClickListener okAction) {
 	final SmallWindow window = new SmallWindow(caption, skin, STYLE);
 
-	window.add(new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_OK), okAction));
+	window.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_OK), okAction));
 
-	window.add(new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_CANCEL), new ClickListener() {
+	window.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_CANCEL), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		window.remove();
@@ -89,7 +89,7 @@ public class WindowFactory {
 	Table buttontable = new Table();
 	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 
-	buttontable.add(new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_CANCEL), new ClickListener() {
+	buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_CANCEL), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		UniverseExploration.windowContainer.closeWindow(windowType);
@@ -114,7 +114,7 @@ public class WindowFactory {
 
 	Table buttontable = new Table();
 
-	buttontable.add(new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_OK), new ClickListener() {
+	buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_OK), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		window.remove();
@@ -140,7 +140,7 @@ public class WindowFactory {
 	Table buttontable = new Table();
 	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 
-	buttontable.add(new ButtonFactory().createTextButton(Localizer.get(LocalKey.BTN_CANCEL), new ClickListener() {
+	buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_CANCEL), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		UniverseExploration.windowContainer.closeWindow(windowType);
@@ -166,7 +166,7 @@ public class WindowFactory {
 
 	Table buttontable = new Table();
 	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
-	buttontable.add(new ButtonFactory().createTextButton(Localizer.get(secondaryButtonTitle), secondaryAction));
+	buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(secondaryButtonTitle), secondaryAction));
 
 	buttontable.row();
 

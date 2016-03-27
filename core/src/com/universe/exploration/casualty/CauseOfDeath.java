@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
-import com.universe.exploration.crewmember.attribute.ICrewMemberAttribute;
 import com.universe.exploration.crewmember.attribute.Strength;
 
 
@@ -37,9 +36,11 @@ public enum CauseOfDeath {
 	     * @see com.universe.exploration.casualty.CauseOfDeath#listOfContributingAttributes()
 	     */
 	    @Override
-	    public List<ICrewMemberAttribute> listOfContributingAttributes() {
+	    public List<CrewMemberAttribute> listOfContributingAttributes() {
 	        List<CrewMemberAttribute> attributes = new ArrayList<CrewMemberAttribute>();
-	        attributes.add(Strength.class);
+	        attributes.add(new Strength(0));
+	        
+	        return attributes;
 	    }
 
 	},
@@ -56,7 +57,7 @@ public enum CauseOfDeath {
 		this.causeOfDeathCategory = causeOfDeathCategory;
 	}
 	
-	public List<ICrewMemberAttribute> listOfContributingAttributes() {
+	public List<CrewMemberAttribute> listOfContributingAttributes() {
 	    return null;
 	}
 	

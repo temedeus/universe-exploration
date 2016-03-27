@@ -19,7 +19,7 @@ public enum IngameAstronomicalConstants {
     private final double value;
     private final String explanation;
 
-    IngameAstronomicalConstants(double value, String explanation) {
+    private IngameAstronomicalConstants(double value, String explanation) {
 	this.value = value;
 	this.explanation = explanation;
     }

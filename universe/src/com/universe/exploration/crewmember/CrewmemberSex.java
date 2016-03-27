@@ -3,6 +3,8 @@
  */
 package com.universe.exploration.crewmember;
 
-public enum CrewmemberSex {
+import com.universe.exploration.common.TranslatableEnum;
+
+public enum CrewmemberSex implements TranslatableEnum {
     MALE, FEMALE;
 }

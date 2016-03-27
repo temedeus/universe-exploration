@@ -196,7 +196,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    CrewFactory cf = new CrewFactory(initializer.getMaleProfiles(), initializer.getFemaleProfiles());
 	    crew = cf.createRandomizedCrew();
 	} catch (IOException e) {
-	    // TODO: error handling
+	    Gdx.app.log("ERROR", "Reading crewmember profile source files failed!", e);
 	}
     }
 
@@ -212,7 +212,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    stageSetup();
 		    gameStatus.activateSurveyMode(false);
 		    playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
-		    updateIngameLog(Localizer.get(LocalKey.DESC_HYPERSPACE_JUMP_COMMENCED));
+		    updateIngameLog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP_COMMENCED));
 		}
 	    };
 	});
@@ -377,7 +377,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		playerStatus.decreaseCrewmen(mc.size());
 
 	    } else {
-		caption = Localizer.get(LocalKey.TITLE_SURVEY_TEAM_SURVIVED);
+		caption = Localizer.getInstance().get(LocalKey.TITLE_SURVEY_TEAM_SURVIVED);
 		updateIngameLog(caption);
 	    }
 
@@ -399,7 +399,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	surveydata.add(caption);
 	if (mc.size() > 0) {
 	    for (Casualty mortality : mc) {
-		surveydata.add(Localizer.get(mortality.getCauseOfDeath().getLocalizationKey()));
+		surveydata.add(Localizer.getInstance().get(mortality.getCauseOfDeath().getLocalizationKey()));
 	    }
 	}
 
@@ -414,17 +414,17 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	String caption = "";
 
 	if (rf.getAir() > 0) {
-	    resources.add(Localizer.get(LocalKey.GENERIC_AIR));
+	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_AIR));
 	    playerStatus.increaseAir(rf.getAir());
 	}
 
 	if (rf.getFood() > 0) {
-	    resources.add(Localizer.get(LocalKey.GENERIC_FOOD));
+	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_FOOD));
 	    playerStatus.increaseFood(rf.getFood());
 	}
 
 	if (rf.getWater() > 0) {
-	    resources.add(Localizer.get(LocalKey.GENERIC_WATER));
+	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_WATER));
 	    playerStatus.increaseWater(rf.getWater());
 	}
 
@@ -442,7 +442,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     private void printMortalityLog(ArrayList<Casualty> mc) {
 	for (Casualty mortality : mc) {
 	    String localizationKey = mortality.getCauseOfDeath().getLocalizationKey();
-	    updateIngameLog(" - " + Localizer.get(localizationKey));
+	    updateIngameLog(" - " + Localizer.getInstance().get(localizationKey));
 	}
     }
 

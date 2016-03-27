@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration;
+package com.universe.exploration.common.tools;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,15 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>
+ * Gdx specific file reader.
+ * </p>
+ * TODO: inspect {@link java.io.FileReader} and see if this class is redundant.
+ * 
  * @author 28.2.2016 Teemu Puurunen
  *
  */
 public class FileReader {
     /**
      * Reads a text file and returns its rows as a list of strings.
+     * 
      * @param path
-     * @return List<String>
-     * 			Rows read from the given text file.
+     * @return List<String> Rows read from the given text file.
      * @throws IOException
      */
     public List<String> readTextFile(String path) throws IOException {
@@ -28,14 +33,14 @@ public class FileReader {
 	    lines.add(line);
 	    line = bufferedReader.readLine();
 	}
-	
+
 	return lines;
     }
-    
+
     public boolean fileExist(String path) {
 	return GdxHelper.provideFileHandle(path).exists();
     }
-    
+
     public boolean isDirectory(String path) {
 	return GdxHelper.provideFileHandle(path).isDirectory();
     }

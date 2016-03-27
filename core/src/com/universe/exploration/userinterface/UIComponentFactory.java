@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.universe.exploration.userinterface.forms.PlanetSurveyForm;
-import com.universe.exploration.userinterface.skins.UEUiSkinBank;
+import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
  * @author 18.10.2015 Teemu Puurunen
@@ -24,11 +24,11 @@ public class UIComponentFactory {
 
     private static TableFormContainerPair createSliderTableWrapper(float minVal, float maxVal, float interval, boolean vertical) {
 	Table sliderTable = new Table();
-	Slider slider = new Slider(minVal, maxVal, interval, vertical, UEUiSkinBank.ueUISkin);
+	Slider slider = new Slider(minVal, maxVal, interval, vertical, UserInterfaceBank.userInterfaceSkin);
 
-	sliderTable.add(new Label("" + minVal, UEUiSkinBank.ueUISkin));
+	sliderTable.add(new Label("" + minVal, UserInterfaceBank.userInterfaceSkin));
 	sliderTable.add(slider);
-	sliderTable.add(new Label("" + maxVal, UEUiSkinBank.ueUISkin));
+	sliderTable.add(new Label("" + maxVal, UserInterfaceBank.userInterfaceSkin));
 	sliderTable.row();
 
 	PlanetSurveyForm surveyForm = new PlanetSurveyForm();

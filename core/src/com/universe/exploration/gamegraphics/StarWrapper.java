@@ -4,8 +4,8 @@
 package com.universe.exploration.gamegraphics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.universe.exploration.GdxHelper;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.common.tools.GdxHelper;
 
 /**
  * @author 27.12.2015 Teemu Puurunen

@@ -13,7 +13,7 @@ import com.universe.exploration.common.CoreConfiguration;
 /**
  * TODO: get rid of this class. Utilize uiskin.json.
  */
-public class UEUiSkinBank {
+public class UserInterfaceBank {
 
     /**
      * Alternate font for showing values.
@@ -34,6 +34,6 @@ public class UEUiSkinBank {
      * 
      * @static
      */
-    public static Skin ueUISkin = new Skin(Gdx.files.internal(CoreConfiguration.UISKINSOURCE));
+    public static Skin userInterfaceSkin = new Skin(Gdx.files.internal(CoreConfiguration.USERINTERFACE_SKIN));
 
 }

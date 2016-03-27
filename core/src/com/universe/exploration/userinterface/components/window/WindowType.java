@@ -94,13 +94,13 @@ public enum WindowType {
      * @return the caption
      */
     public String getLocalizedCaption() {
-	return Localizer.get(caption);
+	return Localizer.getInstance().get(caption);
     }
 
     /**
      * @return the okButtonCaption
      */
     public String getLocalizedOkButtonCaption() {
-	return Localizer.get(okButtonCaption);
+	return Localizer.getInstance().get(okButtonCaption);
     }
 }

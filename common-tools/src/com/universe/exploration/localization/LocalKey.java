@@ -3,6 +3,8 @@
  */
 package com.universe.exploration.localization;
 
+import com.universe.exploration.common.TranslatableEnum;
+
 /**
  * <p>
  * References to localization keys. This way we don't have to use magic strings
@@ -12,7 +14,7 @@ package com.universe.exploration.localization;
  * @author 12.11.2015 Teemu Puurunen
  *
  */
-public enum LocalKey {
+public enum LocalKey implements TranslatableEnum {
     // Titles.
     TITLE_SURVEY_PLANET,
     TITLE_QUIT_GAME,
@@ -66,10 +68,4 @@ public enum LocalKey {
     GENERAL_NO,
     GENERAL_NONE,
     GENERIC_LIQUID_WATER;
-
-    /**
-     * Localization keys.
-     */
-    private LocalKey() {
-    }
 }

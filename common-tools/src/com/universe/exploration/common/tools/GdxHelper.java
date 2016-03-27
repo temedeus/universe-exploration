@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration;
+package com.universe.exploration.common.tools;
 
 import java.io.BufferedReader;
 
