@@ -1,7 +1,6 @@
 package com.universe.exploration.crewmember;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import com.universe.exploration.crewmember.attribute.Agility;
 import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
@@ -17,18 +16,10 @@ public class CrewMember {
     private int age;
 
     private CrewmemberSex sex;
-    
-    private List<CrewMemberAttribute> crewMemberAttributes = new ArrayList<CrewMemberAttribute>();
-
-    private Morale morale;
-
-    private Intelligence intelligence;
-
-    private Agility agility;
-
-    private Strength strength;
 
     private Nationality nationality;
+
+    private HashMap<String, CrewMemberAttribute> crewMemberAttributes = new HashMap<String, CrewMemberAttribute>();
 
     /**
      * @return the name
@@ -55,21 +46,21 @@ public class CrewMember {
      * @return the morale
      */
     public Morale getMorale() {
-	return morale;
+	return ((Morale) crewMemberAttributes.get(Morale.class.getName()));
     }
 
     /**
      * @return the intelligence
      */
     public Intelligence getIntelligence() {
-	return intelligence;
+	return ((Intelligence) crewMemberAttributes.get(Intelligence.class.getName()));
     }
 
     /**
      * @return the strength
      */
     public Strength getStrength() {
-	return strength;
+	return ((Strength) crewMemberAttributes.get(Strength.class.getName()));
     }
 
     /**
@@ -101,7 +92,7 @@ public class CrewMember {
      *            the morale to set
      */
     public void setMorale(int morale) {
-	this.morale = new Morale(morale);
+	((Morale) crewMemberAttributes.get(Morale.class.getName())).setValue(morale);
     }
 
     /**
@@ -109,7 +100,7 @@ public class CrewMember {
      *            the intelligence to set
      */
     public void setIntelligence(int intelligence) {
-	this.intelligence = new Intelligence(intelligence);
+	((Intelligence) crewMemberAttributes.get(Intelligence.class.getName())).setValue(intelligence);
     }
 
     /**
@@ -117,18 +108,7 @@ public class CrewMember {
      *            the strength to set
      */
     public void setStrength(int strength) {
-	this.strength = new Strength(strength);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-	return "Crewman [name=" + name + ", age=" + age + ", sex=" + sex + ", morale=" + morale + ", intelligence=" + intelligence
-		+ ", strength=" + strength + "]";
+	((Strength) crewMemberAttributes.get(Strength.class.getName())).setValue(strength);
     }
 
     /**
@@ -150,7 +130,7 @@ public class CrewMember {
      * @return the agility
      */
     public Agility getAgility() {
-	return agility;
+	return ((Agility) crewMemberAttributes.get(Agility.class.getName()));
     }
 
     /**
@@ -158,7 +138,7 @@ public class CrewMember {
      *            the agility to set
      */
     public void setAgility(int agility) {
-	this.agility = new Agility(agility);
+	((Agility) crewMemberAttributes.get(Agility.class.getName())).setValue(agility);
     }
 
     /**
