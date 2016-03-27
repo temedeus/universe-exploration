@@ -43,14 +43,15 @@ public class Localizer {
 		List<String> rawLocalizationStrings = fileReader.readTextFile(code.getLocalizationFilePath());
 		Localization newLocalization = new Localization();
 		localization.put(code, newLocalization);
+
 		for (String rawLocalizationString : rawLocalizationStrings) {
 		    rawLocalizationString.trim();
-		    if (rawLocalizationString.isEmpty() || rawLocalizationString.startsWith("//"));
-		    String[] splitted = rawLocalizationString.split(":", 2);
-		    if (splitted.length == 2) {
-			newLocalization.putIntoLocalizationMap(splitted[0], splitted[1]);
+		    if (!rawLocalizationString.isEmpty() && !rawLocalizationString.startsWith("//")) {
+			String[] splitted = rawLocalizationString.split(":", 2);
+			if (splitted.length == 2) {
+			    newLocalization.putIntoLocalizationMap(splitted[0], splitted[1]);
+			}
 		    }
-
 		}
 
 	    } catch (IOException e) {
