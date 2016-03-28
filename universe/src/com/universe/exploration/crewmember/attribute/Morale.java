@@ -14,7 +14,6 @@ public class Morale extends CrewMemberAttribute {
      */
     public Morale(int value) {
 	super(value);
-	// TODO Auto-generated constructor stub
     }
 
 }

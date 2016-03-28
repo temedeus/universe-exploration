@@ -42,7 +42,7 @@ public enum CauseOfDeath {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
-	    return super.listOfContributingAttributes();
+	    return listOfContributingAttributes();
 	}
     },
 
@@ -58,7 +58,7 @@ public enum CauseOfDeath {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
-	    return super.listOfContributingAttributes();
+	    return listOfContributingAttributes();
 	}
     },
     SEDUCED_BY_AMAZONS("SEDUCED_BY_AMAZONS", CauseOfDeathCategory.CIVILIZATION) {
@@ -105,7 +105,7 @@ public enum CauseOfDeath {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
-	    return super.listOfContributingAttributes();
+	    return listOfContributingAttributes();
 	}
     },
     CREWMEN_WENT_NUTS("CREWMEN_WENT_NUTS", CauseOfDeathCategory.GENERAL) {
@@ -119,7 +119,7 @@ public enum CauseOfDeath {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Morale.class);
-	    return super.listOfContributingAttributes();
+	    return listOfContributingAttributes();
 	}
     },
     WATER_DEPRIVATION("WATER_DEPRIVATION", CauseOfDeathCategory.GENERAL) {
@@ -133,7 +133,7 @@ public enum CauseOfDeath {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
-	    return super.listOfContributingAttributes();
+	    return listOfContributingAttributes();
 	}
     };
 

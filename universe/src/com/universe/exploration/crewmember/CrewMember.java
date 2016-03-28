@@ -92,7 +92,7 @@ public class CrewMember {
      *            the morale to set
      */
     public void setMorale(int morale) {
-	((Morale) crewMemberAttributes.get(Morale.class.getName())).setValue(morale);
+	crewMemberAttributes.put(Morale.class.getName(), new Morale(morale));
     }
 
     /**
@@ -100,7 +100,7 @@ public class CrewMember {
      *            the intelligence to set
      */
     public void setIntelligence(int intelligence) {
-	((Intelligence) crewMemberAttributes.get(Intelligence.class.getName())).setValue(intelligence);
+	crewMemberAttributes.put(Intelligence.class.getName(), new Intelligence(intelligence));
     }
 
     /**
@@ -108,7 +108,7 @@ public class CrewMember {
      *            the strength to set
      */
     public void setStrength(int strength) {
-	((Strength) crewMemberAttributes.get(Strength.class.getName())).setValue(strength);
+	crewMemberAttributes.put(Strength.class.getName(), new Strength(strength));
     }
 
     /**
@@ -138,7 +138,7 @@ public class CrewMember {
      *            the agility to set
      */
     public void setAgility(int agility) {
-	((Agility) crewMemberAttributes.get(Agility.class.getName())).setValue(agility);
+	crewMemberAttributes.put(Agility.class.getName(), new Agility(agility));
     }
 
     /**

@@ -14,7 +14,6 @@ public class Strength extends CrewMemberAttribute {
      */
     public Strength(int value) {
 	super(value);
-	// TODO Auto-generated constructor stub
     }
 
 }
