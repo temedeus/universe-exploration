@@ -83,11 +83,15 @@ public class Localizer {
      * @return
      */
     public String get(String key) {
-	String result;
+	String result = null;
 	try {
 	    result = localization.get(languageCode).getFromLocalizationMap(key);
 	} catch (NullPointerException e) {
 	    result = key;
+	} finally {
+	    if(result == null) {
+		result = key;
+	    }
 	}
 
 	return result;

@@ -34,6 +34,7 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.components.BasicTable;
 import com.universe.exploration.userinterface.components.LogDisplay;
 import com.universe.exploration.userinterface.components.PlanetSelection;
+import com.universe.exploration.userinterface.components.SurveyTeamSelection;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
 import com.universe.exploration.userinterface.components.window.WindowFactory;
 import com.universe.exploration.userinterface.components.window.WindowType;
@@ -270,7 +271,8 @@ public class UIController {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		if (!UniverseExploration.gameStatus.isPaused() && isHyperspaceJumpAllowed) {
-		    final Dialog dialog = new Dialog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP), UserInterfaceBank.userInterfaceSkin);
+		    final Dialog dialog = new Dialog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP),
+			    UserInterfaceBank.userInterfaceSkin);
 		    dialog.setSize(200, 100);
 		    dialog.show(uiStage);
 		    Timer.schedule(new Timer.Task() {
@@ -460,7 +462,11 @@ public class UIController {
     public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {
 	Table planetInformationTable = new Table();
 
-	planetInformationTable.add(new Label(Localizer.getInstance().get(LocalKey.LABEL_CREWMEN_COUNT), UserInterfaceBank.userInterfaceSkin));
+	planetInformationTable.add(new SurveyTeamSelection(UniverseExploration.crew).createSurveyTeamSelectionTable());
+	planetInformationTable.row();
+
+	planetInformationTable
+		.add(new Label(Localizer.getInstance().get(LocalKey.LABEL_CREWMEN_COUNT), UserInterfaceBank.userInterfaceSkin));
 	planetInformationTable.row();
 
 	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, surveyTeamSize, 1);
@@ -469,7 +475,7 @@ public class UIController {
 	planetInformationTable.add(pair.getTable());
 	planetInformationTable.row();
 
-	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
+	BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
 		createdPlanetSurveyTeamDispatchedClickListener((PlanetSurveyForm) pair.getFormContainer()));
 
 	return window;

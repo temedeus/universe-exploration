@@ -13,9 +13,6 @@ package com.universe.exploration.casualty;
  */
 public class Casualty {
 
-    /**
-     * Determine which crewmen died. TODO: no individual crewmen still exist.
-     */
     private int crewmenID;
 
     /**

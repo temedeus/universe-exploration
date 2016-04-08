@@ -182,8 +182,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      * @throws IOException 
      */
     private void stageSetup() {
-	createStarSystem();
 	createCrew();
+	createStarSystem();
 	setupUiController();
 	setupInputProcessors();
     }
@@ -329,7 +329,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
 	    gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
 	} catch (PlanetCountOutOfRangeException e) {
-	    return false;
+	    Gdx.app.log("ERROR", "Generated planet count is not within range!", e);
 	}
 
 	return true;
