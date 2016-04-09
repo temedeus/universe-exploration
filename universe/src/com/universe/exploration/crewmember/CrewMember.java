@@ -2,6 +2,7 @@ package com.universe.exploration.crewmember;
 
 import java.util.HashMap;
 
+import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.attribute.Agility;
 import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
 import com.universe.exploration.crewmember.attribute.Intelligence;
@@ -20,6 +21,8 @@ public class CrewMember {
     private Nationality nationality;
 
     private HashMap<String, CrewMemberAttribute> crewMemberAttributes = new HashMap<String, CrewMemberAttribute>();
+    
+    private CrewMemberStatus status;
 
     /**
      * @return the name
@@ -154,5 +157,19 @@ public class CrewMember {
      */
     public void setNationality(Nationality nationality) {
 	this.nationality = nationality;
+    }
+
+    /**
+     * @return the crewMemberStatus
+     */
+    public CrewMemberStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * @param crewMemberStatus the crewMemberStatus to set
+     */
+    public void setStatus(CrewMemberStatus status) {
+        this.status = status;
     }
 }

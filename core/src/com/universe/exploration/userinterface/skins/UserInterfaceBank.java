@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.universe.exploration.common.CoreConfiguration;
 
 /**
- * TODO: get rid of this class. Utilize uiskin.json.
+ * TODO: rationalize the use of this class. Should some of the stuff found here be in the uiskin.json?
  */
 public class UserInterfaceBank {
 

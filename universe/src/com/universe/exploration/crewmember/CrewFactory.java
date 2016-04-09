@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.RandomizationTools;
+import com.universe.exploration.crew.CrewMemberStatus;
 
 /**
  * Before utilizing this factory you must first populate {@link #maleProfiles}
@@ -50,7 +51,8 @@ public class CrewFactory {
 	crewmember
 		.setAge(RandomizationTools.getRandomInteger(CrewCharacteristicsBoundaries.MIN_AGE, CrewCharacteristicsBoundaries.MAX_AGE));
 	crewmember.setNationality(profile.getNationality());
-
+	crewmember.setStatus(CrewMemberStatus.ALIVE);
+	
 	// Crewman characteristics
 	setupCrewmanCharacteristics(crewmember);
 

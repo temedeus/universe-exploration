@@ -40,6 +40,7 @@ import com.universe.exploration.userinterface.components.window.WindowFactory;
 import com.universe.exploration.userinterface.components.window.WindowType;
 import com.universe.exploration.userinterface.data.DataPair;
 import com.universe.exploration.userinterface.data.DataPairTableFactory;
+import com.universe.exploration.userinterface.data.container.CrewMemberDetails;
 import com.universe.exploration.userinterface.data.container.DataPairContainer;
 import com.universe.exploration.userinterface.data.container.LeftSideHUD;
 import com.universe.exploration.userinterface.forms.FormContainer;
@@ -422,35 +423,16 @@ public class UIController {
 	     */
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-
+		final CrewMemberDetails crewMemberDetails = new CrewMemberDetails(crewMember);
+		crewMemberDetails.createPairs();
+		
 		BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.CREWMEMBER_DETAILS,
-			populateWithStatus(createCrewMemberDetailsDataPairs(crewMember)), createNewCrewMemberDetailsCLickListener());
+			populateWithStatus(crewMemberDetails), createNewCrewMemberDetailsCLickListener());
 
 		UniverseExploration.windowContainer.add(WindowType.CREWMEMBER_DETAILS, window);
 		show(window);
 	    }
 	};
-    }
-
-    /**
-     * {@link DataPair} keys are hard-coded as they are not really used anywhere
-     * outside this context. If things change, they should be somewhere else.
-     * 
-     * @param crewMember
-     * @return
-     */
-    private DataPairContainer createCrewMemberDetailsDataPairs(CrewMember crewMember) {
-	DataPairContainer dataPairContainer = new DataPairContainer();
-	dataPairContainer.add(new DataPair("name", "Name:", crewMember.getName()));
-	dataPairContainer.add(new DataPair("age", "Age: ", "" + crewMember.getAge()));
-	dataPairContainer.add(new DataPair("sex", "Sex: ", "" + Localizer.getInstance().get(crewMember.getSex())));
-	dataPairContainer.add(new DataPair("nationality", "Nationality: ", "" + Localizer.getInstance().get(crewMember.getNationality())));
-	dataPairContainer.add(new DataPair("agility", "Agility:", "" + crewMember.getAgility().getValue()));
-	dataPairContainer.add(new DataPair("intelligence", "Intelligence: ", "" + crewMember.getIntelligence().getValue()));
-	dataPairContainer.add(new DataPair("morale", "Morale: ", "" + crewMember.getMorale().getValue()));
-	dataPairContainer.add(new DataPair("strength", "Strength: ", "" + crewMember.getStrength().getValue()));
-
-	return dataPairContainer;
     }
 
     private ClickListener createNewCrewMemberDetailsCLickListener() {
