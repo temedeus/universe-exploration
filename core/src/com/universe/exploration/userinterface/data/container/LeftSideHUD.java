@@ -6,7 +6,7 @@ package com.universe.exploration.userinterface.data.container;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
-import com.universe.exploration.player.PlayerStatus;
+import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.player.PlayerStatusItemkeys;
 import com.universe.exploration.userinterface.data.DataPair;
 
@@ -31,7 +31,7 @@ public class LeftSideHUD extends DataPairContainer {
 	add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.getInstance().get(LocalKey.TITLE_POWER), "" + CoreConfiguration.MAX_POWER + " %"));
     }
 
-    public void updateHUDValues(PlayerStatus playerStatus) {
+    public void updateHUDValues(CrewStatusManager playerStatus) {
 	update(PlayerStatusItemkeys.TIME, "" + (int) playerStatus.getTime() + " days");
 	update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int) playerStatus.getAir()));
 	update(PlayerStatusItemkeys.CREWMEN, "" + (int) playerStatus.getCrewmen());

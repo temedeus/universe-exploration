@@ -37,6 +37,7 @@ TITLE_REMOVE_CREWMBMERS_FROM_SURVEYTEAM:Remove crewmembers from survey team:
 LABEL_CREWMEN_COUNT:Crewmen count:
 LABEL_PLANET_SELECTION:Select planet:
 LABEL_NO_PLANETS_FOUND:No planets found
+LABEL_SURVEY_LENGTH:Survey length:
 
 // Descriptions
 DESC_QUIT_GAME:Are you sure you wish to quit?
@@ -94,3 +95,16 @@ RUSSIAN:Russian
 // Sexes
 MALE:Male
 FEMALE:Female
+
+// Statuses
+ALIVE:Alive
+KIA:KIA
+MIA:MIA
+
+// Conditions
+PHSYICAL_INJURY:Physical injury
+PSYCHOSIS:Psychosis
+OXYGEN_DEPRIVATION:Oxygen deprivation
+MALNUTRITION:Malnutrition
+WATER_DEPRIVATION:Water deprivation
+ONSURVEY: On survey

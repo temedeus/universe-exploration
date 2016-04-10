@@ -39,4 +39,9 @@ public class CrewCharacteristicsBoundaries {
     public static final int MAX_AGE = 55;
 
     public static final int MIN_AGE = 30;
+    
+    public static final int MAX_HEALTH = 100;
+    
+    public static final int MIN_HEALTH = 0;
 }
+

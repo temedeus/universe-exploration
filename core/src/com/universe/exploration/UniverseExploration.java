@@ -29,7 +29,7 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.logger.MinimalLogger;
-import com.universe.exploration.player.PlayerStatus;
+import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.player.StatusConsumption;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
@@ -84,7 +84,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     /**
      * Contains player spaceship status.
      */
-    private PlayerStatus playerStatus;
+    private CrewStatusManager playerStatus;
 
     public static WindowContainer windowContainer;
 
@@ -103,9 +103,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	basicSetup();
 	stageSetup();
-	
+
 	pauseGame(false);
-	
+
 	backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("music/space.mp3"));
 	bgId = backgroundMusic.loop();
     }
@@ -147,7 +147,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	gameStatus = new GameStatus();
 	logger = new MinimalLogger();
 	uiStage = new Stage(new ScreenViewport());
-	playerStatus = new PlayerStatus();
+	playerStatus = new CrewStatusManager();
 	playerMonitor = new CameraMonitor();
 	windowContainerSetup();
 	surveyStatusContainer = new SurveyStatusContainer();
@@ -179,7 +179,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     /**
      * First setup star system and then UiController because UI uses star system
      * data.
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
     private void stageSetup() {
 	createCrew();
@@ -187,7 +188,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	setupUiController();
 	setupInputProcessors();
     }
-    
+
     private void createCrew() {
 	crew = null;
 	CrewMembersInitializer initializer;
@@ -295,7 +296,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		stageSetup();
-		playerStatus = new PlayerStatus();
+		playerStatus = new CrewStatusManager();
 		pauseGame(false);
 		windowContainer.closeWindow(WindowType.GAME_OVER);
 	    }
@@ -343,8 +344,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			new ClickListener() {
 			    @Override
 			    public void clicked(InputEvent event, float x, float y) {
-				final BasicWindow surveyedWindow = uiController.createPlanetSurveyedWindow(
-					(PlanetGfxContainer) e.getPayLoad(), calculateAvailableMen());
+				final BasicWindow surveyedWindow = uiController.createSurveyTeamSelectionWindow((PlanetGfxContainer) e
+					.getPayLoad());
 				windowContainer.add(WindowType.SURVEY_WINDOW, surveyedWindow);
 				uiController.show(surveyedWindow);
 			    }
@@ -374,8 +375,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		caption = "You have lost " + mc.size() + " crewmen on survey.";
 		updateIngameLog(caption);
 		printMortalityLog(mc);
-		playerStatus.decreaseCrewmen(mc.size());
-
 	    } else {
 		caption = Localizer.getInstance().get(LocalKey.TITLE_SURVEY_TEAM_SURVIVED);
 		updateIngameLog(caption);

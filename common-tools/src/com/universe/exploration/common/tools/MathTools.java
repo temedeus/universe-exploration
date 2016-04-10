@@ -69,7 +69,7 @@ public class MathTools {
      *            Amount of decrement
      * @return float result
      */
-    public static float decreaseIfResultPositive(float val, float dec) {
+    public static float decreaseIfResultMoreOrEqualToZero(float val, float dec) {
 	return (val - dec >= 0) ? val - dec : 0;
     }
 

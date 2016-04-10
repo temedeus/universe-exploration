@@ -42,7 +42,8 @@ public enum LocalKey implements TranslatableEnum {
     LABEL_NO_PLANETS_FOUND,
     LABEL_CREWMEN_COUNT,
     LABEL_PLANET_SELECTION,
-
+    LABEL_SURVEY_LENGTH,
+    
     // description texts.
     DESC_HYPERSPACE_JUMP,
     DESC_PLANET_TYPE,

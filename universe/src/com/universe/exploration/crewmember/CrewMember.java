@@ -1,7 +1,10 @@
 package com.universe.exploration.crewmember;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import com.universe.exploration.crew.CrewMemberCondition;
 import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.attribute.Agility;
 import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
@@ -15,6 +18,11 @@ public class CrewMember {
     private String name;
 
     private int age;
+    
+    /**
+     * This is a property that will not be seen by the user.
+     */
+    private int health;
 
     private CrewmemberSex sex;
 
@@ -23,6 +31,8 @@ public class CrewMember {
     private HashMap<String, CrewMemberAttribute> crewMemberAttributes = new HashMap<String, CrewMemberAttribute>();
     
     private CrewMemberStatus status;
+    
+    private List<CrewMemberCondition> condition = new ArrayList<CrewMemberCondition>();
 
     /**
      * @return the name
@@ -171,5 +181,30 @@ public class CrewMember {
      */
     public void setStatus(CrewMemberStatus status) {
         this.status = status;
+    }
+    
+    /**
+     * @return the subStatus
+     */
+    public List<CrewMemberCondition> getCondition() {
+        return condition;
+    }
+
+    public void addToCondition(CrewMemberCondition condition) {
+	this.condition.add(condition);
+    }
+
+    /**
+     * @return the health
+     */
+    public int getHealth() {
+        return health;
+    }
+
+    /**
+     * @param health the health to set
+     */
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

@@ -8,8 +8,8 @@ import java.util.List;
 
 import com.universe.exploration.crew.CrewMemberStatus;
 
-public class Crew {
 
+public class Crew {
     private List<CrewMember> crewmen = new ArrayList<CrewMember>();
 
     public void addCrewman(CrewMember crewman) {
@@ -28,13 +28,20 @@ public class Crew {
     }
     
     public List<CrewMember> getAliveCrewmen() {
+	List<CrewMemberStatus> statuses = new ArrayList<CrewMemberStatus>();
+	statuses.add(CrewMemberStatus.ALIVE);
+	return getCrewMembersByStatus(statuses);
+    }
+    
+    public List<CrewMember> getCrewMembersByStatus(List<CrewMemberStatus> statuses) {
 	List<CrewMember> aliveMembers = new ArrayList<CrewMember>();
 	for(CrewMember member : crewmen) {
-	    if(member.getStatus() == CrewMemberStatus.ALIVE) {
+	    if(statuses.contains(member.getStatus())) {
 		aliveMembers.add(member);
 	    }
 	}
 	
 	return aliveMembers;
     }
+
 }

@@ -89,17 +89,6 @@ public class GameViewObjectContainer {
 	}
     }
 
-    public ArrayList<String> getPlanetNames() {
-	ArrayList<String> names = new ArrayList<String>();
-
-	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
-	    String tmp = ((PlanetCelestialComponent) graphicsGfx.getCelestialBodyGfxModel().getStarSystemComponent()).getComponentName();
-	    names.add(tmp);
-	}
-
-	return names;
-    }
-
     public PlanetGfxContainer getPlanetGfxContainerByComponent(PlanetCelestialComponent planet) {
 	for (PlanetGfxContainer graphcisGfx : planetGfxContainer) {
 	    if (graphcisGfx.getComponentType() == planet) {
@@ -131,7 +120,7 @@ public class GameViewObjectContainer {
 			return graphicsGfx;
 		    }
 		} catch (NullPointerException e) {
-		    // Shouldn't happen
+		    // TODO: smarter exception handling
 		}
 	    }
 	}

@@ -39,4 +39,6 @@ public class CoreConfiguration {
     public static final float SPACE_BACKGROUND_POSITION_X = -1000;
 
     public static final float SPACE_BACKGROUND_POSITION_Y = -600;
+    
+    public static final int MAX_DAYS_ON_SURVEY = 30;
 }

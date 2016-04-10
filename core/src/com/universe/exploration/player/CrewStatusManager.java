@@ -3,21 +3,20 @@
  */
 package com.universe.exploration.player;
 
+import java.util.List;
+
+import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.MathTools;
+import com.universe.exploration.crewmember.CrewMember;
 
 /**
  * 
- * General container for supply and crew status
  * 
  * @author 31.8.2015 Teemu Puurunen
  *
  */
-public class PlayerStatus {
-    /**
-     * Count of crewmen alive.
-     */
-    private int crewmen;
+public class CrewStatusManager {
 
     /**
      * Air left
@@ -35,10 +34,9 @@ public class PlayerStatus {
     /**
      * Setup initial values. Start with full values
      */
-    public PlayerStatus() {
+    public CrewStatusManager() {
 
 	time = CoreConfiguration.TIME_START;
-	crewmen = CoreConfiguration.MAX_CREWMEN;
 	air = CoreConfiguration.MAX_AIR;
 	water = CoreConfiguration.MAX_WATER;
 	food = CoreConfiguration.MAX_FOOD;
@@ -50,55 +48,25 @@ public class PlayerStatus {
      * @return
      */
     public void updateStatus() {
+	// TODO: utilize crewmember attributes when decreasing values
+	List<CrewMember> crewmen = UniverseExploration.crew.getAliveCrewmen();
 	increaseDaysPassed();
-	decreaseAirBy((power > 0) ? StatusConsumption.AIR_DECREMENT : StatusConsumption.AIR_DECREMENT * 9);
-	decreaseFoodBy(StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN * crewmen);
-	decreaseWaterBy(StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN * crewmen);
-	decreaseCrewmen();
+	
+	int crewsize = crewmen.size();
+	float airDecrement = StatusConsumption.AIR_DECREMENT * crewsize;
+	
+	decreaseAirBy((power > 0) ? airDecrement : airDecrement * StatusConsumption.AIR_DECREMENT_WHEN_POWER_OUT);
+	decreaseFoodBy(StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN * crewsize);
+	decreaseWaterBy(StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN * crewsize);
+
+	updateCrewMemberStatuses();
     }
 
-    /**
-     * Based on available resources, return mortality rate (if all is well,
-     * return 0)
-     * 
-     * @return float
-     */
-    private float calculateCrewmenMortalityRate() {
-	// Return crewmen death rate by what most crucial resource is depleted
-	if (air == 0) {
-	    return StatusConsumption.CREWMEN_DECREMENT_AIR_DEPLETED;
-	} else {
-	    if (water == 0) {
-		return StatusConsumption.CREWMEN_DECREMENT_WATER_DEPLETED;
-	    } else {
-		if (food == 0) {
-		    return StatusConsumption.CREWMEN_DECREMENT_FOOD_DEPLETED;
-		}
-	    }
-	}
-
-	return 0f;
+    private void updateCrewMemberStatuses() {
+	
     }
-
     public void increaseDaysPassed() {
 	time += CoreConfiguration.TIME_FLOW;
-    }
-
-    /**
-     * Crewman dies
-     * 
-     * @param d
-     */
-    public void decreaseCrewmen() {
-	float dec = calculateCrewmenMortalityRate();
-
-	if (dec > 0) {
-	    crewmen = (int) MathTools.decreaseIfResultPositive(crewmen, dec);
-	}
-    }
-
-    public void decreaseCrewmen(int count) {
-	crewmen -= (crewmen - count >= 0) ? count : 0;
     }
 
     public void increaseAir(float airInc) {
@@ -125,7 +93,7 @@ public class PlayerStatus {
      * @param d
      */
     private boolean decreaseAirBy(float d) {
-	air = MathTools.decreaseIfResultPositive(air, d);
+	air = MathTools.decreaseIfResultMoreOrEqualToZero(air, d);
 	return true;
     }
 
@@ -135,7 +103,7 @@ public class PlayerStatus {
      * @param d
      */
     private void decreaseWaterBy(float d) {
-	water = MathTools.decreaseIfResultPositive(water, d);
+	water = MathTools.decreaseIfResultMoreOrEqualToZero(water, d);
     }
 
     /**
@@ -144,7 +112,7 @@ public class PlayerStatus {
      * @param d
      */
     private void decreaseFoodBy(float d) {
-	food = MathTools.decreaseIfResultPositive(food, d);
+	food = MathTools.decreaseIfResultMoreOrEqualToZero(food, d);
     }
 
     /**
@@ -153,14 +121,14 @@ public class PlayerStatus {
      * @param d
      */
     public void decreasePowerBy(float d) {
-	power = MathTools.decreaseIfResultPositive(power, d);
+	power = MathTools.decreaseIfResultMoreOrEqualToZero(power, d);
     }
 
     /**
      * @return the crewmen
      */
     public int getCrewmen() {
-	return crewmen;
+	return UniverseExploration.crew.getAliveCrewmen().size();
     }
 
     /**
@@ -189,14 +157,6 @@ public class PlayerStatus {
      */
     public float getPower() {
 	return power;
-    }
-
-    /**
-     * @param crewmen
-     *            the crewmen to set
-     */
-    public void setCrewmen(int crewmen) {
-	this.crewmen = crewmen;
     }
 
     /**

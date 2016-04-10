@@ -8,7 +8,7 @@ package com.universe.exploration.crewmember.attribute;
  *
  */
 public abstract class CrewMemberAttribute implements ICrewMemberAttribute {
-    int value;
+    protected int value;
 
     public CrewMemberAttribute(int value) {
 	this.value = value;

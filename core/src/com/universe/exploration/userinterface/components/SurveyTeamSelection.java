@@ -34,7 +34,8 @@ public class SurveyTeamSelection {
 
     public Table createSurveyTeamSelectionTable() {
 	Table table = new Table();
-
+	table.padBottom(50);
+	
 	table.add(new UELabel(Localizer.getInstance().get("TITLE_ADD_CREWMEMBERS_TO_SURVEYTEAM")));
 	table.row();
 

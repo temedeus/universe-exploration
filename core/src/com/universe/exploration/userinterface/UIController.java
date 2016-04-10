@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.GdxHelper;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.gamegraphics.GameViewObjectContainer;
@@ -29,7 +30,7 @@ import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
-import com.universe.exploration.player.PlayerStatus;
+import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.components.BasicTable;
 import com.universe.exploration.userinterface.components.LogDisplay;
@@ -152,7 +153,7 @@ public class UIController {
     /**
      * Update UI
      */
-    public void updateUI(PlayerStatus ps) {
+    public void updateUI(CrewStatusManager ps) {
 	updatePlayerStatusToUI(ps);
 
 	if ((int) ps.getPower() == 0) {
@@ -441,17 +442,17 @@ public class UIController {
 	};
     }
 
-    public BasicWindow createPlanetSurveyedWindow(PlanetGfxContainer pgfx, int surveyTeamSize) {
+    public BasicWindow createSurveyTeamSelectionWindow(PlanetGfxContainer pgfx) {
 	Table planetInformationTable = new Table();
 
 	planetInformationTable.add(new SurveyTeamSelection(UniverseExploration.crew).createSurveyTeamSelectionTable());
 	planetInformationTable.row();
 
 	planetInformationTable
-		.add(new Label(Localizer.getInstance().get(LocalKey.LABEL_CREWMEN_COUNT), UserInterfaceBank.userInterfaceSkin));
+		.add(new Label(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH), UserInterfaceBank.userInterfaceSkin));
 	planetInformationTable.row();
 
-	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, surveyTeamSize, 1);
+	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, CoreConfiguration.MAX_DAYS_ON_SURVEY, 1);
 	((PlanetSurveyForm) pair.getFormContainer()).setPlanet((PlanetCelestialComponent) pgfx.getComponentType());
 
 	planetInformationTable.add(pair.getTable());
@@ -478,7 +479,7 @@ public class UIController {
 	}
     }
 
-    private void updatePlayerStatusToUI(PlayerStatus playerStatus) {
+    private void updatePlayerStatusToUI(CrewStatusManager playerStatus) {
 	leftsidePlayerStatus.updateHUDValues(playerStatus);
     }
 
