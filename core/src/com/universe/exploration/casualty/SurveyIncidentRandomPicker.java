@@ -31,7 +31,7 @@ class SurveyIncidentRandomPicker {
 	}
     }
 
-    public SurveyIncident pickRandomCauseOfDeath() {
+    public SurveyIncident pickRandomSurveyIncident() {
 	int index = RandomizationTools.getRandomInteger(0, listOfApplicableCauseOfDeaths.size() - 1);
 	return listOfApplicableCauseOfDeaths.get(index);
     }

@@ -215,4 +215,11 @@ public class CrewMember {
 	    this.status = CrewMemberStatus.KIA;
 	}
     }
+
+    /**
+     * @return the crewMemberAttributes
+     */
+    public HashMap<String, CrewMemberAttribute> getCrewMemberAttributes() {
+        return crewMemberAttributes;
+    }
 }

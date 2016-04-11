@@ -325,7 +325,7 @@ public class UIController {
     }
 
     public <T extends Actor> void show(T actor) {
-	if(!UniverseExploration.gameStatus.isPaused()) {
+	if (!UniverseExploration.gameStatus.isPaused()) {
 	    uiStage.addActor(actor);
 	}
     }
@@ -476,8 +476,16 @@ public class UIController {
 	     */
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		crewmember.setStatus(CrewMemberStatus.KIA);
-		fireLogMessageListener("You tossed " + crewmember.getName() + " out the airlock!");
+		CrewMemberStatus status = crewmember.getStatus();
+		if (status == CrewMemberStatus.ALIVE) {
+		    crewmember.setStatus(CrewMemberStatus.KIA);
+		    fireLogMessageListener("You tossed " + crewmember.getName() + " out of the airlock!");
+		} else {
+		    fireLogMessageListener("Cannot throw " + crewmember.getName() + " out of the airlock! This person is "
+			    + Localizer.getInstance().get(status));
+
+		}
+
 		UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
 		UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
 		// TODO: work out a way to refresh crew management window

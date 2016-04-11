@@ -3,6 +3,7 @@
  */
 package com.universe.exploration.casualty;
 
+import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
@@ -28,11 +29,33 @@ public class CasualtyFactory {
 	Casualty casualty = new Casualty();
 
 	ApplicableSurveyIncidentFactory acdf = new ApplicableSurveyIncidentFactory();
-	SurveyIncidentRandomPicker codFactory = new SurveyIncidentRandomPicker(acdf.createListofApplicableCauseOfDeath(planet));
+	SurveyIncidentRandomPicker picker = new SurveyIncidentRandomPicker(acdf.createListofApplicableCauseOfDeath(planet));
 
-	casualty.setCauseOfDeath(codFactory.pickRandomCauseOfDeath());
-	casualty.setMember(crewMember);
+	SurveyIncident incident = picker.pickRandomSurveyIncident();
 
-	return casualty;
+	if (calculateIfIncidentHappens(incident, crewMember)) {
+	    casualty.setCauseOfDeath(incident);
+	    casualty.setMember(crewMember);
+
+	    return casualty;
+	} else {
+	    return null;
+	}
+
+    }
+
+    private boolean calculateIfIncidentHappens(SurveyIncident incident, CrewMember crewMember) {
+
+	/*List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = incident.listOfContributingAttributes();
+
+	int attributeValueSum = 0;
+
+	for (Class<? extends CrewMemberAttribute> clazz : listOfApplicableAttributes) {
+	    attributeValueSum += crewMember.getCrewMemberAttributes().get(clazz.getName()).getValue();
+	}*/
+	
+	float odds = incident.getOdds();// - (incident.getOdds() * (float) attributeValueSum / 100);
+		
+	return (MathTools.calculateIfOddsHit(odds)) ? true : false;
     }
 }

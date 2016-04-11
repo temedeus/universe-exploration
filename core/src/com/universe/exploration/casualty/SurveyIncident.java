@@ -29,7 +29,7 @@ import com.universe.exploration.crewmember.attribute.Strength;
  */
 public enum SurveyIncident {
     // No oxygen on the planet
-    HELMET_BREACH("HELMET_BREACH", SurveyIncidentCategory.LACK_OF_OXYGEN) {
+    HELMET_BREACH("HELMET_BREACH", SurveyIncidentCategory.LACK_OF_OXYGEN, 15) {
 	/* (non-Javadoc)
 	 * @see com.universe.exploration.casualty.SurveyIncident#causesStatus()
 	 */
@@ -46,7 +46,7 @@ public enum SurveyIncident {
 	   return CrewMemberCondition.OXYGEN_DEPRIVATION;
 	}
     },
-    RIP_ON_SUIT("RIP_ON_SUIT", SurveyIncidentCategory.LACK_OF_OXYGEN) {
+    RIP_ON_SUIT("RIP_ON_SUIT", SurveyIncidentCategory.LACK_OF_OXYGEN, 15) {
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
@@ -62,7 +62,7 @@ public enum SurveyIncident {
     },
 
     // Animals present
-    ATTACKED_BY_ANIMALS("ATTACKED_BY_ANIMALS", SurveyIncidentCategory.ANIMAL) {
+    ATTACKED_BY_ANIMALS("ATTACKED_BY_ANIMALS", SurveyIncidentCategory.ANIMAL, 35) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -91,7 +91,7 @@ public enum SurveyIncident {
     },
 
     // Civilization present
-    KILLED_BY_LOCALS("KIA_BY_LOCALS", SurveyIncidentCategory.CIVILIZATION) {
+    KILLED_BY_LOCALS("KIA_BY_LOCALS", SurveyIncidentCategory.CIVILIZATION, 30) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -118,7 +118,7 @@ public enum SurveyIncident {
 	   return CrewMemberCondition.PHYSICAL_INJURY;
 	}
     },
-    SEDUCED_BY_AMAZONS("SEDUCED_BY_AMAZONS", SurveyIncidentCategory.CIVILIZATION) {
+    SEDUCED_BY_AMAZONS("SEDUCED_BY_AMAZONS", SurveyIncidentCategory.CIVILIZATION, 8) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -140,7 +140,7 @@ public enum SurveyIncident {
     },
 
     // General
-    FELL_OFF_CLIFF("FELL_OFF_CLIFF", SurveyIncidentCategory.GENERAL) {
+    FELL_OFF_CLIFF("FELL_OFF_CLIFF", SurveyIncidentCategory.GENERAL, 20) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -169,7 +169,7 @@ public enum SurveyIncident {
 	}
 
     },
-    MALNUTRION("MALNUTRITION", SurveyIncidentCategory.GENERAL) {
+    MALNUTRION("MALNUTRITION", SurveyIncidentCategory.GENERAL, 30) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -196,7 +196,7 @@ public enum SurveyIncident {
 	   return CrewMemberCondition.MALNUTRITION;
 	}
     },
-    CREWMEN_WENT_NUTS("CREWMEN_WENT_NUTS", SurveyIncidentCategory.GENERAL) {
+    CREWMEN_WENT_NUTS("CREWMEN_WENT_NUTS", SurveyIncidentCategory.GENERAL, 20) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -223,7 +223,7 @@ public enum SurveyIncident {
 	   return CrewMemberCondition.PSYCHOSIS;
 	}
     },
-    WATER_DEPRIVATION("WATER_DEPRIVATION", SurveyIncidentCategory.GENERAL) {
+    WATER_DEPRIVATION("WATER_DEPRIVATION", SurveyIncidentCategory.GENERAL, 35) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -251,13 +251,16 @@ public enum SurveyIncident {
 	}
     };
 
-    private String localizationKey;
+    private final String localizationKey;
 
-    private SurveyIncidentCategory causeOfDeathCategory;
+    private final SurveyIncidentCategory causeOfDeathCategory;
+    
+    private final float odds;
 
-    private SurveyIncident(String localizationKey, SurveyIncidentCategory causeOfDeathCategory) {
+    private SurveyIncident(String localizationKey, SurveyIncidentCategory causeOfDeathCategory, float odds) {
 	this.localizationKey = localizationKey;
 	this.causeOfDeathCategory = causeOfDeathCategory;
+	this.odds = odds;
     }
 
     /**
@@ -296,25 +299,15 @@ public enum SurveyIncident {
     }
 
     /**
-     * @param localizationKey
-     *            the localizationKey to set
-     */
-    public void setLocalizationKey(String localizationKey) {
-	this.localizationKey = localizationKey;
-    }
-
-    /**
      * @return the causeOfDeathCategory
      */
     public SurveyIncidentCategory getCauseOfDeathCategory() {
 	return causeOfDeathCategory;
     }
-
     /**
-     * @param causeOfDeathCategory
-     *            the causeOfDeathCategory to set
+     * @return the odds
      */
-    public void setCauseOfDeathCategory(SurveyIncidentCategory causeOfDeathCategory) {
-	this.causeOfDeathCategory = causeOfDeathCategory;
+    public float getOdds() {
+        return odds;
     }
 }
