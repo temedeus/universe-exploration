@@ -1,8 +1,8 @@
 package com.universe.exploration.crewmember;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.universe.exploration.crew.CrewMemberCondition;
 import com.universe.exploration.crew.CrewMemberStatus;
@@ -22,7 +22,7 @@ public class CrewMember {
     /**
      * This is a property that will not be seen by the user.
      */
-    private int health;
+    private float health;
 
     private CrewmemberSex sex;
 
@@ -32,7 +32,7 @@ public class CrewMember {
     
     private CrewMemberStatus status;
     
-    private List<CrewMemberCondition> condition = new ArrayList<CrewMemberCondition>();
+    private Set<CrewMemberCondition> condition = new HashSet<CrewMemberCondition>();
 
     /**
      * @return the name
@@ -186,7 +186,7 @@ public class CrewMember {
     /**
      * @return the subStatus
      */
-    public List<CrewMemberCondition> getCondition() {
+    public Set<CrewMemberCondition> getCondition() {
         return condition;
     }
 
@@ -197,14 +197,22 @@ public class CrewMember {
     /**
      * @return the health
      */
-    public int getHealth() {
+    public float getHealth() {
         return health;
     }
 
     /**
      * @param health the health to set
      */
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
+    }
+    
+    public void decreaseHealth(float dec) {
+	if(health > 0) {
+	    this.health -= dec;
+	} else {
+	    this.status = CrewMemberStatus.KIA;
+	}
     }
 }

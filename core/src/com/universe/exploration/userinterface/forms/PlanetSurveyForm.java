@@ -3,7 +3,11 @@
  */
 package com.universe.exploration.userinterface.forms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -12,7 +16,9 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  */
 public class PlanetSurveyForm extends FormContainer {
 
-    private Slider crewmenCount;
+    private List<CrewMember> selectedCrewMembers = new ArrayList<CrewMember>();
+    
+    private Slider surveyLength;
 
     private PlanetCelestialComponent planet;
 
@@ -34,15 +40,29 @@ public class PlanetSurveyForm extends FormContainer {
     /**
      * @return the crewmenCount
      */
-    public Slider getCrewmenCount() {
-	return crewmenCount;
+    public Slider getSurveyLength() {
+	return surveyLength;
     }
 
     /**
      * @param crewmenCount
      *            the crewmenCount to set
      */
-    public void setCrewmenCount(Slider crewmenCount) {
-	this.crewmenCount = crewmenCount;
+    public void setSurveyLength(Slider crewmenCount) {
+	this.surveyLength = crewmenCount;
+    }
+
+    /**
+     * @return the selectedCrewMembers
+     */
+    public List<CrewMember> getSelectedCrewMembers() {
+        return selectedCrewMembers;
+    }
+
+    /**
+     * @param selectedCrewMembers the selectedCrewMembers to set
+     */
+    public void setSelectedCrewMembers(List<CrewMember> selectedCrewMembers) {
+        this.selectedCrewMembers = selectedCrewMembers;
     }
 }

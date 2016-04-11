@@ -3,6 +3,7 @@
  */
 package com.universe.exploration.userinterface.data.container;
 
+import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
@@ -25,6 +26,7 @@ public class LeftSideHUD extends DataPairContainer {
     public void createPairs() {
 	add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.getInstance().get(LocalKey.TITLE_TIME), "" + CoreConfiguration.TIME_START + ""));
 	add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.getInstance().get(LocalKey.TITLE_CREWMEN_LEFT), "" + CoreConfiguration.MAX_CREWMEN));
+	add(new DataPair(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, Localizer.getInstance().get(LocalKey.TITLE_CREWMEN_ON_SURVEY), "" + 0));
 	add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.getInstance().get(LocalKey.TITLE_AIR), "" + CoreConfiguration.MAX_AIR + " %"));
 	add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.getInstance().get(LocalKey.TITLE_WATER), "" + CoreConfiguration.MAX_AIR + " %"));
 	add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.getInstance().get(LocalKey.TITLE_FOOD), "" + CoreConfiguration.MAX_FOOD + " %"));
@@ -34,7 +36,8 @@ public class LeftSideHUD extends DataPairContainer {
     public void updateHUDValues(CrewStatusManager playerStatus) {
 	update(PlayerStatusItemkeys.TIME, "" + (int) playerStatus.getTime() + " days");
 	update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int) playerStatus.getAir()));
-	update(PlayerStatusItemkeys.CREWMEN, "" + (int) playerStatus.getCrewmen());
+	update(PlayerStatusItemkeys.CREWMEN, "" + (int) UniverseExploration.crew.getAliveCrewmen().size());
+	update(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, "" + (int) UniverseExploration.crew.getCrewMenOnSurvey().size());
 	update(PlayerStatusItemkeys.WATER, "" + (int) playerStatus.getWater() + " litres");
 	update(PlayerStatusItemkeys.FOOD, "" + (int) playerStatus.getFood() + " kcal");
 	update(PlayerStatusItemkeys.POWER, playerStatusValueToHUDString("" + (int) playerStatus.getPower()));

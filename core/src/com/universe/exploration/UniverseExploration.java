@@ -2,6 +2,7 @@ package com.universe.exploration;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Application.ApplicationType;
@@ -19,6 +20,7 @@ import com.universe.exploration.camera.CameraMonitor;
 import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.common.tools.TextManipulationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
+import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.Crew;
 import com.universe.exploration.crewmember.CrewFactory;
 import com.universe.exploration.crewmember.CrewMember;
@@ -35,9 +37,9 @@ import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.survey.ResourcesFound;
-import com.universe.exploration.survey.SurveyStatus;
-import com.universe.exploration.survey.SurveyStatusContainer;
-import com.universe.exploration.survey.SurveyStatusFactory;
+import com.universe.exploration.survey.Survey;
+import com.universe.exploration.survey.SurveyContainer;
+import com.universe.exploration.survey.SurveyFactory;
 import com.universe.exploration.userinterface.UIController;
 import com.universe.exploration.userinterface.WindowContainer;
 import com.universe.exploration.userinterface.WindowContainerEvent;
@@ -47,16 +49,6 @@ import com.universe.exploration.userinterface.forms.PlanetSurveyForm;
 
 /**
  * Main game class.
- * <p>
- * In order to start game, the order of calling various is methods is as
- * follows:
- * </p>
- * <ol>
- * <li>{@link #create()}</li>
- * </ol>
- * 
- * @author 2.3.2016 Teemu Puurunen
- *
  */
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
     /**
@@ -79,17 +71,19 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      * User interface.
      */
     private UIController uiController;
+
     public static GameStatus gameStatus;
 
     /**
      * Contains player spaceship status.
      */
-    private CrewStatusManager playerStatus;
+    private CrewStatusManager crewStatus;
 
+    // TODO: handle in {@link UIController}
     public static WindowContainer windowContainer;
 
     private MinimalLogger logger;
-    private SurveyStatusContainer surveyStatusContainer;
+    private SurveyContainer surveyStatusContainer;
 
     private Sound backgroundMusic;
     private long bgId;
@@ -122,15 +116,15 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
 	gameObjectCanvas.drawGameContent();
 
-	playerStatus.updateStatus();
-	uiController.updateUI(playerStatus);
+	crewStatus.updateStatus();
+	uiController.updateUI(crewStatus);
 
-	if (playerStatus.getCrewmen() == 0 && !gameStatus.isPaused()) {
-	    pauseGame(true);
+	if (UniverseExploration.crew.getAliveCrewmen().size() == 0 && !gameStatus.isPaused()) {
 	    BasicWindow gameOverWindow = uiController.createGameOverWindow(WindowType.GAME_OVER, createGameOverClicklistener());
-
+	    windowContainer.closeAllWindows();
 	    windowContainer.add(WindowType.GAME_OVER, gameOverWindow);
 	    uiController.show(gameOverWindow);
+	    pauseGame(true);
 	}
 
 	closeFinishedSurveys();
@@ -147,16 +141,33 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	gameStatus = new GameStatus();
 	logger = new MinimalLogger();
 	uiStage = new Stage(new ScreenViewport());
-	playerStatus = new CrewStatusManager();
+	crewStatus = new CrewStatusManager();
+	crewStatus.setCrewMemberStatusChangeListener(createLogMessageListener());
 	playerMonitor = new CameraMonitor();
 	windowContainerSetup();
-	surveyStatusContainer = new SurveyStatusContainer();
+	surveyStatusContainer = new SurveyContainer();
     }
 
     private void windowContainerSetup() {
 	windowContainer = new WindowContainer();
-	windowContainer.setWindowsThatMustAlert(WindowType.PLANET_DETAILS);
+	windowContainer.setWindowsThatMustAlert(WindowType.PLANET_DETAILS, WindowType.SURVEY_WINDOW);
 	windowContainer.setSpecificedWindowChangeListener(createWindowChangeListener());
+    }
+
+    private UEListener createLogMessageListener() {
+	return new UEListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.universe.exploration.listener.UEListener#handleEventClassEvent
+	     * (java.util.EventObject)
+	     */
+	    @Override
+	    public void handleEventClassEvent(UEEvent e) {
+		updateIngameLog((String) e.getPayLoad());
+	    }
+	};
     }
 
     private UEListener createWindowChangeListener() {
@@ -203,7 +214,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
     private void setupUiController() {
 	uiController = new UIController(gameObjectCanvas.getGameViewObjectContainer(), starSystem.getPlanets());
-
+	uiController.setLogMessageListener(createLogMessageListener());
 	uiController.setPlanetClickListener(createPlanetClickListener());
 	uiController.setHyperspaceJumpListener(new UEListener() {
 	    @Override
@@ -212,7 +223,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    windowContainerSetup();
 		    stageSetup();
 		    gameStatus.activateSurveyMode(false);
-		    playerStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
+		    crewStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
 		    updateIngameLog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP_COMMENCED));
 		}
 	    };
@@ -265,26 +276,24 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     }
 
     private void startSurvey(PlanetSurveyForm form) {
-	int surveyTeamSize = (int) form.getCrewmenCount().getValue();
-	if (surveyTeamSize > 0) {
-	    if (surveyStatusContainer.isSurveyTeamSizeAcceptable(surveyTeamSize, calculateAvailableMen())) {
+	int surveyLength = (int) form.getSurveyLength().getValue();
+	List<CrewMember> crew = form.getSelectedCrewMembers();
 
-		SurveyStatusFactory ssf = new SurveyStatusFactory();
-		SurveyStatus ss = ssf.createSurveyStatus((int) playerStatus.getTime(), new ArrayList<CrewMember>(),
+	if (surveyLength > 0 && crew.size() > 0) {
+	    if (surveyStatusContainer.isSurveyTeamAcceptable(crew)) {
+
+		SurveyFactory ssf = new SurveyFactory();
+		Survey ss = ssf.createSurveyStatus((int) crewStatus.getTime(), surveyLength, form.getSelectedCrewMembers(),
 			(PlanetCelestialComponent) form.getPlanet());
 
 		surveyStatusContainer.add(ss);
 
-		updateIngameLog("Survey team of " + surveyTeamSize + " men and women dispatched.");
+		updateIngameLog("Survey team of " + crew.size() + " men and women dispatched.");
 	    } else {
-		updateIngameLog("Cannot dispatch survey team (" + surveyTeamSize + "). Not enough crewmen available!"
-			+ playerStatus.getCrewmen());
+		updateIngameLog("Cannot dispatch survey team (" + crew.size() + "). Not enough crewmen available!"
+			+ UniverseExploration.crew.getCrewMenAboardSpaceShip().size());
 	    }
 	}
-    }
-
-    private int calculateAvailableMen() {
-	return playerStatus.getCrewmen() - surveyStatusContainer.crewmenOnSurvey();
     }
 
     private void pauseGame(boolean pause) {
@@ -296,7 +305,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		stageSetup();
-		playerStatus = new CrewStatusManager();
+		crewStatus = new CrewStatusManager();
 		pauseGame(false);
 		windowContainer.closeWindow(WindowType.GAME_OVER);
 	    }
@@ -346,44 +355,50 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			    public void clicked(InputEvent event, float x, float y) {
 				final BasicWindow surveyedWindow = uiController.createSurveyTeamSelectionWindow((PlanetGfxContainer) e
 					.getPayLoad());
+				windowContainer.closeWindow(WindowType.PLANET_DETAILS);
 				windowContainer.add(WindowType.SURVEY_WINDOW, surveyedWindow);
 				uiController.show(surveyedWindow);
 			    }
 			});
 
 		windowContainer.add(WindowType.PLANET_DETAILS, surveyWindow);
-		surveyWindow.setPosition(Gdx.graphics.getWidth() / 2 + 100, Gdx.graphics.getHeight() / 2 - 300);
+		surveyWindow.setPosition(Gdx.graphics.getWidth() / 2 + 70, Gdx.graphics.getHeight() / 2 - 300);
 		uiController.show(surveyWindow);
 	    };
 	};
     }
 
     private void closeFinishedSurveys() {
-	SurveyStatus ss = surveyStatusContainer.findAndRemoveOpenSurvey((int) playerStatus.getTime());
+	Survey ss = surveyStatusContainer.findAndRemoveOpenSurvey((int) crewStatus.getTime());
 	showSurveyCompleteNotification(ss);
     }
 
-    private void showSurveyCompleteNotification(SurveyStatus ss) {
+    private void showSurveyCompleteNotification(Survey survey) {
 
-	if (ss != null) {
+	if (survey != null) {
 	    String caption = "";
 	    Sound announcement = Gdx.audio.newSound(Gdx.files.internal("soundeffects/announcement.ogg"));
 	    announcement.play();
-	    ArrayList<Casualty> mc = ss.getMortalities();
+	    List<Casualty> casualtyList = survey.getMortalities();
 
-	    if (mc.size() > 0) {
-		caption = "You have lost " + mc.size() + " crewmen on survey.";
-		updateIngameLog(caption);
-		printMortalityLog(mc);
+	    if (casualtyList.size() > 0) {
+		updateIngameLog("You have lost " + casualtyList.size() + " crewmen on survey.");
+		printMortalityLog(casualtyList);
 	    } else {
 		caption = Localizer.getInstance().get(LocalKey.TITLE_SURVEY_TEAM_SURVIVED);
 		updateIngameLog(caption);
 	    }
+	    
+	    for(CrewMember member : survey.getSurveyTeam()) {
+		if(member.getStatus() == CrewMemberStatus.ONSURVEY) {
+		    member.setStatus(CrewMemberStatus.ALIVE);
+		}
+	    }
 
-	    ResourcesFound rf = ss.getResourcesFound();
+	    ResourcesFound rf = survey.getResourcesFound();
 	    String resourcesCaption = updateResources(rf);
 
-	    ArrayList<String> surveyData = generateSurveyDataRows(caption, resourcesCaption, mc, rf);
+	    List<String> surveyData = generateSurveyDataRows(caption, resourcesCaption, casualtyList, rf);
 	    final BasicWindow surveyClosedWindow = uiController.createSurveyClosedWindow(surveyData);
 
 	    windowContainer.add(WindowType.SURVEY_CLOSED, surveyClosedWindow);
@@ -392,13 +407,14 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	}
     }
 
-    private ArrayList<String> generateSurveyDataRows(String caption, String resourcesCaption, ArrayList<Casualty> mc, ResourcesFound rf) {
-	ArrayList<String> surveydata = new ArrayList<String>();
+    private List<String> generateSurveyDataRows(String caption, String resourcesCaption, List<Casualty> casualtyList, ResourcesFound rf) {
+	List<String> surveydata = new ArrayList<String>();
 
 	surveydata.add(caption);
-	if (mc.size() > 0) {
-	    for (Casualty mortality : mc) {
-		surveydata.add(Localizer.getInstance().get(mortality.getCauseOfDeath().getLocalizationKey()));
+	if (casualtyList.size() > 0) {
+	    for (Casualty casualty : casualtyList) {
+		surveydata.add(casualty.getMember().getName() + ":_ "
+			+ Localizer.getInstance().get(casualty.getSurveyIncident().getLocalizationKey()));
 	    }
 	}
 
@@ -414,17 +430,17 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	if (rf.getAir() > 0) {
 	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_AIR));
-	    playerStatus.increaseAir(rf.getAir());
+	    crewStatus.increaseAir(rf.getAir());
 	}
 
 	if (rf.getFood() > 0) {
 	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_FOOD));
-	    playerStatus.increaseFood(rf.getFood());
+	    crewStatus.increaseFood(rf.getFood());
 	}
 
 	if (rf.getWater() > 0) {
 	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_WATER));
-	    playerStatus.increaseWater(rf.getWater());
+	    crewStatus.increaseWater(rf.getWater());
 	}
 
 	if (resources.size() == 0) {
@@ -438,10 +454,16 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	return caption;
     }
 
-    private void printMortalityLog(ArrayList<Casualty> mc) {
-	for (Casualty mortality : mc) {
-	    String localizationKey = mortality.getCauseOfDeath().getLocalizationKey();
-	    updateIngameLog(" - " + Localizer.getInstance().get(localizationKey));
+    private void printMortalityLog(List<Casualty> mc) {
+	for (Casualty casualty : mc) {
+	    String localizationKey = casualty.getSurveyIncident().getLocalizationKey();
+
+	    CrewMember member = casualty.getMember();
+	    member.setStatus(casualty.getSurveyIncident().causesStatus());
+	    member.addToCondition(casualty.getSurveyIncident().causesCondition());
+
+	    updateIngameLog(member.getName() + " (" + Localizer.getInstance().get(member.getStatus()) + ") - "
+		    + Localizer.getInstance().get(localizationKey));
 	}
     }
 

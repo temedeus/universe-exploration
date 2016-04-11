@@ -4,6 +4,10 @@
 package com.universe.exploration.survey;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.universe.exploration.crew.CrewMemberStatus;
+import com.universe.exploration.crewmember.CrewMember;
 
 /**
  * <p>
@@ -12,29 +16,29 @@ import java.util.ArrayList;
  * </p>
  * 
  * <p>
- * De facfo maintains a list of {@link SurveyStatus}.
+ * De facfo maintains a list of {@link Survey}.
  * 
  * @author 28.10.2015 Teemu Puurunen
  *
  */
-public class SurveyStatusContainer extends ArrayList<SurveyStatus> {
+public class SurveyContainer extends ArrayList<Survey> {
 
     private static final long serialVersionUID = -3335075506066292326L;
 
     /**
      * <p>
      * Removes surveyStatus from ArrayList if survey is over. We immediately
-     * return a {@link SurveyStatus} because this check is run in a loop. In a
+     * return a {@link Survey} because this check is run in a loop. In a
      * normal scenario surveys should not end simultaneously anyway.
      * </p>
      * 
      * @param currentDay
      *            Day the player is currently at.
-     * @return {@link SurveyStatus} Info on the ended survey and team status.
+     * @return {@link Survey} Info on the ended survey and team status.
      * 
      */
-    public SurveyStatus findAndRemoveOpenSurvey(int currentDay) {
-	for (SurveyStatus surveyStatus : this) {
+    public Survey findAndRemoveOpenSurvey(int currentDay) {
+	for (Survey surveyStatus : this) {
 	    if (currentDay >= surveyStatus.getSurveyEndDay()) {
 		remove(surveyStatus);
 		return surveyStatus;
@@ -44,14 +48,20 @@ public class SurveyStatusContainer extends ArrayList<SurveyStatus> {
 	return null;
     }
 
-    public boolean isSurveyTeamSizeAcceptable(int size, int crewmen) {
-	return (size <= crewmen - crewmenOnSurvey()) ? true : false;
+    public boolean isSurveyTeamAcceptable(List<CrewMember> crewmen) {
+	for(CrewMember member : crewmen) {
+	    if(member.getStatus() != CrewMemberStatus.ALIVE) {
+		return false;
+	    }
+	}
+	
+	return true;
     }
 
     public int crewmenOnSurvey() {
 	int crewmenOnSurvey = 0;
-	for (SurveyStatus surveyStatus : this) {
-	    crewmenOnSurvey += surveyStatus.getCrewmenInSurveyTeam();
+	for (Survey surveyStatus : this) {
+	    crewmenOnSurvey += surveyStatus.getSurveyTeamSize();
 	}
 
 	return crewmenOnSurvey;

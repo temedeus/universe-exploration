@@ -1,6 +1,5 @@
 package com.universe.exploration.userinterface;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.GdxHelper;
+import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.gamegraphics.GameViewObjectContainer;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
@@ -79,6 +80,11 @@ public class UIController {
      * </p>
      */
     private boolean isHyperspaceJumpAllowed = true;
+
+    /**
+     * Use to send messages for logging.
+     */
+    private UEListener logMessageListener;
 
     /**
      * <p>
@@ -298,23 +304,7 @@ public class UIController {
 	return new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_CREW_CONTROL), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		BasicWindow window = createCrewManagementWindow(new ClickListener() {
-		    /*
-		     * (non-Javadoc)
-		     * 
-		     * @see
-		     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked
-		     * (com.badlogic.gdx.scenes.scene2d.InputEvent, float,
-		     * float)
-		     */
-		    @Override
-		    public void clicked(InputEvent event, float x, float y) {
-			UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
-		    }
-		});
-
-		UniverseExploration.windowContainer.add(WindowType.CREW_MANAGEMENT, window);
-		show(window);
+		show(createCrewManagementWindow());
 	    }
 	});
     }
@@ -335,7 +325,9 @@ public class UIController {
     }
 
     public <T extends Actor> void show(T actor) {
-	uiStage.addActor(actor);
+	if(!UniverseExploration.gameStatus.isPaused()) {
+	    uiStage.addActor(actor);
+	}
     }
 
     /**
@@ -352,11 +344,15 @@ public class UIController {
 	});
     }
 
+    private void fireLogMessageListener(String message) {
+	logMessageListener.handleEventClassEvent(new UEEvent(message));
+    }
+
     public void createQuitDialog() {
 	uiStage.addActor(new WindowFactory().createQuitWindow(Localizer.getInstance().get(LocalKey.TITLE_QUIT_GAME)));
     }
 
-    public BasicWindow createSurveyClosedWindow(ArrayList<String> surveydata) {
+    public BasicWindow createSurveyClosedWindow(List<String> surveydata) {
 	Table table = new Table(UserInterfaceBank.userInterfaceSkin);
 
 	for (String row : surveydata) {
@@ -385,8 +381,28 @@ public class UIController {
      * 
      * @param pgfx
      */
-    public BasicWindow createCrewManagementWindow(ClickListener okAction) {
-	return new WindowFactory().createMediumDescriptionWindow(WindowType.CREW_MANAGEMENT, createCrewTable(), okAction);
+    public BasicWindow createCrewManagementWindow() {
+	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.CREW_MANAGEMENT, createCrewTable(),
+		createCrewManagementClickListener());
+
+	UniverseExploration.windowContainer.add(WindowType.CREW_MANAGEMENT, window);
+
+	return window;
+    }
+
+    private ClickListener createCrewManagementClickListener() {
+	return new ClickListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked
+	     * (com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+	     */
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
+	    }
+	};
     }
 
     private Table createCrewTable() {
@@ -400,6 +416,8 @@ public class UIController {
 	    cell.padBottom(15);
 	    cell.padRight(15);
 	    cell.add(new Label(crewmember.getName(), UserInterfaceBank.userInterfaceSkin));
+	    cell.row();
+	    cell.add(new Label(Localizer.getInstance().get(crewmember.getStatus()), UserInterfaceBank.userInterfaceSkin));
 	    cell.row();
 	    cell.add(new ButtonFactory().createTextButton("Details", createCrewmemberDetailsClickListerener(crewmember)));
 	    table.add(cell);
@@ -426,12 +444,44 @@ public class UIController {
 	    public void clicked(InputEvent event, float x, float y) {
 		final CrewMemberDetails crewMemberDetails = new CrewMemberDetails(crewMember);
 		crewMemberDetails.createPairs();
-		
+
 		BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.CREWMEMBER_DETAILS,
-			populateWithStatus(crewMemberDetails), createNewCrewMemberDetailsCLickListener());
+			createCrewMemberDetailsPane(crewMemberDetails), createNewCrewMemberDetailsCLickListener());
 
 		UniverseExploration.windowContainer.add(WindowType.CREWMEMBER_DETAILS, window);
 		show(window);
+	    }
+	};
+    }
+
+    private ScrollPane createCrewMemberDetailsPane(CrewMemberDetails details) {
+	VerticalGroup group = new VerticalGroup();
+	group.addActor(populateWithStatus(details));
+	group.addActor(UIComponentFactory.createSpacer());
+	group.addActor(new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_KICK_OUT_OF_AIRLOCK),
+		createaKillCrewManClickListener(details.getCrewMember())));
+	group.addActor(UIComponentFactory.createSpacer());
+
+	return new ScrollPane(group);
+    }
+
+    private ClickListener createaKillCrewManClickListener(final CrewMember crewmember) {
+	return new ClickListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
+	     * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+	     */
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		crewmember.setStatus(CrewMemberStatus.KIA);
+		fireLogMessageListener("You tossed " + crewmember.getName() + " out the airlock!");
+		UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
+		UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
+		// TODO: work out a way to refresh crew management window
+		show(createCrewManagementWindow());
 	    }
 	};
     }
@@ -444,8 +494,8 @@ public class UIController {
 
     public BasicWindow createSurveyTeamSelectionWindow(PlanetGfxContainer pgfx) {
 	Table planetInformationTable = new Table();
-
-	planetInformationTable.add(new SurveyTeamSelection(UniverseExploration.crew).createSurveyTeamSelectionTable());
+	SurveyTeamSelection teamSelection = new SurveyTeamSelection(UniverseExploration.crew);
+	planetInformationTable.add(teamSelection.createSurveyTeamSelectionTable());
 	planetInformationTable.row();
 
 	planetInformationTable
@@ -453,13 +503,14 @@ public class UIController {
 	planetInformationTable.row();
 
 	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, CoreConfiguration.MAX_DAYS_ON_SURVEY, 1);
-	((PlanetSurveyForm) pair.getFormContainer()).setPlanet((PlanetCelestialComponent) pgfx.getComponentType());
-
+	PlanetSurveyForm form = (PlanetSurveyForm) pair.getFormContainer();
+	form.setPlanet((PlanetCelestialComponent) pgfx.getComponentType());
+	form.setSelectedCrewMembers(teamSelection.getSelectedCrewMembers());
 	planetInformationTable.add(pair.getTable());
 	planetInformationTable.row();
 
 	BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
-		createdPlanetSurveyTeamDispatchedClickListener((PlanetSurveyForm) pair.getFormContainer()));
+		createdPlanetSurveyTeamDispatchedClickListener(form));
 
 	return window;
     }
@@ -542,6 +593,21 @@ public class UIController {
      */
     public void setSelectedPlanetChangedListener(UEListener selectedPlanetChangedListener) {
 	planetSelection.setSelectedPlanetChangedListener(selectedPlanetChangedListener);
+    }
+
+    /**
+     * @return the logMessageListener
+     */
+    public UEListener getLogMessageListener() {
+	return logMessageListener;
+    }
+
+    /**
+     * @param logMessageListener
+     *            the logMessageListener to set
+     */
+    public void setLogMessageListener(UEListener logMessageListener) {
+	this.logMessageListener = logMessageListener;
     }
 
 }

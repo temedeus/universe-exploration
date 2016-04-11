@@ -24,6 +24,7 @@ public enum LocalKey implements TranslatableEnum {
     TITLE_SURVEY,
     TITLE_TIME,
     TITLE_CREWMEN_LEFT,
+    TITLE_CREWMEN_ON_SURVEY,
     TITLE_AIR,
     TITLE_WATER,
     TITLE_FOOD,
@@ -59,7 +60,8 @@ public enum LocalKey implements TranslatableEnum {
     BTN_MIN_VOLUME,
     BTN_MAX_VOLUME,
     BTN_CREW_CONTROL,
-
+    BTN_KICK_OUT_OF_AIRLOCK,
+    
     // Generic terms
     GENERIC_AIR,
     GENERIC_WATER,

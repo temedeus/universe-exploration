@@ -22,7 +22,7 @@ public class CoreConfiguration {
 
     public static final float MAX_AIR = 100;
 
-    public static final float MAX_WATER = 100;
+    public static final float MAX_WATER = 10000;
 
     public static final float MAX_POWER = 100;
 

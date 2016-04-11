@@ -3,18 +3,17 @@
  */
 package com.universe.exploration.survey;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.universe.exploration.casualty.Casualty;
-import com.universe.exploration.crewmember.Crew;
+import com.universe.exploration.crewmember.CrewMember;
 
 /**
  * @author 25.10.2015 Teemu Puurunen
  *
  */
-public class SurveyStatus {
-    private List<Crew> surveyTeam;
+public class Survey {
+    private List<CrewMember> surveyTeam;
 
     /**
      * The day survey started.
@@ -29,7 +28,7 @@ public class SurveyStatus {
     /**
      * Determines how many crewmen will die during the survey.
      */
-    private ArrayList<Casualty> mortalities;
+    private List<Casualty> mortalities;
 
     private ResourcesFound resourcesFound;
 
@@ -51,7 +50,7 @@ public class SurveyStatus {
     /**
      * @return the mortalities
      */
-    public ArrayList<Casualty> getMortalities() {
+    public List<Casualty> getMortalities() {
 	return mortalities;
     }
 
@@ -59,7 +58,7 @@ public class SurveyStatus {
      * @param mortalities
      *            the mortalities to set
      */
-    public void setMortalities(ArrayList<Casualty> mortalities) {
+    public void setMortalities(List<Casualty> mortalities) {
 	this.mortalities = mortalities;
     }
 
@@ -96,14 +95,14 @@ public class SurveyStatus {
     /**
      * @return the surveyTeam
      */
-    public List<Crew> getSurveyTeam() {
+    public List<CrewMember> getSurveyTeam() {
         return surveyTeam;
     }
 
     /**
      * @param surveyTeam the surveyTeam to set
      */
-    public void setSurveyTeam(List<Crew> surveyTeam) {
+    public void setSurveyTeam(List<CrewMember> surveyTeam) {
         this.surveyTeam = surveyTeam;
     }
     
@@ -111,7 +110,7 @@ public class SurveyStatus {
      * 
      * @return
      */
-    public int getCrewmenInSurveyTeam() {
+    public int getSurveyTeamSize() {
 	return surveyTeam.size();
     }
 

@@ -7,16 +7,16 @@ import java.util.ArrayList;
 
 /**
  * <p>
- * List of applicable causes of deaths. Essentially this class is an array. A
+ * List of applicable survey incidents. Essentially this class is an array. A
  * separate class (extending ArrayList) was created to ease work of the factory
- * class {@link ApplicableCauseOfDeathFactory}. One can only use
- * {@link CauseOfDeathCategory} with this class.
+ * class {@link ApplicableSurveyIncidentFactory}. One can only use
+ * {@link SurveyIncidentCategory} with this class.
  * </p>
  * 
  * @author 25.10.2015 Teemu Puurunen
  *
  */
-class ApplicableCauseOfDeathCategories extends ArrayList<CauseOfDeathCategory> {
+class ApplicableSurveyIncidentCategoryList extends ArrayList<SurveyIncidentCategory> {
 
     /**
      * Generated serial ID.

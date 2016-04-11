@@ -10,5 +10,5 @@ import com.universe.exploration.common.TranslatableEnum;
  *
  */
 public enum CrewMemberCondition implements TranslatableEnum {
-    PHSYICAL_INJURY, PSYCHOSIS, OXYGEN_DEPRIVATION, MALNUTRITION, WATER_DEPRIVATION;
+    PHYSICAL_INJURY, PSYCHOSIS, OXYGEN_DEPRIVATION, MALNUTRITION, WATER_DEPRIVATION;
 }

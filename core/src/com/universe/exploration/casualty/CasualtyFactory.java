@@ -27,11 +27,11 @@ public class CasualtyFactory {
     public Casualty createCasualty(CrewMember crewMember) {
 	Casualty casualty = new Casualty();
 
-	ApplicableCauseOfDeathFactory acdf = new ApplicableCauseOfDeathFactory();
-	CauseOfDeathRandomPicker codFactory = new CauseOfDeathRandomPicker(acdf.createListofApplicableCauseOfDeath(planet));
+	ApplicableSurveyIncidentFactory acdf = new ApplicableSurveyIncidentFactory();
+	SurveyIncidentRandomPicker codFactory = new SurveyIncidentRandomPicker(acdf.createListofApplicableCauseOfDeath(planet));
 
 	casualty.setCauseOfDeath(codFactory.pickRandomCauseOfDeath());
-	casualty.setCrewmenID(crewMember.getId());
+	casualty.setMember(crewMember);
 
 	return casualty;
     }

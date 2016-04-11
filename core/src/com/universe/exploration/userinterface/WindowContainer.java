@@ -69,6 +69,12 @@ public class WindowContainer {
 	    }
 	}
     }
+    
+    public void closeAllWindows() {
+	for(WindowType type : WindowType.values()) {
+	    closeWindow(type);
+	}
+    }
 
     private void checkIfNeedToAlert(WindowType key, WindowContainerEvent event) {
 	if (Arrays.asList(windowTypes).contains(key)) {

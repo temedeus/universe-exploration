@@ -13,7 +13,7 @@ package com.universe.exploration.survey;
  */
 public enum ResourcesFoundBoundaries {
 
-    WATER(0, 8), AIR(0, 8), FOOD(0, 8);
+    WATER(0, 100), AIR(0, 8), FOOD(0, 8);
 
     private float min;
     private float max;

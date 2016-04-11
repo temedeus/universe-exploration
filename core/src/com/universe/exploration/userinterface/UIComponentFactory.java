@@ -32,8 +32,15 @@ public class UIComponentFactory {
 	sliderTable.row();
 
 	PlanetSurveyForm surveyForm = new PlanetSurveyForm();
-	surveyForm.setCrewmenCount(slider);
+	surveyForm.setSurveyLength(slider);
 
 	return new TableFormContainerPair(surveyForm, sliderTable);
+    }
+    
+    public static Table createSpacer() {
+	Table table = new Table();
+	table.add(new Label("", UserInterfaceBank.userInterfaceSkin));
+	
+	return table;
     }
 }

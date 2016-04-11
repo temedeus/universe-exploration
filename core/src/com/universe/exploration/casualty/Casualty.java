@@ -3,6 +3,8 @@
  */
 package com.universe.exploration.casualty;
 
+import com.universe.exploration.crewmember.CrewMember;
+
 /**
  * <p>
  * Bean describing crewmans death, reason of fatality etc.
@@ -13,41 +15,26 @@ package com.universe.exploration.casualty;
  */
 public class Casualty {
 
-    private int crewmenID;
-
+    private CrewMember member;
+    
     /**
      * Determine cause of death.
      */
-    private CauseOfDeath causeOfDeath;
-
-    /**
-     * @return the crewmenID
-     */
-    public int getCrewmenID() {
-	return crewmenID;
-    }
+    private SurveyIncident incident;
 
     /**
      * @return the causeOfDeath
      */
-    public CauseOfDeath getCauseOfDeath() {
-	return causeOfDeath;
-    }
-
-    /**
-     * @param crewmenID
-     *            the crewmenID to set
-     */
-    public void setCrewmenID(int crewmenID) {
-	this.crewmenID = crewmenID;
+    public SurveyIncident getSurveyIncident() {
+	return incident;
     }
 
     /**
      * @param causeOfDeath
      *            the causeOfDeath to set
      */
-    public void setCauseOfDeath(CauseOfDeath causeOfDeath) {
-	this.causeOfDeath = causeOfDeath;
+    public void setCauseOfDeath(SurveyIncident causeOfDeath) {
+	this.incident = causeOfDeath;
     }
 
     /*
@@ -57,6 +44,20 @@ public class Casualty {
      */
     @Override
     public String toString() {
-	return "Casualty [crewmenID=" + crewmenID + ", causeOfDeath=" + causeOfDeath + "]";
+	return "Casualty [crewmenID=" + member.getId() + ", causeOfDeath=" + incident + "]";
+    }
+
+    /**
+     * @return the member
+     */
+    public CrewMember getMember() {
+        return member;
+    }
+
+    /**
+     * @param member the member to set
+     */
+    public void setMember(CrewMember member) {
+        this.member = member;
     }
 }

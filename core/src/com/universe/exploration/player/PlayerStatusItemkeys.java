@@ -21,4 +21,7 @@ public class PlayerStatusItemkeys {
     public static String FOOD = "FOOD";
 
     public static String MORALE = "MORALE";
+    
+    public static String CREWMEN_ON_SURVEY = "CREWMEN_ON_SURVEY";
 }
+

@@ -38,10 +38,10 @@ public class CrewMembersInitializer {
 
     public CrewMembersInitializer() throws IOException {
 	FileReader fh = new FileReader();
+
 	for (CrewmemberProfileSource filepath : CREWMEMBER_PROFILE_FILES) {
-	    
-	    for(String name : fh.readTextFile(filepath.getTemplatePath())) {
-		 add(new CrewmemberProfile(filepath.getCrewmemberSex(), filepath.getNationality(), name));
+	    for (String name : fh.readTextFile(filepath.getTemplatePath())) {
+		add(new CrewmemberProfile(filepath.getCrewmemberSex(), filepath.getNationality(), name));
 	    }
 	}
     }
@@ -108,7 +108,6 @@ public class CrewMembersInitializer {
     }
 
 }
-
 
 class CrewmemberProfileSource {
     private CrewmemberSex crewmemberSex;

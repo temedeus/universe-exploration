@@ -9,29 +9,29 @@ import com.universe.exploration.common.tools.RandomizationTools;
 
 /**
  * <p>
- * Use this picker to randomly choose {@link CauseOfDeath} from applicable list
+ * Use this picker to randomly choose {@link SurveyIncident} from applicable list
  * of causes of death.
  * </p>
  * 
  * @author 30.10.2015 Teemu Puurunen
  *
  */
-class CauseOfDeathRandomPicker {
+class SurveyIncidentRandomPicker {
 
-    private ArrayList<CauseOfDeath> listOfApplicableCauseOfDeaths;
+    private ArrayList<SurveyIncident> listOfApplicableCauseOfDeaths;
 
-    CauseOfDeathRandomPicker(ApplicableCauseOfDeathCategories applicableCauseOfDeath) {
-	listOfApplicableCauseOfDeaths = new ArrayList<CauseOfDeath>();
+    SurveyIncidentRandomPicker(ApplicableSurveyIncidentCategoryList applicableCauseOfDeath) {
+	listOfApplicableCauseOfDeaths = new ArrayList<SurveyIncident>();
 
-	for (CauseOfDeath causeOfDeath : CauseOfDeath.values()) {
-	    CauseOfDeathCategory cdc = causeOfDeath.getCauseOfDeathCategory();
+	for (SurveyIncident causeOfDeath : SurveyIncident.values()) {
+	    SurveyIncidentCategory cdc = causeOfDeath.getCauseOfDeathCategory();
 	    if (applicableCauseOfDeath.contains(cdc)) {
 		listOfApplicableCauseOfDeaths.add(causeOfDeath);
 	    }
 	}
     }
 
-    public CauseOfDeath pickRandomCauseOfDeath() {
+    public SurveyIncident pickRandomCauseOfDeath() {
 	int index = RandomizationTools.getRandomInteger(0, listOfApplicableCauseOfDeaths.size() - 1);
 	return listOfApplicableCauseOfDeaths.get(index);
     }

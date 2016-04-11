@@ -57,4 +57,18 @@ public class CrewMemberDetails extends DataPairContainer {
 	
 	return tmp;
     }
+
+    /**
+     * @return the crewMember
+     */
+    public CrewMember getCrewMember() {
+        return crewMember;
+    }
+
+    /**
+     * @param crewMember the crewMember to set
+     */
+    public void setCrewMember(CrewMember crewMember) {
+        this.crewMember = crewMember;
+    }
 }

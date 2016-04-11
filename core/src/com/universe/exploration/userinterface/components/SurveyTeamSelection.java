@@ -21,7 +21,7 @@ import com.universe.exploration.userinterface.ButtonFactory;
 public class SurveyTeamSelection {
 
     public SurveyTeamSelection(Crew crew) {
-	unselectedCrewMembers.addAll(crew.getAliveCrewmen());
+	unselectedCrewMembers.addAll(crew.getCrewMenAboardSpaceShip());
     }
 
     private List<CrewMember> unselectedCrewMembers = new ArrayList<CrewMember>();
@@ -126,5 +126,19 @@ public class SurveyTeamSelection {
 
     enum SurveyTeamCrewMemberModifyType {
 	ADD, REMOVE;
+    }
+
+    /**
+     * @return the selectedCrewMembers
+     */
+    public List<CrewMember> getSelectedCrewMembers() {
+        return selectedCrewMembers;
+    }
+
+    /**
+     * @param selectedCrewMembers the selectedCrewMembers to set
+     */
+    public void setSelectedCrewMembers(List<CrewMember> selectedCrewMembers) {
+        this.selectedCrewMembers = selectedCrewMembers;
     }
 }

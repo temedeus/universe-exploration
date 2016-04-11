@@ -68,7 +68,7 @@ public class WindowFactory {
 	return window;
     }
 
-    private Table combineDataAndButtonbar(Table contentTable, Table buttontable) {
+    private <T extends Actor> Table combineDataAndButtonbar(T contentTable, Table buttontable) {
 	Table table = new Table();
 	table.add(contentTable);
 	table.row();
@@ -98,7 +98,7 @@ public class WindowFactory {
 
 	buttontable.row();
 
-	window.add(combineDataAndButtonbar((Table) contentTable, buttontable));
+	window.add(combineDataAndButtonbar(contentTable, buttontable));
 
 	return window;
     }

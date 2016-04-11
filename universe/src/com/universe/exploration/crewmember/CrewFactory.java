@@ -52,6 +52,7 @@ public class CrewFactory {
 		.setAge(RandomizationTools.getRandomInteger(CrewCharacteristicsBoundaries.MIN_AGE, CrewCharacteristicsBoundaries.MAX_AGE));
 	crewmember.setNationality(profile.getNationality());
 	crewmember.setStatus(CrewMemberStatus.ALIVE);
+	crewmember.setHealth(100);
 	
 	// Crewman characteristics
 	setupCrewmanCharacteristics(crewmember);

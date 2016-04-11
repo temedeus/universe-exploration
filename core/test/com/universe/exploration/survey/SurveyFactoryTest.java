@@ -11,20 +11,20 @@ import com.universe.exploration.common.Lifeforms;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
-public class SurveyStatusFactoryTest {
+public class SurveyFactoryTest {
 
     @Test
     public void testCreateSurveyStatusNoMoreMortalitiesThanCrewMembers() throws Exception {
-	SurveyStatusFactory ssf = new SurveyStatusFactory();
-	SurveyStatus ss = ssf.createSurveyStatus(5, generateTestListOfCrewmen(), createTestPlanet());
+	SurveyFactory ssf = new SurveyFactory();
+	Survey ss = ssf.createSurveyStatus(5, 3, generateTestListOfCrewmen(), createTestPlanet());
 
-	Assert.assertTrue(ss.getCrewmenInSurveyTeam() >= ss.getMortalities().size());
+	Assert.assertTrue(ss.getSurveyTeamSize() >= ss.getMortalities().size());
     }
 
     @Test
     public void testCreateSurveyStatus() throws Exception {
-	SurveyStatusFactory ssf = new SurveyStatusFactory();
-	SurveyStatus ss = ssf.createSurveyStatus(5, generateTestListOfCrewmen(), createTestPlanet());
+	SurveyFactory ssf = new SurveyFactory();
+	Survey ss = ssf.createSurveyStatus(5, 3, generateTestListOfCrewmen(), createTestPlanet());
 
 	System.out.println(ss.toString());
 	System.out.println("Mortalities:\n");

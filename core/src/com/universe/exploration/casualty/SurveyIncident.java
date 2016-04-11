@@ -6,6 +6,8 @@ package com.universe.exploration.casualty;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.universe.exploration.crew.CrewMemberCondition;
+import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.attribute.Agility;
 import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
 import com.universe.exploration.crewmember.attribute.Intelligence;
@@ -25,13 +27,42 @@ import com.universe.exploration.crewmember.attribute.Strength;
  * @author 25.10.2015 Teemu Puurunen
  *
  */
-public enum CauseOfDeath {
+public enum SurveyIncident {
     // No oxygen on the planet
-    HELMET_BREACH("HELMET_BREACH", CauseOfDeathCategory.LACK_OF_OXYGEN),
-    RIP_ON_SUIT("RIP_ON_SUIT", CauseOfDeathCategory.LACK_OF_OXYGEN),
+    HELMET_BREACH("HELMET_BREACH", SurveyIncidentCategory.LACK_OF_OXYGEN) {
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesStatus()
+	 */
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.KIA;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+	 */
+	@Override
+	public CrewMemberCondition causesCondition() {
+	   return CrewMemberCondition.OXYGEN_DEPRIVATION;
+	}
+    },
+    RIP_ON_SUIT("RIP_ON_SUIT", SurveyIncidentCategory.LACK_OF_OXYGEN) {
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.KIA;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+	 */
+	@Override
+	public CrewMemberCondition causesCondition() {
+	   return CrewMemberCondition.OXYGEN_DEPRIVATION;
+	}
+    },
 
     // Animals present
-    ATTACKED_BY_ANIMALS("ATTACKED_BY_ANIMALS", CauseOfDeathCategory.ANIMAL) {
+    ATTACKED_BY_ANIMALS("ATTACKED_BY_ANIMALS", SurveyIncidentCategory.ANIMAL) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -43,11 +74,24 @@ public enum CauseOfDeath {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfContributingAttributes();
+	}
+	
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.KIA;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+	 */
+	@Override
+	public CrewMemberCondition causesCondition() {
+	   return CrewMemberCondition.PHYSICAL_INJURY;
 	}
     },
 
     // Civilization present
-    KILLED_BY_LOCALS("KIA_BY_LOCALS", CauseOfDeathCategory.CIVILIZATION) {
+    KILLED_BY_LOCALS("KIA_BY_LOCALS", SurveyIncidentCategory.CIVILIZATION) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -60,8 +104,21 @@ public enum CauseOfDeath {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfContributingAttributes();
 	}
+	
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.KIA;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+	 */
+	@Override
+	public CrewMemberCondition causesCondition() {
+	   return CrewMemberCondition.PHYSICAL_INJURY;
+	}
     },
-    SEDUCED_BY_AMAZONS("SEDUCED_BY_AMAZONS", CauseOfDeathCategory.CIVILIZATION) {
+    SEDUCED_BY_AMAZONS("SEDUCED_BY_AMAZONS", SurveyIncidentCategory.CIVILIZATION) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -75,10 +132,15 @@ public enum CauseOfDeath {
 	    listOfApplicableAttributes.add(Intelligence.class);
 	    return listOfContributingAttributes();
 	}
+	
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.MIA;
+	}
     },
 
     // General
-    FELL_OFF_CLIFF("FELL_OFF_CLIFF", CauseOfDeathCategory.GENERAL) {
+    FELL_OFF_CLIFF("FELL_OFF_CLIFF", SurveyIncidentCategory.GENERAL) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -92,9 +154,22 @@ public enum CauseOfDeath {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfContributingAttributes();
 	}
+	
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.KIA;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+	 */
+	@Override
+	public CrewMemberCondition causesCondition() {
+	   return CrewMemberCondition.PHYSICAL_INJURY;
+	}
 
     },
-    MALNUTRION("MALNUTRITION", CauseOfDeathCategory.GENERAL) {
+    MALNUTRION("MALNUTRITION", SurveyIncidentCategory.GENERAL) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -107,8 +182,21 @@ public enum CauseOfDeath {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfContributingAttributes();
 	}
+	
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.KIA;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+	 */
+	@Override
+	public CrewMemberCondition causesCondition() {
+	   return CrewMemberCondition.MALNUTRITION;
+	}
     },
-    CREWMEN_WENT_NUTS("CREWMEN_WENT_NUTS", CauseOfDeathCategory.GENERAL) {
+    CREWMEN_WENT_NUTS("CREWMEN_WENT_NUTS", SurveyIncidentCategory.GENERAL) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -121,8 +209,21 @@ public enum CauseOfDeath {
 	    listOfApplicableAttributes.add(Morale.class);
 	    return listOfContributingAttributes();
 	}
+	
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.KIA;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+	 */
+	@Override
+	public CrewMemberCondition causesCondition() {
+	   return CrewMemberCondition.PSYCHOSIS;
+	}
     },
-    WATER_DEPRIVATION("WATER_DEPRIVATION", CauseOfDeathCategory.GENERAL) {
+    WATER_DEPRIVATION("WATER_DEPRIVATION", SurveyIncidentCategory.GENERAL) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -135,13 +236,26 @@ public enum CauseOfDeath {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfContributingAttributes();
 	}
+	
+	@Override
+	public CrewMemberStatus causesStatus() {
+	    return CrewMemberStatus.KIA;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+	 */
+	@Override
+	public CrewMemberCondition causesCondition() {
+	   return CrewMemberCondition.WATER_DEPRIVATION;
+	}
     };
 
     private String localizationKey;
 
-    private CauseOfDeathCategory causeOfDeathCategory;
+    private SurveyIncidentCategory causeOfDeathCategory;
 
-    private CauseOfDeath(String localizationKey, CauseOfDeathCategory causeOfDeathCategory) {
+    private SurveyIncident(String localizationKey, SurveyIncidentCategory causeOfDeathCategory) {
 	this.localizationKey = localizationKey;
 	this.causeOfDeathCategory = causeOfDeathCategory;
     }
@@ -154,6 +268,23 @@ public enum CauseOfDeath {
      * @return
      */
     public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
+	return null;
+    }
+    
+    /**
+     * Determines what condition crewman is exposed to due to this event.
+     * @return
+     */
+    public CrewMemberCondition causesCondition() {
+	return null;
+    }
+    
+    
+    /**
+     * Determines what status is caused because of this event.
+     * @return
+     */
+    public CrewMemberStatus causesStatus() {
 	return null;
     }
 
@@ -175,7 +306,7 @@ public enum CauseOfDeath {
     /**
      * @return the causeOfDeathCategory
      */
-    public CauseOfDeathCategory getCauseOfDeathCategory() {
+    public SurveyIncidentCategory getCauseOfDeathCategory() {
 	return causeOfDeathCategory;
     }
 
@@ -183,7 +314,7 @@ public enum CauseOfDeath {
      * @param causeOfDeathCategory
      *            the causeOfDeathCategory to set
      */
-    public void setCauseOfDeathCategory(CauseOfDeathCategory causeOfDeathCategory) {
+    public void setCauseOfDeathCategory(SurveyIncidentCategory causeOfDeathCategory) {
 	this.causeOfDeathCategory = causeOfDeathCategory;
     }
 }

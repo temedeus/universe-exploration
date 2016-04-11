@@ -26,6 +26,7 @@ public class Localizer {
 
     private HashMap<LanguageCode, Localization> localization = new HashMap<LanguageCode, Localization>();
 
+    // English by default
     private LanguageCode languageCode = LanguageCode.ENG;
 
     /**

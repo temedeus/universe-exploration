@@ -8,22 +8,23 @@ import java.util.List;
 
 import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.casualty.CasualtyFactory;
+import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
  * <p>
- * Factory for creating {@link SurveyStatus} instances.
+ * Factory for creating {@link Survey} instances.
  * </p>
  * 
  * @author 25.10.2015 Teemu Puurunen
  *
  */
-public class SurveyStatusFactory {
+public class SurveyFactory {
 
     /**
      * <p>
-     * Create a {@link SurveyStatus} object based on start day and planet data.
+     * Create a {@link Survey} object based on start day and planet data.
      * </p>
      * 
      * @param startDay
@@ -32,22 +33,29 @@ public class SurveyStatusFactory {
      * @param planet
      * @return
      */
-    public SurveyStatus createSurveyStatus(int startDay, List<CrewMember> surveyTeam, PlanetCelestialComponent planet) {
+    public Survey createSurveyStatus(int startDay, int surveyLength, List<CrewMember> surveyTeam, PlanetCelestialComponent planet) {
 	ResourcesFoundFactory rff = new ResourcesFoundFactory();
-	SurveyStatus surveyStatus = new SurveyStatus();
+	Survey surveyStatus = new Survey();
 
 	surveyStatus.setSurveyStartDay(startDay);
-	surveyStatus.setSurveyEndDay(startDay + 2);
+	surveyStatus.setSurveyEndDay(startDay + surveyLength);
 	surveyStatus.setResourcesFound(rff.generateFoundResource(surveyTeam.size(), planet));
-
+	setMemberStatusOnSurvey(surveyTeam);
+	
 	surveyStatus.setMortalities(createCasualtyList(surveyTeam, planet));
 
 	return surveyStatus;
     }
+    
+    private void setMemberStatusOnSurvey(List<CrewMember> surveyTeam) {
+	for(CrewMember member : surveyTeam) {
+	    member.setStatus(CrewMemberStatus.ONSURVEY);
+	}
+    }
 
-    private ArrayList<Casualty> createCasualtyList(List<CrewMember> surveyTeam, PlanetCelestialComponent planet) {
+    private List<Casualty> createCasualtyList(List<CrewMember> surveyTeam, PlanetCelestialComponent planet) {
 	CasualtyFactory mf = new CasualtyFactory(planet);
-	ArrayList<Casualty> casualties = new ArrayList<Casualty>();
+	List<Casualty> casualties = new ArrayList<Casualty>();
 
 	for (CrewMember surveyTeamMember : surveyTeam) {
 	    Casualty casualty = mf.createCasualty(surveyTeamMember);

@@ -11,4 +11,5 @@ import com.universe.exploration.common.TranslatableEnum;
  */
 public enum CrewMemberStatus implements TranslatableEnum {
     ALIVE, KIA, MIA, ONSURVEY;
+
 }

@@ -9,6 +9,7 @@ BTN_MAX_VOLUME:Max volume
 BTN_MIN_VOLUME:Min volume
 
 BTN_CREW_CONTROL:Crew control
+BTN_KICK_OUT_OF_AIRLOCK:Kick out of airlock
 
 // Titles
 TITLE_QUIT_GAME:Quit game
@@ -33,6 +34,7 @@ TITLE_CREW_MANAGEMENT:Crew management
 TITLE_CREWMEMBER_DETAILS:Crew member details
 TITLE_ADD_CREWMEMBERS_TO_SURVEYTEAM:Add crewmembers to survey team:
 TITLE_REMOVE_CREWMBMERS_FROM_SURVEYTEAM:Remove crewmembers from survey team:
+TITLE_CREWMEN_ON_SURVEY:Crewmembers on survey:
 // Labels
 LABEL_CREWMEN_COUNT:Crewmen count:
 LABEL_PLANET_SELECTION:Select planet:
