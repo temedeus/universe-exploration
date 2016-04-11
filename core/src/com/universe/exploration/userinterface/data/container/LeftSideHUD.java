@@ -36,7 +36,7 @@ public class LeftSideHUD extends DataPairContainer {
     public void updateHUDValues(CrewStatusManager playerStatus) {
 	update(PlayerStatusItemkeys.TIME, "" + (int) playerStatus.getTime() + " days");
 	update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int) playerStatus.getAir()));
-	update(PlayerStatusItemkeys.CREWMEN, "" + (int) UniverseExploration.crew.getAliveCrewmen().size());
+	update(PlayerStatusItemkeys.CREWMEN, "" + (int) UniverseExploration.crew.getCrewMenAboardSpaceShip().size());
 	update(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, "" + (int) UniverseExploration.crew.getCrewMenOnSurvey().size());
 	update(PlayerStatusItemkeys.WATER, "" + (int) playerStatus.getWater() + " litres");
 	update(PlayerStatusItemkeys.FOOD, "" + (int) playerStatus.getFood() + " kcal");

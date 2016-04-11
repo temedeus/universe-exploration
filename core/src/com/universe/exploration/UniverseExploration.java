@@ -285,7 +285,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		SurveyFactory ssf = new SurveyFactory();
 		Survey ss = ssf.createSurveyStatus((int) crewStatus.getTime(), surveyLength, form.getSelectedCrewMembers(),
 			(PlanetCelestialComponent) form.getPlanet());
-
+		ss.setSurveyTeam(crew);
 		surveyStatusContainer.add(ss);
 
 		updateIngameLog("Survey team of " + crew.size() + " men and women dispatched.");
@@ -383,7 +383,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	    if (casualtyList.size() > 0) {
 		updateIngameLog("You have lost " + casualtyList.size() + " crewmen on survey.");
-		printMortalityLog(casualtyList);
+		handleCrewmenCasualtiesFromSurvey(casualtyList);
 	    } else {
 		caption = Localizer.getInstance().get(LocalKey.TITLE_SURVEY_TEAM_SURVIVED);
 		updateIngameLog(caption);
@@ -413,7 +413,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	surveydata.add(caption);
 	if (casualtyList.size() > 0) {
 	    for (Casualty casualty : casualtyList) {
-		surveydata.add(casualty.getMember().getName() + ":_ "
+		surveydata.add(casualty.getMember().getName() + ": "
 			+ Localizer.getInstance().get(casualty.getSurveyIncident().getLocalizationKey()));
 	    }
 	}
@@ -454,8 +454,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	return caption;
     }
 
-    private void printMortalityLog(List<Casualty> mc) {
-	for (Casualty casualty : mc) {
+    private void handleCrewmenCasualtiesFromSurvey(List<Casualty> casualtyList) {
+	for (Casualty casualty : casualtyList) {
 	    String localizationKey = casualty.getSurveyIncident().getLocalizationKey();
 
 	    CrewMember member = casualty.getMember();
