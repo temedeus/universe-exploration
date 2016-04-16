@@ -3,8 +3,11 @@
  */
 package com.universe.exploration.casualty;
 
+import java.util.List;
+
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.crewmember.CrewMember;
+import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -46,16 +49,16 @@ public class CasualtyFactory {
 
     private boolean calculateIfIncidentHappens(SurveyIncident incident, CrewMember crewMember) {
 
-	/*List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = incident.listOfContributingAttributes();
+	List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = incident.listOfContributingAttributes();
 
 	int attributeValueSum = 0;
 
 	for (Class<? extends CrewMemberAttribute> clazz : listOfApplicableAttributes) {
 	    attributeValueSum += crewMember.getCrewMemberAttributes().get(clazz.getName()).getValue();
-	}*/
-	
-	float odds = incident.getOdds();// - (incident.getOdds() * (float) attributeValueSum / 100);
-		
+	}
+
+	float odds = incident.getOdds() - (incident.getOdds() * (float) attributeValueSum / 100);
+
 	return (MathTools.calculateIfOddsHit(odds)) ? true : false;
     }
 }

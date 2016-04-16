@@ -73,7 +73,7 @@ public enum SurveyIncident {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
-	    return listOfContributingAttributes();
+	    return listOfApplicableAttributes;
 	}
 	
 	@Override
@@ -102,7 +102,7 @@ public enum SurveyIncident {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
-	    return listOfContributingAttributes();
+	    return listOfApplicableAttributes;
 	}
 	
 	@Override
@@ -130,7 +130,7 @@ public enum SurveyIncident {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Morale.class);
 	    listOfApplicableAttributes.add(Intelligence.class);
-	    return listOfContributingAttributes();
+	    return listOfApplicableAttributes;
 	}
 	
 	@Override
@@ -152,7 +152,7 @@ public enum SurveyIncident {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Agility.class);
 	    listOfApplicableAttributes.add(Strength.class);
-	    return listOfContributingAttributes();
+	    return listOfApplicableAttributes;
 	}
 	
 	@Override
@@ -180,7 +180,7 @@ public enum SurveyIncident {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
-	    return listOfContributingAttributes();
+	    return listOfApplicableAttributes;
 	}
 	
 	@Override
@@ -207,7 +207,7 @@ public enum SurveyIncident {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Morale.class);
-	    return listOfContributingAttributes();
+	    return listOfApplicableAttributes;
 	}
 	
 	@Override
@@ -234,7 +234,7 @@ public enum SurveyIncident {
 	public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
 	    List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	    listOfApplicableAttributes.add(Strength.class);
-	    return listOfContributingAttributes();
+	    return listOfApplicableAttributes;
 	}
 	
 	@Override
@@ -271,7 +271,8 @@ public enum SurveyIncident {
      * @return
      */
     public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
-	return null;
+	List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
+	return listOfApplicableAttributes;
     }
     
     /**

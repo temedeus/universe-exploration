@@ -81,7 +81,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	enlarged = new Sprite(texture);
 	enlarged.setSize(CoreConfiguration.ENLARGED_PLANET_SPRITE_SIZE, CoreConfiguration.ENLARGED_PLANET_SPRITE_SIZE);
 	enlarged.setOrigin(enlarged.getWidth() / 2, enlarged.getHeight() / 2);
-	enlarged.setPosition(-(enlarged.getWidth() / 2), -(enlarged.getWidth() / 2));
+	enlarged.setPosition(-(enlarged.getWidth() / 2) - 600, -(enlarged.getWidth() / 2 + 600));
     }
 
     public void updateSpritePosition() {

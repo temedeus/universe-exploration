@@ -15,6 +15,8 @@ import com.universe.exploration.localization.Localizer;
  * not direct strings.
  * </p>
  * 
+ * TODO: Maybe {@link BasicWindow} could incorporate type within?
+ * 
  * @author 1.11.2015 Teemu Puurunen
  *
  */
@@ -47,10 +49,13 @@ public enum WindowType {
 	    return dependencies;
 	}
     },
-    
+
     CREW_MANAGEMENT(LocalKey.TITLE_CREW_MANAGEMENT, LocalKey.BTN_OK) {
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.ueui.components.window.WindowType#retreiveChildWindows()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.universe.exploration.ueui.components.window.WindowType#
+	 * retreiveChildWindows()
 	 */
 	@Override
 	public List<WindowType> retreiveChildWindows() {
@@ -60,7 +65,7 @@ public enum WindowType {
 	    return dependencies;
 	}
     },
-    
+
     CREWMEMBER_DETAILS(LocalKey.TITLE_CREWMEMBER_DETAILS, LocalKey.BTN_OK),
 
     /**

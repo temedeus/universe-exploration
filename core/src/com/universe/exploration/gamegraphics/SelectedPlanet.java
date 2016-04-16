@@ -27,6 +27,7 @@ public class SelectedPlanet {
 
     public void handleAlpha(boolean fadeAway) {
 	selectedPlanet.getEnlarged().setAlpha(planetFader.updateAlpha(fadeAway));
+	selectedPlanet.getEnlarged().rotate(0.01f);
     }
 
     /**

@@ -3,7 +3,7 @@
  */
 package com.universe.exploration.celestialcomponents.configuration;
 
-import com.universe.exploration.common.Lifeforms;
+import com.universe.exploration.common.Lifeform;
 import com.universe.exploration.common.tools.MathTools;
 
 /**
@@ -31,26 +31,26 @@ public class PlanetComponent extends ComponentType {
      * @param necessitiesMet
      * @return
      */
-    public Lifeforms randomizePlanetLife(boolean necessitiesMet) {
+    public Lifeform randomizePlanetLife(boolean necessitiesMet) {
 	if (necessitiesMet) {
 	    if (MathTools.calculateIfOddsHit(getChanceCivilization())) {
-		return Lifeforms.CIVILIZED;
+		return Lifeform.CIVILIZED;
 	    }
 
 	    if (MathTools.calculateIfOddsHit(getChanceAnimal())) {
-		return Lifeforms.ANIMAL;
+		return Lifeform.ANIMAL;
 	    }
 
 	    if (MathTools.calculateIfOddsHit(getChanceForVegetation())) {
-		return Lifeforms.VEGETATION;
+		return Lifeform.VEGETATION;
 	    }
 
 	    if (MathTools.calculateIfOddsHit(getChanceForBacterial())) {
-		return Lifeforms.BACTERIAL;
+		return Lifeform.BACTERIAL;
 	    }
 	}
 
-	return Lifeforms.NONE;
+	return Lifeform.NONE;
     }
 
     /**

@@ -6,6 +6,8 @@ import java.util.List;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -37,6 +39,7 @@ import com.universe.exploration.userinterface.components.BasicTable;
 import com.universe.exploration.userinterface.components.LogDisplay;
 import com.universe.exploration.userinterface.components.PlanetSelection;
 import com.universe.exploration.userinterface.components.SurveyTeamSelection;
+import com.universe.exploration.userinterface.components.UELabel;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
 import com.universe.exploration.userinterface.components.window.WindowFactory;
 import com.universe.exploration.userinterface.components.window.WindowType;
@@ -505,17 +508,29 @@ public class UIController {
 	SurveyTeamSelection teamSelection = new SurveyTeamSelection(UniverseExploration.crew);
 	planetInformationTable.add(teamSelection.createSurveyTeamSelectionTable());
 	planetInformationTable.row();
+	
+	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, CoreConfiguration.MAX_DAYS_ON_SURVEY, 1);
+	final PlanetSurveyForm form = (PlanetSurveyForm) pair.getFormContainer();
 
-	planetInformationTable
-		.add(new Label(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH), UserInterfaceBank.userInterfaceSkin));
+	final UELabel label = new UELabel(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH) + " (" + form.getSurveyLength().getValue() + ") days");
+	planetInformationTable.add(label);
 	planetInformationTable.row();
 
-	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, CoreConfiguration.MAX_DAYS_ON_SURVEY, 1);
-	PlanetSurveyForm form = (PlanetSurveyForm) pair.getFormContainer();
+	
 	form.setPlanet((PlanetCelestialComponent) pgfx.getComponentType());
 	form.setSelectedCrewMembers(teamSelection.getSelectedCrewMembers());
 	planetInformationTable.add(pair.getTable());
 	planetInformationTable.row();
+
+	form.getSurveyLength().addListener(new EventListener() {
+
+	    @Override
+	    public boolean handle(Event event) {
+		label.setText(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH) + " (" + form.getSurveyLength().getValue() + ") days");
+		
+		return true;
+	    }
+	});
 
 	BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
 		createdPlanetSurveyTeamDispatchedClickListener(form));

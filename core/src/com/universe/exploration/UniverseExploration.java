@@ -96,6 +96,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
 	basicSetup();
+	createCrew();
 	stageSetup();
 
 	pauseGame(false);
@@ -194,7 +195,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      * @throws IOException
      */
     private void stageSetup() {
-	createCrew();
 	createStarSystem();
 	setupUiController();
 	setupInputProcessors();
@@ -304,6 +304,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	return new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
+		createCrew();
 		stageSetup();
 		crewStatus = new CrewStatusManager();
 		pauseGame(false);
@@ -362,7 +363,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			});
 
 		windowContainer.add(WindowType.PLANET_DETAILS, surveyWindow);
-		surveyWindow.setPosition(Gdx.graphics.getWidth() / 2 + 70, Gdx.graphics.getHeight() / 2 - 300);
 		uiController.show(surveyWindow);
 	    };
 	};

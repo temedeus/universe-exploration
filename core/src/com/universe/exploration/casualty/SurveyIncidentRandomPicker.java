@@ -24,8 +24,8 @@ class SurveyIncidentRandomPicker {
 	listOfApplicableCauseOfDeaths = new ArrayList<SurveyIncident>();
 
 	for (SurveyIncident causeOfDeath : SurveyIncident.values()) {
-	    SurveyIncidentCategory cdc = causeOfDeath.getCauseOfDeathCategory();
-	    if (applicableCauseOfDeath.contains(cdc)) {
+	    SurveyIncidentCategory categories = causeOfDeath.getCauseOfDeathCategory();
+	    if (applicableCauseOfDeath.contains(categories)) {
 		listOfApplicableCauseOfDeaths.add(causeOfDeath);
 	    }
 	}

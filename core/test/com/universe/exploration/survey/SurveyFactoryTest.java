@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.universe.exploration.casualty.Casualty;
-import com.universe.exploration.common.Lifeforms;
+import com.universe.exploration.common.Lifeform;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
@@ -42,7 +42,7 @@ public class SurveyFactoryTest {
 
     private PlanetCelestialComponent createTestPlanet() {
 	PlanetCelestialComponent planet = new PlanetCelestialComponent();
-	planet.setLifeforms(Lifeforms.CIVILIZED);
+	planet.setLifeforms(Lifeform.CIVILIZED);
 	planet.setOxygenFound(true);
 	planet.setWaterFound(true);
 	planet.setFoodFound(true);

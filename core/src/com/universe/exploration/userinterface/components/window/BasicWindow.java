@@ -11,7 +11,7 @@ import com.universe.exploration.common.tools.GdxHelper;
  * @author 20.9.2015 Teemu Puurunen
  *
  */
-public class BasicWindow extends Window implements IBasicWindow {
+public abstract class BasicWindow extends Window implements IBasicWindow {
     /**
      * @param title
      * @param skin
