@@ -35,7 +35,7 @@ public class StatusConsumption {
 
     public static final float CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN = 0.001f;
 
-    public static final float CREWMEN_WATER_CONSUMPTION_PER_CREWMAN = 0.01f;
+    public static final float CREWMEN_WATER_CONSUMPTION_PER_CREWMAN = 0.003f;
     
     public static final float AIR_DECREMENT_WHEN_POWER_OUT = 9f;
 

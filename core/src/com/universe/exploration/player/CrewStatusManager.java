@@ -104,7 +104,6 @@ public class CrewStatusManager {
 	    if (foodDecrement > 0) {
 		member.decreaseHealth(foodDecrement - ((foodDecrement * ((float) member.getStrength().getValue() / 100)) / 2));
 		member.addToCondition(CrewMemberCondition.MALNUTRITION);
-
 	    } else {
 		member.getCondition().remove(CrewMemberCondition.MALNUTRITION);
 	    }
@@ -125,7 +124,9 @@ public class CrewStatusManager {
      * @param message
      */
     private void fireCrewStatusChangeListener(String message) {
-	crewMemberStatusChangeListener.handleEventClassEvent(new UEEvent(message));
+	if(crewMemberStatusChangeListener != null) {
+	    crewMemberStatusChangeListener.handleEventClassEvent(new UEEvent(message));   
+	}	
     }
 
     public void increaseDaysPassed() {

@@ -17,21 +17,23 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  * Maintains all the views used in the current game scene. Basically works as a
  * controller between model and view.
  * 
- * TODO: currently deals with planets only :D FIX THIS!!! ...or rename it at
- * least :D
  * 
  * @author 4.8.2015 Teemu Puurunen
  */
-public class GameViewObjectContainer {
+public class PlanetHandler {
     private boolean planetaryMovement = true;
 
     /**
      * Planets
      */
-    private ArrayList<PlanetGfxContainer> planetGfxContainer;
+    private List<PlanetGfxContainer> planetGfxContainer;
 
-    public GameViewObjectContainer() {
+    private List<Sprite> orbitEnhancer = new ArrayList<Sprite>();
+
+    public PlanetHandler() {
 	planetGfxContainer = new ArrayList<PlanetGfxContainer>();
+
+	// orbitEnhancer.add(new Sprite(new Texture(Gdx.app.)))
     }
 
     /**
@@ -73,18 +75,23 @@ public class GameViewObjectContainer {
     /**
      * Draw sprites on screen and update their position and angles
      */
-    public void update() {
+    public void update(PlanetGfxContainer selected) {
 	if (!planetaryMovement)
 	    return;
 
 	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
-	    if (graphicsGfx instanceof PlanetGfxContainer) {
-		try {
-		    graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();
-		    graphicsGfx.updateSpritePosition();
-
-		} catch (NullPointerException e) {
+	    try {
+		if (graphicsGfx.equals(selected)) {
+		    graphicsGfx.setPlanetSelected(true);
+		} else {
+		    graphicsGfx.setPlanetSelected(false);
 		}
+
+		graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();
+		graphicsGfx.updateSpritePosition();
+		graphicsGfx.handleZooming();
+
+	    } catch (NullPointerException e) {
 	    }
 	}
     }

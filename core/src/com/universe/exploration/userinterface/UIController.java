@@ -27,7 +27,7 @@ import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.GdxHelper;
 import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
-import com.universe.exploration.gamegraphics.GameViewObjectContainer;
+import com.universe.exploration.gamegraphics.PlanetHandler;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
@@ -96,7 +96,7 @@ public class UIController {
      */
     private final LogDisplay logDisplay;
 
-    public UIController(GameViewObjectContainer gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
+    public UIController(PlanetHandler gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
 
 	planetSelection = new PlanetSelection(gameViewObjectContainer, planetList);
 
@@ -499,7 +499,13 @@ public class UIController {
 
     private ClickListener createNewCrewMemberDetailsCLickListener() {
 	return new ClickListener() {
-
+	    /* (non-Javadoc)
+	     * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+	     */
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
+	    }
 	};
     }
 

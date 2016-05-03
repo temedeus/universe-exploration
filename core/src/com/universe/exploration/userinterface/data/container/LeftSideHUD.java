@@ -24,26 +24,27 @@ public class LeftSideHUD extends DataPairContainer {
      */
     @Override
     public void createPairs() {
-	add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.getInstance().get(LocalKey.TITLE_TIME), "" + CoreConfiguration.TIME_START + ""));
-	add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.getInstance().get(LocalKey.TITLE_CREWMEN_LEFT), "" + CoreConfiguration.MAX_CREWMEN));
+	add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.getInstance().get(LocalKey.TITLE_TIME), "" + CoreConfiguration.TIME_START
+		+ ""));
+	add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.getInstance().get(LocalKey.TITLE_CREWMEN_LEFT), ""
+		+ CoreConfiguration.MAX_CREWMEN));
 	add(new DataPair(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, Localizer.getInstance().get(LocalKey.TITLE_CREWMEN_ON_SURVEY), "" + 0));
-	add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.getInstance().get(LocalKey.TITLE_AIR), "" + CoreConfiguration.MAX_AIR + " %"));
-	add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.getInstance().get(LocalKey.TITLE_WATER), "" + CoreConfiguration.MAX_AIR + " %"));
-	add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.getInstance().get(LocalKey.TITLE_FOOD), "" + CoreConfiguration.MAX_FOOD + " %"));
-	add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.getInstance().get(LocalKey.TITLE_POWER), "" + CoreConfiguration.MAX_POWER + " %"));
+	add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.getInstance().get(LocalKey.TITLE_AIR), "" + CoreConfiguration.MAX_AIR));
+	add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.getInstance().get(LocalKey.TITLE_WATER), "" + CoreConfiguration.MAX_AIR
+		+ " %"));
+	add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.getInstance().get(LocalKey.TITLE_FOOD), "" + CoreConfiguration.MAX_FOOD
+		+ " %"));
+	add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.getInstance().get(LocalKey.TITLE_POWER), "" + CoreConfiguration.MAX_POWER
+		+ " %"));
     }
 
     public void updateHUDValues(CrewStatusManager playerStatus) {
 	update(PlayerStatusItemkeys.TIME, "" + (int) playerStatus.getTime() + " days");
-	update(PlayerStatusItemkeys.AIR, playerStatusValueToHUDString("" + (int) playerStatus.getAir()));
+	update(PlayerStatusItemkeys.AIR, "" + (int) playerStatus.getAir());
 	update(PlayerStatusItemkeys.CREWMEN, "" + (int) UniverseExploration.crew.getCrewMenAboardSpaceShip().size());
 	update(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, "" + (int) UniverseExploration.crew.getCrewMenOnSurvey().size());
-	update(PlayerStatusItemkeys.WATER, "" + (int) playerStatus.getWater() + " litres");
-	update(PlayerStatusItemkeys.FOOD, "" + (int) playerStatus.getFood() + " kcal");
-	update(PlayerStatusItemkeys.POWER, playerStatusValueToHUDString("" + (int) playerStatus.getPower()));
-    }
-
-    private String playerStatusValueToHUDString(Object val) {
-	return val + " %";
+	update(PlayerStatusItemkeys.WATER, "" + (int) playerStatus.getWater());
+	update(PlayerStatusItemkeys.FOOD, "" + (int) playerStatus.getFood());
+	update(PlayerStatusItemkeys.POWER, "" + (int) playerStatus.getPower() + " %");
     }
 }

@@ -388,9 +388,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		caption = Localizer.getInstance().get(LocalKey.TITLE_SURVEY_TEAM_SURVIVED);
 		updateIngameLog(caption);
 	    }
-	    
-	    for(CrewMember member : survey.getSurveyTeam()) {
-		if(member.getStatus() == CrewMemberStatus.ONSURVEY) {
+
+	    for (CrewMember member : survey.getSurveyTeam()) {
+		if (member.getStatus() == CrewMemberStatus.ONSURVEY) {
 		    member.setStatus(CrewMemberStatus.ALIVE);
 		}
 	    }
@@ -403,6 +403,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	    windowContainer.add(WindowType.SURVEY_CLOSED, surveyClosedWindow);
 
+	    UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
+	    UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
 	    uiController.show(surveyClosedWindow);
 	}
     }

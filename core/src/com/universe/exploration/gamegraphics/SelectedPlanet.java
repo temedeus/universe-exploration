@@ -34,6 +34,7 @@ public class SelectedPlanet {
      * @return the selectedPlanet
      */
     public PlanetGfxContainer getSelectedPlanet() {
+	
 	return selectedPlanet;
     }
 

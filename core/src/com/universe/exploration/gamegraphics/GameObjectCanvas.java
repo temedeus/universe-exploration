@@ -41,7 +41,7 @@ public class GameObjectCanvas {
     /**
      * Contains all the game objects (e.g. planets, stars and whatnot)
      */
-    private GameViewObjectContainer gameViewObjectContainer;
+    private PlanetHandler planetHandler;
 
     private UEListener planetClickListener;
 
@@ -70,16 +70,16 @@ public class GameObjectCanvas {
 
 	List<PlanetCelestialComponent> listOfPlanets = starSystem.getPlanets();
 
-	gameViewObjectContainer = new GameViewObjectContainer();
+	planetHandler = new PlanetHandler();
 
 	for (PlanetCelestialComponent planet : listOfPlanets) {
-	    gameViewObjectContainer.addStarPlanet(planet);
+	    planetHandler.addStarPlanet(planet);
 	}
 
 	// Initially select the first planet (visual borders).
 	if (listOfPlanets.size() > 0) {
 	    selectedPlanet = new SelectedPlanet();
-	    selectedPlanet.setSelectedPlanet(gameViewObjectContainer.getPlanetGfxContainerAtIndex(0));
+	    selectedPlanet.setSelectedPlanet(planetHandler.getPlanetGfxContainerAtIndex(0));
 	}
     }
 
@@ -122,14 +122,14 @@ public class GameObjectCanvas {
 
 	starWrapper.update();
 
-	gameViewObjectContainer.setPlanetaryMovement(UniverseExploration.gameStatus.isPlanetaryMovementActive());
-	gameViewObjectContainer.update();
+	planetHandler.setPlanetaryMovement(UniverseExploration.gameStatus.isPlanetaryMovementActive());
+	planetHandler.update(selectedPlanet.getSelectedPlanet());
 
 	// Background first, next star and then planets.
 
 	starWrapper.getStar().draw(liveComponentBatch);
 
-	for (Sprite sprite : gameViewObjectContainer.getPlanetSprites()) {
+	for (Sprite sprite : planetHandler.getPlanetSprites()) {
 	    sprite.draw(liveComponentBatch);
 	}
 
@@ -149,7 +149,7 @@ public class GameObjectCanvas {
 	    varyingRadius = 10;
 	}
 
-	if (gameViewObjectContainer.getPlanetCount() > 0) {
+	if (planetHandler.getPlanetCount() > 0) {
 	    shapeRenderer.setColor(Color.BLUE);
 	    shapeRenderer.begin(ShapeType.Line);
 	    shapeRenderer.circle(selectedPlanet.getSelectedPlanet().getSprite().getX()
@@ -166,7 +166,7 @@ public class GameObjectCanvas {
 	camera.unproject(input);
 
 	try {
-	    PlanetGfxContainer pgfx = gameViewObjectContainer.getPlanetWithCoordinatesWithinBoundaries(input);
+	    PlanetGfxContainer pgfx = planetHandler.getPlanetWithCoordinatesWithinBoundaries(input);
 	    if (pgfx != null) {
 		firePlanetClickListener(pgfx);
 	    }
@@ -176,7 +176,7 @@ public class GameObjectCanvas {
     }
 
     public void setSelectedPlanet(PlanetCelestialComponent planet) {
-	selectedPlanet.setSelectedPlanet(gameViewObjectContainer.getPlanetGfxContainerByComponent(planet));
+	selectedPlanet.setSelectedPlanet(planetHandler.getPlanetGfxContainerByComponent(planet));
     }
 
     private void firePlanetClickListener(PlanetGfxContainer pgfx) {
@@ -235,7 +235,7 @@ public class GameObjectCanvas {
     /**
      * @return the gameViewObjectContainer
      */
-    public GameViewObjectContainer getGameViewObjectContainer() {
-	return gameViewObjectContainer;
+    public PlanetHandler getGameViewObjectContainer() {
+	return planetHandler;
     }
 }

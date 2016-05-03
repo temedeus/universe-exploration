@@ -20,13 +20,13 @@ public class CoreConfiguration {
 
     public static final int MAX_CREWMEN = 10;
 
-    public static final float MAX_AIR = 100;
+    public static final float MAX_AIR = 200;
 
-    public static final float MAX_WATER = 10000;
+    public static final float MAX_WATER = 200;
 
     public static final float MAX_POWER = 100;
 
-    public static final float MAX_FOOD = 100;
+    public static final float MAX_FOOD = 200;
 
     public static final String USERINTERFACE_SKIN = "uiskin.json";
 

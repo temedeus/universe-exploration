@@ -63,6 +63,23 @@ project(":android") {
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:1.2"
     }
+	
+	android.packagingOptions {
+		pickFirst 'META-INF/NOTICE.txt'	
+		pickFirst 'META-INF/DEPENDENCIES'
+        pickFirst 'META-INF/NOTICE'
+        pickFirst 'META-INF/LICENSE'
+        pickFirst 'META-INF/LICENSE.txt'
+	}
+	
+
+		
+	android {
+		lintOptions {
+			abortOnError false
+		}
+	}
+
 }
 
 project(":ios") {
@@ -114,6 +131,8 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:1.2"
+		compile "org.jmock:jmock-junit4:2.8.2"
+
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
     }
@@ -125,6 +144,7 @@ project(":common-tools") {
     dependencies {
         testCompile "junit:junit:4.11"
 		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+		compile "org.jmock:jmock-junit4:2.8.2"
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
     }
@@ -137,6 +157,7 @@ project(":universe") {
         testCompile "junit:junit:4.11"
         compile project(":common-tools")
 		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+		compile "org.jmock:jmock-junit4:2.8.2"
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
 		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
 	}

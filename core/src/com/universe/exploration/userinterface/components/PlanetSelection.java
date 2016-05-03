@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.universe.exploration.gamegraphics.GameObjectCanvas;
-import com.universe.exploration.gamegraphics.GameViewObjectContainer;
+import com.universe.exploration.gamegraphics.PlanetHandler;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
@@ -33,7 +33,7 @@ public class PlanetSelection {
 
     private TextButton surveyButton;
 
-    private GameViewObjectContainer gameViewObjectContainer = new GameViewObjectContainer();
+    private PlanetHandler gameViewObjectContainer = new PlanetHandler();
 
     private List<PlanetCelestialComponent> planetList;
 
@@ -56,7 +56,7 @@ public class PlanetSelection {
      * 
      * @param planetList
      */
-    public PlanetSelection(GameViewObjectContainer gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
+    public PlanetSelection(PlanetHandler gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
 	this.gameViewObjectContainer = gameViewObjectContainer;
 	this.planetList = planetList;
 
