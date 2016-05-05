@@ -45,7 +45,7 @@ public class GameObjectCanvas {
 
     private UEListener planetClickListener;
 
-    private float varyingRadius = 10;
+    private float varyingRadius = CoreConfiguration.PLANET_ENHANCEMENT_MIN;
 
     private StarWrapper starWrapper;
 
@@ -123,20 +123,22 @@ public class GameObjectCanvas {
 	starWrapper.update();
 
 	planetHandler.setPlanetaryMovement(UniverseExploration.gameStatus.isPlanetaryMovementActive());
-	planetHandler.update(selectedPlanet.getSelectedPlanet());
 
 	// Background first, next star and then planets.
-
 	starWrapper.getStar().draw(liveComponentBatch);
-
-	for (Sprite sprite : planetHandler.getPlanetSprites()) {
-	    sprite.draw(liveComponentBatch);
-	}
-
+	planetHandler.drawPlanets(liveComponentBatch);
+	
 	if (UniverseExploration.gameStatus.isPlanetaryMovementActive()) {
 	    drawEnhancement();
 	}
 
+	// It is perfectly normal scenario that there is no selected planet.
+	if (selectedPlanet != null) {
+	    planetHandler.drawOrbits(selectedPlanet.getSelectedPlanet(), shapeRenderer);
+	    planetHandler.update(selectedPlanet.getSelectedPlanet());
+	}
+
+	shapeRenderer.end();
 	liveComponentBatch.end();
     }
 
@@ -144,13 +146,14 @@ public class GameObjectCanvas {
      * Emphasize planet. (Create a pulsating circle around it.)
      */
     private void drawEnhancement() {
-	varyingRadius += 1;
-	if (varyingRadius >= 60) {
-	    varyingRadius = 10;
+	varyingRadius += CoreConfiguration.PLANET_ENHANCEMENT_INC;
+	if (varyingRadius >= CoreConfiguration.PLANET_ENHANCEMENT_MAX) {
+	    varyingRadius = CoreConfiguration.PLANET_ENHANCEMENT_MIN;
 	}
 
 	if (planetHandler.getPlanetCount() > 0) {
-	    shapeRenderer.setColor(Color.BLUE);
+	    Color navyBlue = new Color(0, 0, 0.5f, 0.7f);
+	    shapeRenderer.setColor(navyBlue);
 	    shapeRenderer.begin(ShapeType.Line);
 	    shapeRenderer.circle(selectedPlanet.getSelectedPlanet().getSprite().getX()
 		    + selectedPlanet.getSelectedPlanet().getSprite().getWidth() / 2, selectedPlanet.getSelectedPlanet().getSprite().getY()
@@ -198,8 +201,7 @@ public class GameObjectCanvas {
     }
 
     private void drawSelectedPlanetWhenValid() {
-	// It is perfectly normal scenario that there is no selected planet (no
-	// one ever instantiates it - hence the null check).
+	// It is perfectly normal scenario that there is no selected planet.
 	if (selectedPlanet != null) {
 	    boolean hidePlanet = !UniverseExploration.gameStatus.isPlanetaryMovementActive() && starWrapper.isAlphaReachedMinimum();
 

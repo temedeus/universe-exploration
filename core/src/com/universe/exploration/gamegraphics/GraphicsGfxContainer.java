@@ -70,7 +70,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
 	Texture texture = new Texture(Gdx.files.internal(graphicsSource));
 	smallVersion = new Sprite(texture);
 	smallVersion.setSize(this.spriteSize, this.spriteSize);
-	smallVersion.setOrigin(this.spriteSize / 2, this.spriteSize / 2);
+	smallVersion.setOriginCenter();
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
     }
 
     public void updateSpritePosition() {
-	smallVersion.setPosition(celestialBodyGfxModel.getPositionX(), celestialBodyGfxModel.getPositionY());
+	smallVersion.setPosition(celestialBodyGfxModel.getPositionX() - smallVersion.getWidth() / 2, celestialBodyGfxModel.getPositionY() - smallVersion.getHeight() / 2);
     }
 
     /**

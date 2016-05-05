@@ -15,11 +15,14 @@ public class PlanetGfxContainer extends GraphicsGfxContainer {
 
     public PlanetGfxContainer(CelestialComponent starSystemComponent) {
 	super(starSystemComponent);
+	resizeFactor = new Fader(spriteSize, 500, 10, 10);
     }
     
     public void handleZooming() {
 	resizeFactor.updateAlpha(!isPlanetSelected);
+	
 	smallVersion.setSize(resizeFactor.getAlphaValue(), resizeFactor.getAlphaValue());
+	smallVersion.setOriginCenter();
     }
 
     /**

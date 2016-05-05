@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -27,8 +28,8 @@ import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.GdxHelper;
 import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
-import com.universe.exploration.gamegraphics.PlanetHandler;
 import com.universe.exploration.gamegraphics.PlanetGfxContainer;
+import com.universe.exploration.gamegraphics.PlanetHandler;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
@@ -88,7 +89,7 @@ public class UIController {
      * Use to send messages for logging.
      */
     private UEListener logMessageListener;
-
+    
     /**
      * <p>
      * Visual representation of game log.
@@ -102,6 +103,7 @@ public class UIController {
 
 	logDisplay = new LogDisplay(10, UserInterfaceBank.userInterfaceSkin);
 	uiStage = new Stage(new ScreenViewport());
+	
 	leftsidePlayerStatus = new LeftSideHUD();
 	leftsidePlayerStatus.createPairs();
 
@@ -118,9 +120,11 @@ public class UIController {
 	table.align(Align.left | Align.top);
 	table.setPosition(Gdx.graphics.getWidth() / 2 - 200, Gdx.graphics.getHeight());
 
-	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MIN_VOLUME), 0f));
-	table.addActor(createVolumeSlider());
-	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MAX_VOLUME), 100f));
+	Slider volumeSlider = createVolumeSlider();
+	
+	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MIN_VOLUME), 0f, volumeSlider));
+	table.addActor(volumeSlider);
+	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MAX_VOLUME), 100f, volumeSlider));
 
 	return table;
     }
@@ -256,7 +260,7 @@ public class UIController {
 	return table;
     }
 
-    public TextButton createVolumeChangeButton(String caption, final float value) {
+    public TextButton createVolumeChangeButton(String caption, final float value, final Slider volumeslider) {
 	return new ButtonFactory().createTextButton(caption, new ClickListener() {
 	    /*
 	     * (non-Javadoc)
@@ -268,6 +272,7 @@ public class UIController {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		fireVolumeChangedListener(value);
+		volumeslider.setValue(value);
 	    }
 	});
     }
@@ -282,6 +287,8 @@ public class UIController {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		if (!UniverseExploration.gameStatus.isPaused() && isHyperspaceJumpAllowed) {
+		    Sound announcement = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hyperspacejump.ogg"));
+		    announcement.play();
 		    final Dialog dialog = new Dialog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP),
 			    UserInterfaceBank.userInterfaceSkin);
 		    dialog.setSize(200, 100);

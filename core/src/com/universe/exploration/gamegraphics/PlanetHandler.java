@@ -6,7 +6,11 @@ package com.universe.exploration.gamegraphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.universe.exploration.starsystem.components.CelestialComponent;
@@ -63,11 +67,10 @@ public class PlanetHandler {
 	}
     }
 
-    public ArrayList<Sprite> getPlanetSprites() {
-	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+    private List<Sprite> getPlanetSprites() {
+	List<Sprite> sprites = new ArrayList<Sprite>();
 	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
 	    sprites.add(graphicsGfx.getSprite());
-
 	}
 	return sprites;
     }
@@ -80,19 +83,10 @@ public class PlanetHandler {
 	    return;
 
 	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
-	    try {
-		if (graphicsGfx.equals(selected)) {
-		    graphicsGfx.setPlanetSelected(true);
-		} else {
-		    graphicsGfx.setPlanetSelected(false);
-		}
-
-		graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();
-		graphicsGfx.updateSpritePosition();
-		graphicsGfx.handleZooming();
-
-	    } catch (NullPointerException e) {
-	    }
+	    graphicsGfx.setPlanetSelected(graphicsGfx.equals(selected));
+	    graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();
+	    graphicsGfx.updateSpritePosition();
+	    graphicsGfx.handleZooming();
 	}
     }
 
@@ -106,6 +100,12 @@ public class PlanetHandler {
 	return null;
     }
 
+    public void drawPlanets(SpriteBatch batch) {
+	for (Sprite sprite : getPlanetSprites()) {
+	    sprite.draw(batch);
+	}
+    }
+
     /**
      * Returns null if no matching planet found.
      * 
@@ -114,21 +114,15 @@ public class PlanetHandler {
      */
     public PlanetGfxContainer getPlanetWithCoordinatesWithinBoundaries(Vector3 coordinates) {
 	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
-	    if (graphicsGfx instanceof PlanetGfxContainer) {
-		try {
-		    // Enlarge hit area a wee bit.
-		    Rectangle planetRectangle = graphicsGfx.getSprite().getBoundingRectangle();
-		    planetRectangle.x -= 5;
-		    planetRectangle.y -= 5;
-		    planetRectangle.width += 50;
-		    planetRectangle.height += 50;
+	    // Enlarge hit area a wee bit.
+	    Rectangle planetRectangle = graphicsGfx.getSprite().getBoundingRectangle();
+	    planetRectangle.x -= 5;
+	    planetRectangle.y -= 5;
+	    planetRectangle.width += 50;
+	    planetRectangle.height += 50;
 
-		    if (planetRectangle.contains(coordinates.x, coordinates.y)) {
-			return graphicsGfx;
-		    }
-		} catch (NullPointerException e) {
-		    // TODO: smarter exception handling
-		}
+	    if (planetRectangle.contains(coordinates.x, coordinates.y)) {
+		return graphicsGfx;
 	    }
 	}
 
@@ -152,5 +146,20 @@ public class PlanetHandler {
      */
     public void setPlanetaryMovement(boolean planetaryMovement) {
 	this.planetaryMovement = planetaryMovement;
+    }
+
+    public void drawOrbits(PlanetGfxContainer selected, ShapeRenderer render) {
+	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
+	    float radius = (float) ((PlanetCelestialComponent) graphicsGfx.celestialBodyGfxModel.getStarSystemComponent())
+		    .getOrbitalRadius();
+
+	    float alpha = (graphicsGfx.equals(selected)) ? 0.5f : 0.1f;
+
+	    render.setColor(new Color(255, 255, 255, alpha));
+	    render.begin(ShapeType.Line);
+	    render.circle(0f, 0f, radius);
+	    render.end();
+	}
+
     }
 }

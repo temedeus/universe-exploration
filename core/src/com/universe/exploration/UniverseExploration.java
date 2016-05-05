@@ -101,7 +101,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	pauseGame(false);
 
-	backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("music/space.mp3"));
+	backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("music/space.ogg"));
 	bgId = backgroundMusic.loop();
     }
 
@@ -225,6 +225,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    gameStatus.activateSurveyMode(false);
 		    crewStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
 		    updateIngameLog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP_COMMENCED));
+		    
 		}
 	    };
 	});

@@ -37,8 +37,8 @@ public class StarWrapper {
     public void update() {
 	// TODO: sort this offset. It likely has something to do with initiating
 	// the sprite and its offsets etc.
-	float starX = GdxHelper.getScreenCenterX() - this.star.getScaleX() * 2 - 2800;
-	float starY = GdxHelper.getScreenCenterY() - this.star.getScaleY() * 2 - 2600;
+	float starX = GdxHelper.getScreenCenterX() - star.getWidth() / 2 - 650;
+	float starY = GdxHelper.getScreenCenterY() - star.getHeight() / 2 - 400;
 
 	star.rotate((float) 0.1);
 	star.setPosition(starX, starY);
