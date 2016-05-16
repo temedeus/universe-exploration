@@ -14,13 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.universe.exploration.gamegraphics.GameObjectCanvas;
-import com.universe.exploration.gamegraphics.PlanetHandler;
-import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
+import com.universe.exploration.spritecontainer.GameObjectCanvas;
+import com.universe.exploration.spritecontainer.PlanetHandler;
+import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.ButtonFactory;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
@@ -127,7 +127,7 @@ public class PlanetSelection {
 
     /**
      * <p>
-     * TODO: Fix this logic. We deal with both {@link PlanetGfxContainer} and
+     * TODO: Fix this logic. We deal with both {@link PlanetSpriteContainer} and
      * {@link PlanetCelestialComponent}... wtf?!
      * </p>
      * <p>

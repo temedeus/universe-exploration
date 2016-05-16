@@ -1,4 +1,4 @@
-package com.universe.exploration.gamegraphics;
+package com.universe.exploration.spritecontainer;
 
 import java.util.List;
 
@@ -18,6 +18,12 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
+/**
+ * This canvas contains planets, system star etc.
+ * 
+ * @author 15.5.2016 Teemu Puurunen
+ *
+ */
 public class GameObjectCanvas {
     private SpriteBatch liveComponentBatch;
     private SpriteBatch backgroundBatch;
@@ -60,11 +66,11 @@ public class GameObjectCanvas {
 	this.starSystem = starSystem;
 
 	// Space background
-	SpaceBackgroundGfxContainer spaceBgGFX = new SpaceBackgroundGfxContainer();
+	SpaceSpriteContainer spaceBgGFX = new SpaceSpriteContainer();
 	space = spaceBgGFX.getSprite();
 
 	// Generate system star.
-	SystemStarGfxContainer ss = new SystemStarGfxContainer(this.starSystem.getSystemstar());
+	SystemStarSpriteContainer ss = new SystemStarSpriteContainer(this.starSystem.getSystemstar());
 
 	starWrapper = new StarWrapper(ss.getSprite());
 
@@ -127,7 +133,7 @@ public class GameObjectCanvas {
 	// Background first, next star and then planets.
 	starWrapper.getStar().draw(liveComponentBatch);
 	planetHandler.drawPlanets(liveComponentBatch);
-	
+
 	if (UniverseExploration.gameStatus.isPlanetaryMovementActive()) {
 	    drawEnhancement();
 	}
@@ -143,7 +149,7 @@ public class GameObjectCanvas {
     }
 
     /**
-     * Emphasize planet. (Create a pulsating circle around it.)
+     * Emphasize planet create a pulsating circle around it).
      */
     private void drawEnhancement() {
 	varyingRadius += CoreConfiguration.PLANET_ENHANCEMENT_INC;
@@ -169,12 +175,12 @@ public class GameObjectCanvas {
 	camera.unproject(input);
 
 	try {
-	    PlanetGfxContainer pgfx = planetHandler.getPlanetWithCoordinatesWithinBoundaries(input);
+	    PlanetSpriteContainer pgfx = planetHandler.getPlanetWithCoordinatesWithinBoundaries(input);
 	    if (pgfx != null) {
 		firePlanetClickListener(pgfx);
 	    }
 	} catch (NullPointerException e) {
-
+	    //TODO: verify if this null check is useless.
 	}
     }
 
@@ -182,7 +188,7 @@ public class GameObjectCanvas {
 	selectedPlanet.setSelectedPlanet(planetHandler.getPlanetGfxContainerByComponent(planet));
     }
 
-    private void firePlanetClickListener(PlanetGfxContainer pgfx) {
+    private void firePlanetClickListener(PlanetSpriteContainer pgfx) {
 	selectedPlanet.setSelectedPlanet(pgfx);
 	planetClickListener.handleEventClassEvent(new UEEvent(pgfx));
     }
@@ -194,15 +200,28 @@ public class GameObjectCanvas {
 	space.draw(backgroundBatch);
 	space.setPosition(CoreConfiguration.SPACE_BACKGROUND_POSITION_X, CoreConfiguration.SPACE_BACKGROUND_POSITION_Y);
 
-	drawSelectedPlanetWhenValid();
+	drawSelectedEnlargedPlanet();
 
 	backgroundCamera.update();
 	backgroundBatch.end();
     }
 
-    private void drawSelectedPlanetWhenValid() {
+    /**
+     * <p>
+     * Draw close-up of the selected planet. This version of the planet is drawn
+     * when you select planet details.
+     * </p>
+     * <p>
+     * Note! Do not confuse with the larger planet that is found in the main
+     * game screen when you select a planet from the planet selection.
+     * </p>
+     */
+    private void drawSelectedEnlargedPlanet() {
 	// It is perfectly normal scenario that there is no selected planet.
 	if (selectedPlanet != null) {
+	    // Draw the planet only if planetary movement is paused and the star
+	    // has been set invisible already (otherwise this looks kind of
+	    // goofy).
 	    boolean hidePlanet = !UniverseExploration.gameStatus.isPlanetaryMovementActive() && starWrapper.isAlphaReachedMinimum();
 
 	    selectedPlanet.handleAlpha((hidePlanet) ? false : true);
@@ -211,7 +230,7 @@ public class GameObjectCanvas {
     }
 
     /**
-     * Update camera on canvas
+     * Update camera on canvas.
      * 
      * @param cam
      */

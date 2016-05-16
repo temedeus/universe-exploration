@@ -8,12 +8,12 @@ import com.universe.exploration.UniverseExploration;
 public class HtmlLauncher extends GwtApplication {
 
     @Override
-    public GwtApplicationConfiguration getConfig () {
-            return new GwtApplicationConfiguration(1300, 760);
+    public GwtApplicationConfiguration getConfig() {
+	return new GwtApplicationConfiguration(1300, 760);
     }
 
     @Override
-    public ApplicationListener getApplicationListener () {
-            return new UniverseExploration();
+    public ApplicationListener getApplicationListener() {
+	return new UniverseExploration();
     }
 }

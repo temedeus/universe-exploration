@@ -1,19 +1,19 @@
-package com.universe.exploration.gamegraphics;
+package com.universe.exploration.spritecontainer;
 
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
-public class PlanetGfxContainer extends GraphicsGfxContainer {
+public class PlanetSpriteContainer extends SpriteContainer {
 
     private boolean isPlanetSelected = false;
     
     private Fader resizeFactor; 
     
-    public PlanetGfxContainer() {
+    public PlanetSpriteContainer() {
 	super(64, "planet2.png");
 	resizeFactor = new Fader(spriteSize, 500, 1, 1);
     }
 
-    public PlanetGfxContainer(CelestialComponent starSystemComponent) {
+    public PlanetSpriteContainer(CelestialComponent starSystemComponent) {
 	super(starSystemComponent);
 	resizeFactor = new Fader(spriteSize, 500, 10, 10);
     }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.model;
+package com.universe.exploration.spritecontainer.data;
 
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
@@ -9,8 +9,8 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  * @author 2.8.2015 Teemu Puurunen
  *
  */
-public class PlanetGfxModel extends CelestialBodyGfxModel {
-    PlanetGfxModel() {
+public class PlanetSpriteData extends CelestialBodySpriteData {
+    PlanetSpriteData() {
 	starSystemComponent = new PlanetCelestialComponent();
     }
 

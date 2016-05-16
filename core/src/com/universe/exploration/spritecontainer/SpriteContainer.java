@@ -1,21 +1,21 @@
-package com.universe.exploration.gamegraphics;
+package com.universe.exploration.spritecontainer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.universe.exploration.common.CoreConfiguration;
-import com.universe.exploration.model.CelestialBodyGfxModel;
+import com.universe.exploration.spritecontainer.data.CelestialBodySpriteData;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
-abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
+abstract class SpriteContainer implements ISpriteContainer {
 
     /**
-     * TODO: constructor takes {@link CelestialBodyGfxModel} instead of
+     * TODO: constructor takes {@link CelestialBodySpriteData} instead of
      * {@link CelestialComponent}
      */
     protected CelestialComponent starSystemComponent;
 
-    protected CelestialBodyGfxModel celestialBodyGfxModel;
+    protected CelestialBodySpriteData celestialBodyGfxModel;
 
     /**
      * Generic texture
@@ -44,18 +44,18 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
      */
     protected String graphicsSource;
 
-    public GraphicsGfxContainer() {
+    public SpriteContainer() {
 	// Empty constructor if one does not wish to install component yet
     }
 
-    public GraphicsGfxContainer(CelestialComponent starSystemComponent) {
+    public SpriteContainer(CelestialComponent starSystemComponent) {
 	this(starSystemComponent.getSpriteSize(), starSystemComponent.getGraphicsFile());
 	this.starSystemComponent = starSystemComponent;
-	celestialBodyGfxModel = new CelestialBodyGfxModel();
+	celestialBodyGfxModel = new CelestialBodySpriteData();
 	celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
     }
 
-    public GraphicsGfxContainer(int spriteSize, String graphicsSource) {
+    public SpriteContainer(int spriteSize, String graphicsSource) {
 	this.spriteSize = spriteSize;
 	this.graphicsSource = graphicsSource;
 
@@ -131,7 +131,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
      */
     public void setComponentType(CelestialComponent componentType) {
 	this.starSystemComponent = componentType;
-	this.setCelestialBodyGfxModel(new CelestialBodyGfxModel());
+	this.setCelestialBodyGfxModel(new CelestialBodySpriteData());
 	this.celestialBodyGfxModel.setStarSystemComponent(componentType);
     }
 
@@ -153,7 +153,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
     /**
      * @return the startBodyGfxModel
      */
-    public CelestialBodyGfxModel getCelestialBodyGfxModel() {
+    public CelestialBodySpriteData getCelestialBodyGfxModel() {
 	return celestialBodyGfxModel;
     }
 
@@ -161,7 +161,7 @@ abstract class GraphicsGfxContainer implements IGraphicsGfxContainer {
      * @param startBodyGfxModel
      *            the startBodyGfxModel to set
      */
-    public void setCelestialBodyGfxModel(CelestialBodyGfxModel startBodyGfxModel) {
+    public void setCelestialBodyGfxModel(CelestialBodySpriteData startBodyGfxModel) {
 	this.celestialBodyGfxModel = startBodyGfxModel;
     }
 

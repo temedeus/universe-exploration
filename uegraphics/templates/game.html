@@ -11,31 +11,12 @@
 			  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
        </head>
        
-       <body style="background-color: #000000">          
+       <body class="radient-bg">          
 			<table style="width: 70%;" border="0" style="">
 	
-				<tr>
-					<td style="padding-right: 50px;" valign="top"><div class="banner" style="text-align: left;"><a href="http://www.universe-exploration.com"><img src="banner_small.png" alt="Universe Exploration" /></a></div><br /><p><a href="./">Home</a></p><p><a href="game.html">Play</a></p></td>
-					<td><div align="center" id="embed-html"></div></td>
-				</tr>
+
 			</table>
-            <script type="text/javascript" src="html/html.nocache.js"></script>
-			
-			 <script>
-              function handleMouseDown(evt) {
-                evt.preventDefault();
-                evt.stopPropagation();
-                evt.target.style.cursor = 'default';
-              }
-              
-              function handleMouseUp(evt) {
-                evt.preventDefault();
-                evt.stopPropagation();
-                evt.target.style.cursor = '';
-              }
-              document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
-              document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
-       </script>
+
 	   
 		<script src="universeExplorationMainController.js"></script>
        </body>

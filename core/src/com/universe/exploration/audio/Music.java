@@ -3,20 +3,22 @@
  */
 package com.universe.exploration.audio;
 
+import java.io.File;
+
 /**
  * @author 5.11.2015 Teemu Puurunen
  *
  */
-public enum MusicFiles implements IAudioFile {
-    BASIC_AMBIENT("SPACE", "space.mp3"),
-    ALIENS_ARRIVE("ALIENS_ARRIVE", "aliens_arrive.ogg");
+public enum Music implements IAudioFile {
+    BASIC_AMBIENT("SPACE", "space.ogg"),
+    ALIENS_ARRIVE("ALIENS_ARRIVE", "aliensarrive.ogg");
 
-    private final static String DIR = "music/";
+    private final static String DIR = "music" + File.separatorChar;
     
     private final String id;
     private final String audioFile;
 
-    private MusicFiles(String id, String audioFile) {
+    private Music(String id, String audioFile) {
 	this.id = id;
 	this.audioFile = audioFile;
     }

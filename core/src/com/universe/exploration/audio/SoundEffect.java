@@ -3,18 +3,21 @@
  */
 package com.universe.exploration.audio;
 
+import java.io.File;
+
 /**
  * @author 5.11.2015 Teemu Puurunen
  *
  */
-public enum SoundEffects implements IAudioFile {
-    BASIC_AMBIENT("ANNOUNCEMENT", "announcement.ogg");
+public enum SoundEffect implements IAudioFile {
+    ANNOUNCEMENT("ANNOUNCEMENT", "announcement.ogg"),
+    HYPERSPACEJUMP("ANNOUNCEMENT", "hyperspacejump.ogg");
 
-    private final static String DIR = "soundeffects/";
+    private final static String DIR = "soundeffects" + File.separator;
     private final String id;
     private final String audioFile;
 
-    private SoundEffects(String id, String audioFile) {
+    private SoundEffect(String id, String audioFile) {
 	this.id = id;
 	this.audioFile = audioFile;
     }

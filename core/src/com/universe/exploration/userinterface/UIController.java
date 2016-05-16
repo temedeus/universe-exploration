@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -24,17 +23,18 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.audio.SoundEffect;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.GdxHelper;
 import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
-import com.universe.exploration.gamegraphics.PlanetGfxContainer;
-import com.universe.exploration.gamegraphics.PlanetHandler;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.CrewStatusManager;
+import com.universe.exploration.spritecontainer.PlanetHandler;
+import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.components.BasicTable;
 import com.universe.exploration.userinterface.components.LogDisplay;
@@ -89,7 +89,7 @@ public class UIController {
      * Use to send messages for logging.
      */
     private UEListener logMessageListener;
-    
+
     /**
      * <p>
      * Visual representation of game log.
@@ -103,7 +103,7 @@ public class UIController {
 
 	logDisplay = new LogDisplay(10, UserInterfaceBank.userInterfaceSkin);
 	uiStage = new Stage(new ScreenViewport());
-	
+
 	leftsidePlayerStatus = new LeftSideHUD();
 	leftsidePlayerStatus.createPairs();
 
@@ -121,7 +121,7 @@ public class UIController {
 	table.setPosition(Gdx.graphics.getWidth() / 2 - 200, Gdx.graphics.getHeight());
 
 	Slider volumeSlider = createVolumeSlider();
-	
+
 	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MIN_VOLUME), 0f, volumeSlider));
 	table.addActor(volumeSlider);
 	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MAX_VOLUME), 100f, volumeSlider));
@@ -287,8 +287,7 @@ public class UIController {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		if (!UniverseExploration.gameStatus.isPaused() && isHyperspaceJumpAllowed) {
-		    Sound announcement = Gdx.audio.newSound(Gdx.files.internal("soundeffects/hyperspacejump.ogg"));
-		    announcement.play();
+		    UniverseExploration.audioManager.playSoundEffect(SoundEffect.HYPERSPACEJUMP);
 		    final Dialog dialog = new Dialog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP),
 			    UserInterfaceBank.userInterfaceSkin);
 		    dialog.setSize(200, 100);
@@ -334,6 +333,12 @@ public class UIController {
 	return gameOverWindow;
     }
 
+    /**
+     * Add actor to stage.
+     * 
+     * @param actor
+     *            Any component that extends {@link Actor}
+     */
     public <T extends Actor> void show(T actor) {
 	if (!UniverseExploration.gameStatus.isPaused()) {
 	    uiStage.addActor(actor);
@@ -341,7 +346,7 @@ public class UIController {
     }
 
     /**
-     * Create quit button
+     * Create quit button.
      * 
      * @return
      */
@@ -362,6 +367,12 @@ public class UIController {
 	uiStage.addActor(new WindowFactory().createQuitWindow(Localizer.getInstance().get(LocalKey.TITLE_QUIT_GAME)));
     }
 
+    /**
+     * Create a window where the results of the survey are summarized.
+     * 
+     * @param surveydata
+     * @return
+     */
     public BasicWindow createSurveyClosedWindow(List<String> surveydata) {
 	Table table = new Table(UserInterfaceBank.userInterfaceSkin);
 
@@ -378,7 +389,7 @@ public class UIController {
      * 
      * @param pgfx
      */
-    public BasicWindow createPlanetarySurveyWindow(PlanetGfxContainer pgfx, ClickListener okAction) {
+    public BasicWindow createPlanetarySurveyWindow(PlanetSpriteContainer pgfx, ClickListener okAction) {
 	final DataPairTableFactory dptf = new DataPairTableFactory();
 
 	Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
@@ -387,7 +398,7 @@ public class UIController {
     }
 
     /**
-     * Planetary survey window.
+     * Crew management window.
      * 
      * @param pgfx
      */
@@ -415,6 +426,11 @@ public class UIController {
 	};
     }
 
+    /**
+     * Create a table that shows all of the crew members.
+     * 
+     * @return
+     */
     private Table createCrewTable() {
 	Table table = new Table();
 
@@ -506,8 +522,12 @@ public class UIController {
 
     private ClickListener createNewCrewMemberDetailsCLickListener() {
 	return new ClickListener() {
-	    /* (non-Javadoc)
-	     * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
+	     * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
 	     */
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
@@ -516,20 +536,28 @@ public class UIController {
 	};
     }
 
-    public BasicWindow createSurveyTeamSelectionWindow(PlanetGfxContainer pgfx) {
+    /**
+     * This window allows you to select your crew setup.
+     * 
+     * @param pgfx
+     *            We pass the {@link PlanetSpriteContainer} in order to show a
+     *            picture of the planet as well. TODO: implement above
+     * @return
+     */
+    public BasicWindow createSurveyTeamSelectionWindow(PlanetSpriteContainer pgfx) {
 	Table planetInformationTable = new Table();
 	SurveyTeamSelection teamSelection = new SurveyTeamSelection(UniverseExploration.crew);
 	planetInformationTable.add(teamSelection.createSurveyTeamSelectionTable());
 	planetInformationTable.row();
-	
+
 	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, CoreConfiguration.MAX_DAYS_ON_SURVEY, 1);
 	final PlanetSurveyForm form = (PlanetSurveyForm) pair.getFormContainer();
 
-	final UELabel label = new UELabel(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH) + " (" + form.getSurveyLength().getValue() + ") days");
+	final UELabel label = new UELabel(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH) + " ("
+		+ form.getSurveyLength().getValue() + ") days");
 	planetInformationTable.add(label);
 	planetInformationTable.row();
 
-	
 	form.setPlanet((PlanetCelestialComponent) pgfx.getComponentType());
 	form.setSelectedCrewMembers(teamSelection.getSelectedCrewMembers());
 	planetInformationTable.add(pair.getTable());
@@ -539,8 +567,9 @@ public class UIController {
 
 	    @Override
 	    public boolean handle(Event event) {
-		label.setText(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH) + " (" + form.getSurveyLength().getValue() + ") days");
-		
+		label.setText(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH) + " (" + form.getSurveyLength().getValue()
+			+ ") days");
+
 		return true;
 	    }
 	});
@@ -596,7 +625,7 @@ public class UIController {
      * @param planetSurveyListener
      *            the planetSurveyListener to set
      */
-    public void setPlanetSurveyListener(UEListener planetSurveyListener) {
+    public void setStartPlanetSurveyListener(UEListener planetSurveyListener) {
 	this.planetSurveyListener = planetSurveyListener;
     }
 

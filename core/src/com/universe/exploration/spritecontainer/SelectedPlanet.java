@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.gamegraphics;
+package com.universe.exploration.spritecontainer;
 
 /**
  * <p>
@@ -13,7 +13,7 @@ package com.universe.exploration.gamegraphics;
  *
  */
 public class SelectedPlanet {
-    private PlanetGfxContainer selectedPlanet;
+    private PlanetSpriteContainer selectedPlanet;
 
     private static final float alphaMin = 0.0f;
     private static final float alphaMax = 1.0f;
@@ -33,7 +33,7 @@ public class SelectedPlanet {
     /**
      * @return the selectedPlanet
      */
-    public PlanetGfxContainer getSelectedPlanet() {
+    public PlanetSpriteContainer getSelectedPlanet() {
 	return selectedPlanet;
     }
 
@@ -41,7 +41,7 @@ public class SelectedPlanet {
      * @param selectedPlanet
      *            the selectedPlanet to set
      */
-    public void setSelectedPlanet(PlanetGfxContainer selectedPlanet) {
+    public void setSelectedPlanet(PlanetSpriteContainer selectedPlanet) {
 	this.selectedPlanet = selectedPlanet;
     }
 

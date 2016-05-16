@@ -15,14 +15,23 @@ import com.universe.exploration.userinterface.skins.UserInterfaceBank;
  */
 public class UIComponentFactory {
     public static TableFormContainerPair createHorizontalSlider(float minVal, float maxVal, float interval) {
-	return createSliderTableWrapper(minVal, maxVal, interval, false);
+	return createSliderWrapper(minVal, maxVal, interval, false);
     }
 
     public static TableFormContainerPair createVerticalSlider(float minVal, float maxVal, float interval) {
-	return createSliderTableWrapper(minVal, maxVal, interval, true);
+	return createSliderWrapper(minVal, maxVal, interval, true);
     }
 
-    private static TableFormContainerPair createSliderTableWrapper(float minVal, float maxVal, float interval, boolean vertical) {
+    /**
+     * Create a slide that also shows the minimum and maximum value.
+     * 
+     * @param minVal
+     * @param maxVal
+     * @param interval
+     * @param vertical
+     * @return
+     */
+    private static TableFormContainerPair createSliderWrapper(float minVal, float maxVal, float interval, boolean vertical) {
 	Table sliderTable = new Table();
 	Slider slider = new Slider(minVal, maxVal, interval, vertical, UserInterfaceBank.userInterfaceSkin);
 
@@ -36,11 +45,11 @@ public class UIComponentFactory {
 
 	return new TableFormContainerPair(surveyForm, sliderTable);
     }
-    
+
     public static Table createSpacer() {
 	Table table = new Table();
 	table.add(new Label("", UserInterfaceBank.userInterfaceSkin));
-	
+
 	return table;
     }
 }

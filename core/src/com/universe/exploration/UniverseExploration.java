@@ -11,11 +11,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.universe.exploration.audio.AudioManager;
+import com.universe.exploration.audio.Music;
+import com.universe.exploration.audio.SoundEffect;
 import com.universe.exploration.camera.CameraMonitor;
 import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.common.tools.TextManipulationTools;
@@ -24,8 +26,6 @@ import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.Crew;
 import com.universe.exploration.crewmember.CrewFactory;
 import com.universe.exploration.crewmember.CrewMember;
-import com.universe.exploration.gamegraphics.GameObjectCanvas;
-import com.universe.exploration.gamegraphics.PlanetGfxContainer;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.LocalKey;
@@ -33,6 +33,8 @@ import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.logger.MinimalLogger;
 import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.player.StatusConsumption;
+import com.universe.exploration.spritecontainer.GameObjectCanvas;
+import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
@@ -85,8 +87,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     private MinimalLogger logger;
     private SurveyContainer surveyStatusContainer;
 
-    private Sound backgroundMusic;
-    private long bgId;
+    public static AudioManager audioManager;
 
     @SuppressWarnings("unused")
     private Stage uiStage;
@@ -101,8 +102,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	pauseGame(false);
 
-	backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("music/space.ogg"));
-	bgId = backgroundMusic.loop();
+	audioManager.playMusic(Music.BASIC_AMBIENT, true);
     }
 
     @Override
@@ -120,18 +120,22 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	crewStatus.updateStatus();
 	uiController.updateUI(crewStatus);
 
+	pollForGameOver();
+	closeFinishedSurveys();
+
+	// Do not allow pressing escape in HTML version of the game.
+	if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && !Gdx.app.getType().equals(ApplicationType.WebGL)) {
+	    uiController.createQuitDialog();
+	}
+    }
+
+    private void pollForGameOver() {
 	if (UniverseExploration.crew.getAliveCrewmen().size() == 0 && !gameStatus.isPaused()) {
 	    BasicWindow gameOverWindow = uiController.createGameOverWindow(WindowType.GAME_OVER, createGameOverClicklistener());
 	    windowContainer.closeAllWindows();
 	    windowContainer.add(WindowType.GAME_OVER, gameOverWindow);
 	    uiController.show(gameOverWindow);
 	    pauseGame(true);
-	}
-
-	closeFinishedSurveys();
-
-	if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && !Gdx.app.getType().equals(ApplicationType.WebGL)) {
-	    uiController.createQuitDialog();
 	}
     }
 
@@ -147,6 +151,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	playerMonitor = new CameraMonitor();
 	windowContainerSetup();
 	surveyStatusContainer = new SurveyContainer();
+	audioManager = new AudioManager();
     }
 
     private void windowContainerSetup() {
@@ -200,6 +205,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	setupInputProcessors();
     }
 
+    /**
+     * Crew should be created only when new game is started.
+     */
     private void createCrew() {
 	crew = null;
 	CrewMembersInitializer initializer;
@@ -214,9 +222,20 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
     private void setupUiController() {
 	uiController = new UIController(gameObjectCanvas.getGameViewObjectContainer(), starSystem.getPlanets());
+	setupUIControllerListeners();
+    }
+
+    private void setupUIControllerListeners() {
 	uiController.setLogMessageListener(createLogMessageListener());
 	uiController.setPlanetClickListener(createPlanetClickListener());
-	uiController.setHyperspaceJumpListener(new UEListener() {
+	uiController.setHyperspaceJumpListener(createHyperSpaceJumpListener());
+	uiController.setStartPlanetSurveyListener(createStartPlanetSurveyListener());
+	uiController.setSelectedPlanetChangedListener(selectedPlanetChangedListener());
+	uiController.setVolumeListener(createVolumeListener());
+    }
+    
+    private UEListener createHyperSpaceJumpListener() {
+	return new UEListener() {
 	    @Override
 	    public void handleEventClassEvent() {
 		if (!gameStatus.isPaused()) {
@@ -225,12 +244,13 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    gameStatus.activateSurveyMode(false);
 		    crewStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
 		    updateIngameLog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP_COMMENCED));
-		    
 		}
 	    };
-	});
+	};
+    }
 
-	uiController.setPlanetSurveyListener(new UEListener() {
+    private UEListener createStartPlanetSurveyListener() {
+	return new UEListener() {
 	    @Override
 	    public void handleEventClassEvent(UEEvent e) {
 		if (e.getPayLoad() instanceof PlanetSurveyForm) {
@@ -239,9 +259,11 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    windowContainer.closeWindow(WindowType.PLANET_DETAILS);
 		}
 	    };
-	});
+	};
+    }
 
-	uiController.setSelectedPlanetChangedListener(new UEListener() {
+    private UEListener selectedPlanetChangedListener() {
+	return new UEListener() {
 	    /*
 	     * (non-Javadoc)
 	     * 
@@ -254,9 +276,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		PlanetCelestialComponent planet = (PlanetCelestialComponent) e.getPayLoad();
 		gameObjectCanvas.setSelectedPlanet(planet);
 	    }
-	});
-
-	uiController.setVolumeListener(createVolumeListener());
+	};
     }
 
     private UEListener createVolumeListener() {
@@ -271,7 +291,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    @Override
 	    public void handleEventClassEvent(UEEvent e) {
 		Float volume = (Float) e.getPayLoad();
-		backgroundMusic.setVolume(bgId, volume);
+		audioManager.getAudioFileCache().get(Music.BASIC_AMBIENT)
+			.setVolume(audioManager.getCurrentlyPlayingBackgroundMusic(), volume);
 	    }
 	};
     }
@@ -351,11 +372,11 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	return new UEListener() {
 	    @Override
 	    public void handleEventClassEvent(final UEEvent e) {
-		final BasicWindow surveyWindow = uiController.createPlanetarySurveyWindow((PlanetGfxContainer) e.getPayLoad(),
+		final BasicWindow surveyWindow = uiController.createPlanetarySurveyWindow((PlanetSpriteContainer) e.getPayLoad(),
 			new ClickListener() {
 			    @Override
 			    public void clicked(InputEvent event, float x, float y) {
-				final BasicWindow surveyedWindow = uiController.createSurveyTeamSelectionWindow((PlanetGfxContainer) e
+				final BasicWindow surveyedWindow = uiController.createSurveyTeamSelectionWindow((PlanetSpriteContainer) e
 					.getPayLoad());
 				windowContainer.closeWindow(WindowType.PLANET_DETAILS);
 				windowContainer.add(WindowType.SURVEY_WINDOW, surveyedWindow);
@@ -378,8 +399,9 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
 	if (survey != null) {
 	    String caption = "";
-	    Sound announcement = Gdx.audio.newSound(Gdx.files.internal("soundeffects/announcement.ogg"));
-	    announcement.play();
+
+	    audioManager.playSoundEffect(SoundEffect.ANNOUNCEMENT);
+
 	    List<Casualty> casualtyList = survey.getMortalities();
 
 	    if (casualtyList.size() > 0) {

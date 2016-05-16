@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.model;
+package com.universe.exploration.spritecontainer.data;
 
 import com.universe.exploration.starsystem.components.CelestialComponent;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
@@ -14,7 +14,7 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  * @author 2.8.2015 Teemu Puurunen
  *
  */
-public class CelestialBodyGfxModel implements IStarsystemBodyGfxModel {
+public class CelestialBodySpriteData implements ICelestialBodySpriteData {
 
     /**
      * Gdx position
@@ -39,7 +39,7 @@ public class CelestialBodyGfxModel implements IStarsystemBodyGfxModel {
     /**
 	 * 
 	 */
-    public CelestialBodyGfxModel() {
+    public CelestialBodySpriteData() {
 	positionX = 0;
 	positionY = 0;
 	angle = 0;

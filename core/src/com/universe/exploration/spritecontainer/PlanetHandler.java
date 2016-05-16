@@ -1,13 +1,12 @@
 /**
  * 
  */
-package com.universe.exploration.gamegraphics;
+package com.universe.exploration.spritecontainer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -30,14 +29,13 @@ public class PlanetHandler {
     /**
      * Planets
      */
-    private List<PlanetGfxContainer> planetGfxContainer;
+    private List<PlanetSpriteContainer> planetContainer;
 
-    private List<Sprite> orbitEnhancer = new ArrayList<Sprite>();
-
+    /**
+     * Constructor cleans the planet list.
+     */
     public PlanetHandler() {
-	planetGfxContainer = new ArrayList<PlanetGfxContainer>();
-
-	// orbitEnhancer.add(new Sprite(new Texture(Gdx.app.)))
+	planetContainer = new ArrayList<PlanetSpriteContainer>();
     }
 
     /**
@@ -48,12 +46,12 @@ public class PlanetHandler {
     public void addStarPlanet(CelestialComponent starSystemComponent) {
 
 	if (starSystemComponent instanceof PlanetCelestialComponent) {
-	    planetGfxContainer.add(new PlanetGfxContainer(starSystemComponent));
+	    planetContainer.add(new PlanetSpriteContainer(starSystemComponent));
 	}
     }
 
-    public PlanetGfxContainer getPlanetGfxContainerAtIndex(int i) {
-	return planetGfxContainer.get(i);
+    public PlanetSpriteContainer getPlanetGfxContainerAtIndex(int i) {
+	return planetContainer.get(i);
     }
 
     /**
@@ -67,22 +65,14 @@ public class PlanetHandler {
 	}
     }
 
-    private List<Sprite> getPlanetSprites() {
-	List<Sprite> sprites = new ArrayList<Sprite>();
-	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
-	    sprites.add(graphicsGfx.getSprite());
-	}
-	return sprites;
-    }
-
     /**
      * Draw sprites on screen and update their position and angles
      */
-    public void update(PlanetGfxContainer selected) {
+    public void update(PlanetSpriteContainer selected) {
 	if (!planetaryMovement)
 	    return;
 
-	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
+	for (PlanetSpriteContainer graphicsGfx : planetContainer) {
 	    graphicsGfx.setPlanetSelected(graphicsGfx.equals(selected));
 	    graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();
 	    graphicsGfx.updateSpritePosition();
@@ -90,8 +80,8 @@ public class PlanetHandler {
 	}
     }
 
-    public PlanetGfxContainer getPlanetGfxContainerByComponent(PlanetCelestialComponent planet) {
-	for (PlanetGfxContainer graphcisGfx : planetGfxContainer) {
+    public PlanetSpriteContainer getPlanetGfxContainerByComponent(PlanetCelestialComponent planet) {
+	for (PlanetSpriteContainer graphcisGfx : planetContainer) {
 	    if (graphcisGfx.getComponentType() == planet) {
 		return graphcisGfx;
 	    }
@@ -100,9 +90,14 @@ public class PlanetHandler {
 	return null;
     }
 
+    /**
+     * Draw sprites on the given spritebatch.
+     * 
+     * @param batch
+     */
     public void drawPlanets(SpriteBatch batch) {
-	for (Sprite sprite : getPlanetSprites()) {
-	    sprite.draw(batch);
+	for (PlanetSpriteContainer graphicsGfx : planetContainer) {
+	    graphicsGfx.getSprite().draw(batch);
 	}
     }
 
@@ -112,8 +107,8 @@ public class PlanetHandler {
      * @param coordinates
      * @return
      */
-    public PlanetGfxContainer getPlanetWithCoordinatesWithinBoundaries(Vector3 coordinates) {
-	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
+    public PlanetSpriteContainer getPlanetWithCoordinatesWithinBoundaries(Vector3 coordinates) {
+	for (PlanetSpriteContainer graphicsGfx : planetContainer) {
 	    // Enlarge hit area a wee bit.
 	    Rectangle planetRectangle = graphicsGfx.getSprite().getBoundingRectangle();
 	    planetRectangle.x -= 5;
@@ -130,7 +125,7 @@ public class PlanetHandler {
     }
 
     public int getPlanetCount() {
-	return planetGfxContainer.size();
+	return planetContainer.size();
     }
 
     /**
@@ -148,8 +143,17 @@ public class PlanetHandler {
 	this.planetaryMovement = planetaryMovement;
     }
 
-    public void drawOrbits(PlanetGfxContainer selected, ShapeRenderer render) {
-	for (PlanetGfxContainer graphicsGfx : planetGfxContainer) {
+    /**
+     * Draws orbit that the planet follows.
+     * 
+     * @param selected
+     *            Selected planet.
+     * @param render
+     *            Shaperenderer with the appropriate camera combined.
+     * 
+     */
+    public void drawOrbits(PlanetSpriteContainer selected, ShapeRenderer render) {
+	for (PlanetSpriteContainer graphicsGfx : planetContainer) {
 	    float radius = (float) ((PlanetCelestialComponent) graphicsGfx.celestialBodyGfxModel.getStarSystemComponent())
 		    .getOrbitalRadius();
 

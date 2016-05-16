@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.gamegraphics;
+package com.universe.exploration.spritecontainer;
 
 /**
  * <p>
