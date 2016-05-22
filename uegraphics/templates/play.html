@@ -29,16 +29,31 @@
           </ul>
         </div>
         <div class="col-md-8">  
-         <h1>Good old clunky space strategy... or something else?</h1>
-         <p>University Exploration is still a work in progress. I am experimenting with libGDX library and creating a space exploration game where you are suppose to seek for a potentially habitable planet. Fundamentally the game will be a simple strategy game where you seek out resources and make bold decisions on which planets to mine for resources and which to leave alone.</p>
-
-         <p><a href="play.html">Play game</a></p>
+         <div align="center" id="embed-html"></div>
        </div>
      </div>
 
    </div>
 
  </div>
+
+ <script type="text/javascript" src="html/html.nocache.js"></script>        
+ <script>
+ function handleMouseDown(evt) {
+  evt.preventDefault();
+  evt.stopPropagation();
+  evt.target.style.cursor = 'default';
+}
+
+function handleMouseUp(evt) {
+  evt.preventDefault();
+  evt.stopPropagation();
+  evt.target.style.cursor = '';
+}
+document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
+document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
+</script>
+
 
 <script src="universeExplorationMainController.js"></script>
 

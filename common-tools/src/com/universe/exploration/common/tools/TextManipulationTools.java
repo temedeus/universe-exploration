@@ -3,7 +3,8 @@
  */
 package com.universe.exploration.common.tools;
 
-import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * <p>
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  *
  */
 public class TextManipulationTools {
-    public static String implodeListAsString(ArrayList<String> list, String separator) {
+    public static String implodeListAsString(List<String> list, String separator) {
 	String returnVal = "";
 
 	for (String str : list) {

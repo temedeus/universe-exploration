@@ -450,7 +450,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     }
 
     private String updateResources(ResourcesFound rf) {
-	ArrayList<String> resources = new ArrayList<String>();
+	List<String> resources = new ArrayList<String>();
 	String caption = "";
 
 	if (rf.getAir() > 0) {
