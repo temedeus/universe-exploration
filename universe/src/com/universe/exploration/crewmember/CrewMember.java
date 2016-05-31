@@ -2,6 +2,7 @@ package com.universe.exploration.crewmember;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.universe.exploration.crew.CrewMemberCondition;
@@ -28,7 +29,7 @@ public class CrewMember {
 
     private Nationality nationality;
 
-    private HashMap<String, CrewMemberAttribute> crewMemberAttributes = new HashMap<String, CrewMemberAttribute>();
+    private Map<String, CrewMemberAttribute> crewMemberAttributes = new HashMap<String, CrewMemberAttribute>();
     
     private CrewMemberStatus status;
     
@@ -219,7 +220,7 @@ public class CrewMember {
     /**
      * @return the crewMemberAttributes
      */
-    public HashMap<String, CrewMemberAttribute> getCrewMemberAttributes() {
+    public Map<String, CrewMemberAttribute> getCrewMemberAttributes() {
         return crewMemberAttributes;
     }
 }
