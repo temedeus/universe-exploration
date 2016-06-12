@@ -30,6 +30,9 @@ public enum CelestialComponentTypes {
 
     private final ComponentType componentType;
 
+    /**
+     * Determines the likelihood of the component.  
+     */
     private final int prevalance;
 
     CelestialComponentTypes(ComponentType componentType, int prevalance) {

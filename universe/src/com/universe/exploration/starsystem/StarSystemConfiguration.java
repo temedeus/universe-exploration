@@ -1,6 +1,7 @@
 package com.universe.exploration.starsystem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
 import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
@@ -41,15 +42,18 @@ public class StarSystemConfiguration {
     private String[][] planettypeListing;
 
     /**
-     * Initiate configuration TODO: maybe we could ditch the String arrays and
-     * utilize ArrayList solely? Right now we convert to String[][] for
-     * compatibility issues with randomizing components. This likely involves
-     * creating a new randomization method.
+     * Initiate configuration TODO: maybe we could ditch the String arrays?
+     * Right now we convert to String[][] for compatibility issues with
+     * randomizing components. This isn't a smart way of doing this but right
+     * now works.
      */
     public StarSystemConfiguration() {
-	ArrayList<String[]> startypes = new ArrayList<String[]>();
-	ArrayList<String[]> planettypes = new ArrayList<String[]>();
+	List<String[]> startypes = new ArrayList<String[]>();
+	List<String[]> planettypes = new ArrayList<String[]>();
 
+	/**
+	 * Generate string array of all potential stars and planets.
+	 */
 	for (CelestialComponentTypes cct : CelestialComponentTypes.values()) {
 	    String[] tmp = { cct.name(), "" + cct.getPrevalance() };
 
@@ -75,7 +79,7 @@ public class StarSystemConfiguration {
      * @param arrList
      * @return
      */
-    private String[][] populateListing(ArrayList<String[]> arrList) {
+    private String[][] populateListing(List<String[]> arrList) {
 	String[][] listing = new String[arrList.size()][2];
 	int x = 0;
 

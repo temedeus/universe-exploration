@@ -5,15 +5,6 @@ package com.universe.exploration.localization;
 
 import com.universe.exploration.common.TranslatableEnum;
 
-/**
- * <p>
- * References to localization keys. This way we don't have to use magic strings
- * around the code.
- * </p>
- * 
- * @author 12.11.2015 Teemu Puurunen
- *
- */
 public enum LocalKey implements TranslatableEnum {
     // Titles.
     TITLE_SURVEY_PLANET,

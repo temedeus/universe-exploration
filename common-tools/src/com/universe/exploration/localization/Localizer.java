@@ -3,13 +3,12 @@
  */
 package com.universe.exploration.localization;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.universe.exploration.common.TranslatableEnum;
-import com.universe.exploration.common.tools.FileReader;
 
 /**
  * <p>
@@ -24,10 +23,7 @@ public class Localizer {
 
     private static Localizer localizer;
 
-    private HashMap<LanguageCode, Localization> localization = new HashMap<LanguageCode, Localization>();
-
-    // English by default
-    private LanguageCode languageCode = LanguageCode.ENG;
+    private I18NBundle localizationBundle;
 
     /**
      * Initialize once. If localizations change in the middle of the game...
@@ -49,31 +45,9 @@ public class Localizer {
      * memory right now. We'll see if we have to change this in the future.
      */
     private Localizer() {
-	FileReader fileReader = new FileReader();
-	for (LanguageCode code : LanguageCode.values()) {
-	    try {
-		List<String> rawLocalizationStrings = fileReader.readTextFile(code.getLocalizationFilePath());
-		Localization newLocalization = new Localization();
-		localization.put(code, newLocalization);
-
-		for (String rawLocalizationString : rawLocalizationStrings) {
-		    rawLocalizationString.trim();
-		    if (!rawLocalizationString.isEmpty() && !rawLocalizationString.startsWith("//")) {
-			String[] splitted = rawLocalizationString.split(":", 2);
-			if (splitted.length == 2) {
-			    newLocalization.putIntoLocalizationMap(splitted[0], splitted[1]);
-			}
-		    }
-		}
-
-	    } catch (IOException e) {
-		Gdx.app.log("ERROR", "Localization file " + code.getLocalizationFilePath() + " could not be read for some reason!", e);
-	    }
-	}
-    }
-
-    public void setLanguage(LanguageCode languageCode) {
-	this.languageCode = languageCode;
+	FileHandle baseFileHandle = Gdx.files.internal("localization/DefaultBundle");
+	Locale locale = new Locale("en", "GB", "VAR1");
+	localizationBundle = I18NBundle.createBundle(baseFileHandle, locale);
     }
 
     /**
@@ -84,18 +58,7 @@ public class Localizer {
      * @return
      */
     public String get(String key) {
-	String result = null;
-	try {
-	    result = localization.get(languageCode).getFromLocalizationMap(key);
-	} catch (NullPointerException e) {
-	    result = key;
-	} finally {
-	    if(result == null) {
-		result = key;
-	    }
-	}
-
-	return result;
+	return localizationBundle.get(key);
     }
 
     /**

@@ -21,8 +21,7 @@ public class WindowContainer {
 
     private WindowType[] windowTypes;
 
-    // TODO: maybe this could be moved apart from this class? I dont think this
-    // should be responsible of such abstract things.
+    // TODO: Abstracise?
     private UEListener notifyOfSpecifiedWindowsChanged;
 
     public WindowContainer() {
