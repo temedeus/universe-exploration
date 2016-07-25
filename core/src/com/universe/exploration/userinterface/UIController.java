@@ -30,7 +30,6 @@ import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
-import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.spritecontainer.PlanetHandler;
@@ -97,6 +96,8 @@ public class UIController {
      */
     private final LogDisplay logDisplay;
 
+    private static final float RIGHT_SIDE_BUTTON_WIDTH = 500;
+    
     public UIController(PlanetHandler gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
 
 	planetSelection = new PlanetSelection(gameViewObjectContainer, planetList);
@@ -122,9 +123,9 @@ public class UIController {
 
 	Slider volumeSlider = createVolumeSlider();
 
-	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MIN_VOLUME), 0f, volumeSlider));
+	table.addActor(createVolumeChangeButton(Localizer.getInstance().get("BTN_MIN_VOLUME"), 0f, volumeSlider));
 	table.addActor(volumeSlider);
-	table.addActor(createVolumeChangeButton(Localizer.getInstance().get(LocalKey.BTN_MAX_VOLUME), 100f, volumeSlider));
+	table.addActor(createVolumeChangeButton(Localizer.getInstance().get("BTN_MAX_VOLUME"), 100f, volumeSlider));
 
 	return table;
     }
@@ -283,12 +284,12 @@ public class UIController {
      * @return
      */
     public TextButton createHyperspaceJumpButton() {
-	return new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_HYPERSPACE_JUMP), new ClickListener() {
+	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_HYPERSPACE_JUMP"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		if (!UniverseExploration.gameStatus.isPaused() && isHyperspaceJumpAllowed) {
 		    UniverseExploration.audioManager.playSoundEffect(SoundEffect.HYPERSPACEJUMP);
-		    final Dialog dialog = new Dialog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP),
+		    final Dialog dialog = new Dialog(Localizer.getInstance().get("DESC_HYPERSPACE_JUMP"),
 			    UserInterfaceBank.userInterfaceSkin);
 		    dialog.setSize(200, 100);
 		    dialog.show(uiStage);
@@ -302,6 +303,10 @@ public class UIController {
 		}
 	    }
 	});
+	
+	button.setWidth(RIGHT_SIDE_BUTTON_WIDTH);
+	
+	return button;
     }
 
     /**
@@ -310,18 +315,21 @@ public class UIController {
      * @return
      */
     public TextButton createCrewControlButton() {
-	return new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_CREW_CONTROL), new ClickListener() {
+	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CREW_CONTROL"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		show(createCrewManagementWindow());
 	    }
 	});
+	
+	button.setWidth(RIGHT_SIDE_BUTTON_WIDTH);
+	return button;
     }
 
     public BasicWindow createGameOverWindow(WindowType windowType, ClickListener tryAgainAction) {
 	BasicTable gameoverData = new BasicTable(Align.left | Align.top);
 	BasicWindow gameOverWindow = new WindowFactory().createDescriptionWindowWithSecondaryAction(windowType, gameoverData,
-		LocalKey.BTN_QUIT_GAME, tryAgainAction, new ClickListener() {
+		"BTN_QUIT_GAME", tryAgainAction, new ClickListener() {
 		    @Override
 		    public void clicked(InputEvent event, float x, float y) {
 			if (!Gdx.app.getType().equals(ApplicationType.WebGL)) {
@@ -351,7 +359,7 @@ public class UIController {
      * @return
      */
     private TextButton createQuitButton() {
-	return new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_QUIT_GAME), new ClickListener() {
+	return new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_QUIT_GAME"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		createQuitDialog();
@@ -364,7 +372,7 @@ public class UIController {
     }
 
     public void createQuitDialog() {
-	uiStage.addActor(new WindowFactory().createQuitWindow(Localizer.getInstance().get(LocalKey.TITLE_QUIT_GAME)));
+	uiStage.addActor(new WindowFactory().createQuitWindow(Localizer.getInstance().get("TITLE_QUIT_GAME")));
     }
 
     /**
@@ -381,7 +389,7 @@ public class UIController {
 	    table.row();
 	}
 
-	return new WindowFactory().createOKWindow(Localizer.getInstance().get(LocalKey.TITLE_SURVEY_CLOSED), table);
+	return new WindowFactory().createOKWindow(Localizer.getInstance().get("TITLE_SURVEY_CLOSED"), table);
     }
 
     /**
@@ -484,7 +492,7 @@ public class UIController {
 	VerticalGroup group = new VerticalGroup();
 	group.addActor(populateWithStatus(details));
 	group.addActor(UIComponentFactory.createSpacer());
-	group.addActor(new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_KICK_OUT_OF_AIRLOCK),
+	group.addActor(new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_KICK_OUT_OF_AIRLOCK"),
 		createaKillCrewManClickListener(details.getCrewMember())));
 	group.addActor(UIComponentFactory.createSpacer());
 
@@ -553,7 +561,7 @@ public class UIController {
 	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, CoreConfiguration.MAX_DAYS_ON_SURVEY, 1);
 	final PlanetSurveyForm form = (PlanetSurveyForm) pair.getFormContainer();
 
-	final UELabel label = new UELabel(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH) + " ("
+	final UELabel label = new UELabel(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " ("
 		+ form.getSurveyLength().getValue() + ") days");
 	planetInformationTable.add(label);
 	planetInformationTable.row();
@@ -567,7 +575,7 @@ public class UIController {
 
 	    @Override
 	    public boolean handle(Event event) {
-		label.setText(Localizer.getInstance().get(LocalKey.LABEL_SURVEY_LENGTH) + " (" + form.getSurveyLength().getValue()
+		label.setText(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " (" + form.getSurveyLength().getValue()
 			+ ") days");
 
 		return true;

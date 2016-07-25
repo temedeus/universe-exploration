@@ -6,7 +6,6 @@ package com.universe.exploration.userinterface.components.window;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 
 /**
@@ -24,18 +23,18 @@ public enum WindowType {
     /**
      * Open up details for sending a survey team.
      */
-    SURVEY_WINDOW(LocalKey.TITLE_SURVEY_PLANET, LocalKey.BTN_SURVEY),
+    SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY"),
 
     /**
      * Game over window.
      */
-    GAME_OVER(LocalKey.TITLE_GAME_OVER, LocalKey.BTN_TRY_AGAIN),
+    GAME_OVER("TITLE_GAME_OVER", "BTN_TRY_AGAIN"),
 
     /**
      * List of planet general details. Allows to open up e.g.
      * {@link #SURVEY_WINDOW}.
      */
-    PLANET_DETAILS(LocalKey.TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN, LocalKey.BTN_SURVEY) {
+    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY") {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -50,7 +49,7 @@ public enum WindowType {
 	}
     },
 
-    CREW_MANAGEMENT(LocalKey.TITLE_CREW_MANAGEMENT, LocalKey.BTN_OK) {
+    CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK") {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -66,21 +65,21 @@ public enum WindowType {
 	}
     },
 
-    CREWMEMBER_DETAILS(LocalKey.TITLE_CREWMEMBER_DETAILS, LocalKey.BTN_OK),
+    CREWMEMBER_DETAILS("TITLE_CREWMEMBER_DETAILS", "BTN_OK"),
 
     /**
      * Notification of a closed survey.
      */
-    SURVEY_CLOSED(LocalKey.TITLE_SURVEY, LocalKey.BTN_SURVEY);
+    SURVEY_CLOSED("TITLE_SURVEY", "BTN_SURVEY");
 
-    private final LocalKey caption;
+    private final String caption;
 
-    private final LocalKey okButtonCaption;
+    private final String okButtonCaption;
 
     /**
      * Contains window caption and ok button text.
      */
-    private WindowType(LocalKey caption, LocalKey okButtonCaption) {
+    private WindowType(String caption, String okButtonCaption) {
 	this.caption = caption;
 	this.okButtonCaption = okButtonCaption;
     }

@@ -8,7 +8,6 @@ import java.util.Locale;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.universe.exploration.common.TranslatableEnum;
 
 /**
  * <p>
@@ -40,9 +39,7 @@ public class Localizer {
     }
 
     /**
-     * We read all the localizations at once to avoid repetetive IO. There is
-     * not so many localization items so far that we couldn't load them all into
-     * memory right now. We'll see if we have to change this in the future.
+     * Default to English bundle.
      */
     private Localizer() {
 	FileHandle baseFileHandle = Gdx.files.internal("localization/DefaultBundle");

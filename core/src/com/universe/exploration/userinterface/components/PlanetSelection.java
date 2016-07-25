@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
-import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.spritecontainer.GameObjectCanvas;
 import com.universe.exploration.spritecontainer.PlanetHandler;
@@ -60,7 +59,7 @@ public class PlanetSelection {
 	this.gameViewObjectContainer = gameViewObjectContainer;
 	this.planetList = planetList;
 
-	surveyButton = new ButtonFactory().createTextButton(Localizer.getInstance().get(LocalKey.BTN_SURVEY), new ClickListener() {
+	surveyButton = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_SURVEY"), new ClickListener() {
 	    /*
 	     * (non-Javadoc)
 	     * 
@@ -115,11 +114,11 @@ public class PlanetSelection {
 
 	if (planetList.size() > 0) {
 
-	    table.addActor(new Label(Localizer.getInstance().get(LocalKey.LABEL_PLANET_SELECTION), UserInterfaceBank.userInterfaceSkin));
+	    table.addActor(new Label(Localizer.getInstance().get("LABEL_PLANET_SELECTION"), UserInterfaceBank.userInterfaceSkin));
 	    table.addActor(createPlanetSelectBox());
 	    table.addActor(surveyButton);
 	} else {
-	    table.addActor(new Label(Localizer.getInstance().get(LocalKey.LABEL_NO_PLANETS_FOUND), UserInterfaceBank.userInterfaceSkin));
+	    table.addActor(new Label(Localizer.getInstance().get("LABEL_NO_PLANETS_FOUND"), UserInterfaceBank.userInterfaceSkin));
 	}
 
 	return table;

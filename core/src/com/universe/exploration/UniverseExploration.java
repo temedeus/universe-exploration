@@ -28,7 +28,6 @@ import com.universe.exploration.crewmember.CrewFactory;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
-import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.logger.MinimalLogger;
 import com.universe.exploration.player.CrewStatusManager;
@@ -243,7 +242,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		    stageSetup();
 		    gameStatus.activateSurveyMode(false);
 		    crewStatus.decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
-		    updateIngameLog(Localizer.getInstance().get(LocalKey.DESC_HYPERSPACE_JUMP_COMMENCED));
+		    updateIngameLog(Localizer.getInstance().get("DESC_HYPERSPACE_JUMP_COMMENCED"));
 		}
 	    };
 	};
@@ -408,7 +407,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		updateIngameLog("You have lost " + casualtyList.size() + " crewmen on survey.");
 		handleCrewmenCasualtiesFromSurvey(casualtyList);
 	    } else {
-		caption = Localizer.getInstance().get(LocalKey.TITLE_SURVEY_TEAM_SURVIVED);
+		caption = Localizer.getInstance().get("TITLE_SURVEY_TEAM_SURVIVED");
 		updateIngameLog(caption);
 	    }
 
@@ -449,23 +448,23 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	return surveydata;
     }
 
-    private String updateResources(ResourcesFound rf) {
+    private String updateResources(ResourcesFound foundResources) {
 	List<String> resources = new ArrayList<String>();
 	String caption = "";
 
-	if (rf.getAir() > 0) {
-	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_AIR));
-	    crewStatus.increaseAir(rf.getAir());
+	if (foundResources.getAir() > 0) {
+	    resources.add(Localizer.getInstance().get("GENERIC_AIR"));
+	    crewStatus.increaseAir(foundResources.getAir());
 	}
 
-	if (rf.getFood() > 0) {
-	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_FOOD));
-	    crewStatus.increaseFood(rf.getFood());
+	if (foundResources.getFood() > 0) {
+	    resources.add(Localizer.getInstance().get("GENERIC_FOOD"));
+	    crewStatus.increaseFood(foundResources.getFood());
 	}
 
-	if (rf.getWater() > 0) {
-	    resources.add(Localizer.getInstance().get(LocalKey.GENERIC_WATER));
-	    crewStatus.increaseWater(rf.getWater());
+	if (foundResources.getWater() > 0) {
+	    resources.add(Localizer.getInstance().get("GENERIC_WATER"));
+	    crewStatus.increaseWater(foundResources.getWater());
 	}
 
 	if (resources.size() == 0) {

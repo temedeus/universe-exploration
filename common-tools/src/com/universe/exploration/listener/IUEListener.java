@@ -12,8 +12,5 @@ import java.util.EventObject;
 interface IUEListener {
     public void handleEventClassEvent(EventObject e);
 
-    /**
-	 * 
-	 */
     void handleEventClassEvent();
 }

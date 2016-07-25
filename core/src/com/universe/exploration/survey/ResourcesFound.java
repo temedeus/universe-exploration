@@ -4,6 +4,8 @@
 package com.universe.exploration.survey;
 
 /**
+ * Describes the resources that were found during the survey mission.
+ * 
  * @author 25.10.2015 Teemu Puurunen
  *
  */

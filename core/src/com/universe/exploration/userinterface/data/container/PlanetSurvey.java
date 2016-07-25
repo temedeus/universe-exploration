@@ -5,7 +5,6 @@ package com.universe.exploration.userinterface.data.container;
 
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.Units;
-import com.universe.exploration.localization.LocalKey;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.data.DataPair;
@@ -30,19 +29,19 @@ public class PlanetSurvey extends DataPairContainer {
 	// abstraction?
 	PlanetCelestialComponent cc = (PlanetCelestialComponent) auxiliaryDataContainer;
 
-	LocalKey waterFound = (cc.isWaterFound()) ? LocalKey.GENERIC_LIQUID_WATER : LocalKey.GENERAL_NONE;
-	LocalKey foodFound = (cc.isFoodFound()) ? LocalKey.GENERAL_YES : LocalKey.GENERAL_NO;
-	LocalKey oxygenFound = (cc.isOxygenFound()) ? LocalKey.GENERAL_YES : LocalKey.GENERAL_NO;
+	String waterFound = (cc.isWaterFound()) ? "GENERIC_LIQUID_WATER" : "GENERAL_NONE";
+	String foodFound = (cc.isFoodFound()) ? "GENERAL_YES" : "GENERAL_NO";
+	String oxygenFound = (cc.isOxygenFound()) ? "GENERAL_YES" : "GENERAL_NO";
 
 	float orbitalRadius = ((float) cc.getOrbitalRadius() / 1000);
 	String orbitalRadiusToString = MathTools.roundedFloatAsString(orbitalRadius) + " " + Units.AU.getUnit();
 
-	add(new DataPair("", Localizer.getInstance().get(LocalKey.DESC_PLANET_TYPE), cc.getComponentName()));
-	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_ORBITAL_RADIUS), orbitalRadiusToString));
-	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_PRESENT_LIFEFORMS), Localizer.getInstance().get(cc.getLifeforms().getLocalKey())));
-	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_WATER_FOUND), Localizer.getInstance().get(waterFound)));
-	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_FOOD_FOUND), Localizer.getInstance().get(foodFound)));
-	add(new DataPair("", Localizer.getInstance().get(LocalKey.SUBHEADER_OXYGEN_PRESENT), Localizer.getInstance().get(oxygenFound)));
+	add(new DataPair("", Localizer.getInstance().get("DESC_PLANET_TYPE"), cc.getComponentName()));
+	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_ORBITAL_RADIUS"), orbitalRadiusToString));
+	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_PRESENT_LIFEFORMS"), Localizer.getInstance().get(cc.getLifeforms().getLocalKey())));
+	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_WATER_FOUND"), Localizer.getInstance().get(waterFound)));
+	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_FOOD_FOUND"), Localizer.getInstance().get(foodFound)));
+	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_OXYGEN_PRESENT"), Localizer.getInstance().get(oxygenFound)));
     }
 
 }
