@@ -4,6 +4,7 @@
 package com.universe.exploration.localization;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -55,7 +56,11 @@ public class Localizer {
      * @return
      */
     public String get(String key) {
-	return localizationBundle.get(key);
+	try {
+	    return localizationBundle.get(key);
+	} catch(MissingResourceException e) {
+	    return key;
+	}
     }
 
     /**

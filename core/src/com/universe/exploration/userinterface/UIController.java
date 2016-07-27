@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -97,7 +96,7 @@ public class UIController {
     private final LogDisplay logDisplay;
 
     private static final float RIGHT_SIDE_BUTTON_WIDTH = 500;
-    
+
     public UIController(PlanetHandler gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
 
 	planetSelection = new PlanetSelection(gameViewObjectContainer, planetList);
@@ -110,24 +109,8 @@ public class UIController {
 
 	uiStage.addActor(createLeftHUD());
 	uiStage.addActor(createTopHUDTable());
-	uiStage.addActor(createTopCenterHUDTable());
 	uiStage.addActor(createBottomHUDTable());
 	uiStage.addActor(createLogDisplay());
-    }
-
-    private HorizontalGroup createTopCenterHUDTable() {
-	HorizontalGroup table = new HorizontalGroup();
-
-	table.align(Align.left | Align.top);
-	table.setPosition(Gdx.graphics.getWidth() / 2 - 200, Gdx.graphics.getHeight());
-
-	Slider volumeSlider = createVolumeSlider();
-
-	table.addActor(createVolumeChangeButton(Localizer.getInstance().get("BTN_MIN_VOLUME"), 0f, volumeSlider));
-	table.addActor(volumeSlider);
-	table.addActor(createVolumeChangeButton(Localizer.getInstance().get("BTN_MAX_VOLUME"), 100f, volumeSlider));
-
-	return table;
     }
 
     private Slider createVolumeSlider() {
@@ -237,7 +220,8 @@ public class UIController {
 	table.padRight(30);
 	table.addActor(createHyperspaceJumpButton());
 	table.addActor(createCrewControlButton());
-
+	table.addActor(createFollowSurveyButton());
+	table.addActor(createOptionsButton());
 	return table;
     }
 
@@ -303,9 +287,9 @@ public class UIController {
 		}
 	    }
 	});
-	
+
 	button.setWidth(RIGHT_SIDE_BUTTON_WIDTH);
-	
+
 	return button;
     }
 
@@ -321,7 +305,32 @@ public class UIController {
 		show(createCrewManagementWindow());
 	    }
 	});
-	
+
+	button.setWidth(RIGHT_SIDE_BUTTON_WIDTH);
+	return button;
+    }
+
+    public TextButton createOptionsButton() {
+	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_OPTIONS"), new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		show(createOptionsWindow());
+	    }
+	});
+
+	button.setWidth(RIGHT_SIDE_BUTTON_WIDTH);
+
+	return button;
+    }
+
+    public TextButton createFollowSurveyButton() {
+	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_FOLLOW_SURVEY"), new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+
+	    }
+	});
+
 	button.setWidth(RIGHT_SIDE_BUTTON_WIDTH);
 	return button;
     }
@@ -412,7 +421,7 @@ public class UIController {
      */
     public BasicWindow createCrewManagementWindow() {
 	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.CREW_MANAGEMENT, createCrewTable(),
-		createCrewManagementClickListener());
+		createCrewManagementClickListener(), false);
 
 	UniverseExploration.windowContainer.add(WindowType.CREW_MANAGEMENT, window);
 
@@ -463,6 +472,29 @@ public class UIController {
 	}
 
 	return table;
+    }
+
+    private BasicWindow createOptionsWindow() {
+	Table table = new Table();
+	table.align(Align.left | Align.top);
+
+	Slider volumeSlider = createVolumeSlider();
+
+	table.add(UIComponentFactory.createSpacer());
+	table.add(new UELabel(Localizer.getInstance().get("LABEL_VOLUME")));
+	table.row();
+	table.add(createVolumeChangeButton(Localizer.getInstance().get("BTN_MIN_VOLUME"), 0f, volumeSlider));
+	table.add(volumeSlider);
+	table.add(createVolumeChangeButton(Localizer.getInstance().get("BTN_MAX_VOLUME"), 100f, volumeSlider));
+	table.row();
+	table.add(UIComponentFactory.createSpacer());
+
+	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.OPTIONS_WINDOW, table,
+		new WindowFactory().createCancelClickListener(WindowType.OPTIONS_WINDOW), false);
+
+	UniverseExploration.windowContainer.add(WindowType.OPTIONS_WINDOW, window);
+
+	return window;
     }
 
     private ClickListener createCrewmemberDetailsClickListerener(final CrewMember crewMember) {
@@ -561,8 +593,8 @@ public class UIController {
 	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, CoreConfiguration.MAX_DAYS_ON_SURVEY, 1);
 	final PlanetSurveyForm form = (PlanetSurveyForm) pair.getFormContainer();
 
-	final UELabel label = new UELabel(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " ("
-		+ form.getSurveyLength().getValue() + ") days");
+	final UELabel label = new UELabel(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " (" + form.getSurveyLength().getValue()
+		+ ") days");
 	planetInformationTable.add(label);
 	planetInformationTable.row();
 
@@ -575,8 +607,7 @@ public class UIController {
 
 	    @Override
 	    public boolean handle(Event event) {
-		label.setText(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " (" + form.getSurveyLength().getValue()
-			+ ") days");
+		label.setText(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " (" + form.getSurveyLength().getValue() + ") days");
 
 		return true;
 	    }

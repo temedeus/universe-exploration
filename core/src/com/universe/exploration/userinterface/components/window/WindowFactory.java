@@ -133,24 +133,32 @@ public class WindowFactory {
      * @param pgfx
      * @return
      */
-    public <T extends Actor> BasicWindow createMediumDescriptionWindow(final WindowType windowType, T contentTable, ClickListener okAction) {
+    public <T extends Actor> BasicWindow createMediumDescriptionWindow(final WindowType windowType, T contentTable, ClickListener okAction,
+	    boolean hasCancelButton) {
 	final MediumWindow window = new MediumWindow(windowType.getLocalizedCaption(), skin, STYLE);
 
 	Table buttontable = new Table();
 	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 
-	buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CANCEL"), new ClickListener() {
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		UniverseExploration.windowContainer.closeWindow(windowType);
-	    }
-	}));
+	if (hasCancelButton) {
+	    buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CANCEL"),
+		    createCancelClickListener(windowType)));
+	}
 
 	buttontable.row();
 
 	window.add(combineDataAndButtonbar((Table) contentTable, buttontable));
 
 	return window;
+    }
+
+    public ClickListener createCancelClickListener(final WindowType windowType) {
+	return new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		UniverseExploration.windowContainer.closeWindow(windowType);
+	    }
+	};
     }
 
     /**

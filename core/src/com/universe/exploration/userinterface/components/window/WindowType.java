@@ -24,7 +24,9 @@ public enum WindowType {
      * Open up details for sending a survey team.
      */
     SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY"),
-
+    
+    OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS"),
+    
     /**
      * Game over window.
      */
