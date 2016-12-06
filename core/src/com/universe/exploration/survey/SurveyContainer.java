@@ -10,13 +10,8 @@ import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
 
 /**
- * <p>
  * Contains list of currently active surveys. Can be used to track down survey
- * that should end.
- * </p>
- * 
- * <p>
- * De facfo maintains a list of {@link Survey}.
+ * that should end. In practice maintains an {@link ArrayList} of {@link Survey}
  * 
  * @author 28.10.2015 Teemu Puurunen
  *
@@ -28,8 +23,8 @@ public class SurveyContainer extends ArrayList<Survey> {
     /**
      * <p>
      * Removes surveyStatus from ArrayList if survey is over. We immediately
-     * return a {@link Survey} because this check is run in a loop. In a
-     * normal scenario surveys should not end simultaneously anyway.
+     * return a {@link Survey} because this check is run in a loop. In a normal
+     * scenario surveys should not end simultaneously anyway.
      * </p>
      * 
      * @param currentDay
@@ -49,12 +44,12 @@ public class SurveyContainer extends ArrayList<Survey> {
     }
 
     public boolean isSurveyTeamAcceptable(List<CrewMember> crewmen) {
-	for(CrewMember member : crewmen) {
-	    if(member.getStatus() != CrewMemberStatus.ALIVE) {
+	for (CrewMember member : crewmen) {
+	    if (member.getStatus() != CrewMemberStatus.ALIVE) {
 		return false;
 	    }
 	}
-	
+
 	return true;
     }
 
