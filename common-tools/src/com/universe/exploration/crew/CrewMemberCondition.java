@@ -6,7 +6,9 @@ package com.universe.exploration.crew;
 import com.universe.exploration.localization.TranslatableEnum;
 
 /**
- * @author 10.4.2016 Teemu Puurunen 
+ * Enumeration of potential crew member conditions.
+ * 
+ * @author 10.4.2016 Teemu Puurunen
  *
  */
 public enum CrewMemberCondition implements TranslatableEnum {

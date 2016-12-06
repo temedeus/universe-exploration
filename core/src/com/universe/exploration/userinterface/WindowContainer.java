@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
@@ -33,6 +34,7 @@ public class WindowContainer {
 	    windowmap.get(key).remove();
 	}
 
+	updatePauseStatus();
 	checkIfNeedToAlert(key, WindowContainerEvent.ADD);
 	windowmap.put(key, window);
     }
@@ -58,7 +60,19 @@ public class WindowContainer {
 	    checkIfNeedToAlert(key, WindowContainerEvent.REMOVE);
 	    closeChildren(key.retreiveChildWindows());
 	    windowmap.remove(key);
+	    updatePauseStatus();
 	}
+    }
+    
+    private void updatePauseStatus() {
+	boolean foundPauseable = false;
+	for(WindowType type : windowmap.keySet()) {
+	    if(type.whenGivenWindowPresentPauseGame()) {
+		foundPauseable = true;
+	    }
+	}
+	
+	UniverseExploration.setGameStatusPaused(foundPauseable);
     }
 
     private void closeChildren(List<WindowType> dependencies) {

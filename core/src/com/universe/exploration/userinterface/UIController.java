@@ -34,6 +34,7 @@ import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.spritecontainer.PlanetHandler;
 import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
+import com.universe.exploration.survey.Survey;
 import com.universe.exploration.userinterface.components.BasicTable;
 import com.universe.exploration.userinterface.components.LogDisplay;
 import com.universe.exploration.userinterface.components.PlanetSelection;
@@ -328,7 +329,7 @@ public class UIController {
 	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_FOLLOW_SURVEY"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		show(createCrewManagementWindow());
+		show(createSurveyManagementWindow());
 	    }
 	});
 
@@ -428,15 +429,14 @@ public class UIController {
 
 	return window;
     }
-    
-    
+
     /**
      * Survey management window.
      * 
      * @param pgfx
      */
     public BasicWindow createSurveyManagementWindow() {
-	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_MANAGEMENT, createCrewTable(),
+	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_MANAGEMENT, createSurveyTable(),
 		createCrewManagementClickListener(), false);
 
 	UniverseExploration.windowContainer.add(WindowType.SURVEY_MANAGEMENT, window);
@@ -460,12 +460,55 @@ public class UIController {
     }
 
     /**
+     * Creates a table containing a list of surveys. TODO: move to some help
+     * class.
+     * 
+     * @return {@link UETable} containing surveys.
+     */
+    private UETable createSurveyTable() {
+	UETable table = new UETable();
+
+	for (Survey survey : UniverseExploration.surveyStatusContainer) {
+	    Table cell = new Table();
+	    cell.padBottom(15);
+	    cell.padRight(15);
+	    cell.add(new UELabel(survey.getSurveyName()));
+	    cell.row();
+	    cell.add(new UELabel(concatenateCrewMemberListNames(survey.getSurveyTeam())));
+	    cell.row();
+	    cell.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("LABEL_SHOW_DETAILS"),
+		    createShowSurveyDetailsClickListerner(survey)));
+	    table.add(cell);
+
+	}
+
+	return table;
+    }
+
+    /**
+     * TODO: move to some help tools
+     * 
+     * @param crewMembers
+     * @return
+     */
+    private String concatenateCrewMemberListNames(List<CrewMember> crewMembers) {
+	StringBuilder sb = new StringBuilder();
+	for (CrewMember member : crewMembers) {
+	    if (crewMembers.indexOf(member) > 0) {
+		sb.append(", ");
+	    }
+	    sb.append(member.getName());
+	}
+	return sb.toString();
+    }
+
+    /**
      * Create a table that shows all of the crew members.
      * 
      * @return
      */
-    private Table createCrewTable() {
-	Table table = new Table();
+    private UETable createCrewTable() {
+	UETable table = new UETable();
 
 	int x = 0;
 
@@ -478,7 +521,8 @@ public class UIController {
 	    cell.row();
 	    cell.add(new Label(Localizer.getInstance().get(crewmember.getStatus()), UserInterfaceBank.userInterfaceSkin));
 	    cell.row();
-	    cell.add(new ButtonFactory().createTextButton("Details", createCrewmemberDetailsClickListerener(crewmember)));
+	    cell.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("LABEL_SHOW_DETAILS"),
+		    createCrewmemberDetailsClickListerener(crewmember)));
 	    table.add(cell);
 
 	    // 5 per row seems good.
@@ -511,6 +555,12 @@ public class UIController {
 	UniverseExploration.windowContainer.add(WindowType.OPTIONS_WINDOW, window);
 
 	return window;
+    }
+
+    private ClickListener createShowSurveyDetailsClickListerner(final Survey survey) {
+	return new ClickListener() {
+
+	};
     }
 
     private ClickListener createCrewmemberDetailsClickListerener(final CrewMember crewMember) {

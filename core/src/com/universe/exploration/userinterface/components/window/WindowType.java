@@ -100,6 +100,10 @@ public enum WindowType {
 	return null;
     }
 
+    public boolean whenGivenWindowPresentPauseGame() {
+	return true;
+    }
+    
     /**
      * @return the caption
      */

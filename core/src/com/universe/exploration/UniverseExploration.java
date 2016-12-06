@@ -84,7 +84,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     public static WindowContainer windowContainer;
 
     private MinimalLogger logger;
-    private SurveyContainer surveyStatusContainer;
+
+    public static SurveyContainer surveyStatusContainer;
 
     public static AudioManager audioManager;
 
@@ -99,7 +100,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	createCrew();
 	stageSetup();
 
-	pauseGame(false);
+	setGameStatusPaused(false);
 
 	audioManager.playMusic(Music.BASIC_AMBIENT, true);
     }
@@ -134,7 +135,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    windowContainer.closeAllWindows();
 	    windowContainer.add(WindowType.GAME_OVER, gameOverWindow);
 	    uiController.show(gameOverWindow);
-	    pauseGame(true);
+	    setGameStatusPaused(true);
 	}
     }
 
@@ -318,10 +319,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	}
     }
 
-    private void pauseGame(boolean pause) {
-	setGameStatusPaused(pause);
-    }
-
     private ClickListener createGameOverClicklistener() {
 	return new ClickListener() {
 	    @Override
@@ -329,7 +326,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		createCrew();
 		stageSetup();
 		crewStatus = new CrewStatusManager();
-		pauseGame(false);
+		setGameStatusPaused(false);
 		windowContainer.closeWindow(WindowType.GAME_OVER);
 	    }
 	};
@@ -501,7 +498,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      * @param gameStatusPaused
      *            the gameStatusPaused to set
      */
-    public void setGameStatusPaused(boolean gameStatusPaused) {
+    public static void setGameStatusPaused(boolean gameStatusPaused) {
 	gameStatus.setPaused(gameStatusPaused);
     }
 
