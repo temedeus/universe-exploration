@@ -101,7 +101,7 @@ public enum WindowType {
     }
 
     public boolean whenGivenWindowPresentPauseGame() {
-	return true;
+	return false;
     }
     
     /**

@@ -423,7 +423,7 @@ public class UIController {
      */
     public BasicWindow createCrewManagementWindow() {
 	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.CREW_MANAGEMENT, createCrewTable(),
-		createCrewManagementClickListener(), false);
+		createGenericCloseWindowClickListener(WindowType.CREW_MANAGEMENT), false);
 
 	UniverseExploration.windowContainer.add(WindowType.CREW_MANAGEMENT, window);
 
@@ -437,14 +437,14 @@ public class UIController {
      */
     public BasicWindow createSurveyManagementWindow() {
 	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_MANAGEMENT, createSurveyTable(),
-		createCrewManagementClickListener(), false);
+		createGenericCloseWindowClickListener(WindowType.SURVEY_MANAGEMENT), false);
 
 	UniverseExploration.windowContainer.add(WindowType.SURVEY_MANAGEMENT, window);
 
 	return window;
     }
 
-    private ClickListener createCrewManagementClickListener() {
+    private ClickListener createGenericCloseWindowClickListener(WindowType type) {
 	return new ClickListener() {
 	    /*
 	     * (non-Javadoc)
@@ -454,7 +454,7 @@ public class UIController {
 	     */
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
+		UniverseExploration.windowContainer.closeWindow(type);
 	    }
 	};
     }
@@ -472,7 +472,7 @@ public class UIController {
 	    Table cell = new Table();
 	    cell.padBottom(15);
 	    cell.padRight(15);
-	    cell.add(new UELabel(survey.getSurveyName()));
+	    cell.add(new UELabel(Localizer.getInstance().get("LABEL_NAME") + survey.getSurveyName()));
 	    cell.row();
 	    cell.add(new UELabel(concatenateCrewMemberListNames(survey.getSurveyTeam())));
 	    cell.row();

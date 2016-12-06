@@ -34,7 +34,7 @@ public class WindowContainer {
 	    windowmap.get(key).remove();
 	}
 
-	updatePauseStatus();
+	//updatePauseStatus();
 	checkIfNeedToAlert(key, WindowContainerEvent.ADD);
 	windowmap.put(key, window);
     }
@@ -60,7 +60,7 @@ public class WindowContainer {
 	    checkIfNeedToAlert(key, WindowContainerEvent.REMOVE);
 	    closeChildren(key.retreiveChildWindows());
 	    windowmap.remove(key);
-	    updatePauseStatus();
+	    //updatePauseStatus();
 	}
     }
     
