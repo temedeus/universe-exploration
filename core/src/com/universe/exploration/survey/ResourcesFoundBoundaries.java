@@ -4,9 +4,7 @@
 package com.universe.exploration.survey;
 
 /**
- * <p>
  * Determines boundaries for potentially found resources.
- * </p>
  * 
  * @author 25.10.2015 Teemu Puurunen
  *

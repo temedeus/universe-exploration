@@ -1,8 +1,11 @@
-/**
- * 
- */
 package com.universe.exploration.crewmember;
 
+/**
+ * Describes a profile based on which a crewmember can be created.
+ * 
+ * @author 6.12.2016 Teemu Puurunen
+ *
+ */
 public class CrewmemberProfile {
     private CrewmemberSex sex;
     private Nationality nationality;

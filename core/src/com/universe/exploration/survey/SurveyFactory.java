@@ -33,18 +33,19 @@ public class SurveyFactory {
      * @param planet
      * @return
      */
-    public Survey createSurveyStatus(int startDay, int surveyLength, List<CrewMember> surveyTeam, PlanetCelestialComponent planet) {
+    public Survey createSurvey(int startDay, int surveyLength, List<CrewMember> surveyTeam, PlanetCelestialComponent planet, String surveyName) {
 	ResourcesFoundFactory rff = new ResourcesFoundFactory();
-	Survey surveyStatus = new Survey();
+	Survey survey = new Survey();
 
-	surveyStatus.setSurveyStartDay(startDay);
-	surveyStatus.setSurveyEndDay(startDay + surveyLength);
-	surveyStatus.setResourcesFound(rff.generateFoundResource(surveyTeam.size(), planet));
+	survey.setSurveyName(surveyName);
+	survey.setSurveyStartDay(startDay);
+	survey.setSurveyEndDay(startDay + surveyLength);
+	survey.setResourcesFound(rff.generateFoundResource(surveyTeam, planet));
 	setMemberStatusOnSurvey(surveyTeam);
 	
-	surveyStatus.setMortalities(createCasualtyList(surveyTeam, planet));
+	survey.setMortalities(createCasualtyList(surveyTeam, planet));
 
-	return surveyStatus;
+	return survey;
     }
     
     private void setMemberStatusOnSurvey(List<CrewMember> surveyTeam) {

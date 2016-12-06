@@ -14,8 +14,6 @@ import com.universe.exploration.crew.CrewMemberStatus;
  * and {@link #femaleProfiles} using {@link #addToNames(CrewmemberSex, String)}.
  * Otherwise you will get zero crewmen.
  * 
- * @author 21.2.2016 Teemu Puurunen
- *
  */
 public class CrewFactory {
 
@@ -53,7 +51,7 @@ public class CrewFactory {
 	crewmember.setNationality(profile.getNationality());
 	crewmember.setStatus(CrewMemberStatus.ALIVE);
 	crewmember.setHealth(100);
-	
+
 	// Crewman characteristics
 	setupCrewmanCharacteristics(crewmember);
 

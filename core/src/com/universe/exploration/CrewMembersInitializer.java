@@ -109,6 +109,12 @@ public class CrewMembersInitializer {
 
 }
 
+/**
+ * Describes a source based on which a crewmember can be created.
+ * 
+ * @author 6.12.2016 Teemu Puurunen
+ *
+ */
 class CrewmemberProfileSource {
     private CrewmemberSex crewmemberSex;
     private Nationality nationality;

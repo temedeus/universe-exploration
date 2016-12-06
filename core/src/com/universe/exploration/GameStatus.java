@@ -22,6 +22,8 @@ public class GameStatus {
      * Ensures game parameters are proper for creating a survey window.
      * 
      * @param activate
+     *            Boolean to tell if survey mode should be activated or
+     *            deactivated.
      */
     public void activateSurveyMode(boolean activate) {
 	if (activate) {
@@ -33,47 +35,26 @@ public class GameStatus {
 	}
     }
 
-    /**
-     * @return the paused
-     */
     public boolean isPaused() {
 	return paused;
     }
 
-    /**
-     * @return the planetaryMovementActive
-     */
     public boolean isPlanetaryMovementActive() {
 	return planetaryMovementActive;
     }
 
-    /**
-     * @param paused
-     *            the paused to set
-     */
     public void setPaused(boolean paused) {
 	this.paused = paused;
     }
 
-    /**
-     * @param planetaryMovementActive
-     *            the planetaryMovementActive to set
-     */
     public void setPlanetaryMovementActive(boolean planetaryMovementActive) {
 	this.planetaryMovementActive = planetaryMovementActive;
     }
 
-    /**
-     * @return the zoomIn
-     */
     public boolean isZoomIn() {
 	return zoomIn;
     }
 
-    /**
-     * @param zoomIn
-     *            the zoomIn to set
-     */
     public void setZoomIn(boolean zoomIn) {
 	this.zoomIn = zoomIn;
     }

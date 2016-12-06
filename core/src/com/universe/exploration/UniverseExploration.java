@@ -37,7 +37,7 @@ import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
 import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-import com.universe.exploration.survey.ResourcesFound;
+import com.universe.exploration.survey.ResourcesFoundBean;
 import com.universe.exploration.survey.Survey;
 import com.universe.exploration.survey.SurveyContainer;
 import com.universe.exploration.survey.SurveyFactory;
@@ -232,7 +232,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	uiController.setSelectedPlanetChangedListener(selectedPlanetChangedListener());
 	uiController.setVolumeListener(createVolumeListener());
     }
-    
+
     private UEListener createHyperSpaceJumpListener() {
 	return new UEListener() {
 	    @Override
@@ -304,12 +304,13 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    if (surveyStatusContainer.isSurveyTeamAcceptable(crew)) {
 
 		SurveyFactory ssf = new SurveyFactory();
-		Survey ss = ssf.createSurveyStatus((int) crewStatus.getTime(), surveyLength, form.getSelectedCrewMembers(),
-			(PlanetCelestialComponent) form.getPlanet());
+		Survey ss = ssf.createSurvey((int) crewStatus.getTime(), surveyLength, form.getSelectedCrewMembers(),
+			(PlanetCelestialComponent) form.getPlanet(), form.getSurveyName().getText());
 		ss.setSurveyTeam(crew);
 		surveyStatusContainer.add(ss);
 
-		updateIngameLog("Survey team of " + crew.size() + " men and women dispatched.");
+		updateIngameLog("Survey (" + form.getSurveyName().getText() + ") dispatched composed of " + crew.size()
+			+ " brave men and women.");
 	    } else {
 		updateIngameLog("Cannot dispatch survey team (" + crew.size() + "). Not enough crewmen available!"
 			+ UniverseExploration.crew.getCrewMenAboardSpaceShip().size());
@@ -417,7 +418,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		}
 	    }
 
-	    ResourcesFound rf = survey.getResourcesFound();
+	    ResourcesFoundBean rf = survey.getResourcesFound();
 	    String resourcesCaption = updateResources(rf);
 
 	    List<String> surveyData = generateSurveyDataRows(caption, resourcesCaption, casualtyList, rf);
@@ -431,7 +432,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	}
     }
 
-    private List<String> generateSurveyDataRows(String caption, String resourcesCaption, List<Casualty> casualtyList, ResourcesFound rf) {
+    private List<String> generateSurveyDataRows(String caption, String resourcesCaption, List<Casualty> casualtyList, ResourcesFoundBean rf) {
 	List<String> surveydata = new ArrayList<String>();
 
 	surveydata.add(caption);
@@ -448,7 +449,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	return surveydata;
     }
 
-    private String updateResources(ResourcesFound foundResources) {
+    private String updateResources(ResourcesFoundBean foundResources) {
 	List<String> resources = new ArrayList<String>();
 	String caption = "";
 

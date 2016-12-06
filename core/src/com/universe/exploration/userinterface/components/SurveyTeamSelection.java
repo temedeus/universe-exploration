@@ -15,27 +15,37 @@ import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.userinterface.ButtonFactory;
 
 /**
+ * Survey team selection view.
+ * 
  * @author 4.4.2016 Teemu Puurunen
  *
  */
 public class SurveyTeamSelection {
 
-    public SurveyTeamSelection(Crew crew) {
-	unselectedCrewMembers.addAll(crew.getCrewMenAboardSpaceShip());
-    }
-
     private List<CrewMember> unselectedCrewMembers = new ArrayList<CrewMember>();
 
     private List<CrewMember> selectedCrewMembers = new ArrayList<CrewMember>();
 
-    private Table unselectedCrewMemberTable = new Table();
+    private UETable unselectedCrewMemberTable = new UETable();
 
-    private Table selectedCrewMemberTable = new Table();
+    private UETable selectedCrewMemberTable = new UETable();
+
+    private UETextField surveyName = new UETextField("");
+
+    public SurveyTeamSelection(Crew crew) {
+	unselectedCrewMembers.addAll(crew.getCrewMenAboardSpaceShip());
+    }
 
     public Table createSurveyTeamSelectionTable() {
 	Table table = new Table();
 	table.padBottom(50);
-	
+
+	table.add(new UELabel(Localizer.getInstance().get("TITLE_SURVEY_NAME")));
+	table.row();
+
+	table.add(surveyName);
+	table.row();
+
 	table.add(new UELabel(Localizer.getInstance().get("TITLE_ADD_CREWMEMBERS_TO_SURVEYTEAM")));
 	table.row();
 
@@ -124,7 +134,7 @@ public class SurveyTeamSelection {
 	};
     }
 
-    enum SurveyTeamCrewMemberModifyType {
+    private enum SurveyTeamCrewMemberModifyType {
 	ADD, REMOVE;
     }
 
@@ -132,13 +142,18 @@ public class SurveyTeamSelection {
      * @return the selectedCrewMembers
      */
     public List<CrewMember> getSelectedCrewMembers() {
-        return selectedCrewMembers;
+	return selectedCrewMembers;
     }
 
     /**
-     * @param selectedCrewMembers the selectedCrewMembers to set
+     * @param selectedCrewMembers
+     *            the selectedCrewMembers to set
      */
     public void setSelectedCrewMembers(List<CrewMember> selectedCrewMembers) {
-        this.selectedCrewMembers = selectedCrewMembers;
+	this.selectedCrewMembers = selectedCrewMembers;
+    }
+    
+    public UETextField getSurveyNameField() {
+	return surveyName;
     }
 }

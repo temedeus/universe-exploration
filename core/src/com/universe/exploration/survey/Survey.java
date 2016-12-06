@@ -9,6 +9,9 @@ import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.crewmember.CrewMember;
 
 /**
+ * Survey abstraction. Contains information about the survey itself, resources
+ * found during the expedition, start and end dates.
+ * 
  * @author 25.10.2015 Teemu Puurunen
  *
  */
@@ -30,12 +33,14 @@ public class Survey {
      */
     private List<Casualty> mortalities;
 
-    private ResourcesFound resourcesFound;
+    private ResourcesFoundBean resourcesFound;
+
+    private String surveyName;
 
     /**
      * @return the resourcesFound
      */
-    public ResourcesFound getResourcesFound() {
+    public ResourcesFoundBean getResourcesFound() {
 	return resourcesFound;
     }
 
@@ -43,7 +48,7 @@ public class Survey {
      * @param resourcesFound
      *            the resourcesFound to set
      */
-    public void setResourcesFound(ResourcesFound resourcesFound) {
+    public void setResourcesFound(ResourcesFoundBean resourcesFound) {
 	this.resourcesFound = resourcesFound;
     }
 
@@ -96,22 +101,38 @@ public class Survey {
      * @return the surveyTeam
      */
     public List<CrewMember> getSurveyTeam() {
-        return surveyTeam;
+	return surveyTeam;
     }
 
     /**
-     * @param surveyTeam the surveyTeam to set
+     * @param surveyTeam
+     *            the surveyTeam to set
      */
     public void setSurveyTeam(List<CrewMember> surveyTeam) {
-        this.surveyTeam = surveyTeam;
+	this.surveyTeam = surveyTeam;
     }
-    
+
     /**
      * 
      * @return
      */
     public int getSurveyTeamSize() {
 	return surveyTeam.size();
+    }
+
+    /**
+     * @return the surveyName
+     */
+    public String getSurveyName() {
+	return surveyName;
+    }
+
+    /**
+     * @param surveyName
+     *            the surveyName to set
+     */
+    public void setSurveyName(String surveyName) {
+	this.surveyName = surveyName;
     }
 
 }

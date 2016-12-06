@@ -39,6 +39,7 @@ import com.universe.exploration.userinterface.components.LogDisplay;
 import com.universe.exploration.userinterface.components.PlanetSelection;
 import com.universe.exploration.userinterface.components.SurveyTeamSelection;
 import com.universe.exploration.userinterface.components.UELabel;
+import com.universe.exploration.userinterface.components.UETable;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
 import com.universe.exploration.userinterface.components.window.WindowFactory;
 import com.universe.exploration.userinterface.components.window.WindowType;
@@ -577,15 +578,15 @@ public class UIController {
     }
 
     /**
-     * This window allows you to select your crew setup.
+     * This window allows you to select your crew setup for surveys.
      * 
-     * @param pgfx
+     * @param planetSpriteContainer
      *            We pass the {@link PlanetSpriteContainer} in order to show a
      *            picture of the planet as well. TODO: implement above
      * @return
      */
-    public BasicWindow createSurveyTeamSelectionWindow(PlanetSpriteContainer pgfx) {
-	Table planetInformationTable = new Table();
+    public BasicWindow createSurveyTeamSelectionWindow(PlanetSpriteContainer planetSpriteContainer) {
+	UETable planetInformationTable = new UETable();
 	SurveyTeamSelection teamSelection = new SurveyTeamSelection(UniverseExploration.crew);
 	planetInformationTable.add(teamSelection.createSurveyTeamSelectionTable());
 	planetInformationTable.row();
@@ -598,8 +599,9 @@ public class UIController {
 	planetInformationTable.add(label);
 	planetInformationTable.row();
 
-	form.setPlanet((PlanetCelestialComponent) pgfx.getComponentType());
+	form.setPlanet((PlanetCelestialComponent) planetSpriteContainer.getComponentType());
 	form.setSelectedCrewMembers(teamSelection.getSelectedCrewMembers());
+	form.setSurveyName(teamSelection.getSurveyNameField());
 	planetInformationTable.add(pair.getTable());
 	planetInformationTable.row();
 

@@ -9,7 +9,7 @@ package com.universe.exploration.survey;
  * @author 25.10.2015 Teemu Puurunen
  *
  */
-public class ResourcesFound {
+public class ResourcesFoundBean {
     private float air;
 
     private float water;

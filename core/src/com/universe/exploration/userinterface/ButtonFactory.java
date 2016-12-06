@@ -9,14 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
+ * Use this class for fetching different types of buttons.
+ * 
  * @author 25.8.2015 Teemu Puurunen
  *
  */
 public class ButtonFactory {
     private Skin uiSkin = UserInterfaceBank.userInterfaceSkin;
-    
+
     /**
-     * Create standardized button
+     * Create standardized button.
      * 
      * @return
      */
@@ -25,7 +27,7 @@ public class ButtonFactory {
     }
 
     /**
-     * Create custom button
+     * Create custom button.
      * 
      * @return
      */

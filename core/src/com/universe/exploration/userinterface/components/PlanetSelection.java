@@ -8,7 +8,6 @@ import java.util.List;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -46,7 +45,7 @@ public class PlanetSelection {
     /**
      * Planets in the current star system.
      */
-    private final SelectBox<Object> planetSelectBox = new SelectBox<Object>(UserInterfaceBank.userInterfaceSkin);
+    private final UESelectBox<Object> planetSelectBox = new UESelectBox<Object>();
 
     /**
      * <p>
@@ -84,7 +83,7 @@ public class PlanetSelection {
 	return planetList.get(planetIndex);
     }
 
-    private SelectBox<Object> createPlanetSelectBox() {
+    private UESelectBox<Object> createPlanetSelectBox() {
 	Object[] labelList = new Object[planetList.size()];
 
 	int x = 0;
