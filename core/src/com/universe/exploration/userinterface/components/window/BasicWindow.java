@@ -14,29 +14,16 @@ import com.universe.exploration.common.tools.GdxHelper;
  *
  */
 public abstract class BasicWindow extends Window implements IBasicWindow {
-    /**
-     * @param title
-     * @param skin
-     */
     public BasicWindow(String title, Skin skin) {
 	super(title, skin);
 	setDefault();
     }
 
-    /**
-     * @param title
-     * @param skin
-     * @param styleName
-     */
     public BasicWindow(String title, Skin skin, String styleName) {
 	super(title, skin, styleName);
 	setDefault();
     }
 
-    /**
-     * @param title
-     * @param style
-     */
     public BasicWindow(String title, WindowStyle style) {
 	super(title, style);
 	setDefault();
@@ -47,7 +34,6 @@ public abstract class BasicWindow extends Window implements IBasicWindow {
 	padTop(20);
 	setWindowSize();
 	setPosition(GdxHelper.getScreenCenterX() - getWidth() / 2, GdxHelper.getScreenCenterY() - getHeight() / 2);
-
     }
 
     public void setWindowSize() {

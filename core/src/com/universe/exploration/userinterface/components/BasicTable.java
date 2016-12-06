@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * Note: this class does not extend {@link Table} but rather wraps one.
- * 
+ * TODO: Find out if you can lose either this or {@link UETable}.
  * @author 24.9.2015 Teemu Puurunen
  *
  */
