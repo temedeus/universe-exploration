@@ -4,6 +4,8 @@
 package com.universe.exploration.userinterface.components.window;
 
 /**
+ * Window setup enumeration. Defines window sizes.
+ * 
  * @author 18.9.2015 Teemu Puurunen
  *
  */
@@ -14,24 +16,15 @@ public enum WindowSetup {
 
     private final int height;
 
-    /**
-	 * 
-	 */
-    WindowSetup(int width, int height) {
+    private WindowSetup(int width, int height) {
 	this.width = width;
 	this.height = height;
     }
 
-    /**
-     * @return the width
-     */
     public int getWidth() {
 	return width;
     }
 
-    /**
-     * @return the height
-     */
     public int getHeight() {
 	return height;
     }

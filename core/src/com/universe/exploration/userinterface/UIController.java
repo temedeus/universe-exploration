@@ -328,7 +328,7 @@ public class UIController {
 	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_FOLLOW_SURVEY"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-
+		show(createCrewManagementWindow());
 	    }
 	});
 
@@ -428,6 +428,21 @@ public class UIController {
 
 	return window;
     }
+    
+    
+    /**
+     * Survey management window.
+     * 
+     * @param pgfx
+     */
+    public BasicWindow createSurveyManagementWindow() {
+	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_MANAGEMENT, createCrewTable(),
+		createCrewManagementClickListener(), false);
+
+	UniverseExploration.windowContainer.add(WindowType.SURVEY_MANAGEMENT, window);
+
+	return window;
+    }
 
     private ClickListener createCrewManagementClickListener() {
 	return new ClickListener() {
@@ -476,7 +491,7 @@ public class UIController {
     }
 
     private BasicWindow createOptionsWindow() {
-	Table table = new Table();
+	UETable table = new UETable();
 	table.align(Align.left | Align.top);
 
 	Slider volumeSlider = createVolumeSlider();

@@ -24,9 +24,9 @@ public enum WindowType {
      * Open up details for sending a survey team.
      */
     SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY"),
-    
+
     OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS"),
-    
+
     /**
      * Game over window.
      */
@@ -44,12 +44,14 @@ public enum WindowType {
 	 */
 	@Override
 	public List<WindowType> retreiveChildWindows() {
-	    ArrayList<WindowType> dependencies = new ArrayList<WindowType>();
+	    List<WindowType> dependencies = new ArrayList<WindowType>();
 	    dependencies.add(SURVEY_WINDOW);
 
 	    return dependencies;
 	}
     },
+
+    SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK"),
 
     CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK") {
 	/*
@@ -60,7 +62,7 @@ public enum WindowType {
 	 */
 	@Override
 	public List<WindowType> retreiveChildWindows() {
-	    ArrayList<WindowType> dependencies = new ArrayList<WindowType>();
+	    List<WindowType> dependencies = new ArrayList<WindowType>();
 	    dependencies.add(CREWMEMBER_DETAILS);
 
 	    return dependencies;
@@ -88,6 +90,8 @@ public enum WindowType {
 
     /**
      * By default no window has any dependencies. Override method to set them.
+     * If window has dependencies, closing this given window will close these
+     * other windows as well.
      * 
      * @return List<WindowType> list of windows that this WindowType is
      *         dependent of.

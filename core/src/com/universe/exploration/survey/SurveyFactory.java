@@ -13,9 +13,7 @@ import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
- * <p>
  * Factory for creating {@link Survey} instances.
- * </p>
  * 
  * @author 25.10.2015 Teemu Puurunen
  *
@@ -33,7 +31,8 @@ public class SurveyFactory {
      * @param planet
      * @return
      */
-    public Survey createSurvey(int startDay, int surveyLength, List<CrewMember> surveyTeam, PlanetCelestialComponent planet, String surveyName) {
+    public Survey createSurvey(int startDay, int surveyLength, List<CrewMember> surveyTeam, PlanetCelestialComponent planet,
+	    String surveyName) {
 	ResourcesFoundFactory rff = new ResourcesFoundFactory();
 	Survey survey = new Survey();
 
@@ -42,14 +41,14 @@ public class SurveyFactory {
 	survey.setSurveyEndDay(startDay + surveyLength);
 	survey.setResourcesFound(rff.generateFoundResource(surveyTeam, planet));
 	setMemberStatusOnSurvey(surveyTeam);
-	
+
 	survey.setMortalities(createCasualtyList(surveyTeam, planet));
 
 	return survey;
     }
-    
+
     private void setMemberStatusOnSurvey(List<CrewMember> surveyTeam) {
-	for(CrewMember member : surveyTeam) {
+	for (CrewMember member : surveyTeam) {
 	    member.setStatus(CrewMemberStatus.ONSURVEY);
 	}
     }

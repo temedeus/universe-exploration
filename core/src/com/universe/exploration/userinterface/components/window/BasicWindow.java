@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.universe.exploration.common.tools.GdxHelper;
 
 /**
+ * Abstract base class for all windows.
+ * 
  * @author 20.9.2015 Teemu Puurunen
  *
  */

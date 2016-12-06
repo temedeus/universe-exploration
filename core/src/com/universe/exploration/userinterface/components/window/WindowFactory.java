@@ -164,7 +164,17 @@ public class WindowFactory {
     /**
      * Creates a description window with secondary action.
      * 
-     * @param pgfx
+     * @param windowType
+     *            Instance of {@link WindowType} telling what type of window we
+     *            are creating.
+     * @param contentTable
+     *            {@link BasicTable} instance with the content.
+     * @param secondaryButtonTitle
+     *            Title for the secondary button.
+     * @param okAction
+     *            Action taken when OK is pressed.
+     * @param secondaryAction
+     *            Action taken when secondary button is pressed.
      * @return
      */
     public BasicWindow createDescriptionWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable,
