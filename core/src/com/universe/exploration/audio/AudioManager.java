@@ -37,7 +37,7 @@ public class AudioManager {
     private float soundEffectsVolume;
 
     /**
-     * TODO: Right now we´re just loading all the sounds ready because there
+     * TODO: Right now we're just loading all the sounds ready because there
      * isnt many of them. Once you get to coding the main menu there is probably
      * a need to load this stuff only once necessary.
      * 

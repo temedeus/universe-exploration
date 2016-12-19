@@ -444,7 +444,7 @@ public class UIController {
 	return window;
     }
 
-    private ClickListener createGenericCloseWindowClickListener(WindowType type) {
+    private ClickListener createGenericCloseWindowClickListener(final WindowType type) {
 	return new ClickListener() {
 	    /*
 	     * (non-Javadoc)
