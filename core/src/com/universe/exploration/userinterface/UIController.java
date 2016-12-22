@@ -413,7 +413,7 @@ public class UIController {
 
 	Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
 
-	return new WindowFactory().createLargeDescriptionWindow(WindowType.PLANET_DETAILS, planetInformationTable, okAction);
+	return new WindowFactory().createLargeDescriptionWindow(WindowType.PLANET_DETAILS, planetInformationTable, okAction, true);
     }
 
     /**
@@ -440,6 +440,20 @@ public class UIController {
 		createGenericCloseWindowClickListener(WindowType.SURVEY_MANAGEMENT), false);
 
 	UniverseExploration.windowContainer.add(WindowType.SURVEY_MANAGEMENT, window);
+
+	return window;
+    }
+
+    /**
+     * Survey details window.
+     * 
+     * @param pgfx
+     */
+    private BasicWindow createSurveyDetailsWindow(Survey survey) {
+	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_DETAILS, createSurveyDetailsTable(survey),
+		createGenericCloseWindowClickListener(WindowType.SURVEY_DETAILS), false);
+
+	UniverseExploration.windowContainer.add(WindowType.SURVEY_DETAILS, window);
 
 	return window;
     }
@@ -481,6 +495,21 @@ public class UIController {
 	    table.add(cell);
 
 	}
+
+	return table;
+    }
+
+    private UETable createSurveyDetailsTable(Survey survey) {
+	UETable table = new UETable();
+
+	Table cell = new Table();
+	cell.padBottom(15);
+	cell.padRight(15);
+	cell.add(new UELabel(Localizer.getInstance().get("LABEL_NAME") + survey.getSurveyName()));
+	cell.row();
+	cell.add(new UELabel(concatenateCrewMemberListNames(survey.getSurveyTeam())));
+	cell.row();
+	table.add(cell);
 
 	return table;
     }
@@ -559,7 +588,21 @@ public class UIController {
 
     private ClickListener createShowSurveyDetailsClickListerner(final Survey survey) {
 	return new ClickListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com.
+	     * badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+	     */
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.SURVEY_DETAILS,
+			createSurveyDetailsWindow(survey), createSurveyDetailsClickListener(), false);
 
+		UniverseExploration.windowContainer.add(WindowType.SURVEY_DETAILS, window);
+		show(window);
+	    }
 	};
     }
 
@@ -578,7 +621,7 @@ public class UIController {
 		crewMemberDetails.createPairs();
 
 		BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.CREWMEMBER_DETAILS,
-			createCrewMemberDetailsPane(crewMemberDetails), createNewCrewMemberDetailsCLickListener());
+			createCrewMemberDetailsPane(crewMemberDetails), createNewCrewMemberDetailsCLickListener(), false);
 
 		UniverseExploration.windowContainer.add(WindowType.CREWMEMBER_DETAILS, window);
 		show(window);
@@ -642,6 +685,22 @@ public class UIController {
 	};
     }
 
+    private ClickListener createSurveyDetailsClickListener() {
+	return new ClickListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
+	     * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+	     */
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		UniverseExploration.windowContainer.closeWindow(WindowType.SURVEY_DETAILS);
+	    }
+	};
+    }
+
     /**
      * This window allows you to select your crew setup for surveys.
      * 
@@ -659,8 +718,8 @@ public class UIController {
 	TableFormContainerPair pair = UIComponentFactory.createHorizontalSlider(0, CoreConfiguration.MAX_DAYS_ON_SURVEY, 1);
 	final PlanetSurveyForm form = (PlanetSurveyForm) pair.getFormContainer();
 
-	final UELabel label = new UELabel(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " (" + form.getSurveyLength().getValue()
-		+ ") days");
+	final UELabel label = new UELabel(
+		Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " (" + form.getSurveyLength().getValue() + ") days");
 	planetInformationTable.add(label);
 	planetInformationTable.row();
 
@@ -681,7 +740,7 @@ public class UIController {
 	});
 
 	BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
-		createdPlanetSurveyTeamDispatchedClickListener(form));
+		createdPlanetSurveyTeamDispatchedClickListener(form), false);
 
 	return window;
     }

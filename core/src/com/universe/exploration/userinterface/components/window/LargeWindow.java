@@ -19,6 +19,11 @@ public class LargeWindow extends BasicWindow {
     public LargeWindow(String title, Skin skin, String styleName) {
 	super(title, skin, styleName);
     }
+    
+    public LargeWindow(WindowType windowType, Skin skin, String styleName) {
+	super(windowType.getLocalizedCaption(), skin, styleName);
+	setWindowType(windowType);
+    }
 
     public LargeWindow(String title, WindowStyle style) {
 	super(title, style);

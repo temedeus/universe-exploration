@@ -14,6 +14,8 @@ import com.universe.exploration.common.tools.GdxHelper;
  *
  */
 public abstract class BasicWindow extends Window implements IBasicWindow {
+    private WindowType windowType; 
+    
     public BasicWindow(String title, Skin skin) {
 	super(title, skin);
 	setDefault();
@@ -38,5 +40,19 @@ public abstract class BasicWindow extends Window implements IBasicWindow {
 
     public void setWindowSize() {
 	setSize(WindowSetup.WINDOW_MEDIUM.getWidth(), WindowSetup.WINDOW_MEDIUM.getHeight());
+    }
+
+    /**
+     * @return the windowType
+     */
+    public WindowType getWindowType() {
+        return windowType;
+    }
+
+    /**
+     * @param windowType the windowType to set
+     */
+    public void setWindowType(WindowType windowType) {
+        this.windowType = windowType;
     }
 }

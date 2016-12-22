@@ -51,7 +51,20 @@ public enum WindowType {
 	}
     },
 
-    SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK"),
+    SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK") {
+	/* (non-Javadoc)
+	 * @see com.universe.exploration.userinterface.components.window.WindowType#retreiveChildWindows()
+	 */
+	@Override
+	public List<WindowType> retreiveChildWindows() {
+	    List<WindowType> dependencies = new ArrayList<WindowType>();
+	    dependencies.add(SURVEY_DETAILS);
+
+	    return dependencies;
+	}
+    },
+    
+    SURVEY_DETAILS("TITLE_SURVEY_SURVEY_DETAILS", "BTN_OK"),
 
     CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK") {
 	/*
