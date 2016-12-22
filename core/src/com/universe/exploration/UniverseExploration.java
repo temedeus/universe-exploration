@@ -131,7 +131,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
     private void pollForGameOver() {
 	if (UniverseExploration.crew.getAliveCrewmen().size() == 0 && !gameStatus.isPaused()) {
-	    BasicWindow gameOverWindow = uiController.createGameOverWindow(WindowType.GAME_OVER, createGameOverClicklistener());
+	    BasicWindow gameOverWindow = uiController.createGameOverWindow(createGameOverClicklistener());
 	    windowContainer.closeAllWindows();
 	    windowContainer.add(WindowType.GAME_OVER, gameOverWindow);
 	    uiController.show(gameOverWindow);

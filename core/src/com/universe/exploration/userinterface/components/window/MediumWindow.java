@@ -23,8 +23,9 @@ public class MediumWindow extends BasicWindow {
      * @param skin
      * @param styleName
      */
-    public MediumWindow(String title, Skin skin, String styleName) {
-	super(title, skin, styleName);
+    public MediumWindow(WindowType windowType, Skin skin, String styleName) {
+	super(windowType.getLocalizedCaption(), skin, styleName);
+	setWindowType(windowType);
     }
 
     /**

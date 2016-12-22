@@ -337,9 +337,9 @@ public class UIController {
 	return button;
     }
 
-    public BasicWindow createGameOverWindow(WindowType windowType, ClickListener tryAgainAction) {
+    public BasicWindow createGameOverWindow(ClickListener tryAgainAction) {
 	BasicTable gameoverData = new BasicTable(Align.left | Align.top);
-	BasicWindow gameOverWindow = new WindowFactory().createDescriptionWindowWithSecondaryAction(windowType, gameoverData,
+	BasicWindow gameOverWindow = new WindowFactory().createWindowWithSecondaryAction(WindowType.GAME_OVER, gameoverData,
 		"BTN_QUIT_GAME", tryAgainAction, new ClickListener() {
 		    @Override
 		    public void clicked(InputEvent event, float x, float y) {
@@ -358,9 +358,10 @@ public class UIController {
      * @param actor
      *            Any component that extends {@link Actor}
      */
-    public <T extends Actor> void show(T actor) {
+    public <T extends Actor> void show(BasicWindow window) {
 	if (!UniverseExploration.gameStatus.isPaused()) {
-	    uiStage.addActor(actor);
+	    UniverseExploration.windowContainer.add(window.getWindowType(), window);
+	    uiStage.addActor(window);
 	}
     }
 
@@ -383,7 +384,15 @@ public class UIController {
     }
 
     public void createQuitDialog() {
-	uiStage.addActor(new WindowFactory().createQuitWindow(Localizer.getInstance().get("TITLE_QUIT_GAME")));
+	BasicWindow window = new WindowFactory().createWindow(WindowType.QUIT_WINDOW, null, new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		Gdx.app.exit();
+	    }
+	});
+
+	UniverseExploration.windowContainer.add(WindowType.QUIT_WINDOW, window);
+	show(window);
     }
 
     /**
@@ -413,7 +422,7 @@ public class UIController {
 
 	Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
 
-	return new WindowFactory().createLargeDescriptionWindow(WindowType.PLANET_DETAILS, planetInformationTable, okAction, true);
+	return new WindowFactory().createWindow(WindowType.PLANET_DETAILS, planetInformationTable, okAction);
     }
 
     /**
@@ -422,8 +431,8 @@ public class UIController {
      * @param pgfx
      */
     public BasicWindow createCrewManagementWindow() {
-	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.CREW_MANAGEMENT, createCrewTable(),
-		createGenericCloseWindowClickListener(WindowType.CREW_MANAGEMENT), false);
+	BasicWindow window = new WindowFactory().createWindow(WindowType.CREW_MANAGEMENT, createCrewTable(),
+		createGenericCloseWindowClickListener(WindowType.CREW_MANAGEMENT));
 
 	UniverseExploration.windowContainer.add(WindowType.CREW_MANAGEMENT, window);
 
@@ -436,8 +445,8 @@ public class UIController {
      * @param pgfx
      */
     public BasicWindow createSurveyManagementWindow() {
-	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_MANAGEMENT, createSurveyTable(),
-		createGenericCloseWindowClickListener(WindowType.SURVEY_MANAGEMENT), false);
+	BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_MANAGEMENT, createSurveyTable(),
+		createGenericCloseWindowClickListener(WindowType.SURVEY_MANAGEMENT));
 
 	UniverseExploration.windowContainer.add(WindowType.SURVEY_MANAGEMENT, window);
 
@@ -450,8 +459,8 @@ public class UIController {
      * @param pgfx
      */
     private BasicWindow createSurveyDetailsWindow(Survey survey) {
-	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.SURVEY_DETAILS, createSurveyDetailsTable(survey),
-		createGenericCloseWindowClickListener(WindowType.SURVEY_DETAILS), false);
+	BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, createSurveyDetailsTable(survey),
+		createGenericCloseWindowClickListener(WindowType.SURVEY_DETAILS));
 
 	UniverseExploration.windowContainer.add(WindowType.SURVEY_DETAILS, window);
 
@@ -578,8 +587,8 @@ public class UIController {
 	table.row();
 	table.add(UIComponentFactory.createSpacer());
 
-	BasicWindow window = new WindowFactory().createMediumDescriptionWindow(WindowType.OPTIONS_WINDOW, table,
-		new WindowFactory().createCancelClickListener(WindowType.OPTIONS_WINDOW), false);
+	BasicWindow window = new WindowFactory().createWindow(WindowType.OPTIONS_WINDOW, table,
+		new WindowFactory().createCancelClickListener(WindowType.OPTIONS_WINDOW));
 
 	UniverseExploration.windowContainer.add(WindowType.OPTIONS_WINDOW, window);
 
@@ -597,8 +606,8 @@ public class UIController {
 	     */
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.SURVEY_DETAILS,
-			createSurveyDetailsWindow(survey), createSurveyDetailsClickListener(), false);
+		BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, createSurveyDetailsWindow(survey),
+			createSurveyDetailsClickListener());
 
 		UniverseExploration.windowContainer.add(WindowType.SURVEY_DETAILS, window);
 		show(window);
@@ -620,8 +629,8 @@ public class UIController {
 		final CrewMemberDetails crewMemberDetails = new CrewMemberDetails(crewMember);
 		crewMemberDetails.createPairs();
 
-		BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.CREWMEMBER_DETAILS,
-			createCrewMemberDetailsPane(crewMemberDetails), createNewCrewMemberDetailsCLickListener(), false);
+		BasicWindow window = new WindowFactory().createWindow(WindowType.CREWMEMBER_DETAILS,
+			createCrewMemberDetailsPane(crewMemberDetails), createNewCrewMemberDetailsCLickListener());
 
 		UniverseExploration.windowContainer.add(WindowType.CREWMEMBER_DETAILS, window);
 		show(window);
@@ -739,8 +748,8 @@ public class UIController {
 	    }
 	});
 
-	BasicWindow window = new WindowFactory().createLargeDescriptionWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
-		createdPlanetSurveyTeamDispatchedClickListener(form), false);
+	BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
+		createdPlanetSurveyTeamDispatchedClickListener(form));
 
 	return window;
     }

@@ -16,9 +16,14 @@ public class SmallWindow extends BasicWindow {
     public SmallWindow(String title, Skin skin) {
 	super(title, skin);
     }
-
+    
     public SmallWindow(String title, Skin skin, String styleName) {
 	super(title, skin, styleName);
+    }
+
+    public SmallWindow(WindowType windowType, Skin skin, String styleName) {
+	super(windowType.getLocalizedCaption(), skin, styleName);
+	setWindowType(windowType);
     }
 
     public SmallWindow(String title, WindowStyle style) {

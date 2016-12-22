@@ -3,12 +3,10 @@
  */
 package com.universe.exploration.userinterface.components.window;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.localization.Localizer;
@@ -32,21 +30,6 @@ public class WindowFactory {
     private static final String STYLE = "default";
 
     /**
-     * Creates quit game window. Utilizes {@link createOkWindow} by just issuing
-     * it a ClickListener with action to quit application.
-     * 
-     * @return Window
-     */
-    public Window createQuitWindow(String caption) {
-	return createOkWindow(caption, new ClickListener() {
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		Gdx.app.exit();
-	    }
-	});
-    }
-
-    /**
      * Creates OK window. OK button action can be configured.
      * 
      * @param okAction
@@ -63,44 +46,6 @@ public class WindowFactory {
 		window.remove();
 	    }
 	}));
-
-	return window;
-    }
-
-    private <T extends Actor> Table combineDataAndButtonbar(T contentTable, Table buttontable) {
-	Table table = new Table();
-	table.add(contentTable);
-	table.row();
-	table.add(buttontable);
-
-	return table;
-    }
-
-    /**
-     * Creates a description window.
-     * 
-     * @param pgfx
-     * @return
-     */
-    public <T extends Actor> BasicWindow createLargeDescriptionWindow(final WindowType windowType, T contentTable, ClickListener okAction,
-	    boolean hasCancelButton) {
-	final LargeWindow window = new LargeWindow(windowType, skin, STYLE);
-
-	Table buttontable = new Table();
-	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
-
-	if (hasCancelButton) {
-	    buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CANCEL"), new ClickListener() {
-		@Override
-		public void clicked(InputEvent event, float x, float y) {
-		    UniverseExploration.windowContainer.closeWindow(windowType);
-		}
-	    }));
-	}
-
-	buttontable.row();
-
-	window.add(combineDataAndButtonbar(contentTable, buttontable));
 
 	return window;
     }
@@ -131,19 +76,21 @@ public class WindowFactory {
     }
 
     /**
-     * Creates a description window.
+     * Create a window based on {@link WindowType}.
      * 
-     * @param pgfx
+     * @param windowType
+     * @param contentTable
+     * @param okAction
+     * @param hasCancelButton
      * @return
      */
-    public <T extends Actor> BasicWindow createMediumDescriptionWindow(final WindowType windowType, T contentTable, ClickListener okAction,
-	    boolean hasCancelButton) {
-	final MediumWindow window = new MediumWindow(windowType.getLocalizedCaption(), skin, STYLE);
+    public <T extends Actor> BasicWindow createWindow(final WindowType windowType, T contentTable, ClickListener okAction) {
+	final BasicWindow window = createWindowFrame(windowType);
 
 	Table buttontable = new Table();
 	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 
-	if (hasCancelButton) {
+	if (windowType.isHasCancelButton()) {
 	    buttontable.add(
 		    new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CANCEL"), createCancelClickListener(windowType)));
 	}
@@ -155,34 +102,19 @@ public class WindowFactory {
 	return window;
     }
 
-    public ClickListener createCancelClickListener(final WindowType windowType) {
-	return new ClickListener() {
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		UniverseExploration.windowContainer.closeWindow(windowType);
-	    }
-	};
-    }
-
     /**
      * Creates a description window with secondary action.
      * 
      * @param windowType
-     *            Instance of {@link WindowType} telling what type of window we
-     *            are creating.
      * @param contentTable
-     *            {@link BasicTable} instance with the content.
      * @param secondaryButtonTitle
-     *            Title for the secondary button.
      * @param okAction
-     *            Action taken when OK is pressed.
      * @param secondaryAction
-     *            Action taken when secondary button is pressed.
      * @return
      */
-    public BasicWindow createDescriptionWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable,
-	    String secondaryButtonTitle, ClickListener okAction, ClickListener secondaryAction) {
-	final SmallWindow window = new SmallWindow(windowType.getLocalizedCaption(), skin, STYLE);
+    public BasicWindow createWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable, String secondaryButtonTitle,
+	    ClickListener okAction, ClickListener secondaryAction) {
+	final BasicWindow window = createWindowFrame(windowType);
 
 	Table buttontable = new Table();
 	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
@@ -198,5 +130,36 @@ public class WindowFactory {
 	window.add(table);
 
 	return window;
+    }
+
+    private BasicWindow createWindowFrame(final WindowType windowType) {
+	if (windowType.getWindowSetup().equals(WindowSetup.LARGE))
+	    return new LargeWindow(windowType, skin, STYLE);
+
+	if (windowType.getWindowSetup().equals(WindowSetup.MEDIUM))
+	    return new MediumWindow(windowType, skin, STYLE);
+
+	if (windowType.getWindowSetup().equals(WindowSetup.SMALL))
+
+	    return new SmallWindow(windowType, skin, STYLE);
+	return null;
+    }
+
+    public ClickListener createCancelClickListener(final WindowType windowType) {
+	return new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		UniverseExploration.windowContainer.closeWindow(windowType);
+	    }
+	};
+    }
+
+    private <T extends Actor> Table combineDataAndButtonbar(T contentTable, Table buttontable) {
+	Table table = new Table();
+	table.add(contentTable);
+	table.row();
+	table.add(buttontable);
+
+	return table;
     }
 }

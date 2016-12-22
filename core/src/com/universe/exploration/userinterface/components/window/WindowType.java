@@ -20,23 +20,25 @@ import com.universe.exploration.localization.Localizer;
  *
  */
 public enum WindowType {
+    QUIT_WINDOW("TITLE_QUIT_GAME", "BTN_OK", WindowSetup.SMALL, true),
+
     /**
      * Open up details for sending a survey team.
      */
-    SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY", WindowSetup.LARGE),
+    SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY", WindowSetup.LARGE, true),
 
-    OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS", WindowSetup.MEDIUM),
+    OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS", WindowSetup.MEDIUM, true),
 
     /**
      * Game over window.
      */
-    GAME_OVER("TITLE_GAME_OVER", "BTN_TRY_AGAIN", WindowSetup.SMALL),
+    GAME_OVER("TITLE_GAME_OVER", "BTN_TRY_AGAIN", WindowSetup.SMALL, true),
 
     /**
      * List of planet general details. Allows to open up e.g.
      * {@link #SURVEY_WINDOW}.
      */
-    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY", WindowSetup.LARGE) {
+    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY", WindowSetup.LARGE, false) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -51,7 +53,7 @@ public enum WindowType {
 	}
     },
 
-    SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK", WindowSetup.MEDIUM) {
+    SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK", WindowSetup.MEDIUM, false) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -68,9 +70,9 @@ public enum WindowType {
 	}
     },
 
-    SURVEY_DETAILS("TITLE_SURVEY_SURVEY_DETAILS", "BTN_OK", WindowSetup.LARGE),
+    SURVEY_DETAILS("TITLE_SURVEY_SURVEY_DETAILS", "BTN_OK", WindowSetup.LARGE, false),
 
-    CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK", WindowSetup.LARGE) {
+    CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK", WindowSetup.LARGE, false) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -86,12 +88,12 @@ public enum WindowType {
 	}
     },
 
-    CREWMEMBER_DETAILS("TITLE_CREWMEMBER_DETAILS", "BTN_OK", WindowSetup.LARGE),
+    CREWMEMBER_DETAILS("TITLE_CREWMEMBER_DETAILS", "BTN_OK", WindowSetup.LARGE, false),
 
     /**
      * Notification of a closed survey.
      */
-    SURVEY_CLOSED("TITLE_SURVEY", "BTN_SURVEY", WindowSetup.LARGE);
+    SURVEY_CLOSED("TITLE_SURVEY", "BTN_SURVEY", WindowSetup.LARGE, false);
 
     private final String caption;
 
@@ -99,13 +101,16 @@ public enum WindowType {
 
     private final WindowSetup windowSetup;
 
+    private final boolean hasCancelButton;
+
     /**
      * Contains window caption and ok button text.
      */
-    private WindowType(String caption, String okButtonCaption, WindowSetup windowSetup) {
+    private WindowType(String caption, String okButtonCaption, WindowSetup windowSetup, boolean hasCancelButton) {
 	this.caption = caption;
 	this.okButtonCaption = okButtonCaption;
 	this.windowSetup = windowSetup;
+	this.hasCancelButton = hasCancelButton;
     }
 
     /**
@@ -136,5 +141,19 @@ public enum WindowType {
      */
     public String getLocalizedOkButtonCaption() {
 	return Localizer.getInstance().get(okButtonCaption);
+    }
+
+    /**
+     * @return the windowSetup
+     */
+    public WindowSetup getWindowSetup() {
+	return windowSetup;
+    }
+
+    /**
+     * @return the hasCancelButton
+     */
+    public boolean isHasCancelButton() {
+	return hasCancelButton;
     }
 }
