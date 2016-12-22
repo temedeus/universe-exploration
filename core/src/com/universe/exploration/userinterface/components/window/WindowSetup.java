@@ -10,7 +10,7 @@ package com.universe.exploration.userinterface.components.window;
  *
  */
 public enum WindowSetup {
-    WINDOW_SMALL(210, 105), WINDOW_MEDIUM(380, 205), WINDOW_LARGE(560, 600);
+    SMALL(210, 105), MEDIUM(380, 205), LARGE(560, 600);
 
     private final int width;
 

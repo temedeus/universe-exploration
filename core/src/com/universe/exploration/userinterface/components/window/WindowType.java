@@ -23,20 +23,20 @@ public enum WindowType {
     /**
      * Open up details for sending a survey team.
      */
-    SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY"),
+    SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY", WindowSetup.LARGE),
 
-    OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS"),
+    OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS", WindowSetup.MEDIUM),
 
     /**
      * Game over window.
      */
-    GAME_OVER("TITLE_GAME_OVER", "BTN_TRY_AGAIN"),
+    GAME_OVER("TITLE_GAME_OVER", "BTN_TRY_AGAIN", WindowSetup.SMALL),
 
     /**
      * List of planet general details. Allows to open up e.g.
      * {@link #SURVEY_WINDOW}.
      */
-    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY") {
+    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY", WindowSetup.LARGE) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -51,9 +51,13 @@ public enum WindowType {
 	}
     },
 
-    SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK") {
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.userinterface.components.window.WindowType#retreiveChildWindows()
+    SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK", WindowSetup.MEDIUM) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.userinterface.components.window.WindowType#
+	 * retreiveChildWindows()
 	 */
 	@Override
 	public List<WindowType> retreiveChildWindows() {
@@ -63,10 +67,10 @@ public enum WindowType {
 	    return dependencies;
 	}
     },
-    
-    SURVEY_DETAILS("TITLE_SURVEY_SURVEY_DETAILS", "BTN_OK"),
 
-    CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK") {
+    SURVEY_DETAILS("TITLE_SURVEY_SURVEY_DETAILS", "BTN_OK", WindowSetup.LARGE),
+
+    CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK", WindowSetup.LARGE) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -82,23 +86,26 @@ public enum WindowType {
 	}
     },
 
-    CREWMEMBER_DETAILS("TITLE_CREWMEMBER_DETAILS", "BTN_OK"),
+    CREWMEMBER_DETAILS("TITLE_CREWMEMBER_DETAILS", "BTN_OK", WindowSetup.LARGE),
 
     /**
      * Notification of a closed survey.
      */
-    SURVEY_CLOSED("TITLE_SURVEY", "BTN_SURVEY");
+    SURVEY_CLOSED("TITLE_SURVEY", "BTN_SURVEY", WindowSetup.LARGE);
 
     private final String caption;
 
     private final String okButtonCaption;
 
+    private final WindowSetup windowSetup;
+
     /**
      * Contains window caption and ok button text.
      */
-    private WindowType(String caption, String okButtonCaption) {
+    private WindowType(String caption, String okButtonCaption, WindowSetup windowSetup) {
 	this.caption = caption;
 	this.okButtonCaption = okButtonCaption;
+	this.windowSetup = windowSetup;
     }
 
     /**
@@ -116,7 +123,7 @@ public enum WindowType {
     public boolean whenGivenWindowPresentPauseGame() {
 	return false;
     }
-    
+
     /**
      * @return the caption
      */

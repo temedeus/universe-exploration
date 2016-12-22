@@ -27,6 +27,6 @@ public class SmallWindow extends BasicWindow {
 
     @Override
     public void setWindowSize() {
-	setSize(WindowSetup.WINDOW_SMALL.getWidth(), WindowSetup.WINDOW_SMALL.getHeight());
+	setSize(WindowSetup.SMALL.getWidth(), WindowSetup.SMALL.getHeight());
     }
 }

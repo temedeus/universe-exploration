@@ -31,6 +31,6 @@ public class LargeWindow extends BasicWindow {
 
     @Override
     public void setWindowSize() {
-	setSize(WindowSetup.WINDOW_LARGE.getWidth(), WindowSetup.WINDOW_LARGE.getHeight());
+	setSize(WindowSetup.LARGE.getWidth(), WindowSetup.LARGE.getHeight());
     }
 }

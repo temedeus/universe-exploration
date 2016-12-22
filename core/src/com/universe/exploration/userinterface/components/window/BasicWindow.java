@@ -39,7 +39,7 @@ public abstract class BasicWindow extends Window implements IBasicWindow {
     }
 
     public void setWindowSize() {
-	setSize(WindowSetup.WINDOW_MEDIUM.getWidth(), WindowSetup.WINDOW_MEDIUM.getHeight());
+	setSize(WindowSetup.MEDIUM.getWidth(), WindowSetup.MEDIUM.getHeight());
     }
 
     /**

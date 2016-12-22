@@ -37,6 +37,6 @@ public class MediumWindow extends BasicWindow {
 
     @Override
     public void setWindowSize() {
-	setSize(WindowSetup.WINDOW_MEDIUM.getWidth(), WindowSetup.WINDOW_MEDIUM.getHeight());
+	setSize(WindowSetup.MEDIUM.getWidth(), WindowSetup.MEDIUM.getHeight());
     }
 }
