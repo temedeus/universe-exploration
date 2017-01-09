@@ -27,6 +27,7 @@ import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.GdxHelper;
 import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
+import com.universe.exploration.crewmember.CrewMemberTools;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.Localizer;
@@ -37,10 +38,14 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.survey.Survey;
 import com.universe.exploration.userinterface.components.BasicTable;
 import com.universe.exploration.userinterface.components.LogDisplay;
+import com.universe.exploration.userinterface.components.LogDisplayTable;
 import com.universe.exploration.userinterface.components.PlanetSelection;
+import com.universe.exploration.userinterface.components.SurveyDetailsTable;
 import com.universe.exploration.userinterface.components.SurveyTeamSelection;
+import com.universe.exploration.userinterface.components.TopRightHud;
 import com.universe.exploration.userinterface.components.UELabel;
 import com.universe.exploration.userinterface.components.UETable;
+import com.universe.exploration.userinterface.components.VolumeSlider;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
 import com.universe.exploration.userinterface.components.window.WindowFactory;
 import com.universe.exploration.userinterface.components.window.WindowType;
@@ -106,33 +111,11 @@ public class UIController {
 	logDisplay = new LogDisplay(10, UserInterfaceBank.userInterfaceSkin);
 	uiStage = new Stage(new ScreenViewport());
 
-	leftsidePlayerStatus = new LeftSideHUD();
-	leftsidePlayerStatus.createPairs();
-
-	uiStage.addActor(createLeftHUD());
-	uiStage.addActor(createTopHUDTable());
-	uiStage.addActor(createBottomHUDTable());
-	uiStage.addActor(createLogDisplay());
-    }
-
-    private Slider createVolumeSlider() {
-	final Slider volumeSlider = new Slider(1, 100, 1, false, UserInterfaceBank.userInterfaceSkin);
-	volumeSlider.addListener(new ClickListener() {
-	    /*
-	     * (non-Javadoc)
-	     * 
-	     * @see
-	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
-	     * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-	     */
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		fireVolumeChangedListener(volumeSlider.getValue());
-	    }
-	});
-
-	volumeSlider.setValue(100);
-	return volumeSlider;
+	uiStage.addActor(createTopLeftHUD());
+	uiStage.addActor(new TopRightHud(uiStage.getWidth(), createHyperspaceJumpButton(), createCrewControlButton(),
+		createFollowSurveyButton(), createOptionsButton()));
+	uiStage.addActor(createBottomRightHUDTable());
+	uiStage.addActor(new LogDisplayTable(uiStage.getWidth(), logDisplay.getLogDisplayTable()));
     }
 
     private void fireVolumeChangedListener(float newVolumeVal) {
@@ -164,7 +147,10 @@ public class UIController {
 	uiStage.draw();
     }
 
-    public VerticalGroup createLeftHUD() {
+    public VerticalGroup createTopLeftHUD() {
+	leftsidePlayerStatus = new LeftSideHUD();
+	leftsidePlayerStatus.createPairs();
+
 	VerticalGroup table = new VerticalGroup();
 	table.padTop(30);
 	table.padLeft(30);
@@ -173,20 +159,6 @@ public class UIController {
 	table.addActor(populateWithStatus(leftsidePlayerStatus));
 
 	table.addActor(planetSelection.createPlanetSelectionTable());
-
-	return table;
-    }
-
-    public Table createLogDisplay() {
-	Table table = new Table();
-	table.setWidth(uiStage.getWidth());
-	table.align(Align.left | Align.bottom);
-	table.setPosition(30, 30);
-	table.padTop(30);
-	table.padLeft(30);
-
-	table.add(logDisplay.getLogDisplayTable());
-	table.row();
 
 	return table;
     }
@@ -209,30 +181,11 @@ public class UIController {
     }
 
     /**
-     * Create HUD top. Add all the buttons and their actions.
-     * 
-     * @return
-     */
-    public VerticalGroup createTopHUDTable() {
-	VerticalGroup table = new VerticalGroup();
-	table.setWidth(uiStage.getWidth());
-	table.align(Align.right | Align.top);
-	table.setPosition(0, Gdx.graphics.getHeight());
-	table.padTop(30);
-	table.padRight(30);
-	table.addActor(createHyperspaceJumpButton());
-	table.addActor(createCrewControlButton());
-	table.addActor(createFollowSurveyButton());
-	table.addActor(createOptionsButton());
-	return table;
-    }
-
-    /**
      * Create HUD bottom. Add all the buttons and their actions.
      * 
      * @return
      */
-    public VerticalGroup createBottomHUDTable() {
+    public VerticalGroup createBottomRightHUDTable() {
 	VerticalGroup table = new VerticalGroup();
 	table.setWidth(uiStage.getWidth());
 	table.align(Align.right | Align.bottom);
@@ -304,7 +257,7 @@ public class UIController {
 	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CREW_CONTROL"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		show(createCrewManagementWindow());
+		show(openWindowWithData(WindowType.CREW_MANAGEMENT, createCrewTable()));
 	    }
 	});
 
@@ -329,7 +282,7 @@ public class UIController {
 	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_FOLLOW_SURVEY"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		show(createSurveyManagementWindow());
+		openWindowWithData(WindowType.CREW_MANAGEMENT, createSurveyTable());
 	    }
 	});
 
@@ -391,7 +344,6 @@ public class UIController {
 	    }
 	});
 
-	UniverseExploration.windowContainer.add(WindowType.QUIT_WINDOW, window);
 	show(window);
     }
 
@@ -409,7 +361,12 @@ public class UIController {
 	    table.row();
 	}
 
-	return new WindowFactory().createOKWindow(Localizer.getInstance().get("TITLE_SURVEY_CLOSED"), table);
+	return new WindowFactory().createWindow(WindowType.SURVEY_CLOSED, table, new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		UniverseExploration.windowContainer.closeWindow(WindowType.SURVEY_CLOSED);
+	    }
+	});
     }
 
     /**
@@ -419,10 +376,7 @@ public class UIController {
      */
     public BasicWindow createPlanetarySurveyWindow(PlanetSpriteContainer pgfx, ClickListener okAction) {
 	final DataPairTableFactory dptf = new DataPairTableFactory();
-
-	Table planetInformationTable = dptf.createPlanetInformationTable(pgfx);
-
-	return new WindowFactory().createWindow(WindowType.PLANET_DETAILS, planetInformationTable, okAction);
+	return new WindowFactory().createWindow(WindowType.PLANET_DETAILS, dptf.createPlanetInformationTable(pgfx), okAction);
     }
 
     /**
@@ -430,25 +384,9 @@ public class UIController {
      * 
      * @param pgfx
      */
-    public BasicWindow createCrewManagementWindow() {
-	BasicWindow window = new WindowFactory().createWindow(WindowType.CREW_MANAGEMENT, createCrewTable(),
-		createGenericCloseWindowClickListener(WindowType.CREW_MANAGEMENT));
-
-	UniverseExploration.windowContainer.add(WindowType.CREW_MANAGEMENT, window);
-
-	return window;
-    }
-
-    /**
-     * Survey management window.
-     * 
-     * @param pgfx
-     */
-    public BasicWindow createSurveyManagementWindow() {
-	BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_MANAGEMENT, createSurveyTable(),
-		createGenericCloseWindowClickListener(WindowType.SURVEY_MANAGEMENT));
-
-	UniverseExploration.windowContainer.add(WindowType.SURVEY_MANAGEMENT, window);
+    public BasicWindow openWindowWithData(WindowType type, UETable table) {
+	BasicWindow window = new WindowFactory().createWindow(WindowType.CREW_MANAGEMENT, table,
+		new WindowFactory().createCancelClickListener(WindowType.CREW_MANAGEMENT));
 
 	return window;
     }
@@ -459,27 +397,10 @@ public class UIController {
      * @param pgfx
      */
     private BasicWindow createSurveyDetailsWindow(Survey survey) {
-	BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, createSurveyDetailsTable(survey),
-		createGenericCloseWindowClickListener(WindowType.SURVEY_DETAILS));
-
-	UniverseExploration.windowContainer.add(WindowType.SURVEY_DETAILS, window);
+	BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, new SurveyDetailsTable(survey),
+		new WindowFactory().createCancelClickListener(WindowType.SURVEY_DETAILS));
 
 	return window;
-    }
-
-    private ClickListener createGenericCloseWindowClickListener(final WindowType type) {
-	return new ClickListener() {
-	    /*
-	     * (non-Javadoc)
-	     * 
-	     * @see com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked
-	     * (com.badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-	     */
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		UniverseExploration.windowContainer.closeWindow(type);
-	    }
-	};
     }
 
     /**
@@ -497,7 +418,7 @@ public class UIController {
 	    cell.padRight(15);
 	    cell.add(new UELabel(Localizer.getInstance().get("LABEL_NAME") + survey.getSurveyName()));
 	    cell.row();
-	    cell.add(new UELabel(concatenateCrewMemberListNames(survey.getSurveyTeam())));
+	    cell.add(new UELabel(new CrewMemberTools().concatenateCrewMemberListNames((survey.getSurveyTeam()))));
 	    cell.row();
 	    cell.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("LABEL_SHOW_DETAILS"),
 		    createShowSurveyDetailsClickListerner(survey)));
@@ -506,38 +427,6 @@ public class UIController {
 	}
 
 	return table;
-    }
-
-    private UETable createSurveyDetailsTable(Survey survey) {
-	UETable table = new UETable();
-
-	Table cell = new Table();
-	cell.padBottom(15);
-	cell.padRight(15);
-	cell.add(new UELabel(Localizer.getInstance().get("LABEL_NAME") + survey.getSurveyName()));
-	cell.row();
-	cell.add(new UELabel(concatenateCrewMemberListNames(survey.getSurveyTeam())));
-	cell.row();
-	table.add(cell);
-
-	return table;
-    }
-
-    /**
-     * TODO: move to some help tools
-     * 
-     * @param crewMembers
-     * @return
-     */
-    private String concatenateCrewMemberListNames(List<CrewMember> crewMembers) {
-	StringBuilder sb = new StringBuilder();
-	for (CrewMember member : crewMembers) {
-	    if (crewMembers.indexOf(member) > 0) {
-		sb.append(", ");
-	    }
-	    sb.append(member.getName());
-	}
-	return sb.toString();
     }
 
     /**
@@ -576,7 +465,20 @@ public class UIController {
 	UETable table = new UETable();
 	table.align(Align.left | Align.top);
 
-	Slider volumeSlider = createVolumeSlider();
+	final VolumeSlider volumeSlider = new VolumeSlider();
+	volumeSlider.addListener(new ClickListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see
+	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
+	     * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
+	     */
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		fireVolumeChangedListener(volumeSlider.getValue());
+	    }
+	});
 
 	table.add(UIComponentFactory.createSpacer());
 	table.add(new UELabel(Localizer.getInstance().get("LABEL_VOLUME")));
@@ -589,8 +491,6 @@ public class UIController {
 
 	BasicWindow window = new WindowFactory().createWindow(WindowType.OPTIONS_WINDOW, table,
 		new WindowFactory().createCancelClickListener(WindowType.OPTIONS_WINDOW));
-
-	UniverseExploration.windowContainer.add(WindowType.OPTIONS_WINDOW, window);
 
 	return window;
     }
@@ -607,9 +507,8 @@ public class UIController {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, createSurveyDetailsWindow(survey),
-			createSurveyDetailsClickListener());
+			new WindowFactory().createCancelClickListener(WindowType.SURVEY_DETAILS));
 
-		UniverseExploration.windowContainer.add(WindowType.SURVEY_DETAILS, window);
 		show(window);
 	    }
 	};
@@ -630,9 +529,9 @@ public class UIController {
 		crewMemberDetails.createPairs();
 
 		BasicWindow window = new WindowFactory().createWindow(WindowType.CREWMEMBER_DETAILS,
-			createCrewMemberDetailsPane(crewMemberDetails), createNewCrewMemberDetailsCLickListener());
+			createCrewMemberDetailsPane(crewMemberDetails),
+			new WindowFactory().createCancelClickListener(WindowType.CREWMEMBER_DETAILS));
 
-		UniverseExploration.windowContainer.add(WindowType.CREWMEMBER_DETAILS, window);
 		show(window);
 	    }
 	};
@@ -673,39 +572,7 @@ public class UIController {
 		UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
 		UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
 		// TODO: work out a way to refresh crew management window
-		show(createCrewManagementWindow());
-	    }
-	};
-    }
-
-    private ClickListener createNewCrewMemberDetailsCLickListener() {
-	return new ClickListener() {
-	    /*
-	     * (non-Javadoc)
-	     * 
-	     * @see
-	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
-	     * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-	     */
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
-	    }
-	};
-    }
-
-    private ClickListener createSurveyDetailsClickListener() {
-	return new ClickListener() {
-	    /*
-	     * (non-Javadoc)
-	     * 
-	     * @see
-	     * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
-	     * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-	     */
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		UniverseExploration.windowContainer.closeWindow(WindowType.SURVEY_DETAILS);
+		openWindowWithData(WindowType.CREW_MANAGEMENT, createCrewTable());
 	    }
 	};
     }
@@ -774,25 +641,11 @@ public class UIController {
     }
 
     /**
-     * @return the hyperspaceJumpListener
-     */
-    public UEListener getHyperspaceJumpListener() {
-	return hyperspaceJumpListener;
-    }
-
-    /**
      * @param hyperspaceJumpListener
      *            the hyperspaceJumpListener to set
      */
     public void setHyperspaceJumpListener(UEListener hyperspaceJumpListener) {
 	this.hyperspaceJumpListener = hyperspaceJumpListener;
-    }
-
-    /**
-     * @return the planetSurveyListener
-     */
-    public UEListener getPlanetSurveyListener() {
-	return planetSurveyListener;
     }
 
     /**
@@ -812,13 +665,6 @@ public class UIController {
     }
 
     /**
-     * @return the volumeListener
-     */
-    public UEListener getVolumeListener() {
-	return volumeListener;
-    }
-
-    /**
      * @param volumeListener
      *            the volumeListener to set
      */
@@ -835,18 +681,10 @@ public class UIController {
     }
 
     /**
-     * @return the logMessageListener
-     */
-    public UEListener getLogMessageListener() {
-	return logMessageListener;
-    }
-
-    /**
      * @param logMessageListener
      *            the logMessageListener to set
      */
     public void setLogMessageListener(UEListener logMessageListener) {
 	this.logMessageListener = logMessageListener;
     }
-
 }

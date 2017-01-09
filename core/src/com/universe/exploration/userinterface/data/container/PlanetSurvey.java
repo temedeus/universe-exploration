@@ -7,7 +7,6 @@ import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.Units;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-import com.universe.exploration.userinterface.data.DataPair;
 
 /**
  * @author 1.10.2015 Teemu Puurunen
@@ -36,12 +35,12 @@ public class PlanetSurvey extends DataPairContainer {
 	float orbitalRadius = ((float) cc.getOrbitalRadius() / 1000);
 	String orbitalRadiusToString = MathTools.roundedFloatAsString(orbitalRadius) + " " + Units.AU.getUnit();
 
-	add(new DataPair("", Localizer.getInstance().get("DESC_PLANET_TYPE"), cc.getComponentName()));
-	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_ORBITAL_RADIUS"), orbitalRadiusToString));
-	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_PRESENT_LIFEFORMS"), Localizer.getInstance().get(cc.getLifeforms().getLocalKey())));
-	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_WATER_FOUND"), Localizer.getInstance().get(waterFound)));
-	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_FOOD_FOUND"), Localizer.getInstance().get(foodFound)));
-	add(new DataPair("", Localizer.getInstance().get("SUBHEADER_OXYGEN_PRESENT"), Localizer.getInstance().get(oxygenFound)));
+	add("", Localizer.getInstance().get("DESC_PLANET_TYPE"), cc.getComponentName());
+	add("", Localizer.getInstance().get("SUBHEADER_ORBITAL_RADIUS"), orbitalRadiusToString);
+	add("", Localizer.getInstance().get("SUBHEADER_PRESENT_LIFEFORMS"), Localizer.getInstance().get(cc.getLifeforms().getLocalKey()));
+	add("", Localizer.getInstance().get("SUBHEADER_WATER_FOUND"), Localizer.getInstance().get(waterFound));
+	add("", Localizer.getInstance().get("SUBHEADER_FOOD_FOUND"), Localizer.getInstance().get(foodFound));
+	add("", Localizer.getInstance().get("SUBHEADER_OXYGEN_PRESENT"), Localizer.getInstance().get(oxygenFound));
     }
 
 }

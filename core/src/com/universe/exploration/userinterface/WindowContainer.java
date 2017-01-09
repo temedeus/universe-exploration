@@ -67,7 +67,7 @@ public class WindowContainer {
     private void updatePauseStatus() {
 	boolean foundPauseable = false;
 	for(WindowType type : windowmap.keySet()) {
-	    if(type.whenGivenWindowPresentPauseGame()) {
+	    if(type.windowPausesGame()) {
 		foundPauseable = true;
 	    }
 	}

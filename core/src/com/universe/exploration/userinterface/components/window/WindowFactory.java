@@ -12,6 +12,7 @@ import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.userinterface.ButtonFactory;
 import com.universe.exploration.userinterface.components.BasicTable;
+import com.universe.exploration.userinterface.components.UETable;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
@@ -30,52 +31,6 @@ public class WindowFactory {
     private static final String STYLE = "default";
 
     /**
-     * Creates OK window. OK button action can be configured.
-     * 
-     * @param okAction
-     * @return UEWindow
-     */
-    public BasicWindow createOkWindow(String caption, ClickListener okAction) {
-	final SmallWindow window = new SmallWindow(caption, skin, STYLE);
-
-	window.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_OK"), okAction));
-
-	window.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CANCEL"), new ClickListener() {
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		window.remove();
-	    }
-	}));
-
-	return window;
-    }
-
-    /**
-     * Creates a description window.
-     * 
-     * @param pgfx
-     * @return
-     */
-    public <T extends Actor> BasicWindow createOKWindow(String caption, T contentTable) {
-	final LargeWindow window = new LargeWindow(caption, skin, STYLE);
-
-	Table buttontable = new Table();
-
-	buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_OK"), new ClickListener() {
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		window.remove();
-	    }
-	}));
-
-	buttontable.row();
-
-	window.add(combineDataAndButtonbar((Table) contentTable, buttontable));
-
-	return window;
-    }
-
-    /**
      * Create a window based on {@link WindowType}.
      * 
      * @param windowType
@@ -87,7 +42,7 @@ public class WindowFactory {
     public <T extends Actor> BasicWindow createWindow(final WindowType windowType, T contentTable, ClickListener okAction) {
 	final BasicWindow window = createWindowFrame(windowType);
 
-	Table buttontable = new Table();
+	UETable buttontable = new UETable();
 	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 
 	if (windowType.isHasCancelButton()) {
@@ -116,7 +71,7 @@ public class WindowFactory {
 	    ClickListener okAction, ClickListener secondaryAction) {
 	final BasicWindow window = createWindowFrame(windowType);
 
-	Table buttontable = new Table();
+	UETable buttontable = new UETable();
 	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
 	buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(secondaryButtonTitle), secondaryAction));
 
@@ -140,8 +95,8 @@ public class WindowFactory {
 	    return new MediumWindow(windowType, skin, STYLE);
 
 	if (windowType.getWindowSetup().equals(WindowSetup.SMALL))
-
 	    return new SmallWindow(windowType, skin, STYLE);
+
 	return null;
     }
 

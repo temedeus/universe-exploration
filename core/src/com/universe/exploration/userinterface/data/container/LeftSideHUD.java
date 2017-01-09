@@ -8,7 +8,6 @@ import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.player.PlayerStatusItemkeys;
-import com.universe.exploration.userinterface.data.DataPair;
 
 /**
  * @author 1.10.2015 Teemu Puurunen TODO: perhaps you could link this to
@@ -23,18 +22,13 @@ public class LeftSideHUD extends DataPairContainer {
      */
     @Override
     public void createPairs() {
-	add(new DataPair(PlayerStatusItemkeys.TIME, Localizer.getInstance().get("TITLE_TIME"), "" + CoreConfiguration.TIME_START
-		+ ""));
-	add(new DataPair(PlayerStatusItemkeys.CREWMEN, Localizer.getInstance().get("TITLE_CREWMEN_LEFT"), ""
-		+ CoreConfiguration.MAX_CREWMEN));
-	add(new DataPair(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, Localizer.getInstance().get("TITLE_CREWMEN_ON_SURVEY"), "" + 0));
-	add(new DataPair(PlayerStatusItemkeys.AIR, Localizer.getInstance().get("TITLE_AIR"), "" + CoreConfiguration.MAX_AIR));
-	add(new DataPair(PlayerStatusItemkeys.WATER, Localizer.getInstance().get("TITLE_WATER"), "" + CoreConfiguration.MAX_AIR
-		+ " %"));
-	add(new DataPair(PlayerStatusItemkeys.FOOD, Localizer.getInstance().get("TITLE_FOOD"), "" + CoreConfiguration.MAX_FOOD
-		+ " %"));
-	add(new DataPair(PlayerStatusItemkeys.POWER, Localizer.getInstance().get("TITLE_POWER"), "" + CoreConfiguration.MAX_POWER
-		+ " %"));
+	add(PlayerStatusItemkeys.TIME, Localizer.getInstance().get("TITLE_TIME"), "" + CoreConfiguration.TIME_START + "");
+	add(PlayerStatusItemkeys.CREWMEN, Localizer.getInstance().get("TITLE_CREWMEN_LEFT"), "" + CoreConfiguration.MAX_CREWMEN);
+	add(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, Localizer.getInstance().get("TITLE_CREWMEN_ON_SURVEY"), "" + 0);
+	add(PlayerStatusItemkeys.AIR, Localizer.getInstance().get("TITLE_AIR"), "" + CoreConfiguration.MAX_AIR);
+	add(PlayerStatusItemkeys.WATER, Localizer.getInstance().get("TITLE_WATER"), "" + CoreConfiguration.MAX_AIR + " %");
+	add(PlayerStatusItemkeys.FOOD, Localizer.getInstance().get("TITLE_FOOD"), "" + CoreConfiguration.MAX_FOOD + " %");
+	add(PlayerStatusItemkeys.POWER, Localizer.getInstance().get("TITLE_POWER"), "" + CoreConfiguration.MAX_POWER + " %");
     }
 
     public void updateHUDValues(CrewStatusManager playerStatus) {

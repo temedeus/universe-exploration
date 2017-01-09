@@ -1,6 +1,7 @@
 package com.universe.exploration.userinterface.data.container;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.universe.exploration.userinterface.data.DataPair;
 
@@ -17,7 +18,7 @@ public class DataPairContainer implements IDataPairContainer {
     // TODO: this would have likely been wiser as HashMap. However the
     // implementation is kind of goofy so this would result in redundant
     // information (id as key for HashMap and also in DataPair).
-    private ArrayList<DataPair> pairList;
+    private List<DataPair> pairList;
 
     protected Object auxiliaryDataContainer;
 
@@ -52,6 +53,10 @@ public class DataPairContainer implements IDataPairContainer {
     public void add(DataPair pair) {
 	pairList.add(pair);
     }
+    
+    public void add(String id, String label, String value) {
+	pairList.add(new DataPair(id, label, value));
+    }
 
     /**
      * Update label value according to predetermined ID.
@@ -70,7 +75,7 @@ public class DataPairContainer implements IDataPairContainer {
     /**
      * @return
      */
-    public ArrayList<DataPair> getPairList() {
+    public List<DataPair> getPairList() {
 	return pairList;
     }
 
