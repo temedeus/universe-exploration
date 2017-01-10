@@ -4,13 +4,14 @@
 package com.universe.exploration.casualty;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.universe.exploration.common.tools.RandomizationTools;
 
 /**
  * <p>
- * Use this picker to randomly choose {@link SurveyIncident} from applicable list
- * of causes of death.
+ * Use this picker to randomly choose {@link SurveyIncident} from applicable
+ * list of causes of death.
  * </p>
  * 
  * @author 30.10.2015 Teemu Puurunen
@@ -18,7 +19,7 @@ import com.universe.exploration.common.tools.RandomizationTools;
  */
 class SurveyIncidentRandomPicker {
 
-    private ArrayList<SurveyIncident> listOfApplicableCauseOfDeaths;
+    private List<SurveyIncident> listOfApplicableCauseOfDeaths;
 
     SurveyIncidentRandomPicker(ApplicableSurveyIncidentCategoryList applicableCauseOfDeath) {
 	listOfApplicableCauseOfDeaths = new ArrayList<SurveyIncident>();

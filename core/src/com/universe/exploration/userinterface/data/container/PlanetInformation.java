@@ -9,11 +9,13 @@ import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
+ * Contains information regarding a planet.
+ * 
  * @author 1.10.2015 Teemu Puurunen
  *
  */
-public class PlanetSurvey extends DataPairContainer {
-    public PlanetSurvey(PlanetCelestialComponent celestialComponent) {
+public class PlanetInformation extends DataPairContainer {
+    public PlanetInformation(PlanetCelestialComponent celestialComponent) {
 	super(celestialComponent);
     }
 
@@ -35,12 +37,12 @@ public class PlanetSurvey extends DataPairContainer {
 	float orbitalRadius = ((float) cc.getOrbitalRadius() / 1000);
 	String orbitalRadiusToString = MathTools.roundedFloatAsString(orbitalRadius) + " " + Units.AU.getUnit();
 
-	add("", Localizer.getInstance().get("DESC_PLANET_TYPE"), cc.getComponentName());
-	add("", Localizer.getInstance().get("SUBHEADER_ORBITAL_RADIUS"), orbitalRadiusToString);
-	add("", Localizer.getInstance().get("SUBHEADER_PRESENT_LIFEFORMS"), Localizer.getInstance().get(cc.getLifeforms().getLocalKey()));
-	add("", Localizer.getInstance().get("SUBHEADER_WATER_FOUND"), Localizer.getInstance().get(waterFound));
-	add("", Localizer.getInstance().get("SUBHEADER_FOOD_FOUND"), Localizer.getInstance().get(foodFound));
-	add("", Localizer.getInstance().get("SUBHEADER_OXYGEN_PRESENT"), Localizer.getInstance().get(oxygenFound));
+	addNoId(Localizer.getInstance().get("DESC_PLANET_TYPE"), cc.getComponentName());
+	addNoId(Localizer.getInstance().get("SUBHEADER_ORBITAL_RADIUS"), orbitalRadiusToString);
+	addNoId(Localizer.getInstance().get("SUBHEADER_PRESENT_LIFEFORMS"), Localizer.getInstance().get(cc.getLifeforms().getLocalKey()));
+	addNoId(Localizer.getInstance().get("SUBHEADER_WATER_FOUND"), Localizer.getInstance().get(waterFound));
+	addNoId(Localizer.getInstance().get("SUBHEADER_FOOD_FOUND"), Localizer.getInstance().get(foodFound));
+	addNoId(Localizer.getInstance().get("SUBHEADER_OXYGEN_PRESENT"), Localizer.getInstance().get(oxygenFound));
     }
 
 }

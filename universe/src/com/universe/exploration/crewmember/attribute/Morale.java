@@ -16,4 +16,5 @@ public class Morale extends CrewMemberAttribute {
 	super(value);
     }
 
+
 }

@@ -17,7 +17,6 @@ import com.badlogic.gdx.files.FileHandle;
  *
  */
 public class GdxHelper {
-
     public static BufferedReader provideAssetReader(String path) {
 	return new BufferedReader(Gdx.files.internal(path).reader());
     }
@@ -43,5 +42,9 @@ public class GdxHelper {
 
     public static float getDeltaTime() {
 	return Gdx.graphics.getDeltaTime() * 100;
+    }
+
+    public static void logError(String tag, String error) {
+	Gdx.app.error(tag, error);
     }
 }

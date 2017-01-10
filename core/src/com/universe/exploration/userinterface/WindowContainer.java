@@ -14,15 +14,17 @@ import com.universe.exploration.userinterface.components.window.BasicWindow;
 import com.universe.exploration.userinterface.components.window.WindowType;
 
 /**
+ * 
+ * Handles instances
+ * 
  * @author 7.10.2015 Teemu Puurunen
  *
  */
 public class WindowContainer {
     private HashMap<WindowType, BasicWindow> windowmap;
 
-    private WindowType[] windowTypes;
+    private List<WindowType> windowTypesContained;
 
-    // TODO: Abstracise?
     private UEListener notifyOfSpecifiedWindowsChanged;
 
     public WindowContainer() {
@@ -30,11 +32,7 @@ public class WindowContainer {
     }
 
     public void add(WindowType key, BasicWindow window) {
-	if (hasWindow(key)) {
-	    windowmap.get(key).remove();
-	}
-
-	//updatePauseStatus();
+	// updatePauseStatus();
 	checkIfNeedToAlert(key, WindowContainerEvent.ADD);
 	windowmap.put(key, window);
     }
@@ -44,7 +42,7 @@ public class WindowContainer {
      * will be fired.
      */
     public void setWindowsThatMustAlert(WindowType... windowTypes) {
-	this.windowTypes = windowTypes;
+	this.windowTypesContained = Arrays.asList(windowTypes);
     }
 
     /**
@@ -60,18 +58,18 @@ public class WindowContainer {
 	    checkIfNeedToAlert(key, WindowContainerEvent.REMOVE);
 	    closeChildren(key.retreiveChildWindows());
 	    windowmap.remove(key);
-	    //updatePauseStatus();
+	    // updatePauseStatus();
 	}
     }
-    
+
     private void updatePauseStatus() {
 	boolean foundPauseable = false;
-	for(WindowType type : windowmap.keySet()) {
-	    if(type.windowPausesGame()) {
+	for (WindowType type : windowmap.keySet()) {
+	    if (type.windowPausesGame()) {
 		foundPauseable = true;
 	    }
 	}
-	
+
 	UniverseExploration.setGameStatusPaused(foundPauseable);
     }
 
@@ -82,15 +80,15 @@ public class WindowContainer {
 	    }
 	}
     }
-    
+
     public void closeAllWindows() {
-	for(WindowType type : WindowType.values()) {
+	for (WindowType type : WindowType.values()) {
 	    closeWindow(type);
 	}
     }
 
     private void checkIfNeedToAlert(WindowType key, WindowContainerEvent event) {
-	if (Arrays.asList(windowTypes).contains(key)) {
+	if (windowTypesContained.contains(key)) {
 	    fireSpecificedWindowChangeListener(event);
 	}
     }

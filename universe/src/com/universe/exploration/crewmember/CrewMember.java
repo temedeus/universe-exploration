@@ -100,7 +100,7 @@ public class CrewMember {
     public void setSex(CrewmemberSex sex) {
 	this.sex = sex;
     }
-
+    
     /**
      * @param morale
      *            the morale to set

@@ -21,9 +21,6 @@ public class CasualtyFactory {
 
     private PlanetCelestialComponent planet;
 
-    /**
-	 * 
-	 */
     public CasualtyFactory(PlanetCelestialComponent planet) {
 	this.planet = planet;
     }

@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.userinterface.ButtonFactory;
-import com.universe.exploration.userinterface.components.BasicTable;
 import com.universe.exploration.userinterface.components.UETable;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
@@ -52,7 +51,7 @@ public class WindowFactory {
 
 	buttontable.row();
 
-	window.add(combineDataAndButtonbar((Table) contentTable, buttontable));
+	window.add(combineDataAndButtonbar(contentTable, buttontable));
 
 	return window;
     }
@@ -67,7 +66,7 @@ public class WindowFactory {
      * @param secondaryAction
      * @return
      */
-    public BasicWindow createWindowWithSecondaryAction(WindowType windowType, BasicTable contentTable, String secondaryButtonTitle,
+    public BasicWindow createWindowWithSecondaryAction(WindowType windowType, UETable contentTable, String secondaryButtonTitle,
 	    ClickListener okAction, ClickListener secondaryAction) {
 	final BasicWindow window = createWindowFrame(windowType);
 
@@ -78,7 +77,7 @@ public class WindowFactory {
 	buttontable.row();
 
 	Table table = new Table();
-	table.add(contentTable.getTable());
+	table.add(contentTable);
 	table.row();
 	table.add(buttontable);
 

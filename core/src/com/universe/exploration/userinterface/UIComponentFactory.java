@@ -15,15 +15,15 @@ import com.universe.exploration.userinterface.skins.UserInterfaceBank;
  */
 public class UIComponentFactory {
     public static TableFormContainerPair createHorizontalSlider(float minVal, float maxVal, float interval) {
-	return createSliderWrapper(minVal, maxVal, interval, false);
+	return createSliderWithMinMaxValues(minVal, maxVal, interval, false);
     }
 
     public static TableFormContainerPair createVerticalSlider(float minVal, float maxVal, float interval) {
-	return createSliderWrapper(minVal, maxVal, interval, true);
+	return createSliderWithMinMaxValues(minVal, maxVal, interval, true);
     }
 
     /**
-     * Create a slide that also shows the minimum and maximum value.
+     * Create a slider that also shows the minimum and maximum value.
      * 
      * @param minVal
      * @param maxVal
@@ -31,7 +31,7 @@ public class UIComponentFactory {
      * @param vertical
      * @return
      */
-    private static TableFormContainerPair createSliderWrapper(float minVal, float maxVal, float interval, boolean vertical) {
+    private static TableFormContainerPair createSliderWithMinMaxValues(float minVal, float maxVal, float interval, boolean vertical) {
 	Table sliderTable = new Table();
 	Slider slider = new Slider(minVal, maxVal, interval, vertical, UserInterfaceBank.userInterfaceSkin);
 

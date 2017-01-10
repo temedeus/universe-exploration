@@ -16,9 +16,9 @@ import com.universe.exploration.crewmember.CrewMember;
 public class Casualty {
 
     private CrewMember member;
-    
+
     /**
-     * Determine cause of death.
+     * Incident occurred during a survey.
      */
     private SurveyIncident incident;
 
@@ -51,13 +51,14 @@ public class Casualty {
      * @return the member
      */
     public CrewMember getMember() {
-        return member;
+	return member;
     }
 
     /**
-     * @param member the member to set
+     * @param member
+     *            the member to set
      */
     public void setMember(CrewMember member) {
-        this.member = member;
+	this.member = member;
     }
 }

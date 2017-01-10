@@ -58,7 +58,7 @@ public class Localizer {
     public String get(String key) {
 	try {
 	    return localizationBundle.get(key);
-	} catch(MissingResourceException e) {
+	} catch (MissingResourceException e) {
 	    return key;
 	}
     }

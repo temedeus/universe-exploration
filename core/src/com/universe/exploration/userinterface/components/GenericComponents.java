@@ -3,8 +3,6 @@
  */
 package com.universe.exploration.userinterface.components;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-
 /**
  * Generic UI components.
  * 
@@ -19,15 +17,26 @@ public class GenericComponents {
 	// Ensure this class is instantiated once.
     }
 
-    public static GenericComponents createInstance() {
-	if (genericComponents == null) {
-	    return new GenericComponents();
-	} else {
-	    return genericComponents;
-	}
+    /**
+     * Singleton for {@link GenericComponents).
+     * 
+     * @return
+     */
+    public static GenericComponents getInstance() {
+	return (genericComponents == null) ? instantiate() : genericComponents;
     }
 
-    public Label createSpacer() {
-	return new UELabel("");
+    private static GenericComponents instantiate() {
+	genericComponents = new GenericComponents();
+	return genericComponents;
+    }
+
+    /**
+     * Creates a spacer element.
+     * 
+     * @return {@link Spacer}
+     */
+    public UELabel createSpacer() {
+	return new Spacer();
     }
 }

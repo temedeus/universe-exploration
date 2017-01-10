@@ -165,9 +165,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    /*
 	     * (non-Javadoc)
 	     * 
-	     * @see
-	     * com.universe.exploration.listener.UEListener#handleEventClassEvent
-	     * (java.util.EventObject)
+	     * @see com.universe.exploration.listener.UEListener#
+	     * handleEventClassEvent (java.util.EventObject)
 	     */
 	    @Override
 	    public void handleEventClassEvent(UEEvent e) {
@@ -181,9 +180,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    /*
 	     * (non-Javadoc)
 	     * 
-	     * @see
-	     * com.universe.exploration.listener.UEListener#handleEventClassEvent
-	     * (com.universe.exploration.listener.UEEvent)
+	     * @see com.universe.exploration.listener.UEListener#
+	     * handleEventClassEvent (com.universe.exploration.listener.UEEvent)
 	     */
 	    @Override
 	    public void handleEventClassEvent(UEEvent e) {
@@ -267,9 +265,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    /*
 	     * (non-Javadoc)
 	     * 
-	     * @see
-	     * com.universe.exploration.listener.UEListener#handleEventClassEvent
-	     * (com.universe.exploration.listener.UEEvent)
+	     * @see com.universe.exploration.listener.UEListener#
+	     * handleEventClassEvent (com.universe.exploration.listener.UEEvent)
 	     */
 	    @Override
 	    public void handleEventClassEvent(UEEvent e) {
@@ -284,15 +281,14 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    /*
 	     * (non-Javadoc)
 	     * 
-	     * @see
-	     * com.universe.exploration.listener.UEListener#handleEventClassEvent
-	     * ()
+	     * @see com.universe.exploration.listener.UEListener#
+	     * handleEventClassEvent ()
 	     */
 	    @Override
 	    public void handleEventClassEvent(UEEvent e) {
 		Float volume = (Float) e.getPayLoad();
-		audioManager.getAudioFileCache().get(Music.BASIC_AMBIENT)
-			.setVolume(audioManager.getCurrentlyPlayingBackgroundMusic(), volume);
+		audioManager.getAudioFileCache().get(Music.BASIC_AMBIENT).setVolume(audioManager.getCurrentlyPlayingBackgroundMusic(),
+			volume);
 	    }
 	};
     }
@@ -310,8 +306,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		ss.setSurveyTeam(crew);
 		surveyStatusContainer.add(ss);
 
-		updateIngameLog("Survey (" + form.getSurveyName().getText() + ") dispatched composed of " + crew.size()
-			+ " brave men and women.");
+		updateIngameLog(
+			"Survey (" + form.getSurveyName().getText() + ") dispatched composed of " + crew.size() + " brave men and women.");
 	    } else {
 		updateIngameLog("Cannot dispatch survey team (" + crew.size() + "). Not enough crewmen available!"
 			+ UniverseExploration.crew.getCrewMenAboardSpaceShip().size());
@@ -351,10 +347,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      * @return
      */
     private boolean createStarSystem() {
-	StarSystemFactory uf = new StarSystemFactory();
-
 	try {
-	    starSystem = uf.makeStarSystem();
+	    starSystem = new StarSystemFactory().makeStarSystem();
 	    gameObjectCanvas = new GameObjectCanvas(starSystem);
 	    gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
 	    gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
@@ -373,15 +367,13 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			new ClickListener() {
 			    @Override
 			    public void clicked(InputEvent event, float x, float y) {
-				final BasicWindow surveyedWindow = uiController.createSurveyTeamSelectionWindow((PlanetSpriteContainer) e
-					.getPayLoad());
+				final BasicWindow surveyedWindow = uiController
+					.createSurveyTeamSelectionWindow((PlanetSpriteContainer) e.getPayLoad());
 				windowContainer.closeWindow(WindowType.PLANET_DETAILS);
-				windowContainer.add(WindowType.SURVEY_WINDOW, surveyedWindow);
 				uiController.show(surveyedWindow);
 			    }
 			});
 
-		windowContainer.add(WindowType.PLANET_DETAILS, surveyWindow);
 		uiController.show(surveyWindow);
 	    };
 	};
@@ -421,15 +413,14 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    List<String> surveyData = generateSurveyDataRows(caption, resourcesCaption, casualtyList, rf);
 	    final BasicWindow surveyClosedWindow = uiController.createSurveyClosedWindow(surveyData);
 
-	    windowContainer.add(WindowType.SURVEY_CLOSED, surveyClosedWindow);
-
 	    UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
 	    UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
 	    uiController.show(surveyClosedWindow);
 	}
     }
 
-    private List<String> generateSurveyDataRows(String caption, String resourcesCaption, List<Casualty> casualtyList, ResourcesFoundBean rf) {
+    private List<String> generateSurveyDataRows(String caption, String resourcesCaption, List<Casualty> casualtyList,
+	    ResourcesFoundBean rf) {
 	List<String> surveydata = new ArrayList<String>();
 
 	surveydata.add(caption);

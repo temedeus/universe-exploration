@@ -15,5 +15,4 @@ public class Intelligence extends CrewMemberAttribute {
     public Intelligence(int value) {
 	super(value);
     }
-
 }

@@ -4,6 +4,8 @@
 package com.universe.exploration.crewmember.attribute;
 
 /**
+ * Abstract class for crew member attributes.
+ * 
  * @author 15.3.2016 Teemu Puurunen
  *
  */

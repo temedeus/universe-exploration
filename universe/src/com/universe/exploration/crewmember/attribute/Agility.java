@@ -15,5 +15,4 @@ public class Agility extends CrewMemberAttribute {
     public Agility(int value) {
 	super(value);
     }
-
 }

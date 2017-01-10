@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -21,9 +20,10 @@ import com.universe.exploration.spritecontainer.PlanetHandler;
 import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.ButtonFactory;
-import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
+ * Handles selecting planets.
+ * 
  * @author 1.2.2016 Teemu Puurunen
  *
  */
@@ -109,15 +109,14 @@ public class PlanetSelection {
     public VerticalGroup createPlanetSelectionTable() {
 	VerticalGroup table = new VerticalGroup();
 	table.align(Align.left | Align.bottom);
-	table.addActor(GenericComponents.createInstance().createSpacer());
+	table.addActor(GenericComponents.getInstance().createSpacer());
 
 	if (planetList.size() > 0) {
-
-	    table.addActor(new Label(Localizer.getInstance().get("LABEL_PLANET_SELECTION"), UserInterfaceBank.userInterfaceSkin));
+	    table.addActor(new UELabel(Localizer.getInstance().get("LABEL_PLANET_SELECTION")));
 	    table.addActor(createPlanetSelectBox());
 	    table.addActor(surveyButton);
 	} else {
-	    table.addActor(new Label(Localizer.getInstance().get("LABEL_NO_PLANETS_FOUND"), UserInterfaceBank.userInterfaceSkin));
+	    table.addActor(new UELabel(Localizer.getInstance().get("LABEL_NO_PLANETS_FOUND")));
 	}
 
 	return table;
@@ -139,8 +138,8 @@ public class PlanetSelection {
      * </p>
      */
     private void firePlanetClickListener() {
-	planetClickListener.handleEventClassEvent(new UEEvent(gameViewObjectContainer
-		.getPlanetGfxContainerByComponent(parsePlanetFromSelectBox())));
+	planetClickListener
+		.handleEventClassEvent(new UEEvent(gameViewObjectContainer.getPlanetGfxContainerByComponent(parsePlanetFromSelectBox())));
     }
 
     /**

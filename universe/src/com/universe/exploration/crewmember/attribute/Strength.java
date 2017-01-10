@@ -4,7 +4,7 @@
 package com.universe.exploration.crewmember.attribute;
 
 /**
- * @author 15.3.2016 Teemu Puurunen 
+ * @author 15.3.2016 Teemu Puurunen
  *
  */
 public class Strength extends CrewMemberAttribute {
@@ -15,5 +15,4 @@ public class Strength extends CrewMemberAttribute {
     public Strength(int value) {
 	super(value);
     }
-
 }

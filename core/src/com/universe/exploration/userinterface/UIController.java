@@ -36,7 +36,6 @@ import com.universe.exploration.spritecontainer.PlanetHandler;
 import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.survey.Survey;
-import com.universe.exploration.userinterface.components.BasicTable;
 import com.universe.exploration.userinterface.components.LogDisplay;
 import com.universe.exploration.userinterface.components.LogDisplayTable;
 import com.universe.exploration.userinterface.components.PlanetSelection;
@@ -291,7 +290,7 @@ public class UIController {
     }
 
     public BasicWindow createGameOverWindow(ClickListener tryAgainAction) {
-	BasicTable gameoverData = new BasicTable(Align.left | Align.top);
+	UETable gameoverData = new UETable();
 	BasicWindow gameOverWindow = new WindowFactory().createWindowWithSecondaryAction(WindowType.GAME_OVER, gameoverData,
 		"BTN_QUIT_GAME", tryAgainAction, new ClickListener() {
 		    @Override

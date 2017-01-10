@@ -23,8 +23,8 @@ public class DataPairContainer implements IDataPairContainer {
     protected Object auxiliaryDataContainer;
 
     /**
-	 * 
-	 */
+     * 
+     */
     public DataPairContainer() {
 	pairList = new ArrayList<DataPair>();
     }
@@ -53,9 +53,13 @@ public class DataPairContainer implements IDataPairContainer {
     public void add(DataPair pair) {
 	pairList.add(pair);
     }
-    
+
     public void add(String id, String label, String value) {
 	pairList.add(new DataPair(id, label, value));
+    }
+
+    public void addNoId(String label, String value) {
+	pairList.add(new DataPair(null, label, value));
     }
 
     /**
