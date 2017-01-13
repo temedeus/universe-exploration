@@ -3,6 +3,11 @@
  */
 package com.universe.exploration.survey;
 
+import com.universe.exploration.resource.Air;
+import com.universe.exploration.resource.Food;
+import com.universe.exploration.resource.Resource;
+import com.universe.exploration.resource.Water;
+
 /**
  * Determines boundaries for potentially found resources.
  * 
@@ -11,12 +16,14 @@ package com.universe.exploration.survey;
  */
 public enum ResourcesFoundBoundaries {
 
-    WATER(0, 100), AIR(0, 8), FOOD(0, 8);
+    WATER(Water.class, 0, 100), AIR(Air.class, 0, 8), FOOD(Food.class, 0, 8);
 
     private float min;
     private float max;
+    private Class<? extends Resource> clazz;
 
-    ResourcesFoundBoundaries(float min, float max) {
+    ResourcesFoundBoundaries(Class<? extends Resource> clazz, float min, float max) {
+	this.clazz = clazz;
 	this.min = min;
 	this.max = max;
     }
@@ -49,5 +56,19 @@ public enum ResourcesFoundBoundaries {
      */
     public void setMax(float max) {
 	this.max = max;
+    }
+
+    /**
+     * @return the clazz
+     */
+    public Class<? extends Resource> getClazz() {
+        return clazz;
+    }
+
+    /**
+     * @param clazz the clazz to set
+     */
+    public void setClazz(Class<? extends Resource> clazz) {
+        this.clazz = clazz;
     }
 }

@@ -9,6 +9,8 @@ import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.survey.Survey;
 
 /**
+ * Survey details table.
+ * 
  * @author 10.1.2017 Teemu Puurunen
  *
  */

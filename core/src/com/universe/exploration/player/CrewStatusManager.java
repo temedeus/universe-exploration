@@ -5,7 +5,7 @@ package com.universe.exploration.player;
 
 import java.util.List;
 
-import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.GameStatus;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.crew.CrewMemberCondition;
@@ -56,10 +56,11 @@ public class CrewStatusManager {
     /**
      * 
      * @return
+     * 
      */
     public void updateStatus() {
 	// TODO: utilize crewmember attributes when decreasing values
-	List<CrewMember> crewmen = UniverseExploration.crew.getCrewMenAboardSpaceShip();
+	List<CrewMember> crewmen = GameStatus.getCrew().getCrewMenAboardSpaceShip();
 	increaseDaysPassed();
 
 	int crewsize = crewmen.size();

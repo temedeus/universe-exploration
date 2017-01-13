@@ -3,6 +3,10 @@
  */
 package com.universe.exploration;
 
+import com.universe.exploration.crewmember.Crew;
+import com.universe.exploration.player.CrewStatusManager;
+import com.universe.exploration.starsystem.StarSystem;
+
 /**
  * <p>
  * Container for general game status.
@@ -18,6 +22,19 @@ public class GameStatus {
 
     private boolean zoomIn = false;
 
+    /**
+     * Star system
+     */
+    private static StarSystem starSystem;
+
+    public static Crew crew;
+
+
+    /**
+     * Contains player spaceship status.
+     */
+    private CrewStatusManager crewStatus;
+    
     /**
      * Ensures game parameters are proper for creating a survey window.
      * 
@@ -57,5 +74,47 @@ public class GameStatus {
 
     public void setZoomIn(boolean zoomIn) {
 	this.zoomIn = zoomIn;
+    }
+
+    /**
+     * @return the starSystem
+     */
+    public static StarSystem getStarSystem() {
+        return starSystem;
+    }
+
+    /**
+     * @return the crew
+     */
+    public static Crew getCrew() {
+        return crew;
+    }
+
+    /**
+     * @return the crewStatus
+     */
+    public CrewStatusManager getCrewStatus() {
+        return crewStatus;
+    }
+
+    /**
+     * @param starSystem the starSystem to set
+     */
+    public static void setStarSystem(StarSystem starSystem) {
+        GameStatus.starSystem = starSystem;
+    }
+
+    /**
+     * @param crew the crew to set
+     */
+    public static void setCrew(Crew crew) {
+        GameStatus.crew = crew;
+    }
+
+    /**
+     * @param crewStatus the crewStatus to set
+     */
+    public void setCrewStatus(CrewStatusManager crewStatus) {
+        this.crewStatus = crewStatus;
     }
 }

@@ -11,11 +11,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
+import com.universe.exploration.GameStatus;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
-import com.universe.exploration.starsystem.StarSystem;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -28,8 +28,6 @@ public class GameObjectCanvas {
     private SpriteBatch liveComponentBatch;
     private SpriteBatch backgroundBatch;
     private Sprite space;
-
-    private StarSystem starSystem;
 
     private ShapeRenderer shapeRenderer;
 
@@ -60,30 +58,28 @@ public class GameObjectCanvas {
      * 
      * @param iua
      */
-    public GameObjectCanvas(StarSystem starSystem) {
+    public GameObjectCanvas() {
 	initBasicSetup();
-
-	this.starSystem = starSystem;
 
 	// Space background
 	SpaceSpriteContainer spaceBgGFX = new SpaceSpriteContainer();
 	space = spaceBgGFX.getSprite();
 
 	// Generate system star.
-	SystemStarSpriteContainer ss = new SystemStarSpriteContainer(this.starSystem.getSystemstar());
+	SystemStarSpriteContainer starSpriteContainer = new SystemStarSpriteContainer(GameStatus.getStarSystem().getSystemstar());
 
-	starWrapper = new StarWrapper(ss.getSprite());
+	starWrapper = new StarWrapper(starSpriteContainer.getSprite());
 
-	List<PlanetCelestialComponent> listOfPlanets = starSystem.getPlanets();
+	List<PlanetCelestialComponent> planetList = GameStatus.getStarSystem().getPlanets();
 
 	planetHandler = new PlanetHandler();
 
-	for (PlanetCelestialComponent planet : listOfPlanets) {
+	for (PlanetCelestialComponent planet : planetList) {
 	    planetHandler.addStarPlanet(planet);
 	}
 
 	// Initially select the first planet (visual borders).
-	if (listOfPlanets.size() > 0) {
+	if (planetList.size() > 0) {
 	    selectedPlanet = new SelectedPlanet();
 	    selectedPlanet.setSelectedPlanet(planetHandler.getPlanetGfxContainerAtIndex(0));
 	}
@@ -161,9 +157,10 @@ public class GameObjectCanvas {
 	    Color navyBlue = new Color(0, 0, 0.5f, 0.7f);
 	    shapeRenderer.setColor(navyBlue);
 	    shapeRenderer.begin(ShapeType.Line);
-	    shapeRenderer.circle(selectedPlanet.getSelectedPlanet().getSprite().getX()
-		    + selectedPlanet.getSelectedPlanet().getSprite().getWidth() / 2, selectedPlanet.getSelectedPlanet().getSprite().getY()
-		    + selectedPlanet.getSelectedPlanet().getSprite().getHeight() / 2, varyingRadius);
+	    shapeRenderer.circle(
+		    selectedPlanet.getSelectedPlanet().getSprite().getX() + selectedPlanet.getSelectedPlanet().getSprite().getWidth() / 2,
+		    selectedPlanet.getSelectedPlanet().getSprite().getY() + selectedPlanet.getSelectedPlanet().getSprite().getHeight() / 2,
+		    varyingRadius);
 	    shapeRenderer.end();
 	}
     }
@@ -175,12 +172,12 @@ public class GameObjectCanvas {
 	camera.unproject(input);
 
 	try {
-	    PlanetSpriteContainer pgfx = planetHandler.getPlanetWithCoordinatesWithinBoundaries(input);
-	    if (pgfx != null) {
-		firePlanetClickListener(pgfx);
+	    PlanetSpriteContainer planetSprite = planetHandler.getPlanetWithCoordinatesWithinBoundaries(input);
+	    if (planetSprite != null) {
+		firePlanetClickListener(planetSprite);
 	    }
 	} catch (NullPointerException e) {
-	    //TODO: verify if this null check is useless.
+	    // TODO: verify if this null check is useless.
 	}
     }
 

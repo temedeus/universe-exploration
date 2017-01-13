@@ -21,7 +21,7 @@ class SurveyIncidentRandomPicker {
 
     private List<SurveyIncident> listOfApplicableCauseOfDeaths;
 
-    SurveyIncidentRandomPicker(ApplicableSurveyIncidentCategoryList applicableCauseOfDeath) {
+    SurveyIncidentRandomPicker(List<SurveyIncidentCategory> applicableCauseOfDeath) {
 	listOfApplicableCauseOfDeaths = new ArrayList<SurveyIncident>();
 
 	for (SurveyIncident causeOfDeath : SurveyIncident.values()) {

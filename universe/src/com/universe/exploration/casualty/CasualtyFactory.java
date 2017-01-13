@@ -3,6 +3,7 @@
  */
 package com.universe.exploration.casualty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.universe.exploration.common.tools.MathTools;
@@ -28,8 +29,7 @@ public class CasualtyFactory {
     public Casualty createCasualty(CrewMember crewMember) {
 	Casualty casualty = new Casualty();
 
-	ApplicableSurveyIncidentFactory acdf = new ApplicableSurveyIncidentFactory();
-	SurveyIncidentRandomPicker picker = new SurveyIncidentRandomPicker(acdf.createListofApplicableCauseOfDeath(planet));
+	SurveyIncidentRandomPicker picker = new SurveyIncidentRandomPicker(createListofApplicableCauseOfDeath(planet));
 
 	SurveyIncident incident = picker.pickRandomSurveyIncident();
 
@@ -42,6 +42,20 @@ public class CasualtyFactory {
 	    return null;
 	}
 
+    }
+
+    private List<SurveyIncidentCategory> createListofApplicableCauseOfDeath(PlanetCelestialComponent planet) {
+	List<SurveyIncidentCategory> applicableSurveyIncidents = new ArrayList<SurveyIncidentCategory>();
+
+	applicableSurveyIncidents.add(SurveyIncidentCategory.GENERAL);
+
+	if (!planet.isOxygenFound()) {
+	    applicableSurveyIncidents.add(SurveyIncidentCategory.LACK_OF_OXYGEN);
+	}
+
+	applicableSurveyIncidents.addAll(planet.getLifeforms().provideSurveyIncidentCategoryList());
+
+	return applicableSurveyIncidents;
     }
 
     private boolean calculateIfIncidentHappens(SurveyIncident incident, CrewMember crewMember) {

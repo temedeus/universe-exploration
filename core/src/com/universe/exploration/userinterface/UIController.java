@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.universe.exploration.GameStatus;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.audio.SoundEffect;
 import com.universe.exploration.common.CoreConfiguration;
@@ -162,6 +163,19 @@ public class UIController {
 	return table;
     }
 
+    public void createPlanetClickWindow(final UEEvent e) {
+	final BasicWindow surveyWindow = createPlanetarySurveyWindow((PlanetSpriteContainer) e.getPayLoad(), new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		final BasicWindow surveyedWindow = createSurveyTeamSelectionWindow((PlanetSpriteContainer) e.getPayLoad());
+		UniverseExploration.windowContainer.closeWindow(WindowType.PLANET_DETAILS);
+		show(surveyedWindow);
+	    }
+	});
+
+	show(surveyWindow);
+    }
+
     private Table populateWithStatus(DataPairContainer dataPairContainer) {
 	Table tableRepresentation = new Table();
 	tableRepresentation.align(Align.left | Align.top);
@@ -289,7 +303,7 @@ public class UIController {
 	return button;
     }
 
-    public BasicWindow createGameOverWindow(ClickListener tryAgainAction) {
+    public void createGameOverWindow(ClickListener tryAgainAction) {
 	UETable gameoverData = new UETable();
 	BasicWindow gameOverWindow = new WindowFactory().createWindowWithSecondaryAction(WindowType.GAME_OVER, gameoverData,
 		"BTN_QUIT_GAME", tryAgainAction, new ClickListener() {
@@ -301,7 +315,7 @@ public class UIController {
 		    }
 		});
 
-	return gameOverWindow;
+	show(gameOverWindow);
     }
 
     /**
@@ -315,6 +329,7 @@ public class UIController {
 	    UniverseExploration.windowContainer.add(window.getWindowType(), window);
 	    uiStage.addActor(window);
 	}
+
     }
 
     /**
@@ -350,9 +365,8 @@ public class UIController {
      * Create a window where the results of the survey are summarized.
      * 
      * @param surveydata
-     * @return
      */
-    public BasicWindow createSurveyClosedWindow(List<String> surveydata) {
+    public void createSurveyClosedWindow(List<String> surveydata) {
 	Table table = new Table(UserInterfaceBank.userInterfaceSkin);
 
 	for (String row : surveydata) {
@@ -360,12 +374,17 @@ public class UIController {
 	    table.row();
 	}
 
-	return new WindowFactory().createWindow(WindowType.SURVEY_CLOSED, table, new ClickListener() {
+	BasicWindow surveyClosedWindow = new WindowFactory().createWindow(WindowType.SURVEY_CLOSED, table, new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		UniverseExploration.windowContainer.closeWindow(WindowType.SURVEY_CLOSED);
 	    }
 	});
+
+	UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
+	UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
+
+	show(surveyClosedWindow);
     }
 
     /**
@@ -438,7 +457,7 @@ public class UIController {
 
 	int x = 0;
 
-	for (CrewMember crewmember : UniverseExploration.crew.getCrewmen()) {
+	for (CrewMember crewmember : GameStatus.getCrew().getCrewmen()) {
 	    x++;
 	    Table cell = new Table();
 	    cell.padBottom(15);
@@ -586,7 +605,7 @@ public class UIController {
      */
     public BasicWindow createSurveyTeamSelectionWindow(PlanetSpriteContainer planetSpriteContainer) {
 	UETable planetInformationTable = new UETable();
-	SurveyTeamSelection teamSelection = new SurveyTeamSelection(UniverseExploration.crew);
+	SurveyTeamSelection teamSelection = new SurveyTeamSelection(GameStatus.getCrew());
 	planetInformationTable.add(teamSelection.createSurveyTeamSelectionTable());
 	planetInformationTable.row();
 

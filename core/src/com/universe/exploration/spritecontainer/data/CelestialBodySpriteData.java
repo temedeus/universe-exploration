@@ -7,9 +7,7 @@ import com.universe.exploration.starsystem.components.CelestialComponent;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
- * <p>
  * Graphical abstraction of any star system body
- * </p>
  * 
  * @author 2.8.2015 Teemu Puurunen
  *
@@ -37,8 +35,8 @@ public class CelestialBodySpriteData implements ICelestialBodySpriteData {
     protected CelestialComponent starSystemComponent;
 
     /**
-	 * 
-	 */
+     * 
+     */
     public CelestialBodySpriteData() {
 	positionX = 0;
 	positionY = 0;

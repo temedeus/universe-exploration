@@ -16,12 +16,12 @@ import com.universe.exploration.crewmember.attribute.Strength;
 
 /**
  * <p>
- * A cause of death of a crewman.
+ * Potential causes of death for a crew person on a survey.
  * </p>
  * <p>
  * Method {@link #listOfContributingAttributes()} defines which classes
- * extending abstract {@link CrewMemberAttribute} affect on chances of being killed by
- * given cause of death.
+ * extending abstract {@link CrewMemberAttribute} affect on chances of being
+ * killed by given cause of death.
  * </p>
  * 
  * @author 25.10.2015 Teemu Puurunen
@@ -30,20 +30,25 @@ import com.universe.exploration.crewmember.attribute.Strength;
 public enum SurveyIncident {
     // No oxygen on the planet
     HELMET_BREACH("HELMET_BREACH", SurveyIncidentCategory.LACK_OF_OXYGEN, 15) {
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.universe.exploration.casualty.SurveyIncident#causesStatus()
 	 */
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.casualty.SurveyIncident#causesCondition()
 	 */
 	@Override
 	public CrewMemberCondition causesCondition() {
-	   return CrewMemberCondition.OXYGEN_DEPRIVATION;
+	    return CrewMemberCondition.OXYGEN_DEPRIVATION;
 	}
     },
     RIP_ON_SUIT("RIP_ON_SUIT", SurveyIncidentCategory.LACK_OF_OXYGEN, 15) {
@@ -51,13 +56,16 @@ public enum SurveyIncident {
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.casualty.SurveyIncident#causesCondition()
 	 */
 	@Override
 	public CrewMemberCondition causesCondition() {
-	   return CrewMemberCondition.OXYGEN_DEPRIVATION;
+	    return CrewMemberCondition.OXYGEN_DEPRIVATION;
 	}
     },
 
@@ -75,18 +83,21 @@ public enum SurveyIncident {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfApplicableAttributes;
 	}
-	
+
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.casualty.SurveyIncident#causesCondition()
 	 */
 	@Override
 	public CrewMemberCondition causesCondition() {
-	   return CrewMemberCondition.PHYSICAL_INJURY;
+	    return CrewMemberCondition.PHYSICAL_INJURY;
 	}
     },
 
@@ -104,18 +115,21 @@ public enum SurveyIncident {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfApplicableAttributes;
 	}
-	
+
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.casualty.SurveyIncident#causesCondition()
 	 */
 	@Override
 	public CrewMemberCondition causesCondition() {
-	   return CrewMemberCondition.PHYSICAL_INJURY;
+	    return CrewMemberCondition.PHYSICAL_INJURY;
 	}
     },
     SEDUCED_BY_AMAZONS("SEDUCED_BY_AMAZONS", SurveyIncidentCategory.CIVILIZATION, 8) {
@@ -132,7 +146,7 @@ public enum SurveyIncident {
 	    listOfApplicableAttributes.add(Intelligence.class);
 	    return listOfApplicableAttributes;
 	}
-	
+
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.MIA;
@@ -154,18 +168,21 @@ public enum SurveyIncident {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfApplicableAttributes;
 	}
-	
+
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.casualty.SurveyIncident#causesCondition()
 	 */
 	@Override
 	public CrewMemberCondition causesCondition() {
-	   return CrewMemberCondition.PHYSICAL_INJURY;
+	    return CrewMemberCondition.PHYSICAL_INJURY;
 	}
 
     },
@@ -182,18 +199,21 @@ public enum SurveyIncident {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfApplicableAttributes;
 	}
-	
+
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.casualty.SurveyIncident#causesCondition()
 	 */
 	@Override
 	public CrewMemberCondition causesCondition() {
-	   return CrewMemberCondition.MALNUTRITION;
+	    return CrewMemberCondition.MALNUTRITION;
 	}
     },
     CREWMEN_WENT_NUTS("CREWMEN_WENT_NUTS", SurveyIncidentCategory.GENERAL, 20) {
@@ -209,18 +229,21 @@ public enum SurveyIncident {
 	    listOfApplicableAttributes.add(Morale.class);
 	    return listOfApplicableAttributes;
 	}
-	
+
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.casualty.SurveyIncident#causesCondition()
 	 */
 	@Override
 	public CrewMemberCondition causesCondition() {
-	   return CrewMemberCondition.PSYCHOSIS;
+	    return CrewMemberCondition.PSYCHOSIS;
 	}
     },
     WATER_DEPRIVATION("WATER_DEPRIVATION", SurveyIncidentCategory.GENERAL, 35) {
@@ -236,25 +259,28 @@ public enum SurveyIncident {
 	    listOfApplicableAttributes.add(Strength.class);
 	    return listOfApplicableAttributes;
 	}
-	
+
 	@Override
 	public CrewMemberStatus causesStatus() {
 	    return CrewMemberStatus.KIA;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.universe.exploration.casualty.SurveyIncident#causesCondition()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.universe.exploration.casualty.SurveyIncident#causesCondition()
 	 */
 	@Override
 	public CrewMemberCondition causesCondition() {
-	   return CrewMemberCondition.WATER_DEPRIVATION;
+	    return CrewMemberCondition.WATER_DEPRIVATION;
 	}
     };
 
     private final String localizationKey;
 
     private final SurveyIncidentCategory causeOfDeathCategory;
-    
+
     private final float odds;
 
     private SurveyIncident(String localizationKey, SurveyIncidentCategory causeOfDeathCategory, float odds) {
@@ -274,18 +300,19 @@ public enum SurveyIncident {
 	List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
 	return listOfApplicableAttributes;
     }
-    
+
     /**
      * Determines what condition crewman is exposed to due to this event.
+     * 
      * @return
      */
     public CrewMemberCondition causesCondition() {
 	return null;
     }
-    
-    
+
     /**
      * Determines what status is caused because of this event.
+     * 
      * @return
      */
     public CrewMemberStatus causesStatus() {
@@ -305,10 +332,11 @@ public enum SurveyIncident {
     public SurveyIncidentCategory getCauseOfDeathCategory() {
 	return causeOfDeathCategory;
     }
+
     /**
      * @return the odds
      */
     public float getOdds() {
-        return odds;
+	return odds;
     }
 }

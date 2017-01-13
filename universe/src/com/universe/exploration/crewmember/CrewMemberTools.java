@@ -6,7 +6,9 @@ package com.universe.exploration.crewmember;
 import java.util.List;
 
 /**
- * @author 23.12.2016 Teemu Puurunen
+ * Tools with dealing with {@link CrewMember}.
+ * 
+ * @author 13.1.2017 Teemu Puurunen
  *
  */
 public class CrewMemberTools {

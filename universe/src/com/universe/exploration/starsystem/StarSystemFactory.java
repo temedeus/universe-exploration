@@ -123,17 +123,15 @@ public class StarSystemFactory {
 	planet.setOxygenFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen()));
 	planet.setWaterFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractWater()));
 	planet.setLifeforms(cc.randomizePlanetLife(planet.isWaterFound() && planet.isOxygenFound()));
-	planet = calculateFoodPresence(planet);
+	setupFoodPresence(planet);
 
 	return planet;
     }
 
-    private PlanetCelestialComponent calculateFoodPresence(PlanetCelestialComponent planet) {
+    private void setupFoodPresence(PlanetCelestialComponent planet) {
 	if (planet.getLifeforms().getRank() >= Lifeform.VEGETATION.getRank()) {
 	    planet.setFoodFound(true);
 	}
-
-	return planet;
     }
 
     /**
@@ -160,10 +158,7 @@ public class StarSystemFactory {
     private double verifyDistance(double distance, double previousDistance) {
 	double difference = distance - previousDistance;
 
-	if (difference <= IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue()) {
-	    return distance + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue() - difference;
-	} else {
-	    return distance;
-	}
+	return (difference <= IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue())
+		? distance + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue() - difference : distance;
     }
 }

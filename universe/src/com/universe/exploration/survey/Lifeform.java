@@ -9,6 +9,11 @@ import java.util.List;
 import com.universe.exploration.casualty.SurveyIncidentCategory;
 
 /**
+ * Describes the lifeforms present in the given planet. Lifeform enumeration
+ * basically works hierarchically, ie. from simplest lifeform (bacteria) to
+ * civilization the number of potential causes of death for a survey crew member
+ * only increases.
+ * 
  * @author 27.9.2015 Teemu Puurunen
  *
  */

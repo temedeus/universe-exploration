@@ -9,13 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.Align;
 
 /**
+ * Top right hud.
+ * 
  * @author 10.1.2017 Teemu Puurunen
  *
  */
 public class TopRightHud extends VerticalGroup {
-    /**
-     * 
-     */
+
     public TopRightHud(float width, TextButton hyperSpaceJumpButton, TextButton crewControlButton, TextButton followSurveyButton,
 	    TextButton optionsButton) {
 	setWidth(width);
