@@ -1,7 +1,7 @@
 package com.universe.exploration.crewmember;
 
 /**
- * Describes a profile based on which a crewmember can be created.
+ * Describes a profile based on which a {@link CrewMember} can be created.
  * 
  * @author 6.12.2016 Teemu Puurunen
  *

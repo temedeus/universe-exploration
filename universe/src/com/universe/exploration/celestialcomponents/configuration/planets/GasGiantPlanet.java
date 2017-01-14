@@ -3,16 +3,16 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
-import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
+import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
 
 /**
  * @author 24.8.2015 Teemu Puurunen
  *
  */
-public class GasGiantPlanet extends PlanetComponent {
+public class GasGiantPlanet extends PlanetTemplate {
 
     public GasGiantPlanet() {
-	componentName = "Giant gas planet";
+	templateName = "Giant gas planet";
 	graphicsFiles = new String[] { "gasplanet/planet3.png", "gasplanet/gasplanet1.png" };
 	spriteSizes = new int[] { 40, 50, 55 };
 

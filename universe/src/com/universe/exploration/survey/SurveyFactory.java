@@ -10,6 +10,7 @@ import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.casualty.CasualtyFactory;
 import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
+import com.universe.exploration.resource.ResourcesFoundFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -54,11 +55,11 @@ public class SurveyFactory {
     }
 
     private List<Casualty> createCasualtyList(List<CrewMember> surveyTeam, PlanetCelestialComponent planet) {
-	CasualtyFactory mf = new CasualtyFactory(planet);
+	CasualtyFactory casualtyFactory = new CasualtyFactory(planet);
 	List<Casualty> casualties = new ArrayList<Casualty>();
 
 	for (CrewMember surveyTeamMember : surveyTeam) {
-	    Casualty casualty = mf.createCasualty(surveyTeamMember);
+	    Casualty casualty = casualtyFactory.createCasualty(surveyTeamMember);
 	    if (casualty != null) {
 		casualties.add(casualty);
 	    }

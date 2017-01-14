@@ -3,7 +3,11 @@
  */
 package com.universe.exploration.starsystem.components;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
+import com.universe.exploration.resource.Resource;
 import com.universe.exploration.survey.Lifeform;
 
 /**
@@ -14,10 +18,6 @@ import com.universe.exploration.survey.Lifeform;
  *
  */
 public class PlanetCelestialComponent extends CelestialComponent {
-    /**
-	 * 
-	 */
-
     /**
      * Aphelion - distance when farthest to star. TODO: calculate radius based
      * on periphelion and aphelion
@@ -59,11 +59,7 @@ public class PlanetCelestialComponent extends CelestialComponent {
 
     private Lifeform lifeform;
 
-    private boolean waterFound;
-
-    private boolean oxygenFound;
-
-    private boolean foodFound;
+    private List<Resource> resourcesFound;
 
     /**
      * Planet numerical representation (e.g. speed, mass, velocity etc.)
@@ -71,6 +67,7 @@ public class PlanetCelestialComponent extends CelestialComponent {
      * set.
      */
     public PlanetCelestialComponent() {
+	resourcesFound = new ArrayList<Resource>();
 	this.aphelion = IngameAstronomicalConstants.APHELION_EARTH.getValue();
 	this.periphelion = IngameAstronomicalConstants.PERIPHELION_EARTH.getValue();
 	this.orbitalVelocity = IngameAstronomicalConstants.MIN_ORBITAL_VELOCITY.getValue();
@@ -204,27 +201,6 @@ public class PlanetCelestialComponent extends CelestialComponent {
     }
 
     /**
-     * @return the waterFound
-     */
-    public boolean isWaterFound() {
-	return waterFound;
-    }
-
-    /**
-     * @return the oxygenFound
-     */
-    public boolean isOxygenFound() {
-	return oxygenFound;
-    }
-
-    /**
-     * @return the foodFound
-     */
-    public boolean isFoodFound() {
-	return foodFound;
-    }
-
-    /**
      * @param lifeforms
      *            the lifeforms to set
      */
@@ -233,26 +209,34 @@ public class PlanetCelestialComponent extends CelestialComponent {
     }
 
     /**
-     * @param waterFound
-     *            the waterFound to set
+     * @return the resourcesFound
      */
-    public void setWaterFound(boolean waterFound) {
-	this.waterFound = waterFound;
+    public List<Resource> getResourcesFound() {
+	return resourcesFound;
     }
 
     /**
-     * @param oxygenFound
-     *            the oxygenFound to set
+     * @param resourcesFound
+     *            the resourcesFound to set
      */
-    public void setOxygenFound(boolean oxygenFound) {
-	this.oxygenFound = oxygenFound;
+    public void addFoundResource(Resource resource) {
+	this.resourcesFound.add(resource);
     }
 
     /**
-     * @param foodFound
-     *            the foodFound to set
+     * See if resources contain given resource type. (E.g. perform class
+     * comparison.)
+     * 
+     * @return boolean
      */
-    public void setFoodFound(boolean foodFound) {
-	this.foodFound = foodFound;
+    public boolean containsInstanceOfResource(Class<? extends Resource> clazz) {
+	for (Resource resource : resourcesFound) {
+	    if (resource.getClass().equals(clazz)) {
+		return true;
+	    }
+	}
+
+	return false;
     }
+
 }

@@ -1,11 +1,14 @@
 package com.universe.exploration.starsystem;
 
-import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
-import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
+import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTemplate;
+import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
+import com.universe.exploration.resource.Air;
+import com.universe.exploration.resource.Food;
+import com.universe.exploration.resource.Water;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.StarCelestialComponent;
 import com.universe.exploration.survey.Lifeform;
@@ -61,7 +64,7 @@ public class StarSystemFactory {
 	String tmpStarType = RandomizationTools.getRandomStringFromWeightedArray(uConf.getStartypeListing());
 
 	StarCelestialComponent systemstar = new StarCelestialComponent();
-	systemstar.setGraphicsFile(CelestialComponentTypes.valueOf(tmpStarType).getComponentType().getRandomGraphicsFile());
+	systemstar.setGraphicsFile(CelestialComponentTemplate.valueOf(tmpStarType).getComponentType().getRandomGraphicsFile());
 	this.starsystem.setSystemstar(systemstar);
 
 	return this.starsystem;
@@ -84,7 +87,7 @@ public class StarSystemFactory {
 
 	    // Setup planet component ready.
 	    String tmpPlanetType = RandomizationTools.getRandomStringFromWeightedArray(uConf.getPlanettypeListing());
-	    PlanetComponent cc = (PlanetComponent) CelestialComponentTypes.valueOf(tmpPlanetType).getComponentType();
+	    PlanetTemplate cc = (PlanetTemplate) CelestialComponentTemplate.valueOf(tmpPlanetType).getComponentType();
 
 	    // Generate all the new values
 	    planet = calculatePlanetOrbitalData(planet, cc, planetarySpace, previousOrbitalRadious, x);
@@ -100,7 +103,7 @@ public class StarSystemFactory {
 	}
     }
 
-    private PlanetCelestialComponent calculatePlanetOrbitalData(PlanetCelestialComponent planet, PlanetComponent cc, double planetarySpace,
+    private PlanetCelestialComponent calculatePlanetOrbitalData(PlanetCelestialComponent planet, PlanetTemplate cc, double planetarySpace,
 	    double previousOrbitalRadious, int x) {
 	double planetOrbitalVelocity = RandomizationTools.getRandomDouble(IngameAstronomicalConstants.MIN_ORBITAL_VELOCITY.getValue(),
 		IngameAstronomicalConstants.MAX_ORBITAL_VELOCITY.getValue());
@@ -119,10 +122,17 @@ public class StarSystemFactory {
 	return planet;
     }
 
-    private PlanetCelestialComponent calculatePlanetHabitability(PlanetCelestialComponent planet, PlanetComponent cc) {
-	planet.setOxygenFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen()));
-	planet.setWaterFound(MathTools.calculateIfOddsHit(cc.getChanceToExtractWater()));
-	planet.setLifeforms(cc.randomizePlanetLife(planet.isWaterFound() && planet.isOxygenFound()));
+    private PlanetCelestialComponent calculatePlanetHabitability(PlanetCelestialComponent planet, PlanetTemplate cc) {
+	if (MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen())) {
+	    planet.addFoundResource(new Air());
+	}
+
+	if (MathTools.calculateIfOddsHit(cc.getChanceToExtractWater())) {
+	    planet.addFoundResource(new Water());
+	}
+
+	boolean mandatoryForLife = planet.containsInstanceOfResource(Water.class) && planet.containsInstanceOfResource(Air.class);
+	planet.setLifeforms(cc.randomizePlanetLife(mandatoryForLife));
 	setupFoodPresence(planet);
 
 	return planet;
@@ -130,7 +140,7 @@ public class StarSystemFactory {
 
     private void setupFoodPresence(PlanetCelestialComponent planet) {
 	if (planet.getLifeforms().getRank() >= Lifeform.VEGETATION.getRank()) {
-	    planet.setFoodFound(true);
+	    planet.addFoundResource(new Food());
 	}
     }
 
@@ -140,7 +150,7 @@ public class StarSystemFactory {
      * @param planet
      * @return
      */
-    private PlanetCelestialComponent setupPlanetBasicInfo(PlanetCelestialComponent planet, PlanetComponent cc) {
+    private PlanetCelestialComponent setupPlanetBasicInfo(PlanetCelestialComponent planet, PlanetTemplate cc) {
 	planet.setGraphicsFile(cc.getRandomGraphicsFile());
 	planet.setSpriteSize(cc.getRandomSpriteSize());
 	planet.setComponentName(cc.getComponentName());

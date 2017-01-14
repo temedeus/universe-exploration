@@ -3,9 +3,9 @@ package com.universe.exploration.starsystem;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTypes;
-import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
-import com.universe.exploration.celestialcomponents.configuration.StarComponent;
+import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTemplate;
+import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
+import com.universe.exploration.celestialcomponents.configuration.StarTemplate;
 
 /**
  * Config
@@ -54,14 +54,14 @@ public class StarSystemConfiguration {
 	/**
 	 * Generate string array of all potential stars and planets.
 	 */
-	for (CelestialComponentTypes cct : CelestialComponentTypes.values()) {
+	for (CelestialComponentTemplate cct : CelestialComponentTemplate.values()) {
 	    String[] tmp = { cct.name(), "" + cct.getPrevalance() };
 
-	    if (cct.getComponentType() instanceof StarComponent) {
+	    if (cct.getComponentType() instanceof StarTemplate) {
 		startypes.add(tmp);
 	    }
 
-	    if (cct.getComponentType() instanceof PlanetComponent) {
+	    if (cct.getComponentType() instanceof PlanetTemplate) {
 		planettypes.add(tmp);
 	    }
 	}

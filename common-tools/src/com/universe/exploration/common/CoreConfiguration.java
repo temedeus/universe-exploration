@@ -20,13 +20,7 @@ public class CoreConfiguration {
 
     public static final int MAX_CREWMEN = 10;
 
-    public static final float MAX_AIR = 200;
-
-    public static final float MAX_WATER = 200;
-
     public static final float MAX_POWER = 100;
-
-    public static final float MAX_FOOD = 200;
 
     public static final String USERINTERFACE_SKIN = "uiskin.json";
 
@@ -39,12 +33,12 @@ public class CoreConfiguration {
     public static final float SPACE_BACKGROUND_POSITION_X = -1000;
 
     public static final float SPACE_BACKGROUND_POSITION_Y = -600;
-    
+
     public static final int MAX_DAYS_ON_SURVEY = 30;
-    
+
     public static final float PLANET_ENHANCEMENT_MIN = 120;
-    
+
     public static final float PLANET_ENHANCEMENT_MAX = 300;
-    
+
     public static final float PLANET_ENHANCEMENT_INC = 10;
 }

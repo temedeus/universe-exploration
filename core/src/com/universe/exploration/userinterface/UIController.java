@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.universe.exploration.GameStatus;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.audio.SoundEffect;
 import com.universe.exploration.common.CoreConfiguration;
@@ -457,7 +456,7 @@ public class UIController {
 
 	int x = 0;
 
-	for (CrewMember crewmember : GameStatus.getCrew().getCrewmen()) {
+	for (CrewMember crewmember : UniverseExploration.gameStatus.getCrew().getCrewmen()) {
 	    x++;
 	    Table cell = new Table();
 	    cell.padBottom(15);
@@ -605,7 +604,7 @@ public class UIController {
      */
     public BasicWindow createSurveyTeamSelectionWindow(PlanetSpriteContainer planetSpriteContainer) {
 	UETable planetInformationTable = new UETable();
-	SurveyTeamSelection teamSelection = new SurveyTeamSelection(GameStatus.getCrew());
+	SurveyTeamSelection teamSelection = new SurveyTeamSelection(UniverseExploration.gameStatus.getCrew());
 	planetInformationTable.add(teamSelection.createSurveyTeamSelectionTable());
 	planetInformationTable.row();
 

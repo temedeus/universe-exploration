@@ -9,6 +9,7 @@ import java.util.List;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
+import com.universe.exploration.resource.Water;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -30,7 +31,6 @@ public class CasualtyFactory {
 	Casualty casualty = new Casualty();
 
 	SurveyIncidentRandomPicker picker = new SurveyIncidentRandomPicker(createListofApplicableCauseOfDeath(planet));
-
 	SurveyIncident incident = picker.pickRandomSurveyIncident();
 
 	if (calculateIfIncidentHappens(incident, crewMember)) {
@@ -49,7 +49,7 @@ public class CasualtyFactory {
 
 	applicableSurveyIncidents.add(SurveyIncidentCategory.GENERAL);
 
-	if (!planet.isOxygenFound()) {
+	if (!planet.containsInstanceOfResource(Water.class)) {
 	    applicableSurveyIncidents.add(SurveyIncidentCategory.LACK_OF_OXYGEN);
 	}
 

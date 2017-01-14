@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.universe.exploration;
 
 import com.universe.exploration.crewmember.Crew;
@@ -8,9 +6,7 @@ import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.starsystem.StarSystem;
 
 /**
- * <p>
- * Container for general game status.
- * </p>
+ * Game status.
  * 
  * @author 17.12.2015 Teemu Puurunen
  *
@@ -25,16 +21,15 @@ public class GameStatus {
     /**
      * Star system
      */
-    private static StarSystem starSystem;
+    private StarSystem starSystem;
 
-    public static Crew crew;
-
+    public Crew crew;
 
     /**
      * Contains player spaceship status.
      */
     private CrewStatusManager crewStatus;
-    
+
     /**
      * Ensures game parameters are proper for creating a survey window.
      * 
@@ -79,42 +74,45 @@ public class GameStatus {
     /**
      * @return the starSystem
      */
-    public static StarSystem getStarSystem() {
-        return starSystem;
+    public StarSystem getStarSystem() {
+	return starSystem;
     }
 
     /**
      * @return the crew
      */
-    public static Crew getCrew() {
-        return crew;
+    public Crew getCrew() {
+	return crew;
     }
 
     /**
      * @return the crewStatus
      */
     public CrewStatusManager getCrewStatus() {
-        return crewStatus;
+	return crewStatus;
     }
 
     /**
-     * @param starSystem the starSystem to set
+     * @param starSystem
+     *            the starSystem to set
      */
-    public static void setStarSystem(StarSystem starSystem) {
-        GameStatus.starSystem = starSystem;
+    public void setStarSystem(StarSystem starSystem) {
+	this.starSystem = starSystem;
     }
 
     /**
-     * @param crew the crew to set
+     * @param crew
+     *            the crew to set
      */
-    public static void setCrew(Crew crew) {
-        GameStatus.crew = crew;
+    public void setCrew(Crew crew) {
+	this.crew = crew;
     }
 
     /**
-     * @param crewStatus the crewStatus to set
+     * @param crewStatus
+     *            the crewStatus to set
      */
     public void setCrewStatus(CrewStatusManager crewStatus) {
-        this.crewStatus = crewStatus;
+	this.crewStatus = crewStatus;
     }
 }

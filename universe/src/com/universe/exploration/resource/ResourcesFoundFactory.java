@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.survey;
+package com.universe.exploration.resource;
 
 import java.util.List;
 
@@ -21,19 +21,14 @@ public class ResourcesFoundFactory {
 	ResourcesFoundBean resourcesFoundBean = new ResourcesFoundBean();
 	int crewSize = crew.size();
 
-	if (planet.isFoodFound()) {
-	    float food = crewSize * randomizeAmount(ResourcesFoundBoundaries.WATER);
-	    resourcesFoundBean.setFood(food);
-	}
+	for (Resource resource : planet.getResourcesFound()) {
+	    float amount = crewSize * randomizeAmount(resource.getBoundary());
 
-	if (planet.isWaterFound()) {
-	    float water = crewSize * randomizeAmount(ResourcesFoundBoundaries.WATER);
-	    resourcesFoundBean.setWater(water);
-	}
+	    if (amount > 0) {
+		resource.setAmount(amount);
+		resourcesFoundBean.addToResources(resource);
+	    }
 
-	if (planet.isOxygenFound()) {
-	    float oxygen = crewSize * randomizeAmount(ResourcesFoundBoundaries.AIR);
-	    resourcesFoundBean.setAir(oxygen);
 	}
 
 	return resourcesFoundBean;

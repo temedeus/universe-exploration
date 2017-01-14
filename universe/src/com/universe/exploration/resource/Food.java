@@ -9,4 +9,14 @@ package com.universe.exploration.resource;
  */
 public class Food extends Resource {
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.universe.exploration.resource.IResource#getResourceLocal()
+     */
+    @Override
+    public String getResourceLocal() {
+	return "GENERIC_FOOD";
+    }
+
 }

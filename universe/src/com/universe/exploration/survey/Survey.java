@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.crewmember.CrewMember;
+import com.universe.exploration.resource.ResourcesFoundBean;
 
 /**
  * Survey abstraction. Contains information about the survey itself, resources

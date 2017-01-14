@@ -9,7 +9,7 @@ import com.universe.exploration.common.tools.RandomizationTools;
  * @author 24.8.2015 Teemu Puurunen
  *
  */
-public abstract class ComponentType {
+public abstract class AbstractTemplate {
 
     /**
      * Identifier for component so that we can refer to it from UI-side.
@@ -31,7 +31,7 @@ public abstract class ComponentType {
 	ComponentID = componentID;
     }
 
-    protected String componentName;
+    protected String templateName;
 
     protected String[] graphicsFiles;
 
@@ -51,7 +51,7 @@ public abstract class ComponentType {
      * @return the componentName
      */
     public String getComponentName() {
-	return componentName;
+	return templateName;
     }
 
     /**
@@ -59,6 +59,6 @@ public abstract class ComponentType {
      *            the componentName to set
      */
     public void setComponentName(String componentName) {
-	this.componentName = componentName;
+	this.templateName = componentName;
     }
 }

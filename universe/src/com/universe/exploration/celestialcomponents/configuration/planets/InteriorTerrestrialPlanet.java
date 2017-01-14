@@ -3,15 +3,17 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
-import com.universe.exploration.celestialcomponents.configuration.PlanetComponent;
+import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
 
 /**
- * @author 24.8.2015 Teemu Puurunen
+ * Interior terrestrial planet template.
+ * 
+ * @author 14.1.2017 Teemu Puurunen
  *
  */
-public class InteriorTerrestrialPlanet extends PlanetComponent {
+public class InteriorTerrestrialPlanet extends PlanetTemplate {
     public InteriorTerrestrialPlanet() {
-	componentName = "Interior terrestrial planet";
+	templateName = "Interior terrestrial planet";
 	graphicsFiles = new String[] { "planet1.png" };
 	spriteSizes = new int[] { 10, 12, 14 };
 

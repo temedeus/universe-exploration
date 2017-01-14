@@ -31,10 +31,11 @@ import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.logger.MinimalLogger;
 import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.player.StatusConsumption;
+import com.universe.exploration.resource.Resource;
+import com.universe.exploration.resource.ResourcesFoundBean;
 import com.universe.exploration.spritecontainer.GameObjectCanvas;
 import com.universe.exploration.starsystem.StarSystemFactory;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-import com.universe.exploration.survey.ResourcesFoundBean;
 import com.universe.exploration.survey.Survey;
 import com.universe.exploration.survey.SurveyContainer;
 import com.universe.exploration.survey.SurveyFactory;
@@ -115,7 +116,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     }
 
     private void pollForGameOver() {
-	if (GameStatus.getCrew().getAliveCrewmen().size() == 0 && !gameStatus.isPaused()) {
+	if (UniverseExploration.gameStatus.getCrew().getAliveCrewmen().size() == 0 && !gameStatus.isPaused()) {
 	    uiController.createGameOverWindow(createGameOverClicklistener());
 	    windowContainer.closeAllWindows();
 	    setGameStatusPaused(true);
@@ -190,19 +191,20 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      * Crew should be created only when new game is started.
      */
     private void createCrew() {
-	GameStatus.setCrew(null);
+	UniverseExploration.gameStatus.setCrew(null);
 	CrewMembersInitializer initializer;
 	try {
 	    initializer = new CrewMembersInitializer();
 	    CrewFactory cf = new CrewFactory(initializer.getMaleProfiles(), initializer.getFemaleProfiles());
-	    GameStatus.setCrew(cf.createRandomizedCrew());
+	    UniverseExploration.gameStatus.setCrew(cf.createRandomizedCrew());
 	} catch (IOException e) {
 	    Gdx.app.log("ERROR", "Reading crewmember profile source files failed!", e);
 	}
     }
 
     private void setupUiController() {
-	uiController = new UIController(gameObjectCanvas.getGameViewObjectContainer(), GameStatus.getStarSystem().getPlanets());
+	uiController = new UIController(gameObjectCanvas.getGameViewObjectContainer(),
+		UniverseExploration.gameStatus.getStarSystem().getPlanets());
 	setupUIControllerListeners();
     }
 
@@ -293,7 +295,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 			"Survey (" + form.getSurveyName().getText() + ") dispatched composed of " + crew.size() + " brave men and women.");
 	    } else {
 		updateIngameLog("Cannot dispatch survey team (" + crew.size() + "). Not enough crewmen available!"
-			+ GameStatus.getCrew().getCrewMenAboardSpaceShip().size());
+			+ gameStatus.getCrew().getCrewMenAboardSpaceShip().size());
 	    }
 	}
     }
@@ -331,7 +333,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      */
     private boolean createStarSystem() {
 	try {
-	    GameStatus.setStarSystem(new StarSystemFactory().makeStarSystem());
+	    UniverseExploration.gameStatus.setStarSystem(new StarSystemFactory().makeStarSystem());
 	    gameObjectCanvas = new GameObjectCanvas();
 	    gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
 	    gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
@@ -406,30 +408,16 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
     private String updateResources(ResourcesFoundBean foundResources) {
 	List<String> resources = new ArrayList<String>();
-	String caption = "";
 
-	if (foundResources.getAir() > 0) {
-	    resources.add(Localizer.getInstance().get("GENERIC_AIR"));
-	    gameStatus.getCrewStatus().increaseAir(foundResources.getAir());
+	for (Resource resource : foundResources.getResources()) {
+	    resources.add(Localizer.getInstance().get(resource.getResourceLocal()));
+	    gameStatus.getCrewStatus().adjustStatusValue(resource);
 	}
 
-	if (foundResources.getFood() > 0) {
-	    resources.add(Localizer.getInstance().get("GENERIC_FOOD"));
-	    gameStatus.getCrewStatus().increaseFood(foundResources.getFood());
-	}
+	String caption = (resources.size() == 0) ? "You found nothing during your survey!"
+		: "During your survey you found: " + TextManipulationTools.implodeListAsString(resources, ", ");
 
-	if (foundResources.getWater() > 0) {
-	    resources.add(Localizer.getInstance().get("GENERIC_WATER"));
-	    gameStatus.getCrewStatus().increaseWater(foundResources.getWater());
-	}
-
-	if (resources.size() == 0) {
-	    caption = "You found nothing during your survey!";
-	    updateIngameLog(caption);
-	} else {
-	    caption = "During your survey you found: " + TextManipulationTools.implodeListAsString(resources, ", ");
-	    updateIngameLog(caption);
-	}
+	updateIngameLog(caption);
 
 	return caption;
     }

@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
-import com.universe.exploration.GameStatus;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.listener.UEEvent;
@@ -66,11 +65,12 @@ public class GameObjectCanvas {
 	space = spaceBgGFX.getSprite();
 
 	// Generate system star.
-	SystemStarSpriteContainer starSpriteContainer = new SystemStarSpriteContainer(GameStatus.getStarSystem().getSystemstar());
+	SystemStarSpriteContainer starSpriteContainer = new SystemStarSpriteContainer(
+		UniverseExploration.gameStatus.getStarSystem().getSystemstar());
 
 	starWrapper = new StarWrapper(starSpriteContainer.getSprite());
 
-	List<PlanetCelestialComponent> planetList = GameStatus.getStarSystem().getPlanets();
+	List<PlanetCelestialComponent> planetList = UniverseExploration.gameStatus.getStarSystem().getPlanets();
 
 	planetHandler = new PlanetHandler();
 

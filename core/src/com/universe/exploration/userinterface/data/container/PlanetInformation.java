@@ -6,6 +6,9 @@ package com.universe.exploration.userinterface.data.container;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.Units;
 import com.universe.exploration.localization.Localizer;
+import com.universe.exploration.resource.Air;
+import com.universe.exploration.resource.Food;
+import com.universe.exploration.resource.Water;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
@@ -30,9 +33,9 @@ public class PlanetInformation extends DataPairContainer {
 	// abstraction?
 	PlanetCelestialComponent cc = (PlanetCelestialComponent) auxiliaryDataContainer;
 
-	String waterFound = (cc.isWaterFound()) ? "GENERIC_LIQUID_WATER" : "GENERAL_NONE";
-	String foodFound = (cc.isFoodFound()) ? "GENERAL_YES" : "GENERAL_NO";
-	String oxygenFound = (cc.isOxygenFound()) ? "GENERAL_YES" : "GENERAL_NO";
+	String waterFound = (cc.containsInstanceOfResource(Water.class)) ? "GENERIC_LIQUID_WATER" : "GENERAL_NONE";
+	String foodFound = (cc.containsInstanceOfResource(Food.class)) ? "GENERAL_YES" : "GENERAL_NO";
+	String oxygenFound = (cc.containsInstanceOfResource(Air.class)) ? "GENERAL_YES" : "GENERAL_NO";
 
 	float orbitalRadius = ((float) cc.getOrbitalRadius() / 1000);
 	String orbitalRadiusToString = MathTools.roundedFloatAsString(orbitalRadius) + " " + Units.AU.getUnit();

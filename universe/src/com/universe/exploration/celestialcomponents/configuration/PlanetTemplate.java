@@ -7,10 +7,12 @@ import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.survey.Lifeform;
 
 /**
- * @author 22.9.2015 Teemu Puurunen
+ * Provides boundaries for creating planets.
+ * 
+ * @author 14.1.2017 Teemu Puurunen
  *
  */
-public class PlanetComponent extends ComponentType {
+public class PlanetTemplate extends AbstractTemplate {
     protected float chanceForCivilization;
 
     protected float chanceForBacterial;

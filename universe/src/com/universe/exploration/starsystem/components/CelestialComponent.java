@@ -76,7 +76,7 @@ public class CelestialComponent implements ICelestialComponent {
      * overridden in each file that extends this class.
      */
     public int getSpriteSize() {
-	return spriteSize; 
+	return spriteSize;
     }
 
     /**

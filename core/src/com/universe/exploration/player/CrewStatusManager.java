@@ -1,44 +1,30 @@
-/**
- * 
- */
 package com.universe.exploration.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.universe.exploration.GameStatus;
+import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.common.tools.MathTools;
-import com.universe.exploration.crew.CrewMemberCondition;
+import com.universe.exploration.crewmember.Crew;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
+import com.universe.exploration.resource.Resource;
 
 /**
- * 
+ * Manages {@link CrewStatus} attributed to the {@link Crew}.
  * 
  * @author 31.8.2015 Teemu Puurunen
  *
  */
 public class CrewStatusManager {
 
-    /**
-     * Air left
-     */
-    private float air;
-
-    private float water;
-
-    private float food;
+    private List<ICrewStatus> statuses;
 
     private float power;
 
     private float time;
-
-    private boolean warnedOnAir = false;
-
-    private boolean warnedOnWater = false;
-
-    private boolean warnedOnFood = false;
 
     private UEListener crewMemberStatusChangeListener;
 
@@ -46,74 +32,74 @@ public class CrewStatusManager {
      * Setup initial values. Start with full values
      */
     public CrewStatusManager() {
+	statuses = new ArrayList<ICrewStatus>();
+	statuses.add(new CrewStatusAir());
+	statuses.add(new CrewStatusFood());
+	statuses.add(new CrewStatusWater());
 	time = CoreConfiguration.TIME_START;
-	air = CoreConfiguration.MAX_AIR;
-	water = CoreConfiguration.MAX_WATER;
-	food = CoreConfiguration.MAX_FOOD;
 	power = CoreConfiguration.MAX_POWER;
     }
 
     /**
-     * 
-     * @return
-     * 
+     * Update crew statuses.
      */
     public void updateStatus() {
-	// TODO: utilize crewmember attributes when decreasing values
-	List<CrewMember> crewmen = GameStatus.getCrew().getCrewMenAboardSpaceShip();
+	List<CrewMember> crewmen = UniverseExploration.gameStatus.getCrew().getCrewMenAboardSpaceShip();
 	increaseDaysPassed();
 
 	int crewsize = crewmen.size();
-	float airDecrement = StatusConsumption.AIR_DECREMENT * crewsize;
 
-	decreaseAirBy((power > 0) ? airDecrement : airDecrement * StatusConsumption.AIR_DECREMENT_WHEN_POWER_OUT);
-	decreaseFoodBy(StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN * crewsize);
-	decreaseWaterBy(StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN * crewsize);
+	for (ICrewStatus status : statuses) {
+	    if (status instanceof CrewStatusAir) {
+		float airDecrement = status.getDecrement() * crewsize;
+		status.decrementValue((power > 0) ? airDecrement : airDecrement * StatusConsumption.AIR_DECREMENT_WHEN_POWER_OUT);
+	    } else {
+		status.decrementValue(status.getDecrement() * crewsize);
+	    }
+	}
 
 	updateCrewMemberStatuses(crewmen);
     }
 
-    // TODO: maybe you could generalize these attributes?
+    /**
+     * Adjust resource value based on found resources.
+     * 
+     * @param resource
+     */
+    public void adjustStatusValue(Resource resource) {
+	for (ICrewStatus status : statuses) {
+	    if (status.mapCrewStatusToResource().equals(resource.getClass())) {
+		status.incrementValue(resource.getAmount());
+	    }
+	}
+    }
+
+    /**
+     * Updates crewmember statuses {@link #statuses}.
+     * 
+     * @param crewmen
+     *            List of {@link CrewMember} subject to status change.
+     */
     private void updateCrewMemberStatuses(List<CrewMember> crewmen) {
-	float airDecrement = (air == 0) ? StatusConsumption.CREWMEN_DECREMENT_AIR_DEPLETED : 0;
-	float foodDecrement = (food == 0) ? StatusConsumption.CREWMEN_DECREMENT_FOOD_DEPLETED : 0;
-	float waterDecrement = (water == 0) ? StatusConsumption.CREWMEN_DECREMENT_WATER_DEPLETED : 0;
+	List<ICrewStatus> statusesToDecrease = new ArrayList<ICrewStatus>();
+	for (ICrewStatus status : statuses) {
+	    float decrement = (status.getValue() == 0) ? StatusConsumption.HEALTH_DECREASE_WHEN_AIR_DEPLETED : 0;
+	    if (decrement > 0 && !status.isProvidedWarningOnDepletion()) {
+		fireCrewStatusChangeListener(status.getSetup().getDepletionMessageLocale());
+		status.setProvidedWarningOnDepletion(true);
+		statusesToDecrease.add(status);
+	    }
+	}
 
-	if (airDecrement > 0 && !warnedOnAir) {
-	    fireCrewStatusChangeListener("Warning! Air level substantially low.");
-	    warnedOnAir = true;
-	} 
-	
-	if (foodDecrement > 0 && !warnedOnWater) {
-	    fireCrewStatusChangeListener("Warning! Food depleted.");
-	    warnedOnWater = true;
-	} 
-	
-	if (waterDecrement > 0 && !warnedOnFood) {
-	    fireCrewStatusChangeListener("Warning! Water depleted.");
-	    warnedOnFood = true;
-	} 
-
+	/**
+	 * Perform health increase on each crewman individually. Stronger ones
+	 * last more when bad condition hits.
+	 */
 	for (CrewMember member : crewmen) {
-	    if (airDecrement > 0) {
-		member.decreaseHealth(airDecrement - ((airDecrement * ((float) member.getMorale().getValue() / 100)) / 2));
-		member.addToCondition(CrewMemberCondition.OXYGEN_DEPRIVATION);
-	    } else {
-		member.getCondition().remove(CrewMemberCondition.OXYGEN_DEPRIVATION);
-	    }
-
-	    if (foodDecrement > 0) {
-		member.decreaseHealth(foodDecrement - ((foodDecrement * ((float) member.getStrength().getValue() / 100)) / 2));
-		member.addToCondition(CrewMemberCondition.MALNUTRITION);
-	    } else {
-		member.getCondition().remove(CrewMemberCondition.MALNUTRITION);
-	    }
-
-	    if (waterDecrement > 0) {
-		member.decreaseHealth(waterDecrement - ((waterDecrement * ((float) member.getStrength().getValue() / 100)) / 2));
-		member.addToCondition(CrewMemberCondition.WATER_DEPRIVATION);
-	    } else {
-		member.getCondition().remove(CrewMemberCondition.WATER_DEPRIVATION);
+	    for (ICrewStatus status : statusesToDecrease) {
+		member.decreaseHealth(status.healthDecreaseWhenDepleated()
+			- ((status.healthDecreaseWhenDepleated() * ((float) member.getStrength().getValue() / 100)) / 2));
+		member.addToCondition(status.deprivationCausesCondition());
 	    }
 	}
     }
@@ -125,71 +111,13 @@ public class CrewStatusManager {
      * @param message
      */
     private void fireCrewStatusChangeListener(String message) {
-	if(crewMemberStatusChangeListener != null) {
-	    crewMemberStatusChangeListener.handleEventClassEvent(new UEEvent(message));   
-	}	
+	if (crewMemberStatusChangeListener != null) {
+	    crewMemberStatusChangeListener.handleEventClassEvent(new UEEvent(message));
+	}
     }
 
     public void increaseDaysPassed() {
 	time += CoreConfiguration.TIME_FLOW;
-    }
-
-    public void increaseAir(float airInc) {
-	if(air == 0) {
-	    warnedOnAir = false;
-	}
-	
-	air += airInc;
-	if (air > 100)
-	    air = 100;
-    }
-
-    public void increaseFood(float foodInc) {
-	if(food == 0) {
-	    warnedOnFood = false;
-	}
-	
-	food += foodInc;
-	if (food > 100)
-	    food = 100;
-    }
-
-    public void increaseWater(float foodInc) {
-	if(water == 0) {
-	    warnedOnWater = false;
-	}
-	
-	water += foodInc;
-	if (water > 100)
-	    water = 100;
-    }
-
-    /**
-     * Air gets sucked out
-     * 
-     * @param d
-     */
-    private boolean decreaseAirBy(float d) {
-	air = MathTools.decreaseIfResultMoreOrEqualToZero(air, d);
-	return true;
-    }
-
-    /**
-     * Water leaks
-     * 
-     * @param d
-     */
-    private void decreaseWaterBy(float d) {
-	water = MathTools.decreaseIfResultMoreOrEqualToZero(water, d);
-    }
-
-    /**
-     * Food gets eaten
-     * 
-     * @param d
-     */
-    private void decreaseFoodBy(float d) {
-	food = MathTools.decreaseIfResultMoreOrEqualToZero(food, d);
     }
 
     /**
@@ -202,55 +130,10 @@ public class CrewStatusManager {
     }
 
     /**
-     * @return the air
-     */
-    public float getAir() {
-	return air;
-    }
-
-    /**
-     * @return the water
-     */
-    public float getWater() {
-	return water;
-    }
-
-    /**
-     * @return the food
-     */
-    public float getFood() {
-	return food;
-    }
-
-    /**
      * @return the power
      */
     public float getPower() {
 	return power;
-    }
-
-    /**
-     * @param air
-     *            the air to set
-     */
-    public void setAir(float air) {
-	this.air = air;
-    }
-
-    /**
-     * @param water
-     *            the water to set
-     */
-    public void setWater(float water) {
-	this.water = water;
-    }
-
-    /**
-     * @param food
-     *            the food to set
-     */
-    public void setFood(float food) {
-	this.food = food;
     }
 
     /**
@@ -289,5 +172,21 @@ public class CrewStatusManager {
      */
     public void setCrewMemberStatusChangeListener(UEListener crewMemberStatusChangeListener) {
 	this.crewMemberStatusChangeListener = crewMemberStatusChangeListener;
+    }
+
+    /**
+     * Find given status class and its value.
+     * 
+     * @param clazz
+     * @return
+     */
+    public float getStatusValue(CrewStatusSetup setup) {
+	for (ICrewStatus status : statuses) {
+	    if (status.getSetup() == setup) {
+		return status.getValue();
+	    }
+	}
+
+	return 0f;
     }
 }

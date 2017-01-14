@@ -16,7 +16,7 @@ import com.universe.exploration.celestialcomponents.configuration.stars.SmallSta
  * @author 15.7.2015 Teemu Puurunen
  *
  */
-public enum CelestialComponentTypes {
+public enum CelestialComponentTemplate {
     // SYSTEM STARS
     LARGE_STAR(new LargeStar(), 10),
     MEDIUM_STAR(new MediumStar(), 3),
@@ -28,14 +28,14 @@ public enum CelestialComponentTypes {
     COLD_ROCKY_PLANET(new ColdRockyPlanet(), 15),
     EARTLIKE_PLANET(new GoldilocksPlanet(), 2);
 
-    private final ComponentType componentType;
+    private final AbstractTemplate componentType;
 
     /**
      * Determines the likelihood of the component.  
      */
     private final int prevalance;
 
-    CelestialComponentTypes(ComponentType componentType, int prevalance) {
+    CelestialComponentTemplate(AbstractTemplate componentType, int prevalance) {
 	this.componentType = componentType;
 	this.prevalance = prevalance;
     }
@@ -43,7 +43,7 @@ public enum CelestialComponentTypes {
     /**
      * @return the graphicsFile
      */
-    public ComponentType getComponentType() {
+    public AbstractTemplate getComponentType() {
 	return componentType;
     }
 
