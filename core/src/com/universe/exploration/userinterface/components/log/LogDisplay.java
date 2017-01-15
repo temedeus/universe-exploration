@@ -1,13 +1,14 @@
 /**
  * 
  */
-package com.universe.exploration.userinterface.components;
+package com.universe.exploration.userinterface.components.log;
 
 import java.util.LinkedList;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.universe.exploration.userinterface.components.UETable;
 
 /**
  * 
@@ -27,7 +28,7 @@ public class LogDisplay {
 
     private Skin logDisplaySkin;
 
-    private Table logDisplayTable;
+    private UETable logDisplayTable;
 
     private int logMax;
 
@@ -66,8 +67,8 @@ public class LogDisplay {
 	}
     }
 
-    private Table createLogDisplayTable() {
-	final Table logDisplayTable = new Table();
+    private UETable createLogDisplayTable() {
+	final UETable logDisplayTable = new UETable();
 
 	for (Label logEntry : logEntries) {
 	    logDisplayTable.add(logEntry).left();

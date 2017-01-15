@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.userinterface.components;
+package com.universe.exploration.userinterface.components.survey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,9 @@ import com.universe.exploration.crewmember.Crew;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.userinterface.ButtonFactory;
+import com.universe.exploration.userinterface.components.UELabel;
+import com.universe.exploration.userinterface.components.UETable;
+import com.universe.exploration.userinterface.components.UETextField;
 
 /**
  * Survey team selection view.
@@ -30,7 +33,7 @@ public class SurveyTeamSelection {
 
     private UETable selectedCrewMemberTable = new UETable();
 
-    private UETextField surveyName = new UETextField("");
+    private UETextField surveyName = new UETextField(Localizer.getInstance().get("GENERAL_UNNAMED"));
 
     public SurveyTeamSelection(Crew crew) {
 	unselectedCrewMembers.addAll(crew.getCrewMenAboardSpaceShip());
@@ -152,7 +155,7 @@ public class SurveyTeamSelection {
     public void setSelectedCrewMembers(List<CrewMember> selectedCrewMembers) {
 	this.selectedCrewMembers = selectedCrewMembers;
     }
-    
+
     public UETextField getSurveyNameField() {
 	return surveyName;
     }

@@ -29,8 +29,6 @@ public class PlanetInformation extends DataPairContainer {
      */
     @Override
     public void createPairs() {
-	// TODO: Abstracize generating this data? Maybe create another table
-	// abstraction?
 	PlanetCelestialComponent cc = (PlanetCelestialComponent) auxiliaryDataContainer;
 
 	String waterFound = (cc.containsInstanceOfResource(Water.class)) ? "GENERIC_LIQUID_WATER" : "GENERAL_NONE";

@@ -19,4 +19,12 @@ public class Air extends Resource {
 	return "GENERIC_AIR";
     }
 
+    /* (non-Javadoc)
+     * @see com.universe.exploration.resource.IResource#getBoundary()
+     */
+    @Override
+    public ResourcesFoundBoundaries getBoundary() {
+	return ResourcesFoundBoundaries.AIR;
+    }
+
 }

@@ -13,7 +13,7 @@ package com.universe.exploration.spritecontainer;
  *
  */
 public class SelectedPlanet {
-    private PlanetSpriteContainer selectedPlanet;
+    private PlanetSprite selectedPlanet;
 
     private static final float alphaMin = 0.0f;
     private static final float alphaMax = 1.0f;
@@ -33,7 +33,7 @@ public class SelectedPlanet {
     /**
      * @return the selectedPlanet
      */
-    public PlanetSpriteContainer getSelectedPlanet() {
+    public PlanetSprite getSelectedPlanet() {
 	return selectedPlanet;
     }
 
@@ -41,7 +41,7 @@ public class SelectedPlanet {
      * @param selectedPlanet
      *            the selectedPlanet to set
      */
-    public void setSelectedPlanet(PlanetSpriteContainer selectedPlanet) {
+    public void setSelectedPlanet(PlanetSprite selectedPlanet) {
 	this.selectedPlanet = selectedPlanet;
     }
 

@@ -19,4 +19,12 @@ public class Food extends Resource {
 	return "GENERIC_FOOD";
     }
 
+    /* (non-Javadoc)
+     * @see com.universe.exploration.resource.IResource#getBoundary()
+     */
+    @Override
+    public ResourcesFoundBoundaries getBoundary() {
+	return ResourcesFoundBoundaries.FOOD;
+    }
+
 }

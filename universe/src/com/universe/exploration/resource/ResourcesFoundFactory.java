@@ -28,7 +28,6 @@ public class ResourcesFoundFactory {
 		resource.setAmount(amount);
 		resourcesFoundBean.addToResources(resource);
 	    }
-
 	}
 
 	return resourcesFoundBean;

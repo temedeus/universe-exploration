@@ -10,6 +10,7 @@ import com.universe.exploration.crewmember.Crew;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
+import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.resource.Resource;
 
 /**
@@ -85,7 +86,7 @@ public class CrewStatusManager {
 	for (ICrewStatus status : statuses) {
 	    float decrement = (status.getValue() == 0) ? StatusConsumption.HEALTH_DECREASE_WHEN_AIR_DEPLETED : 0;
 	    if (decrement > 0 && !status.isProvidedWarningOnDepletion()) {
-		fireCrewStatusChangeListener(status.getSetup().getDepletionMessageLocale());
+		fireCrewStatusChangeListener(Localizer.getInstance().get(status.getSetup().getDepletionMessageLocale()));
 		status.setProvidedWarningOnDepletion(true);
 		statusesToDecrease.add(status);
 	    }

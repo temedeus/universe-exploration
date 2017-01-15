@@ -1,12 +1,14 @@
 /**
  * 
  */
-package com.universe.exploration.userinterface.components;
+package com.universe.exploration.userinterface.components.survey;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.universe.exploration.crewmember.CrewMemberTools;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.survey.Survey;
+import com.universe.exploration.userinterface.components.UELabel;
+import com.universe.exploration.userinterface.components.UETable;
 
 /**
  * Survey details table.

@@ -47,12 +47,11 @@ import com.universe.exploration.userinterface.forms.PlanetSurveyForm;
 
 /**
  * Main game class.
+ * 
+ * TODO: {@link UniverseExploration} and {@link UIController} both perform
+ * actions that do not belong in these classes. Refactor.
  */
 public class UniverseExploration extends ApplicationAdapter implements InputProcessor {
-    /**
-     * Game objects are handled here
-     */
-    private GameObjectCanvas gameObjectCanvas;
 
     /**
      * Controls the camera
@@ -60,20 +59,29 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     private CameraMonitor playerMonitor;
 
     /**
+     * Game objects are handled here
+     */
+    private GameObjectCanvas gameObjectCanvas;
+
+    /**
      * User interface.
      */
     private UIController uiController;
 
+    /**
+     * Audio related stuff.
+     */
+    public static AudioManager audioManager;
+
+    /**
+     * Game status.
+     */
     public static GameStatus gameStatus;
 
     // TODO: handle in {@link UIController}
     public static WindowContainer windowContainer;
 
     private MinimalLogger logger;
-
-    public static SurveyContainer surveyStatusContainer;
-
-    public static AudioManager audioManager;
 
     @SuppressWarnings("unused")
     private Stage uiStage;
@@ -134,7 +142,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	gameStatus.getCrewStatus().setCrewMemberStatusChangeListener(createLogMessageListener());
 	playerMonitor = new CameraMonitor();
 	windowContainerSetup();
-	surveyStatusContainer = new SurveyContainer();
+	gameStatus.setSurveyStatusContainer(new SurveyContainer());
 	audioManager = new AudioManager();
     }
 
@@ -283,13 +291,13 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	List<CrewMember> crew = form.getSelectedCrewMembers();
 
 	if (surveyLength > 0 && crew.size() > 0) {
-	    if (surveyStatusContainer.isSurveyTeamAcceptable(crew)) {
+	    if (gameStatus.getSurveyStatusContainer().isSurveyTeamAcceptable(crew)) {
 
 		SurveyFactory ssf = new SurveyFactory();
 		Survey ss = ssf.createSurvey((int) gameStatus.getCrewStatus().getTime(), surveyLength, form.getSelectedCrewMembers(),
 			(PlanetCelestialComponent) form.getPlanet(), form.getSurveyName().getText());
 		ss.setSurveyTeam(crew);
-		surveyStatusContainer.add(ss);
+		gameStatus.getSurveyStatusContainer().add(ss);
 
 		updateIngameLog(
 			"Survey (" + form.getSurveyName().getText() + ") dispatched composed of " + crew.size() + " brave men and women.");
@@ -354,7 +362,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     }
 
     private void closeFinishedSurveys() {
-	showSurveyCompleteNotification(surveyStatusContainer.findAndRemoveOpenSurvey((int) gameStatus.getCrewStatus().getTime()));
+	showSurveyCompleteNotification(
+		gameStatus.getSurveyStatusContainer().findAndRemoveOpenSurvey((int) gameStatus.getCrewStatus().getTime()));
     }
 
     private void showSurveyCompleteNotification(Survey survey) {

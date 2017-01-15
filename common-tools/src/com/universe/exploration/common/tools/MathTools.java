@@ -4,11 +4,11 @@
 package com.universe.exploration.common.tools;
 
 /**
- * <p>
- * Semi-generic math tools for all-around use in the game.
- * </p>
+ * Math tools.
  * 
- * @author 8.7.2015 Teemu Puurunen
+ * TODO: probably could have used some library.
+ * 
+ * @author 15.1.2017 Teemu Puurunen
  *
  */
 public class MathTools {
@@ -88,7 +88,7 @@ public class MathTools {
     }
 
     public static String roundedFloatAsStringByGivenPrecision(float f, int precision) {
-	return "" + Math.round(f);
+	return String.valueOf(Math.round(f));
     }
 
     /**

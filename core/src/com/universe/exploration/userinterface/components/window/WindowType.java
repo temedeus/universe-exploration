@@ -38,7 +38,7 @@ public enum WindowType {
      * List of planet general details. Allows to open up e.g.
      * {@link #SURVEY_WINDOW}.
      */
-    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY", WindowSetup.LARGE, false) {
+    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY", WindowSetup.LARGE, true) {
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -70,7 +70,7 @@ public enum WindowType {
 	}
     },
 
-    SURVEY_DETAILS("TITLE_SURVEY_SURVEY_DETAILS", "BTN_OK", WindowSetup.LARGE, false),
+    SURVEY_DETAILS("TITLE_SURVEY_DETAILS", "BTN_OK", WindowSetup.LARGE, false),
 
     CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK", WindowSetup.LARGE, false) {
 	/*

@@ -13,7 +13,9 @@ import com.universe.exploration.celestialcomponents.configuration.stars.MediumSt
 import com.universe.exploration.celestialcomponents.configuration.stars.SmallStar;
 
 /**
- * @author 15.7.2015 Teemu Puurunen
+ * Enumeration of potential stars and planets.
+ * 
+ * @author 15.1.2017 Teemu Puurunen
  *
  */
 public enum CelestialComponentTemplate {
@@ -31,7 +33,7 @@ public enum CelestialComponentTemplate {
     private final AbstractTemplate componentType;
 
     /**
-     * Determines the likelihood of the component.  
+     * Determines the likelihood of the component.
      */
     private final int prevalance;
 

@@ -1,10 +1,11 @@
 /**
  * 
  */
-package com.universe.exploration.userinterface.components;
+package com.universe.exploration.userinterface.components.log;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.universe.exploration.userinterface.components.UETable;
 
 /**
  * @author 10.1.2017 Teemu Puurunen

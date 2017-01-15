@@ -11,6 +11,7 @@ import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
 import com.universe.exploration.resource.Water;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
+import com.universe.exploration.survey.Lifeform;
 
 /**
  * Factory for {@link Casualty}. We need {@link PlanetCelestialComponent} to
@@ -53,7 +54,9 @@ public class CasualtyFactory {
 	    applicableSurveyIncidents.add(SurveyIncidentCategory.LACK_OF_OXYGEN);
 	}
 
-	applicableSurveyIncidents.addAll(planet.getLifeforms().provideSurveyIncidentCategoryList());
+	if (planet.getLifeforms() != Lifeform.NONE) {
+	    applicableSurveyIncidents.addAll(planet.getLifeforms().provideSurveyIncidentCategoryList());
+	}
 
 	return applicableSurveyIncidents;
     }

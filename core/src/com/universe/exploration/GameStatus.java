@@ -4,6 +4,7 @@ package com.universe.exploration;
 import com.universe.exploration.crewmember.Crew;
 import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.starsystem.StarSystem;
+import com.universe.exploration.survey.SurveyContainer;
 
 /**
  * Game status.
@@ -17,6 +18,8 @@ public class GameStatus {
     private boolean planetaryMovementActive = true;
 
     private boolean zoomIn = false;
+
+    private SurveyContainer surveyStatusContainer;
 
     /**
      * Star system
@@ -114,5 +117,20 @@ public class GameStatus {
      */
     public void setCrewStatus(CrewStatusManager crewStatus) {
 	this.crewStatus = crewStatus;
+    }
+
+    /**
+     * @return the surveyStatusContainer
+     */
+    public SurveyContainer getSurveyStatusContainer() {
+	return surveyStatusContainer;
+    }
+
+    /**
+     * @param surveyStatusContainer
+     *            the surveyStatusContainer to set
+     */
+    public void setSurveyStatusContainer(SurveyContainer surveyStatusContainer) {
+	this.surveyStatusContainer = surveyStatusContainer;
     }
 }

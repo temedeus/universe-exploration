@@ -3,6 +3,7 @@
  */
 package com.universe.exploration.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +14,10 @@ import java.util.List;
  */
 public class ResourcesFoundBean {
     private List<Resource> resources;
+
+    public ResourcesFoundBean() {
+	resources = new ArrayList<Resource>();
+    }
 
     /**
      * @return the resources

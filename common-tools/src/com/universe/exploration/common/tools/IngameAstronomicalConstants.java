@@ -4,7 +4,10 @@
 package com.universe.exploration.common.tools;
 
 /**
- * @author 15.6.2015 Teemu Puurunen
+ * Astronomical constants used in game. Units do not necessarily represent
+ * anything real-life, more so they are about in-game functionality.
+ * 
+ * @author 15.1.2017 Teemu Puurunen
  *
  */
 public enum IngameAstronomicalConstants {

@@ -17,7 +17,7 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.spritecontainer.GameObjectCanvas;
 import com.universe.exploration.spritecontainer.PlanetHandler;
-import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
+import com.universe.exploration.spritecontainer.PlanetSprite;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.ButtonFactory;
 
@@ -109,7 +109,7 @@ public class PlanetSelection {
     public VerticalGroup createPlanetSelectionTable() {
 	VerticalGroup table = new VerticalGroup();
 	table.align(Align.left | Align.bottom);
-	table.addActor(GenericComponents.getInstance().createSpacer());
+	table.addActor(new Spacer());
 
 	if (planetList.size() > 0) {
 	    table.addActor(new UELabel(Localizer.getInstance().get("LABEL_PLANET_SELECTION")));
@@ -124,7 +124,7 @@ public class PlanetSelection {
 
     /**
      * <p>
-     * TODO: Fix this logic. We deal with both {@link PlanetSpriteContainer} and
+     * TODO: Fix this logic. We deal with both {@link PlanetSprite} and
      * {@link PlanetCelestialComponent}... wtf?!
      * </p>
      * <p>

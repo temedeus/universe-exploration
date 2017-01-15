@@ -33,18 +33,18 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.player.CrewStatusManager;
 import com.universe.exploration.spritecontainer.PlanetHandler;
-import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
+import com.universe.exploration.spritecontainer.PlanetSprite;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.survey.Survey;
-import com.universe.exploration.userinterface.components.LogDisplay;
-import com.universe.exploration.userinterface.components.LogDisplayTable;
 import com.universe.exploration.userinterface.components.PlanetSelection;
-import com.universe.exploration.userinterface.components.SurveyDetailsTable;
-import com.universe.exploration.userinterface.components.SurveyTeamSelection;
-import com.universe.exploration.userinterface.components.TopRightHud;
 import com.universe.exploration.userinterface.components.UELabel;
 import com.universe.exploration.userinterface.components.UETable;
 import com.universe.exploration.userinterface.components.VolumeSlider;
+import com.universe.exploration.userinterface.components.hud.TopRightHud;
+import com.universe.exploration.userinterface.components.log.LogDisplay;
+import com.universe.exploration.userinterface.components.log.LogDisplayTable;
+import com.universe.exploration.userinterface.components.survey.SurveyDetailsTable;
+import com.universe.exploration.userinterface.components.survey.SurveyTeamSelection;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
 import com.universe.exploration.userinterface.components.window.WindowFactory;
 import com.universe.exploration.userinterface.components.window.WindowType;
@@ -58,9 +58,16 @@ import com.universe.exploration.userinterface.forms.PlanetSurveyForm;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
+ * <p>
  * {@link UniverseExploration} and no other class should have an instance of
  * UIController.
+ * </p>
  * 
+ * <p>
+ * TODO: {@link UniverseExploration} and {@link UIController} both perform
+ * actions that do not belong in these classes. Refactor.
+ * </p>
+ *
  * @author 25.8.2015 Teemu Puurunen
  *
  */
@@ -163,12 +170,11 @@ public class UIController {
     }
 
     public void createPlanetClickWindow(final UEEvent e) {
-	final BasicWindow surveyWindow = createPlanetarySurveyWindow((PlanetSpriteContainer) e.getPayLoad(), new ClickListener() {
+	final BasicWindow surveyWindow = createPlanetarySurveyWindow((PlanetSprite) e.getPayLoad(), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		final BasicWindow surveyedWindow = createSurveyTeamSelectionWindow((PlanetSpriteContainer) e.getPayLoad());
+		createSurveyTeamSelectionWindow((PlanetSprite) e.getPayLoad());
 		UniverseExploration.windowContainer.closeWindow(WindowType.PLANET_DETAILS);
-		show(surveyedWindow);
 	    }
 	});
 
@@ -269,7 +275,7 @@ public class UIController {
 	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CREW_CONTROL"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		show(openWindowWithData(WindowType.CREW_MANAGEMENT, createCrewTable()));
+		openWithoutPrimaryButtonAction(WindowType.CREW_MANAGEMENT, createCrewTable());
 	    }
 	});
 
@@ -294,7 +300,7 @@ public class UIController {
 	TextButton button = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_FOLLOW_SURVEY"), new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		openWindowWithData(WindowType.CREW_MANAGEMENT, createSurveyTable());
+		openWithoutPrimaryButtonAction(WindowType.SURVEY_MANAGEMENT, createSurveyTable());
 	    }
 	});
 
@@ -303,18 +309,23 @@ public class UIController {
     }
 
     public void createGameOverWindow(ClickListener tryAgainAction) {
-	UETable gameoverData = new UETable();
-	BasicWindow gameOverWindow = new WindowFactory().createWindowWithSecondaryAction(WindowType.GAME_OVER, gameoverData,
-		"BTN_QUIT_GAME", tryAgainAction, new ClickListener() {
-		    @Override
-		    public void clicked(InputEvent event, float x, float y) {
-			if (!Gdx.app.getType().equals(ApplicationType.WebGL)) {
-			    Gdx.app.exit();
-			}
-		    }
-		});
+	show(new WindowFactory().createWindowWithSecondaryAction(WindowType.GAME_OVER, null, "BTN_QUIT_GAME", tryAgainAction,
+		createQuitClickListener()));
+    }
 
-	show(gameOverWindow);
+    public void createQuitDialog() {
+	show(new WindowFactory().createWindow(WindowType.QUIT_WINDOW, null, createQuitClickListener()));
+    }
+
+    private ClickListener createQuitClickListener() {
+	return new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		if (!Gdx.app.getType().equals(ApplicationType.WebGL)) {
+		    Gdx.app.exit();
+		}
+	    }
+	};
     }
 
     /**
@@ -349,17 +360,6 @@ public class UIController {
 	logMessageListener.handleEventClassEvent(new UEEvent(message));
     }
 
-    public void createQuitDialog() {
-	BasicWindow window = new WindowFactory().createWindow(WindowType.QUIT_WINDOW, null, new ClickListener() {
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		Gdx.app.exit();
-	    }
-	});
-
-	show(window);
-    }
-
     /**
      * Create a window where the results of the survey are summarized.
      * 
@@ -391,33 +391,29 @@ public class UIController {
      * 
      * @param pgfx
      */
-    public BasicWindow createPlanetarySurveyWindow(PlanetSpriteContainer pgfx, ClickListener okAction) {
+    public BasicWindow createPlanetarySurveyWindow(PlanetSprite pgfx, ClickListener okAction) {
 	final DataPairTableFactory dptf = new DataPairTableFactory();
 	return new WindowFactory().createWindow(WindowType.PLANET_DETAILS, dptf.createPlanetInformationTable(pgfx), okAction);
     }
 
     /**
-     * Crew management window.
+     * Open window without primary button action. OK action just closes the
+     * window.
      * 
      * @param pgfx
      */
-    public BasicWindow openWindowWithData(WindowType type, UETable table) {
-	BasicWindow window = new WindowFactory().createWindow(WindowType.CREW_MANAGEMENT, table,
-		new WindowFactory().createCancelClickListener(WindowType.CREW_MANAGEMENT));
-
-	return window;
+    public void openWithPrimaryButtonAction(WindowType type, UETable table, ClickListener okAction) {
+	show(new WindowFactory().createWindow(type, table, okAction));
     }
 
     /**
-     * Survey details window.
+     * Open window without primary button action. OK action just closes the
+     * window.
      * 
      * @param pgfx
      */
-    private BasicWindow createSurveyDetailsWindow(Survey survey) {
-	BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, new SurveyDetailsTable(survey),
-		new WindowFactory().createCancelClickListener(WindowType.SURVEY_DETAILS));
-
-	return window;
+    public void openWithoutPrimaryButtonAction(WindowType type, UETable table) {
+	show(new WindowFactory().createWindow(type, table, null));
     }
 
     /**
@@ -429,7 +425,7 @@ public class UIController {
     private UETable createSurveyTable() {
 	UETable table = new UETable();
 
-	for (Survey survey : UniverseExploration.surveyStatusContainer) {
+	for (Survey survey : UniverseExploration.gameStatus.getSurveyStatusContainer()) {
 	    Table cell = new Table();
 	    cell.padBottom(15);
 	    cell.padRight(15);
@@ -438,7 +434,7 @@ public class UIController {
 	    cell.add(new UELabel(new CrewMemberTools().concatenateCrewMemberListNames((survey.getSurveyTeam()))));
 	    cell.row();
 	    cell.add(new ButtonFactory().createTextButton(Localizer.getInstance().get("LABEL_SHOW_DETAILS"),
-		    createShowSurveyDetailsClickListerner(survey)));
+		    createShowSurveyDetailsClickListener(survey)));
 	    table.add(cell);
 
 	}
@@ -506,13 +502,12 @@ public class UIController {
 	table.row();
 	table.add(UIComponentFactory.createSpacer());
 
-	BasicWindow window = new WindowFactory().createWindow(WindowType.OPTIONS_WINDOW, table,
-		new WindowFactory().createCancelClickListener(WindowType.OPTIONS_WINDOW));
+	BasicWindow window = new WindowFactory().createWindow(WindowType.OPTIONS_WINDOW, table, null);
 
 	return window;
     }
 
-    private ClickListener createShowSurveyDetailsClickListerner(final Survey survey) {
+    private ClickListener createShowSurveyDetailsClickListener(final Survey survey) {
 	return new ClickListener() {
 	    /*
 	     * (non-Javadoc)
@@ -523,8 +518,7 @@ public class UIController {
 	     */
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, createSurveyDetailsWindow(survey),
-			new WindowFactory().createCancelClickListener(WindowType.SURVEY_DETAILS));
+		BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, new SurveyDetailsTable(survey), null);
 
 		show(window);
 	    }
@@ -546,8 +540,7 @@ public class UIController {
 		crewMemberDetails.createPairs();
 
 		BasicWindow window = new WindowFactory().createWindow(WindowType.CREWMEMBER_DETAILS,
-			createCrewMemberDetailsPane(crewMemberDetails),
-			new WindowFactory().createCancelClickListener(WindowType.CREWMEMBER_DETAILS));
+			createCrewMemberDetailsPane(crewMemberDetails), null);
 
 		show(window);
 	    }
@@ -589,7 +582,7 @@ public class UIController {
 		UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
 		UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
 		// TODO: work out a way to refresh crew management window
-		openWindowWithData(WindowType.CREW_MANAGEMENT, createCrewTable());
+		openWithoutPrimaryButtonAction(WindowType.CREW_MANAGEMENT, createCrewTable());
 	    }
 	};
     }
@@ -598,11 +591,11 @@ public class UIController {
      * This window allows you to select your crew setup for surveys.
      * 
      * @param planetSpriteContainer
-     *            We pass the {@link PlanetSpriteContainer} in order to show a
-     *            picture of the planet as well. TODO: implement above
+     *            We pass the {@link PlanetSprite} in order to show a picture of
+     *            the planet as well. TODO: implement above
      * @return
      */
-    public BasicWindow createSurveyTeamSelectionWindow(PlanetSpriteContainer planetSpriteContainer) {
+    public void createSurveyTeamSelectionWindow(PlanetSprite planetSpriteContainer) {
 	UETable planetInformationTable = new UETable();
 	SurveyTeamSelection teamSelection = new SurveyTeamSelection(UniverseExploration.gameStatus.getCrew());
 	planetInformationTable.add(teamSelection.createSurveyTeamSelectionTable());
@@ -632,10 +625,7 @@ public class UIController {
 	    }
 	});
 
-	BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_WINDOW, planetInformationTable,
-		createdPlanetSurveyTeamDispatchedClickListener(form));
-
-	return window;
+	openWithPrimaryButtonAction(WindowType.SURVEY_WINDOW, planetInformationTable, createdPlanetSurveyTeamDispatchedClickListener(form));
     }
 
     private ClickListener createdPlanetSurveyTeamDispatchedClickListener(final PlanetSurveyForm planetSurveyForm) {

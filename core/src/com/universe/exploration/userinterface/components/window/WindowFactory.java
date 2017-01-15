@@ -30,11 +30,14 @@ public class WindowFactory {
     private static final String STYLE = "default";
 
     /**
-     * Create a window based on {@link WindowType}.
+     * Create a window based on {@link WindowType}. With no
+     * <code>okAction</code> specified, just close the window.
      * 
      * @param windowType
      * @param contentTable
      * @param okAction
+     *            Action taken when primary button is pressed. If
+     *            <code>null</code>, just close window.
      * @param hasCancelButton
      * @return
      */
@@ -42,7 +45,13 @@ public class WindowFactory {
 	final BasicWindow window = createWindowFrame(windowType);
 
 	UETable buttontable = new UETable();
-	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
+
+	if (okAction != null) {
+	    buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
+	} else {
+	    buttontable.add(
+		    new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), createCancelClickListener(windowType)));
+	}
 
 	if (windowType.isHasCancelButton()) {
 	    buttontable.add(

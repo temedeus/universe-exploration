@@ -33,7 +33,7 @@ public class PlanetTemplate extends AbstractTemplate {
      * @param necessitiesMet
      * @return
      */
-    public Lifeform randomizePlanetLife(boolean necessitiesMet) {
+    public Lifeform randomizePlanetLifeForm(boolean necessitiesMet) {
 	if (necessitiesMet) {
 	    if (MathTools.calculateIfOddsHit(getChanceCivilization())) {
 		return Lifeform.CIVILIZED;

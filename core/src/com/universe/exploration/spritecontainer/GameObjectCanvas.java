@@ -140,7 +140,7 @@ public class GameObjectCanvas {
 	    planetHandler.update(selectedPlanet.getSelectedPlanet());
 	}
 
-	shapeRenderer.end();
+
 	liveComponentBatch.end();
     }
 
@@ -172,7 +172,7 @@ public class GameObjectCanvas {
 	camera.unproject(input);
 
 	try {
-	    PlanetSpriteContainer planetSprite = planetHandler.getPlanetWithCoordinatesWithinBoundaries(input);
+	    PlanetSprite planetSprite = planetHandler.getPlanetWithCoordinatesWithinBoundaries(input);
 	    if (planetSprite != null) {
 		firePlanetClickListener(planetSprite);
 	    }
@@ -185,7 +185,7 @@ public class GameObjectCanvas {
 	selectedPlanet.setSelectedPlanet(planetHandler.getPlanetGfxContainerByComponent(planet));
     }
 
-    private void firePlanetClickListener(PlanetSpriteContainer pgfx) {
+    private void firePlanetClickListener(PlanetSprite pgfx) {
 	selectedPlanet.setSelectedPlanet(pgfx);
 	planetClickListener.handleEventClassEvent(new UEEvent(pgfx));
     }

@@ -12,8 +12,8 @@ package com.universe.exploration.player;
 public enum CrewStatusSetup {
     AIR(0, 200, "DESC_AIR_LOW"), WATER(0, 200, "DESC_WATER_LOW"), FOOD(0, 200, "DESC_FOOD_LOW");
 
-    private final float maxValue;
     private final float minValue;
+    private final float maxValue;
     private final String depletionMessageLocale;
 
     private CrewStatusSetup(float minValue, float maxValue, String depletionMessageLocale) {

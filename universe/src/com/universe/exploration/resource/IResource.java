@@ -9,4 +9,6 @@ package com.universe.exploration.resource;
  */
 interface IResource {
     String getResourceLocal();
+
+    ResourcesFoundBoundaries getBoundary();
 }

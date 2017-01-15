@@ -2,25 +2,25 @@ package com.universe.exploration.spritecontainer;
 
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
-public class PlanetSpriteContainer extends SpriteContainer {
+public class PlanetSprite extends SpriteFacade {
 
     private boolean isPlanetSelected = false;
-    
-    private Fader resizeFactor; 
-    
-    public PlanetSpriteContainer() {
+
+    private Fader resizeFactor;
+
+    public PlanetSprite() {
 	super(64, "planet2.png");
 	resizeFactor = new Fader(spriteSize, 500, 1, 1);
     }
 
-    public PlanetSpriteContainer(CelestialComponent starSystemComponent) {
+    public PlanetSprite(CelestialComponent starSystemComponent) {
 	super(starSystemComponent);
 	resizeFactor = new Fader(spriteSize, 500, 10, 10);
     }
-    
+
     public void handleZooming() {
 	resizeFactor.updateAlpha(!isPlanetSelected);
-	
+
 	smallVersion.setSize(resizeFactor.getAlphaValue(), resizeFactor.getAlphaValue());
 	smallVersion.setOriginCenter();
     }
@@ -29,15 +29,15 @@ public class PlanetSpriteContainer extends SpriteContainer {
      * @return the isPlanetSelected
      */
     public boolean isPlanetSelected() {
-        return isPlanetSelected;
+	return isPlanetSelected;
     }
-    
+
     /**
-     * @param isPlanetSelected the isPlanetSelected to set
+     * @param isPlanetSelected
+     *            the isPlanetSelected to set
      */
     public void setPlanetSelected(boolean isPlanetSelected) {
-        this.isPlanetSelected = isPlanetSelected;
+	this.isPlanetSelected = isPlanetSelected;
     }
-    
-    
+
 }

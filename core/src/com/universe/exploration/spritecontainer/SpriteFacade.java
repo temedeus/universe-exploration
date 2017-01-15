@@ -7,7 +7,7 @@ import com.universe.exploration.common.CoreConfiguration;
 import com.universe.exploration.spritecontainer.data.CelestialBodySpriteData;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
-abstract class SpriteContainer implements ISpriteContainer {
+abstract class SpriteFacade {
 
     /**
      * TODO: constructor takes {@link CelestialBodySpriteData} instead of
@@ -16,11 +16,6 @@ abstract class SpriteContainer implements ISpriteContainer {
     protected CelestialComponent starSystemComponent;
 
     protected CelestialBodySpriteData celestialBodyGfxModel;
-
-    /**
-     * Generic texture
-     */
-    protected Texture img;
 
     /**
      * Sprite containing graphics item
@@ -44,18 +39,18 @@ abstract class SpriteContainer implements ISpriteContainer {
      */
     protected String graphicsSource;
 
-    public SpriteContainer() {
+    public SpriteFacade() {
 	// Empty constructor if one does not wish to install component yet
     }
 
-    public SpriteContainer(CelestialComponent starSystemComponent) {
+    public SpriteFacade(CelestialComponent starSystemComponent) {
 	this(starSystemComponent.getSpriteSize(), starSystemComponent.getGraphicsFile());
 	this.starSystemComponent = starSystemComponent;
 	celestialBodyGfxModel = new CelestialBodySpriteData();
 	celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
     }
 
-    public SpriteContainer(int spriteSize, String graphicsSource) {
+    public SpriteFacade(int spriteSize, String graphicsSource) {
 	this.spriteSize = spriteSize;
 	this.graphicsSource = graphicsSource;
 
@@ -85,7 +80,8 @@ abstract class SpriteContainer implements ISpriteContainer {
     }
 
     public void updateSpritePosition() {
-	smallVersion.setPosition(celestialBodyGfxModel.getPositionX() - smallVersion.getWidth() / 2, celestialBodyGfxModel.getPositionY() - smallVersion.getHeight() / 2);
+	smallVersion.setPosition(celestialBodyGfxModel.getPositionX() - smallVersion.getWidth() / 2,
+		celestialBodyGfxModel.getPositionY() - smallVersion.getHeight() / 2);
     }
 
     /**

@@ -22,13 +22,13 @@ import com.universe.exploration.survey.Lifeform;
  */
 public class StarSystemFactory {
     private StarSystem starsystem;
-    private StarSystemConfiguration uConf;
+    private StarSystemConfiguration starSystemConfiguration;
 
     /**
      * Default configuration
      */
     public StarSystemFactory() {
-	this.uConf = new StarSystemConfiguration();
+	this.starSystemConfiguration = new StarSystemConfiguration();
 	this.starsystem = new StarSystem();
     }
 
@@ -39,7 +39,7 @@ public class StarSystemFactory {
      *            uConf
      */
     public StarSystemFactory(StarSystemConfiguration uConf) {
-	this.uConf = uConf;
+	this.starSystemConfiguration = uConf;
 	this.starsystem = new StarSystem();
     }
 
@@ -49,19 +49,19 @@ public class StarSystemFactory {
      * @return StarSystem starsystem
      */
     public StarSystem makeStarSystem() throws PlanetCountOutOfRangeException {
-	int planetCount = RandomizationTools.getRandomInteger(uConf.getMinPlanetCount(), uConf.getMaxPlanetCount());
+	int planetCount = RandomizationTools.getRandomInteger(starSystemConfiguration.getMinPlanetCount(), starSystemConfiguration.getMaxPlanetCount());
 
 	// Planet count between configured limits.
-	if (MathTools.betweenIntRangeInclusively(planetCount, this.uConf.getMaxPlanetCount(), this.uConf.getMinPlanetCount())) {
+	if (MathTools.betweenIntRangeInclusively(planetCount, this.starSystemConfiguration.getMaxPlanetCount(), this.starSystemConfiguration.getMinPlanetCount())) {
 	    this.starsystem.setPlanetCount(planetCount);
 	} else {
-	    throw new PlanetCountOutOfRangeException("Planet count must be between " + this.uConf.getMinPlanetCount() + " and "
-		    + this.uConf.getMaxPlanetCount() + ". Current value: " + planetCount);
+	    throw new PlanetCountOutOfRangeException("Planet count must be between " + this.starSystemConfiguration.getMinPlanetCount() + " and "
+		    + this.starSystemConfiguration.getMaxPlanetCount() + ". Current value: " + planetCount);
 	}
 
 	populateWithPlanets(planetCount);
 
-	String tmpStarType = RandomizationTools.getRandomStringFromWeightedArray(uConf.getStartypeListing());
+	String tmpStarType = RandomizationTools.getRandomStringFromWeightedArray(starSystemConfiguration.getStartypeListing());
 
 	StarCelestialComponent systemstar = new StarCelestialComponent();
 	systemstar.setGraphicsFile(CelestialComponentTemplate.valueOf(tmpStarType).getComponentType().getRandomGraphicsFile());
@@ -86,7 +86,7 @@ public class StarSystemFactory {
 	    PlanetCelestialComponent planet = new PlanetCelestialComponent();
 
 	    // Setup planet component ready.
-	    String tmpPlanetType = RandomizationTools.getRandomStringFromWeightedArray(uConf.getPlanettypeListing());
+	    String tmpPlanetType = RandomizationTools.getRandomStringFromWeightedArray(starSystemConfiguration.getPlanettypeListing());
 	    PlanetTemplate cc = (PlanetTemplate) CelestialComponentTemplate.valueOf(tmpPlanetType).getComponentType();
 
 	    // Generate all the new values
@@ -132,7 +132,7 @@ public class StarSystemFactory {
 	}
 
 	boolean mandatoryForLife = planet.containsInstanceOfResource(Water.class) && planet.containsInstanceOfResource(Air.class);
-	planet.setLifeforms(cc.randomizePlanetLife(mandatoryForLife));
+	planet.setLifeforms(cc.randomizePlanetLifeForm(mandatoryForLife));
 	setupFoodPresence(planet);
 
 	return planet;

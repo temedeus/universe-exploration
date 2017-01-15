@@ -9,10 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>
- * Gdx specific file reader.
- * </p>
- * TODO: inspect {@link java.io.FileReader} and see if this class is redundant.
+ * File reader taking advantage of the Gdx asset reader and file handle.
  * 
  * @author 28.2.2016 Teemu Puurunen
  *

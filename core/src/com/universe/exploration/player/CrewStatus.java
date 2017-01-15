@@ -26,6 +26,7 @@ public abstract class CrewStatus implements ICrewStatus {
      * warn on depletion of this given resource.
      */
     public CrewStatus() {
+	value = getSetup().getMaxValue();
 	providedWarningOnDepletion = true;
     }
 

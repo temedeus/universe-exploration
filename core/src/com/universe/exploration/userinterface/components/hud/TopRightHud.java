@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.universe.exploration.userinterface.components;
+package com.universe.exploration.userinterface.components.hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;

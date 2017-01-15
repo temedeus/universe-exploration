@@ -43,9 +43,6 @@ public class ButtonFactory {
      */
     public TextButton createCustomTextButton(String caption, ClickListener clickListener, String style) {
 	final TextButton button = new TextButton(caption, uiSkin, style);
-	button.setWidth(200);
-	button.setHeight(50);
-
 	button.addListener(clickListener);
 
 	return button;

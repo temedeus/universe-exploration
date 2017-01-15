@@ -5,7 +5,7 @@ package com.universe.exploration.userinterface.data;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.universe.exploration.spritecontainer.PlanetSpriteContainer;
+import com.universe.exploration.spritecontainer.PlanetSprite;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.data.container.PlanetInformation;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
@@ -15,7 +15,7 @@ import com.universe.exploration.userinterface.skins.UserInterfaceBank;
  *
  */
 public class DataPairTableFactory {
-    public Table createPlanetInformationTable(PlanetSpriteContainer pgfx) {
+    public Table createPlanetInformationTable(PlanetSprite pgfx) {
 	Table planetInformationTable = new Table();
 
 	PlanetInformation planetSurveyLabels = new PlanetInformation((PlanetCelestialComponent) pgfx.getCelestialBodyGfxModel()

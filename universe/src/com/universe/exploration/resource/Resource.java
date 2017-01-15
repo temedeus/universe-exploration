@@ -14,8 +14,6 @@ import com.universe.exploration.survey.Survey;
 public abstract class Resource implements IResource {
     protected float amount;
 
-    protected ResourcesFoundBoundaries boundary;
-
     /**
      * @return the amount
      */
@@ -29,20 +27,5 @@ public abstract class Resource implements IResource {
      */
     public void setAmount(float amount) {
 	this.amount = amount;
-    }
-
-    /**
-     * @return the boundary
-     */
-    public ResourcesFoundBoundaries getBoundary() {
-	return boundary;
-    }
-
-    /**
-     * @param boundary
-     *            the boundary to set
-     */
-    public void setBoundary(ResourcesFoundBoundaries boundary) {
-	this.boundary = boundary;
     }
 }

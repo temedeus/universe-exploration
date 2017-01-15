@@ -19,4 +19,14 @@ public class Water extends Resource {
 	return "GENERIC_WATER";
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.universe.exploration.resource.IResource#getBoundary()
+     */
+    @Override
+    public ResourcesFoundBoundaries getBoundary() {
+	return ResourcesFoundBoundaries.WATER;
+    }
+
 }

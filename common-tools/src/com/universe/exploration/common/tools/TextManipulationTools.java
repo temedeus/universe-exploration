@@ -5,13 +5,10 @@ package com.universe.exploration.common.tools;
 
 import java.util.List;
 
-
 /**
- * <p>
- * Generic tools for text manipulation.
- * </p>
+ * Text manipulation tools.
  * 
- * @author 31.10.2015 Teemu Puurunen
+ * @author 15.1.2017 Teemu Puurunen
  *
  */
 public class TextManipulationTools {
