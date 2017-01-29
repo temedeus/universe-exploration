@@ -40,8 +40,6 @@ import com.universe.exploration.survey.Survey;
 import com.universe.exploration.survey.SurveyContainer;
 import com.universe.exploration.survey.SurveyFactory;
 import com.universe.exploration.userinterface.UIController;
-import com.universe.exploration.userinterface.WindowContainer;
-import com.universe.exploration.userinterface.WindowContainerEvent;
 import com.universe.exploration.userinterface.components.window.WindowType;
 import com.universe.exploration.userinterface.forms.PlanetSurveyForm;
 
@@ -77,9 +75,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      * Game status.
      */
     public static GameStatus gameStatus;
-
-    // TODO: handle in {@link UIController}
-    public static WindowContainer windowContainer;
 
     private MinimalLogger logger;
 
@@ -126,7 +121,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     private void pollForGameOver() {
 	if (UniverseExploration.gameStatus.getCrew().getAliveCrewmen().size() == 0 && !gameStatus.isPaused()) {
 	    uiController.createGameOverWindow(createGameOverClicklistener());
-	    windowContainer.closeAllWindows();
+	    uiController.getWindowContainer().closeAllWindows();
 	    setGameStatusPaused(true);
 	}
     }
@@ -141,15 +136,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	gameStatus.setCrewStatus(new CrewStatusManager());
 	gameStatus.getCrewStatus().setCrewMemberStatusChangeListener(createLogMessageListener());
 	playerMonitor = new CameraMonitor();
-	windowContainerSetup();
 	gameStatus.setSurveyStatusContainer(new SurveyContainer());
 	audioManager = new AudioManager();
-    }
-
-    private void windowContainerSetup() {
-	windowContainer = new WindowContainer();
-	windowContainer.setWindowsThatMustAlert(WindowType.PLANET_DETAILS, WindowType.SURVEY_WINDOW);
-	windowContainer.setSpecificedWindowChangeListener(createWindowChangeListener());
     }
 
     private UEListener createLogMessageListener() {
@@ -163,22 +151,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    @Override
 	    public void handleEventClassEvent(UEEvent e) {
 		updateIngameLog((String) e.getPayLoad());
-	    }
-	};
-    }
-
-    private UEListener createWindowChangeListener() {
-	return new UEListener() {
-	    /*
-	     * (non-Javadoc)
-	     * 
-	     * @see com.universe.exploration.listener.UEListener#
-	     * handleEventClassEvent (com.universe.exploration.listener.UEEvent)
-	     */
-	    @Override
-	    public void handleEventClassEvent(UEEvent e) {
-		WindowContainerEvent event = (WindowContainerEvent) e.getPayLoad();
-		gameStatus.activateSurveyMode(event.equals(WindowContainerEvent.ADD));
 	    }
 	};
     }
@@ -230,7 +202,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    @Override
 	    public void handleEventClassEvent() {
 		if (!gameStatus.isPaused()) {
-		    windowContainerSetup();
 		    stageSetup();
 		    gameStatus.activateSurveyMode(false);
 		    gameStatus.getCrewStatus().decreasePowerBy(StatusConsumption.POWER_DECREMENT_HYPERSPACE_JUMP);
@@ -246,8 +217,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	    public void handleEventClassEvent(UEEvent e) {
 		if (e.getPayLoad() instanceof PlanetSurveyForm) {
 		    startSurvey((PlanetSurveyForm) e.getPayLoad());
-		    windowContainer.closeWindow(WindowType.SURVEY_WINDOW);
-		    windowContainer.closeWindow(WindowType.PLANET_DETAILS);
+		    uiController.getWindowContainer().closeWindow(WindowType.SURVEY_WINDOW);
+		    uiController.getWindowContainer().closeWindow(WindowType.PLANET_DETAILS);
 		}
 	    };
 	};
@@ -293,11 +264,11 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 	if (surveyLength > 0 && crew.size() > 0) {
 	    if (gameStatus.getSurveyStatusContainer().isSurveyTeamAcceptable(crew)) {
 
-		SurveyFactory ssf = new SurveyFactory();
-		Survey ss = ssf.createSurvey((int) gameStatus.getCrewStatus().getTime(), surveyLength, form.getSelectedCrewMembers(),
-			(PlanetCelestialComponent) form.getPlanet(), form.getSurveyName().getText());
-		ss.setSurveyTeam(crew);
-		gameStatus.getSurveyStatusContainer().add(ss);
+		SurveyFactory surveyFactory = new SurveyFactory();
+		Survey survey = surveyFactory.createSurvey((int) gameStatus.getCrewStatus().getTime(), surveyLength,
+			form.getSelectedCrewMembers(), (PlanetCelestialComponent) form.getPlanet(), form.getSurveyName().getText());
+		survey.setSurveyTeam(crew);
+		gameStatus.getSurveyStatusContainer().add(survey);
 
 		updateIngameLog(
 			"Survey (" + form.getSurveyName().getText() + ") dispatched composed of " + crew.size() + " brave men and women.");
@@ -316,7 +287,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 		stageSetup();
 		gameStatus.setCrewStatus(new CrewStatusManager());
 		setGameStatusPaused(false);
-		windowContainer.closeWindow(WindowType.GAME_OVER);
+		uiController.getWindowContainer().closeWindow(WindowType.GAME_OVER);
 	    }
 	};
     }

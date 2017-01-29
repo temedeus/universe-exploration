@@ -2,7 +2,7 @@ package com.universe.exploration.spritecontainer;
 
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
-public class SystemStarSpriteContainer extends SpriteFacade {
+public class SystemStarSpriteContainer extends SpriteContainer {
     public SystemStarSpriteContainer() {
 	super(4096, "star1");
     }

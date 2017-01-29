@@ -2,7 +2,7 @@ package com.universe.exploration.spritecontainer;
 
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
-public class PlanetSprite extends SpriteFacade {
+public class PlanetSprite extends SpriteContainer {
 
     private boolean isPlanetSelected = false;
 

@@ -46,7 +46,6 @@ import com.universe.exploration.userinterface.components.log.LogDisplayTable;
 import com.universe.exploration.userinterface.components.survey.SurveyDetailsTable;
 import com.universe.exploration.userinterface.components.survey.SurveyTeamSelection;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
-import com.universe.exploration.userinterface.components.window.WindowFactory;
 import com.universe.exploration.userinterface.components.window.WindowType;
 import com.universe.exploration.userinterface.data.DataPair;
 import com.universe.exploration.userinterface.data.DataPairTableFactory;
@@ -82,6 +81,8 @@ public class UIController {
     private LeftSideHUD leftsidePlayerStatus;
 
     private PlanetSelection planetSelection;
+
+    public WindowContainer windowContainer;
 
     /**
      * Listen for change in volume.
@@ -122,6 +123,7 @@ public class UIController {
 		createFollowSurveyButton(), createOptionsButton()));
 	uiStage.addActor(createBottomRightHUDTable());
 	uiStage.addActor(new LogDisplayTable(uiStage.getWidth(), logDisplay.getLogDisplayTable()));
+	windowContainerSetup();
     }
 
     private void fireVolumeChangedListener(float newVolumeVal) {
@@ -129,6 +131,28 @@ public class UIController {
 	if (val <= 100) {
 	    volumeListener.handleEventClassEvent(new UEEvent(val));
 	}
+    }
+
+    private void windowContainerSetup() {
+	windowContainer = new WindowContainer();
+	windowContainer.setWindowsThatMustAlert(WindowType.PLANET_DETAILS, WindowType.SURVEY_WINDOW);
+	windowContainer.setSpecificedWindowChangeListener(createWindowChangeListener());
+    }
+
+    private UEListener createWindowChangeListener() {
+	return new UEListener() {
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see com.universe.exploration.listener.UEListener#
+	     * handleEventClassEvent (com.universe.exploration.listener.UEEvent)
+	     */
+	    @Override
+	    public void handleEventClassEvent(UEEvent e) {
+		WindowContainerEvent event = (WindowContainerEvent) e.getPayLoad();
+		UniverseExploration.gameStatus.activateSurveyMode(event.equals(WindowContainerEvent.ADD));
+	    }
+	};
     }
 
     /**
@@ -170,15 +194,20 @@ public class UIController {
     }
 
     public void createPlanetClickWindow(final UEEvent e) {
-	final BasicWindow surveyWindow = createPlanetarySurveyWindow((PlanetSprite) e.getPayLoad(), new ClickListener() {
+	openWithPrimaryButtonAction(WindowType.PLANET_DETAILS,
+		new DataPairTableFactory().createPlanetInformationTable((PlanetSprite) e.getPayLoad()),
+		createSurveyTeamSelectionClickListener(e));
+    }
+
+    private ClickListener createSurveyTeamSelectionClickListener(final UEEvent e) {
+
+	return new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 		createSurveyTeamSelectionWindow((PlanetSprite) e.getPayLoad());
-		UniverseExploration.windowContainer.closeWindow(WindowType.PLANET_DETAILS);
+		windowContainer.closeWindow(WindowType.PLANET_DETAILS);
 	    }
-	});
-
-	show(surveyWindow);
+	};
     }
 
     private Table populateWithStatus(DataPairContainer dataPairContainer) {
@@ -309,12 +338,12 @@ public class UIController {
     }
 
     public void createGameOverWindow(ClickListener tryAgainAction) {
-	show(new WindowFactory().createWindowWithSecondaryAction(WindowType.GAME_OVER, null, "BTN_QUIT_GAME", tryAgainAction,
+	show(windowContainer.getWindowFactory().createWindowWithSecondaryAction(WindowType.GAME_OVER, null, "BTN_QUIT_GAME", tryAgainAction,
 		createQuitClickListener()));
     }
 
     public void createQuitDialog() {
-	show(new WindowFactory().createWindow(WindowType.QUIT_WINDOW, null, createQuitClickListener()));
+	show(windowContainer.getWindowFactory().createWindow(WindowType.QUIT_WINDOW, null, createQuitClickListener()));
     }
 
     private ClickListener createQuitClickListener() {
@@ -336,7 +365,7 @@ public class UIController {
      */
     public <T extends Actor> void show(BasicWindow window) {
 	if (!UniverseExploration.gameStatus.isPaused()) {
-	    UniverseExploration.windowContainer.add(window.getWindowType(), window);
+	    windowContainer.add(window.getWindowType(), window);
 	    uiStage.addActor(window);
 	}
 
@@ -373,27 +402,15 @@ public class UIController {
 	    table.row();
 	}
 
-	BasicWindow surveyClosedWindow = new WindowFactory().createWindow(WindowType.SURVEY_CLOSED, table, new ClickListener() {
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		UniverseExploration.windowContainer.closeWindow(WindowType.SURVEY_CLOSED);
-	    }
-	});
-
-	UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
-	UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
+	BasicWindow surveyClosedWindow = windowContainer.getWindowFactory().createWindow(WindowType.SURVEY_CLOSED, table,
+		new ClickListener() {
+		    @Override
+		    public void clicked(InputEvent event, float x, float y) {
+			windowContainer.closeWindow(WindowType.SURVEY_CLOSED);
+		    }
+		});
 
 	show(surveyClosedWindow);
-    }
-
-    /**
-     * Planetary survey window.
-     * 
-     * @param pgfx
-     */
-    public BasicWindow createPlanetarySurveyWindow(PlanetSprite pgfx, ClickListener okAction) {
-	final DataPairTableFactory dptf = new DataPairTableFactory();
-	return new WindowFactory().createWindow(WindowType.PLANET_DETAILS, dptf.createPlanetInformationTable(pgfx), okAction);
     }
 
     /**
@@ -403,7 +420,7 @@ public class UIController {
      * @param pgfx
      */
     public void openWithPrimaryButtonAction(WindowType type, UETable table, ClickListener okAction) {
-	show(new WindowFactory().createWindow(type, table, okAction));
+	show(windowContainer.getWindowFactory().createWindow(type, table, okAction));
     }
 
     /**
@@ -413,7 +430,7 @@ public class UIController {
      * @param pgfx
      */
     public void openWithoutPrimaryButtonAction(WindowType type, UETable table) {
-	show(new WindowFactory().createWindow(type, table, null));
+	show(windowContainer.getWindowFactory().createWindow(type, table, null));
     }
 
     /**
@@ -502,7 +519,7 @@ public class UIController {
 	table.row();
 	table.add(UIComponentFactory.createSpacer());
 
-	BasicWindow window = new WindowFactory().createWindow(WindowType.OPTIONS_WINDOW, table, null);
+	BasicWindow window = windowContainer.getWindowFactory().createWindow(WindowType.OPTIONS_WINDOW, table, null);
 
 	return window;
     }
@@ -518,7 +535,8 @@ public class UIController {
 	     */
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		BasicWindow window = new WindowFactory().createWindow(WindowType.SURVEY_DETAILS, new SurveyDetailsTable(survey), null);
+		BasicWindow window = windowContainer.getWindowFactory().createWindow(WindowType.SURVEY_DETAILS,
+			new SurveyDetailsTable(survey), null);
 
 		show(window);
 	    }
@@ -539,7 +557,7 @@ public class UIController {
 		final CrewMemberDetails crewMemberDetails = new CrewMemberDetails(crewMember);
 		crewMemberDetails.createPairs();
 
-		BasicWindow window = new WindowFactory().createWindow(WindowType.CREWMEMBER_DETAILS,
+		BasicWindow window = windowContainer.getWindowFactory().createWindow(WindowType.CREWMEMBER_DETAILS,
 			createCrewMemberDetailsPane(crewMemberDetails), null);
 
 		show(window);
@@ -579,8 +597,8 @@ public class UIController {
 
 		}
 
-		UniverseExploration.windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
-		UniverseExploration.windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
+		windowContainer.closeWindow(WindowType.CREWMEMBER_DETAILS);
+		windowContainer.closeWindow(WindowType.CREW_MANAGEMENT);
 		// TODO: work out a way to refresh crew management window
 		openWithoutPrimaryButtonAction(WindowType.CREW_MANAGEMENT, createCrewTable());
 	    }
@@ -693,5 +711,12 @@ public class UIController {
      */
     public void setLogMessageListener(UEListener logMessageListener) {
 	this.logMessageListener = logMessageListener;
+    }
+
+    /**
+     * @return the windowContainer
+     */
+    public WindowContainer getWindowContainer() {
+	return windowContainer;
     }
 }

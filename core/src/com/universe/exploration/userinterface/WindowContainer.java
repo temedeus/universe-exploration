@@ -11,6 +11,7 @@ import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
+import com.universe.exploration.userinterface.components.window.WindowFactory;
 import com.universe.exploration.userinterface.components.window.WindowType;
 
 /**
@@ -27,8 +28,11 @@ public class WindowContainer {
 
     private UEListener notifyOfSpecifiedWindowsChanged;
 
+    private WindowFactory windowFactory;
+
     public WindowContainer() {
 	windowmap = new HashMap<WindowType, BasicWindow>();
+	windowFactory = new WindowFactory(this);
     }
 
     public void add(WindowType key, BasicWindow window) {
@@ -108,6 +112,13 @@ public class WindowContainer {
      */
     public void setSpecificedWindowChangeListener(UEListener specificedWindowChangeListener) {
 	this.notifyOfSpecifiedWindowsChanged = specificedWindowChangeListener;
+    }
+
+    /**
+     * @return the windowFactory
+     */
+    public WindowFactory getWindowFactory() {
+        return windowFactory;
     }
 
 }

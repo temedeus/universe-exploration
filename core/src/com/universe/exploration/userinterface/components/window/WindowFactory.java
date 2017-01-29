@@ -8,19 +8,17 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.userinterface.ButtonFactory;
+import com.universe.exploration.userinterface.WindowContainer;
 import com.universe.exploration.userinterface.components.UETable;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
- * <p>
  * A lot of these windows are not very abstract by nature. This game probably
  * never requires any advanced functionality so we'll make do with what we have
  * now. If game complexity increases significantly, let's work on abstraction
  * levels then.
- * </p>
  * 
  * @author 25.8.2015 Teemu Puurunen
  */
@@ -28,6 +26,12 @@ public class WindowFactory {
     private Skin skin = UserInterfaceBank.userInterfaceSkin;
 
     private static final String STYLE = "default";
+
+    private WindowContainer windowContainer;
+
+    public WindowFactory(WindowContainer windowContainer) {
+	this.windowContainer = windowContainer;
+    }
 
     /**
      * Create a window based on {@link WindowType}. With no
@@ -112,7 +116,7 @@ public class WindowFactory {
 	return new ClickListener() {
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-		UniverseExploration.windowContainer.closeWindow(windowType);
+		windowContainer.closeWindow(windowType);
 	    }
 	};
     }
@@ -124,5 +128,20 @@ public class WindowFactory {
 	table.add(buttontable);
 
 	return table;
+    }
+
+    /**
+     * @return the windowContainer
+     */
+    public WindowContainer getWindowContainer() {
+	return windowContainer;
+    }
+
+    /**
+     * @param windowContainer
+     *            the windowContainer to set
+     */
+    public void setWindowContainer(WindowContainer windowContainer) {
+	this.windowContainer = windowContainer;
     }
 }

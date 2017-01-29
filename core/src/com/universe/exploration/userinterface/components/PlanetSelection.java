@@ -139,7 +139,7 @@ public class PlanetSelection {
      */
     private void firePlanetClickListener() {
 	planetClickListener
-		.handleEventClassEvent(new UEEvent(gameViewObjectContainer.getPlanetGfxContainerByComponent(parsePlanetFromSelectBox())));
+		.handleEventClassEvent(new UEEvent(gameViewObjectContainer.getPlanetSpriteByComponent(parsePlanetFromSelectBox())));
     }
 
     /**

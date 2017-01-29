@@ -41,10 +41,10 @@ public class PlanetHandler {
      * 
      * @param starsystemObject
      */
-    public void addStarPlanet(CelestialComponent starSystemComponent) {
+    public void addPlanet(CelestialComponent celestialComponent) {
 
-	if (starSystemComponent instanceof PlanetCelestialComponent) {
-	    planetContainer.add(new PlanetSprite(starSystemComponent));
+	if (celestialComponent instanceof PlanetCelestialComponent) {
+	    planetContainer.add(new PlanetSprite(celestialComponent));
 	}
     }
 
@@ -59,7 +59,7 @@ public class PlanetHandler {
      */
     public void addMultiplePlanets(List<CelestialComponent> starSystemComponents) {
 	for (CelestialComponent starSystemComponent : starSystemComponents) {
-	    addStarPlanet(starSystemComponent);
+	    addPlanet(starSystemComponent);
 	}
     }
 
@@ -78,7 +78,7 @@ public class PlanetHandler {
 	}
     }
 
-    public PlanetSprite getPlanetGfxContainerByComponent(PlanetCelestialComponent planet) {
+    public PlanetSprite getPlanetSpriteByComponent(PlanetCelestialComponent planet) {
 	for (PlanetSprite graphcisGfx : planetContainer) {
 	    if (graphcisGfx.getComponentType() == planet) {
 		return graphcisGfx;

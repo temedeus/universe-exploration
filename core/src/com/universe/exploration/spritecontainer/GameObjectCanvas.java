@@ -75,7 +75,7 @@ public class GameObjectCanvas {
 	planetHandler = new PlanetHandler();
 
 	for (PlanetCelestialComponent planet : planetList) {
-	    planetHandler.addStarPlanet(planet);
+	    planetHandler.addPlanet(planet);
 	}
 
 	// Initially select the first planet (visual borders).
@@ -140,7 +140,6 @@ public class GameObjectCanvas {
 	    planetHandler.update(selectedPlanet.getSelectedPlanet());
 	}
 
-
 	liveComponentBatch.end();
     }
 
@@ -182,7 +181,7 @@ public class GameObjectCanvas {
     }
 
     public void setSelectedPlanet(PlanetCelestialComponent planet) {
-	selectedPlanet.setSelectedPlanet(planetHandler.getPlanetGfxContainerByComponent(planet));
+	selectedPlanet.setSelectedPlanet(planetHandler.getPlanetSpriteByComponent(planet));
     }
 
     private void firePlanetClickListener(PlanetSprite pgfx) {

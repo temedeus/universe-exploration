@@ -6,8 +6,8 @@ package com.universe.exploration.starsystem.components;
 /**
  * <p>
  * Any class extending CelestialComponent describes component properties,
- * maximum and minimum values, but NOT the current state of the astronomical
- * body!
+ * maximum and minimum values, but NOT the current state of the given
+ * astronomical body!
  * </p>
  * 
  * <p>
