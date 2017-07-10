@@ -13,5 +13,5 @@ import com.universe.exploration.userinterface.components.window.BasicWindow;
  *
  */
 public enum WindowContainerEvent {
-    ADD, REMOVE;
+	ADD, REMOVE;
 }

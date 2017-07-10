@@ -11,11 +11,11 @@ package com.universe.exploration.userinterface.components;
  */
 public class Spacer extends UELabel {
 
-    /**
-     * Just a label with empty text.
-     */
-    public Spacer() {
-	super("");
-    }
+	/**
+	 * Just a label with empty text.
+	 */
+	public Spacer() {
+		super("");
+	}
 
 }

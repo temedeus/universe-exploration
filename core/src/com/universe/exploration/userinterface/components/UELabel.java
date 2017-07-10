@@ -14,11 +14,11 @@ import com.universe.exploration.userinterface.skins.UserInterfaceBank;
  *
  */
 public class UELabel extends Label {
-    public UELabel(CharSequence text) {
-	super(text, UserInterfaceBank.userInterfaceSkin);
-    }
+	public UELabel(CharSequence text) {
+		super(text, UserInterfaceBank.userInterfaceSkin);
+	}
 
-    public UELabel(CharSequence text, Skin skin, String styleName) {
-	super(text, skin, styleName);
-    }
+	public UELabel(CharSequence text, Skin skin, String styleName) {
+		super(text, skin, styleName);
+	}
 }

@@ -15,36 +15,36 @@ import com.universe.exploration.userinterface.skins.UserInterfaceBank;
  *
  */
 public class ButtonFactory {
-    private Skin uiSkin = UserInterfaceBank.userInterfaceSkin;
+	private Skin uiSkin = UserInterfaceBank.userInterfaceSkin;
 
-    /**
-     * Create text button with default style.
-     * 
-     * @param caption
-     *            Caption of the button.
-     * @param clickListener
-     *            Action taken on button click.
-     * @return
-     */
-    public TextButton createTextButton(String caption, ClickListener clickListener) {
-	return createCustomTextButton(caption, clickListener, "default");
-    }
+	/**
+	 * Create text button with default style.
+	 * 
+	 * @param caption
+	 *            Caption of the button.
+	 * @param clickListener
+	 *            Action taken on button click.
+	 * @return
+	 */
+	public TextButton createTextButton(String caption, ClickListener clickListener) {
+		return createCustomTextButton(caption, clickListener, "default");
+	}
 
-    /**
-     * Create customized button.
-     * 
-     * @param caption
-     *            Caption of the button.
-     * @param clickListener
-     *            Action taken upon button click.
-     * @param style
-     *            Determine the style of the button.
-     * @return
-     */
-    public TextButton createCustomTextButton(String caption, ClickListener clickListener, String style) {
-	final TextButton button = new TextButton(caption, uiSkin, style);
-	button.addListener(clickListener);
+	/**
+	 * Create customized button.
+	 * 
+	 * @param caption
+	 *            Caption of the button.
+	 * @param clickListener
+	 *            Action taken upon button click.
+	 * @param style
+	 *            Determine the style of the button.
+	 * @return
+	 */
+	public TextButton createCustomTextButton(String caption, ClickListener clickListener, String style) {
+		final TextButton button = new TextButton(caption, uiSkin, style);
+		button.addListener(clickListener);
 
-	return button;
-    }
+		return button;
+	}
 }
