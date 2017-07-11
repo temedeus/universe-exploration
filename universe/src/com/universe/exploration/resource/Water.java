@@ -25,8 +25,8 @@ public class Water extends Resource {
      * @see com.universe.exploration.resource.IResource#getBoundary()
      */
     @Override
-    public ResourcesFoundBoundaries getBoundary() {
-	return ResourcesFoundBoundaries.WATER;
+    public ResourcesFoundBoundary getResourcesFoundBoundary() {
+	return ResourcesFoundBoundary.WATER;
     }
 
 }

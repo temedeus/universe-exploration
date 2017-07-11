@@ -4,15 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTemplate;
-import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
-import com.universe.exploration.celestialcomponents.configuration.StarTemplate;
+import com.universe.exploration.celestialcomponents.configuration.PlanetConfiguration;
+import com.universe.exploration.celestialcomponents.configuration.StarConfiguration;
+import com.universe.exploration.common.tools.WeightedRandomizationItem;
 
 /**
- * Config
+ * <p>
+ * Star system configuration representating the potential star, planets and the
+ * boundaries for given star system configuration.
+ * </p>
  * 
+ * <p>
+ * As a result {@link StarSystemFactory} generates a {@link StarSystem} based on
+ * this configuration.
+ * </p>
+ * 
+ * <p>
  * Configuration class for universe generation. TODO: create schema and XML
  * configuration based on schema. Config class in future should just read this
  * XML configuration instead of having everything hard-coded.
+ * </p>
  * 
  * @author 6.6.2015 Teemu Puurunen
  *
@@ -32,59 +43,29 @@ public class StarSystemConfiguration {
      */
     private final int minPlanetCount = 0;
 
-    private String[][] startypeListing;
+    /**
+     * Star types and their weighted probabilities.
+     */
+    private List<WeightedRandomizationItem> potentialStars;
 
     /**
      * Planet types and their weighted probabilities.
-     * 
-     * @access private
      */
-    private String[][] planettypeListing;
+    private List<WeightedRandomizationItem> potentialPlanets;
 
-    /**
-     * Initiate configuration TODO: maybe we could ditch the String arrays?
-     * Right now we convert to String[][] for compatibility issues with
-     * randomizing components. This isn't a smart way of doing this but right
-     * now works.
-     */
     public StarSystemConfiguration() {
-	List<String[]> startypes = new ArrayList<String[]>();
-	List<String[]> planettypes = new ArrayList<String[]>();
+	potentialPlanets = new ArrayList<WeightedRandomizationItem>();
+	potentialStars = new ArrayList<WeightedRandomizationItem>();
 
-	/**
-	 * Generate string array of all potential stars and planets.
-	 */
-	for (CelestialComponentTemplate cct : CelestialComponentTemplate.values()) {
-	    String[] tmp = { cct.name(), "" + cct.getPrevalance() };
-
-	    if (cct.getComponentType() instanceof StarTemplate) {
-		startypes.add(tmp);
+	for (CelestialComponentTemplate template : CelestialComponentTemplate.values()) {
+	    if (template.getComponentType() instanceof StarConfiguration) {
+		potentialStars.add(new WeightedRandomizationItem(template.getPrevalance(), template));
 	    }
 
-	    if (cct.getComponentType() instanceof PlanetTemplate) {
-		planettypes.add(tmp);
+	    if (template.getComponentType() instanceof PlanetConfiguration) {
+		potentialPlanets.add(new WeightedRandomizationItem(template.getPrevalance(), template));
 	    }
 	}
-
-	startypeListing = populateListing(startypes);
-	planettypeListing = populateListing(planettypes);
-    }
-
-    /**
-     * TODO: this is quite clumsy as it is.
-     * 
-     * @param arrList
-     * @return
-     */
-    private String[][] populateListing(List<String[]> arrList) {
-	String[][] listing = new String[arrList.size()][2];
-	int x = 0;
-
-	for (String[] listItemAsStringArray : arrList) {
-	    listing[x++] = listItemAsStringArray;
-	}
-
-	return listing;
     }
 
     /**
@@ -104,30 +85,14 @@ public class StarSystemConfiguration {
     /**
      * @return the startypeListing
      */
-    public String[][] getStartypeListing() {
-	return this.startypeListing;
-    }
-
-    /**
-     * @param startypeListing
-     *            the startypeListing to set
-     */
-    public void setStartypeListing(String[][] startypeListing) {
-	this.startypeListing = startypeListing;
+    public List<WeightedRandomizationItem> getPotentialStars() {
+	return this.potentialStars;
     }
 
     /**
      * @return the planettypeListing
      */
-    public String[][] getPlanettypeListing() {
-	return planettypeListing;
-    }
-
-    /**
-     * @param planettypeListing
-     *            the planettypeListing to set
-     */
-    public void setPlanettypeListing(String[][] planettypeListing) {
-	this.planettypeListing = planettypeListing;
+    public List<WeightedRandomizationItem> getPotentialsPlanets() {
+	return potentialPlanets;
     }
 }

@@ -1,21 +1,23 @@
 package com.universe.exploration.starsystem;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTemplate;
-import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
+import com.universe.exploration.celestialcomponents.configuration.PlanetConfiguration;
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
+import com.universe.exploration.common.tools.WeightedRandomizationItem;
 import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.resource.Air;
 import com.universe.exploration.resource.Food;
 import com.universe.exploration.resource.Water;
+import com.universe.exploration.starsystem.components.CelestialComponent;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.StarCelestialComponent;
 import com.universe.exploration.survey.Lifeform;
 
 /**
  * 
- * Generates a new star system.
+ * Generates {@link StarSystem}.
  * 
  * @author 7.6.2015 Teemu Puurunen
  *
@@ -35,36 +37,40 @@ public class StarSystemFactory {
     /**
      * Custom configuration configuration
      * 
-     * @param StarSystemConfiguration
-     *            uConf
+     * @param starSystemConfiguration
+     *            StarSystemConfiguration
      */
-    public StarSystemFactory(StarSystemConfiguration uConf) {
-	this.starSystemConfiguration = uConf;
+    public StarSystemFactory(StarSystemConfiguration starSystemConfiguration) {
+	this.starSystemConfiguration = starSystemConfiguration;
 	this.starsystem = new StarSystem();
     }
 
     /**
-     * Create a star system
+     * Create a star system.
      * 
      * @return StarSystem starsystem
      */
     public StarSystem makeStarSystem() throws PlanetCountOutOfRangeException {
-	int planetCount = RandomizationTools.getRandomInteger(starSystemConfiguration.getMinPlanetCount(), starSystemConfiguration.getMaxPlanetCount());
+	int planetCount = RandomizationTools.getRandomInteger(starSystemConfiguration.getMinPlanetCount(),
+		starSystemConfiguration.getMaxPlanetCount());
 
 	// Planet count between configured limits.
-	if (MathTools.betweenIntRangeInclusively(planetCount, this.starSystemConfiguration.getMaxPlanetCount(), this.starSystemConfiguration.getMinPlanetCount())) {
+	if (MathTools.betweenIntRangeInclusively(planetCount, this.starSystemConfiguration.getMaxPlanetCount(),
+		this.starSystemConfiguration.getMinPlanetCount())) {
 	    this.starsystem.setPlanetCount(planetCount);
 	} else {
-	    throw new PlanetCountOutOfRangeException("Planet count must be between " + this.starSystemConfiguration.getMinPlanetCount() + " and "
-		    + this.starSystemConfiguration.getMaxPlanetCount() + ". Current value: " + planetCount);
+	    throw new PlanetCountOutOfRangeException(
+		    "Planet count must be between " + this.starSystemConfiguration.getMinPlanetCount() + " and "
+			    + this.starSystemConfiguration.getMaxPlanetCount() + ". Current value: " + planetCount);
 	}
 
 	populateWithPlanets(planetCount);
 
-	String tmpStarType = RandomizationTools.getRandomStringFromWeightedArray(starSystemConfiguration.getStartypeListing());
+	CelestialComponentTemplate template = (CelestialComponentTemplate) ((WeightedRandomizationItem) RandomizationTools
+		.getWeightedRandomItem(starSystemConfiguration.getPotentialStars())).getItem();
 
 	StarCelestialComponent systemstar = new StarCelestialComponent();
-	systemstar.setGraphicsFile(CelestialComponentTemplate.valueOf(tmpStarType).getComponentType().getRandomGraphicsFile());
+	systemstar.setGraphicsFile(template.getComponentType().getRandomGraphicsFile());
 	this.starsystem.setSystemstar(systemstar);
 
 	return this.starsystem;
@@ -85,14 +91,15 @@ public class StarSystemFactory {
 	    // Container for our planet data.
 	    PlanetCelestialComponent planet = new PlanetCelestialComponent();
 
-	    // Setup planet component ready.
-	    String tmpPlanetType = RandomizationTools.getRandomStringFromWeightedArray(starSystemConfiguration.getPlanettypeListing());
-	    PlanetTemplate cc = (PlanetTemplate) CelestialComponentTemplate.valueOf(tmpPlanetType).getComponentType();
-
+	    WeightedRandomizationItem item = ((WeightedRandomizationItem) RandomizationTools
+		    .getWeightedRandomItem(starSystemConfiguration.getPotentialsPlanets()));
+	    CelestialComponentTemplate template = ((CelestialComponentTemplate) item.getItem());
+	    PlanetConfiguration planetTemplate = (PlanetConfiguration) template.getComponentType();
+	    
 	    // Generate all the new values
-	    planet = calculatePlanetOrbitalData(planet, cc, planetarySpace, previousOrbitalRadious, x);
-	    planet = calculatePlanetHabitability(planet, cc);
-	    planet = setupPlanetBasicInfo(planet, cc);
+	    planet = calculatePlanetOrbitalData(planet, planetarySpace, previousOrbitalRadious, x);
+	    planet = calculatePlanetHabitability(planet, planetTemplate);
+	    planet = setupPlanetBasicInfo(planet, planetTemplate);
 
 	    // Store old orbital radius value so we do not create orbits that
 	    // cross with previous ones.
@@ -103,9 +110,10 @@ public class StarSystemFactory {
 	}
     }
 
-    private PlanetCelestialComponent calculatePlanetOrbitalData(PlanetCelestialComponent planet, PlanetTemplate cc, double planetarySpace,
+    private PlanetCelestialComponent calculatePlanetOrbitalData(PlanetCelestialComponent planet, double planetarySpace,
 	    double previousOrbitalRadious, int x) {
-	double planetOrbitalVelocity = RandomizationTools.getRandomDouble(IngameAstronomicalConstants.MIN_ORBITAL_VELOCITY.getValue(),
+	double planetOrbitalVelocity = RandomizationTools.getRandomDouble(
+		IngameAstronomicalConstants.MIN_ORBITAL_VELOCITY.getValue(),
 		IngameAstronomicalConstants.MAX_ORBITAL_VELOCITY.getValue());
 
 	double minOrbitalRadius = x * planetarySpace + IngameAstronomicalConstants.MIN_ORBITAL_RADIUS.getValue();
@@ -122,7 +130,8 @@ public class StarSystemFactory {
 	return planet;
     }
 
-    private PlanetCelestialComponent calculatePlanetHabitability(PlanetCelestialComponent planet, PlanetTemplate cc) {
+    private PlanetCelestialComponent calculatePlanetHabitability(PlanetCelestialComponent planet,
+	    PlanetConfiguration cc) {
 	if (MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen())) {
 	    planet.addFoundResource(new Air());
 	}
@@ -131,7 +140,8 @@ public class StarSystemFactory {
 	    planet.addFoundResource(new Water());
 	}
 
-	boolean mandatoryForLife = planet.containsInstanceOfResource(Water.class) && planet.containsInstanceOfResource(Air.class);
+	boolean mandatoryForLife = planet.containsInstanceOfResource(Water.class)
+		&& planet.containsInstanceOfResource(Air.class);
 	planet.setLifeforms(cc.randomizePlanetLifeForm(mandatoryForLife));
 	setupFoodPresence(planet);
 
@@ -150,10 +160,11 @@ public class StarSystemFactory {
      * @param planet
      * @return
      */
-    private PlanetCelestialComponent setupPlanetBasicInfo(PlanetCelestialComponent planet, PlanetTemplate cc) {
-	planet.setGraphicsFile(cc.getRandomGraphicsFile());
-	planet.setSpriteSize(cc.getRandomSpriteSize());
-	planet.setComponentName(cc.getComponentName());
+    private PlanetCelestialComponent setupPlanetBasicInfo(PlanetCelestialComponent planet,
+	    PlanetConfiguration planetTemplate) {
+	planet.setGraphicsFile(planetTemplate.getRandomGraphicsFile());
+	planet.setSpriteSize(planetTemplate.getRandomSpriteSize());
+	planet.setComponentName(planetTemplate.getComponentName());
 
 	return planet;
     }
@@ -169,6 +180,8 @@ public class StarSystemFactory {
 	double difference = distance - previousDistance;
 
 	return (difference <= IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue())
-		? distance + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue() - difference : distance;
+		? distance + IngameAstronomicalConstants.MIN_DIFFERENCE_BETWEEN_ADJACENT_PLANET_RADII.getValue()
+			- difference
+		: distance;
     }
 }

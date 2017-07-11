@@ -3,13 +3,13 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
-import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
+import com.universe.exploration.celestialcomponents.configuration.PlanetConfiguration;
 
 /**
  * @author 24.8.2015 Teemu Puurunen
  *
  */
-public class GoldilocksPlanet extends PlanetTemplate {
+public class GoldilocksPlanet extends PlanetConfiguration {
 
     public GoldilocksPlanet() {
 	templateName = "Goldilocks planet";

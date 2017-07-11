@@ -3,13 +3,13 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.stars;
 
-import com.universe.exploration.celestialcomponents.configuration.StarTemplate;
+import com.universe.exploration.celestialcomponents.configuration.StarConfiguration;
 
 /**
  * @author 24.8.2015 Teemu Puurunen 
  *
  */
-public class MediumStar extends StarTemplate {
+public class MediumStar extends StarConfiguration {
 	/**
 	 * 
 	 */

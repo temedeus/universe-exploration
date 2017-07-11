@@ -9,18 +9,18 @@ import com.universe.exploration.common.tools.RandomizationTools;
  * @author 24.8.2015 Teemu Puurunen
  *
  */
-public abstract class AbstractTemplate {
+public abstract class AbstractConfiguration {
 
     /**
      * Identifier for component so that we can refer to it from UI-side.
      */
-    protected String ComponentID;
+    protected String componentID;
 
     /**
      * @return the componentID
      */
     public String getComponentID() {
-	return ComponentID;
+	return componentID;
     }
 
     /**
@@ -28,7 +28,7 @@ public abstract class AbstractTemplate {
      *            the componentID to set
      */
     public void setComponentID(String componentID) {
-	ComponentID = componentID;
+	this.componentID = componentID;
     }
 
     protected String templateName;

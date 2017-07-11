@@ -22,7 +22,7 @@ public class ResourcesFoundFactory {
 	int crewSize = crew.size();
 
 	for (Resource resource : planet.getResourcesFound()) {
-	    float amount = crewSize * randomizeAmount(resource.getBoundary());
+	    float amount = crewSize * randomizeAmount(resource.getResourcesFoundBoundary());
 
 	    if (amount > 0) {
 		resource.setAmount(amount);
@@ -33,7 +33,7 @@ public class ResourcesFoundFactory {
 	return resourcesFoundBean;
     }
 
-    private float randomizeAmount(ResourcesFoundBoundaries boundary) {
+    private float randomizeAmount(ResourcesFoundBoundary boundary) {
 	double min = boundary.getMin();
 	double max = boundary.getMax();
 

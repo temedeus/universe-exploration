@@ -23,8 +23,8 @@ public class Food extends Resource {
      * @see com.universe.exploration.resource.IResource#getBoundary()
      */
     @Override
-    public ResourcesFoundBoundaries getBoundary() {
-	return ResourcesFoundBoundaries.FOOD;
+    public ResourcesFoundBoundary getResourcesFoundBoundary() {
+	return ResourcesFoundBoundary.FOOD;
     }
 
 }

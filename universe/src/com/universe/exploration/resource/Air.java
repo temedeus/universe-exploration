@@ -23,8 +23,8 @@ public class Air extends Resource {
      * @see com.universe.exploration.resource.IResource#getBoundary()
      */
     @Override
-    public ResourcesFoundBoundaries getBoundary() {
-	return ResourcesFoundBoundaries.AIR;
+    public ResourcesFoundBoundary getResourcesFoundBoundary() {
+	return ResourcesFoundBoundary.AIR;
     }
 
 }

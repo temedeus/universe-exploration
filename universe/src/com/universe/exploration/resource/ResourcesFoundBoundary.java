@@ -12,14 +12,14 @@ import com.universe.exploration.survey.Survey;
  * @author 25.10.2015 Teemu Puurunen
  *
  */
-public enum ResourcesFoundBoundaries {
+public enum ResourcesFoundBoundary {
 
     WATER(0, 100), AIR(0, 8), FOOD(0, 8);
 
     private float min;
     private float max;
 
-    ResourcesFoundBoundaries(float min, float max) {
+    ResourcesFoundBoundary(float min, float max) {
 	this.min = min;
 	this.max = max;
     }

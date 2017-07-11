@@ -152,8 +152,8 @@ public class PlanetHandler {
      */
     public void drawOrbits(PlanetSprite selected, ShapeRenderer render) {
 	for (PlanetSprite graphicsGfx : planetContainer) {
-	    float radius = (float) ((PlanetCelestialComponent) graphicsGfx.celestialBodyGfxModel.getStarSystemComponent())
-		    .getOrbitalRadius();
+	    float radius = (float) ((PlanetCelestialComponent) graphicsGfx.celestialBodyGfxModel
+		    .getStarSystemComponent()).getOrbitalRadius();
 
 	    float alpha = (graphicsGfx.equals(selected)) ? 0.5f : 0.1f;
 

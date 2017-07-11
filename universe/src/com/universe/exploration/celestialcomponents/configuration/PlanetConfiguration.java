@@ -12,7 +12,7 @@ import com.universe.exploration.survey.Lifeform;
  * @author 14.1.2017 Teemu Puurunen
  *
  */
-public class PlanetTemplate extends AbstractTemplate {
+public class PlanetConfiguration extends AbstractConfiguration {
     protected float chanceForCivilization;
 
     protected float chanceForBacterial;

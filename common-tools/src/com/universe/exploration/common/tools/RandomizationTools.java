@@ -1,5 +1,6 @@
 package com.universe.exploration.common.tools;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -24,7 +25,7 @@ public class RandomizationTools {
 
 	return randomNumber;
     }
-    
+
     public static final boolean randomBoolean() {
 	return (getRandomInteger(0, 1) == 1) ? true : false;
     }
@@ -44,29 +45,29 @@ public class RandomizationTools {
     }
 
     /**
-     * Get random string from a weighted array
+     * Return a random item from a list of weighted items.
      * 
-     * @param string
-     *            [][] array of values and weights e.g ({{"apple",
-     *            "3"},{"banana", "6"}})
-     * @return string
+     * @param items
+     * @return WeightedRandomizationItem
      */
-    public static final String getRandomStringFromWeightedArray(String[][] sourceForRandomization) {
+    public static final WeightedRandomizationItem getWeightedRandomItem(
+	    List<WeightedRandomizationItem> items) {
 
 	// Compute the total weight of all items together
 	double tw = 0.0d;
-	for (int x = 0; x < sourceForRandomization.length; x++) {
-	    tw += Double.parseDouble(sourceForRandomization[x][1]);
+	for (WeightedRandomizationItem item : items) {
+	    tw += item.getWeight();
 	}
 
 	double random = Math.random() * tw;
-	for (int i = 0; i < sourceForRandomization.length; ++i) {
-	    random -= Double.parseDouble(sourceForRandomization[i][1]);
+	for (WeightedRandomizationItem item : items) {
+
+	    random -= item.getWeight();
 	    if (random <= 0.0d) {
-		return sourceForRandomization[i][0];
+		return item;
 	    }
 	}
 
-	return sourceForRandomization[0][0];
+	return items.get(0);
     }
 }

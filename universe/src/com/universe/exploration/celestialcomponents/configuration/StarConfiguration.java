@@ -9,6 +9,6 @@ package com.universe.exploration.celestialcomponents.configuration;
  * @author 14.1.2017 Teemu Puurunen
  *
  */
-public class StarTemplate extends AbstractTemplate {
+public class StarConfiguration extends AbstractConfiguration {
 
 }

@@ -6,11 +6,14 @@ import java.util.List;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.StarCelestialComponent;
 
+/**
+ * Represents a star system containing hte star, planets and the actualy
+ * boundaries. Generated based on {@link StarSystemConfiguration}.
+ * 
+ * @author Teemu
+ *
+ */
 public class StarSystem {
-
-    /**
-     * System star
-     */
     private StarCelestialComponent systemstar;
 
     private List<PlanetCelestialComponent> planets;
