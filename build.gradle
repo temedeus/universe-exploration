@@ -72,14 +72,11 @@ project(":android") {
         pickFirst 'META-INF/LICENSE.txt'
 	}
 	
-
-		
 	android {
 		lintOptions {
 			abortOnError false
 		}
 	}
-
 }
 
 project(":ios") {
@@ -145,8 +142,6 @@ project(":common-tools") {
         testCompile "junit:junit:4.11"
 		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 		compile "org.jmock:jmock-junit4:2.8.2"
-		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
-		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
     }
 }
 
@@ -158,12 +153,8 @@ project(":universe") {
         compile project(":common-tools")
 		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 		compile "org.jmock:jmock-junit4:2.8.2"
-		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
-		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
 	}
 }
-
-
 
 tasks.eclipse.doLast {
     delete ".project"

@@ -9,7 +9,6 @@ import org.junit.Test;
 import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewMember;
 
-
 public class SurveyContainerTest {
 
     @Test
@@ -20,7 +19,7 @@ public class SurveyContainerTest {
 	SurveyContainer container = new SurveyContainer();
 	Assert.assertTrue(container.isSurveyTeamAcceptable(crew));
     }
-    
+
     @Test
     public void testIsSurveyTeamAcceptableWhenTeamNotAcceptable() throws Exception {
 	List<CrewMember> crew = new ArrayList<CrewMember>();
@@ -33,7 +32,7 @@ public class SurveyContainerTest {
     private CrewMember createAliveCrewMember(CrewMemberStatus status) {
 	CrewMember member = new CrewMember();
 	member.setStatus(status);
-	
+
 	return member;
     }
 }
