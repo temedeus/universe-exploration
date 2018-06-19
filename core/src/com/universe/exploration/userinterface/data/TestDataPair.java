@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.data;
 
@@ -14,9 +14,8 @@ package com.universe.exploration.userinterface.data;
  * unit tests, this class can be removed. In a sense I suppose this class is
  * theoretically a "mock" of a kind?
  * </p>
- * 
- * @author 1.10.2015 Teemu Puurunen
  *
+ * @author 1.10.2015 Teemu Puurunen
  */
 public class TestDataPair extends DataPair {
     /**
@@ -36,44 +35,44 @@ public class TestDataPair extends DataPair {
 
     /**
      * Holds a pair of labels for displaying data/value pair.
-     * 
+     *
      * @param label
      * @param value
      * @param skin
      */
     public TestDataPair(String id, String label, String value) {
-	this.id = id;
-	this.label = label;
-	this.value = value;
+        this.id = id;
+        this.label = label;
+        this.value = value;
     }
 
     /**
      * @return the id
      */
     public String getIdToString() {
-	return id;
+        return id;
     }
 
     /**
      * @return the label
      */
     public String getLabelToString() {
-	return label;
+        return label;
     }
 
     /**
      * @return the value
      */
     public String getValueToString() {
-	return value;
+        return value;
     }
 
     /**
      * Update player statistic value
-     * 
+     *
      * @param value
      */
     public void updateValue(String value) {
-	this.value = value;
+        this.value = value;
     }
 }

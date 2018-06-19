@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.player;
 
@@ -9,7 +9,6 @@ import com.universe.exploration.resource.Resource;
 
 /**
  * @author 14.1.2017 Teemu Puurunen
- *
  */
 public class CrewStatusFood extends CrewStatus {
 
@@ -21,7 +20,7 @@ public class CrewStatusFood extends CrewStatus {
      */
     @Override
     public Class<? extends Resource> mapCrewStatusToResource() {
-	return Food.class;
+        return Food.class;
     }
 
     /* (non-Javadoc)
@@ -29,7 +28,7 @@ public class CrewStatusFood extends CrewStatus {
      */
     @Override
     public CrewMemberCondition deprivationCausesCondition() {
-	return CrewMemberCondition.MALNUTRITION;
+        return CrewMemberCondition.MALNUTRITION;
     }
 
     /* (non-Javadoc)
@@ -37,7 +36,7 @@ public class CrewStatusFood extends CrewStatus {
      */
     @Override
     public CrewStatusSetup getSetup() {
-	return CrewStatusSetup.FOOD;
+        return CrewStatusSetup.FOOD;
     }
 
     /* (non-Javadoc)
@@ -45,7 +44,7 @@ public class CrewStatusFood extends CrewStatus {
      */
     @Override
     public float healthDecreaseWhenDepleated() {
-	return StatusConsumption.HEALTH_DECREASE_WHEN_FOOD_DEPLETED;
+        return StatusConsumption.HEALTH_DECREASE_WHEN_FOOD_DEPLETED;
     }
 
     /* (non-Javadoc)
@@ -53,6 +52,6 @@ public class CrewStatusFood extends CrewStatus {
      */
     @Override
     public float getDecrement() {
-	return StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN;
+        return StatusConsumption.CREWMEN_FOOD_CONSUMPTION_PER_CREWMAN;
     }
 }

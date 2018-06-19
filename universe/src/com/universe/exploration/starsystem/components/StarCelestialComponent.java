@@ -1,23 +1,21 @@
 package com.universe.exploration.starsystem.components;
 
 /**
- * 
  * Star system star representation.
- * 
- * @author 6.6.2015 Teemu Puurunen
  *
+ * @author 6.6.2015 Teemu Puurunen
  */
 public class StarCelestialComponent extends CelestialComponent {
     /**
      * Solar mass
-     * 
+     *
      * @access private
      */
     private double solarMass;
 
     /**
      * Solar radius
-     * 
+     *
      * @access private
      */
     private double solarRadius;
@@ -27,8 +25,8 @@ public class StarCelestialComponent extends CelestialComponent {
      * sun).
      */
     public StarCelestialComponent() {
-	this.solarMass = 1.0;
-	this.solarRadius = 1.0;
+        this.solarMass = 1.0;
+        this.solarRadius = 1.0;
     }
 
     /**
@@ -36,36 +34,34 @@ public class StarCelestialComponent extends CelestialComponent {
      */
     @Override
     public int getSpriteSize() {
-	return 4096;
+        return 4096;
     }
 
     /**
      * @return the solarMass
      */
     public double getSolarMass() {
-	return solarMass;
+        return solarMass;
     }
 
     /**
-     * @param solarMass
-     *            the solarMass to set
+     * @param solarMass the solarMass to set
      */
     public void setSolarMass(double solarMass) {
-	this.solarMass = solarMass;
+        this.solarMass = solarMass;
     }
 
     /**
      * @return the solarRadius
      */
     public double getSolarRadius() {
-	return solarRadius;
+        return solarRadius;
     }
 
     /**
-     * @param solarRadius
-     *            the solarRadius to set
+     * @param solarRadius the solarRadius to set
      */
     public void setSolarRadius(double solarRadius) {
-	this.solarRadius = solarRadius;
+        this.solarRadius = solarRadius;
     }
 }

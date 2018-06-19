@@ -9,35 +9,34 @@ public class PlanetSprite extends SpriteContainer {
     private Fader resizeFactor;
 
     public PlanetSprite() {
-	super(64, "planet2.png");
-	resizeFactor = new Fader(spriteSize, 500, 1, 1);
+        super(64, "planet2.png");
+        resizeFactor = new Fader(spriteSize, 500, 1, 1);
     }
 
     public PlanetSprite(CelestialComponent starSystemComponent) {
-	super(starSystemComponent);
-	resizeFactor = new Fader(spriteSize, 500, 10, 10);
+        super(starSystemComponent);
+        resizeFactor = new Fader(spriteSize, 500, 10, 10);
     }
 
     public void handleZooming() {
-	resizeFactor.updateAlpha(!isPlanetSelected);
+        resizeFactor.updateAlpha(!isPlanetSelected);
 
-	smallVersion.setSize(resizeFactor.getAlphaValue(), resizeFactor.getAlphaValue());
-	smallVersion.setOriginCenter();
+        smallVersion.setSize(resizeFactor.getAlphaValue(), resizeFactor.getAlphaValue());
+        smallVersion.setOriginCenter();
     }
 
     /**
      * @return the isPlanetSelected
      */
     public boolean isPlanetSelected() {
-	return isPlanetSelected;
+        return isPlanetSelected;
     }
 
     /**
-     * @param isPlanetSelected
-     *            the isPlanetSelected to set
+     * @param isPlanetSelected the isPlanetSelected to set
      */
     public void setPlanetSelected(boolean isPlanetSelected) {
-	this.isPlanetSelected = isPlanetSelected;
+        this.isPlanetSelected = isPlanetSelected;
     }
 
 }

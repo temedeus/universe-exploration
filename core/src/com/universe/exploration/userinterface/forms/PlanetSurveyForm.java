@@ -1,21 +1,20 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.forms;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.components.UETextField;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Planet survey form.
- * 
- * @author 26.10.2015 Teemu Puurunen
  *
+ * @author 26.10.2015 Teemu Puurunen
  */
 public class PlanetSurveyForm extends FormContainer {
 
@@ -31,59 +30,55 @@ public class PlanetSurveyForm extends FormContainer {
      * @return the planet
      */
     public PlanetCelestialComponent getPlanet() {
-	return planet;
+        return planet;
     }
 
     /**
-     * @param planet
-     *            the planet to set
+     * @param planet the planet to set
      */
     public void setPlanet(PlanetCelestialComponent planet) {
-	this.planet = planet;
+        this.planet = planet;
     }
 
     /**
      * @return the crewmenCount
      */
     public Slider getSurveyLength() {
-	return surveyLength;
+        return surveyLength;
     }
 
     /**
-     * @param crewmenCount
-     *            the crewmenCount to set
+     * @param crewmenCount the crewmenCount to set
      */
     public void setSurveyLength(Slider crewmenCount) {
-	this.surveyLength = crewmenCount;
+        this.surveyLength = crewmenCount;
     }
 
     /**
      * @return the selectedCrewMembers
      */
     public List<CrewMember> getSelectedCrewMembers() {
-	return selectedCrewMembers;
+        return selectedCrewMembers;
     }
 
     /**
-     * @param selectedCrewMembers
-     *            the selectedCrewMembers to set
+     * @param selectedCrewMembers the selectedCrewMembers to set
      */
     public void setSelectedCrewMembers(List<CrewMember> selectedCrewMembers) {
-	this.selectedCrewMembers = selectedCrewMembers;
+        this.selectedCrewMembers = selectedCrewMembers;
     }
 
     /**
      * @return the surveyName
      */
     public UETextField getSurveyName() {
-	return surveyName;
+        return surveyName;
     }
 
     /**
-     * @param surveyName
-     *            the surveyName to set
+     * @param surveyName the surveyName to set
      */
     public void setSurveyName(UETextField surveyName) {
-	this.surveyName = surveyName;
+        this.surveyName = surveyName;
     }
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.crewmember;
 
@@ -13,9 +13,8 @@ package com.universe.exploration.crewmember;
  * Certain values cannot go all the way to zero as I figured you never hire
  * below average personnel as astronauts.
  * </p>
- * 
- * @author 13.3.2016 Teemu Puurunen
  *
+ * @author 13.3.2016 Teemu Puurunen
  */
 public class CrewCharacteristicsBoundaries {
     public static final int MAX_AGILITY = 10;
@@ -39,9 +38,9 @@ public class CrewCharacteristicsBoundaries {
     public static final int MAX_AGE = 55;
 
     public static final int MIN_AGE = 30;
-    
+
     public static final int MAX_HEALTH = 100;
-    
+
     public static final int MIN_HEALTH = 0;
 }
 

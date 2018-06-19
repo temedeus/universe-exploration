@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.audio;
 
@@ -7,7 +7,6 @@ import java.io.File;
 
 /**
  * @author 5.11.2015 Teemu Puurunen
- *
  */
 public enum SoundEffect implements IAudioFile {
     ANNOUNCEMENT("ANNOUNCEMENT", "announcement.ogg"),
@@ -18,21 +17,21 @@ public enum SoundEffect implements IAudioFile {
     private final String audioFile;
 
     private SoundEffect(String id, String audioFile) {
-	this.id = id;
-	this.audioFile = audioFile;
+        this.id = id;
+        this.audioFile = audioFile;
     }
 
     /**
      * @return the id
      */
     public String getId() {
-	return id;
+        return id;
     }
 
     /**
      * @return the audioFile
      */
     public String getAudioFilePath() {
-	return DIR + audioFile;
+        return DIR + audioFile;
     }
 }

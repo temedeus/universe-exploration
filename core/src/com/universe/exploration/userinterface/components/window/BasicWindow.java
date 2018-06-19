@@ -1,45 +1,31 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.components.window;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Align;
 import com.universe.exploration.common.tools.GdxHelper;
 
 /**
  * Abstract base class for all windows.
- * 
- * @author 20.9.2015 Teemu Puurunen
  *
+ * @author 20.9.2015 Teemu Puurunen
  */
 public abstract class BasicWindow extends Window implements IBasicWindow {
-    private WindowType windowType; 
-    
-    public BasicWindow(String title, Skin skin) {
-	super(title, skin);
-	setDefault();
-    }
+    private WindowType windowType;
 
     public BasicWindow(String title, Skin skin, String styleName) {
-	super(title, skin, styleName);
-	setDefault();
-    }
-
-    public BasicWindow(String title, WindowStyle style) {
-	super(title, style);
-	setDefault();
+        super(title, skin, styleName);
+        setDefault();
     }
 
     private void setDefault() {
-	setMovable(true);
-	padTop(20);
-	setWindowSize();
-	setPosition(GdxHelper.getScreenCenterX() - getWidth() / 2, GdxHelper.getScreenCenterY() - getHeight() / 2);
-    }
+        getTitleLabel().setAlignment(Align.center, Align.bottom);
+        setMovable(true);
 
-    public void setWindowSize() {
-	setSize(WindowSetup.MEDIUM.getWidth(), WindowSetup.MEDIUM.getHeight());
+        setPosition(GdxHelper.getScreenCenterX() - getWidth() / 2, GdxHelper.getScreenCenterY() - getHeight() / 2);
     }
 
     /**
@@ -47,6 +33,11 @@ public abstract class BasicWindow extends Window implements IBasicWindow {
      */
     public WindowType getWindowType() {
         return windowType;
+    }
+
+    @Override
+    public void setWindowSize() {
+        setSize(WindowSetup.MEDIUM.getWidth(), WindowSetup.MEDIUM.getHeight());
     }
 
     /**

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
@@ -7,26 +7,25 @@ import com.universe.exploration.celestialcomponents.configuration.PlanetConfigur
 
 /**
  * @author 24.8.2015 Teemu Puurunen
- *
  */
 public class GasGiantPlanet extends PlanetConfiguration {
 
     public GasGiantPlanet() {
-	templateName = "Giant gas planet";
-	graphicsFiles = new String[] { "gasplanet/planet3.png", "gasplanet/gasplanet1.png" };
-	spriteSizes = new int[] { 40, 50, 55 };
+        templateName = "Giant gas planet";
+        graphicsFiles = new String[]{"gasplanet/planet3.png", "gasplanet/gasplanet1.png"};
+        spriteSizes = new int[]{40, 50, 55};
 
-	chanceForCivilization = 0;
+        chanceForCivilization = 0;
 
-	chanceForBacterial = 0;
+        chanceForBacterial = 0;
 
-	chanceForAnimalLife = 0;
+        chanceForAnimalLife = 0;
 
-	chanceToExtractWater = 10f;
+        chanceToExtractWater = 10f;
 
-	chanceToExtractOxygen = 40f;
+        chanceToExtractOxygen = 40f;
 
-	chanceToFindFood = 0;
-	chanceForVegetation = 0;
+        chanceToFindFood = 0;
+        chanceForVegetation = 0;
     }
 }

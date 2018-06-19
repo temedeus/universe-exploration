@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.data;
 
@@ -12,25 +12,24 @@ import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
  * @author 20.10.2015 Teemu Puurunen
- *
  */
 public class DataPairTableFactory {
     public UETable createPlanetInformationTable(PlanetSprite pgfx) {
-	UETable planetInformationTable = new UETable();
+        UETable planetInformationTable = new UETable();
 
-	PlanetInformation planetSurveyLabels = new PlanetInformation((PlanetCelestialComponent) pgfx.getCelestialBodyGfxModel()
-		.getStarSystemComponent());
-	planetSurveyLabels.createPairs();
+        PlanetInformation planetSurveyLabels = new PlanetInformation((PlanetCelestialComponent) pgfx.getCelestialBodyGfxModel()
+                .getStarSystemComponent());
+        planetSurveyLabels.createPairs();
 
-	for (DataPair planetLabel : planetSurveyLabels.getPairList()) {
-	    planetInformationTable.add(planetLabel.getLabel()).left();
-	    planetInformationTable.add(planetLabel.getValue()).left();
-	    planetInformationTable.row();
-	}
+        for (DataPair planetLabel : planetSurveyLabels.getPairList()) {
+            planetInformationTable.add(planetLabel.getLabel()).left();
+            planetInformationTable.add(planetLabel.getValue()).left();
+            planetInformationTable.row();
+        }
 
-	planetInformationTable.add(new Label("\n\n", UserInterfaceBank.userInterfaceSkin));
-	planetInformationTable.row();
+        planetInformationTable.add(new Label("\n\n", UserInterfaceBank.userInterfaceSkin));
+        planetInformationTable.row();
 
-	return planetInformationTable;
+        return planetInformationTable;
     }
 }

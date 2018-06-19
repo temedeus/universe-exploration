@@ -1,23 +1,22 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.components.window;
 
+import com.universe.exploration.localization.Localizer;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.universe.exploration.localization.Localizer;
 
 /**
  * <p>
  * Contains window caption and ok button text. Referenced as {@link LocalKey},
  * not direct strings.
  * </p>
- * 
+ * <p>
  * TODO: Maybe {@link BasicWindow} could incorporate type within?
- * 
- * @author 1.11.2015 Teemu Puurunen
  *
+ * @author 1.11.2015 Teemu Puurunen
  */
 public enum WindowType {
     QUIT_WINDOW("TITLE_QUIT_GAME", "BTN_OK", WindowSetup.SMALL, true),
@@ -38,54 +37,48 @@ public enum WindowType {
      * List of planet general details. Allows to open up e.g.
      * {@link #SURVEY_WINDOW}.
      */
-    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY", WindowSetup.LARGE, true) {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.universe.exploration.ueui.WindowType#retreiveDependencies()
-	 */
-	@Override
-	public List<WindowType> retreiveChildWindows() {
-	    List<WindowType> dependencies = new ArrayList<WindowType>();
-	    dependencies.add(SURVEY_WINDOW);
-
-	    return dependencies;
-	}
-    },
+    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY", WindowSetup.LARGE, true),
 
     SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK", WindowSetup.MEDIUM, false) {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.universe.exploration.userinterface.components.window.WindowType#
-	 * retreiveChildWindows()
-	 */
-	@Override
-	public List<WindowType> retreiveChildWindows() {
-	    List<WindowType> dependencies = new ArrayList<WindowType>();
-	    dependencies.add(SURVEY_DETAILS);
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * com.universe.exploration.userinterface.components.window.WindowType#
+         * relatedViews()
+         */
+        @Override
+        public List<WindowType> relatedViews() {
+            List<WindowType> dependencies = new ArrayList<WindowType>();
+            dependencies.add(SURVEY_DETAILS);
 
-	    return dependencies;
-	}
+            return dependencies;
+        }
     },
 
-    SURVEY_DETAILS("TITLE_SURVEY_DETAILS", "BTN_OK", WindowSetup.LARGE, false),
+    SURVEY_DETAILS("TITLE_SURVEY_DETAILS", "BTN_OK", WindowSetup.LARGE, false) {
+        @Override
+        public List<WindowType> relatedViews() {
+            List<WindowType> dependencies = new ArrayList<WindowType>();
+            dependencies.add(PLANET_DETAILS);
+            return dependencies;
+        }
+    },
 
     CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK", WindowSetup.LARGE, false) {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.universe.exploration.ueui.components.window.WindowType#
-	 * retreiveChildWindows()
-	 */
-	@Override
-	public List<WindowType> retreiveChildWindows() {
-	    List<WindowType> dependencies = new ArrayList<WindowType>();
-	    dependencies.add(CREWMEMBER_DETAILS);
+        /*
+         * (non-Javadoc)
+         *
+         * @see com.universe.exploration.ueui.components.window.WindowType#
+         * relatedViews()
+         */
+        @Override
+        public List<WindowType> relatedViews() {
+            List<WindowType> dependencies = new ArrayList<WindowType>();
+            dependencies.add(CREWMEMBER_DETAILS);
 
-	    return dependencies;
-	}
+            return dependencies;
+        }
     },
 
     CREWMEMBER_DETAILS("TITLE_CREWMEMBER_DETAILS", "BTN_OK", WindowSetup.LARGE, false),
@@ -106,54 +99,54 @@ public enum WindowType {
     /**
      * Contains window caption and ok button text.
      */
-    private WindowType(String caption, String okButtonCaption, WindowSetup windowSetup, boolean hasCancelButton) {
-	this.caption = caption;
-	this.okButtonCaption = okButtonCaption;
-	this.windowSetup = windowSetup;
-	this.hasCancelButton = hasCancelButton;
+    WindowType(String caption, String okButtonCaption, WindowSetup windowSetup, boolean hasCancelButton) {
+        this.caption = caption;
+        this.okButtonCaption = okButtonCaption;
+        this.windowSetup = windowSetup;
+        this.hasCancelButton = hasCancelButton;
     }
 
     /**
      * By default no window has any dependencies. Override method to set them.
      * If window has dependencies, closing this given window will close these
      * other windows as well.
-     * 
+     *
      * @return List<WindowType> list of windows that this WindowType is
-     *         dependent of.
+     * dependent of.
      */
-    public List<WindowType> retreiveChildWindows() {
-	return null;
+    public List<WindowType> relatedViews() {
+        return null;
     }
 
     public boolean windowPausesGame() {
-	return false;
+        return false;
     }
 
     /**
      * @return the caption
      */
     public String getLocalizedCaption() {
-	return Localizer.getInstance().get(caption);
+        return Localizer.getInstance().get(caption);
     }
 
     /**
      * @return the okButtonCaption
      */
     public String getLocalizedOkButtonCaption() {
-	return Localizer.getInstance().get(okButtonCaption);
+        return Localizer.getInstance().get(okButtonCaption);
     }
 
     /**
      * @return the windowSetup
      */
     public WindowSetup getWindowSetup() {
-	return windowSetup;
+        return windowSetup;
     }
 
     /**
      * @return the hasCancelButton
      */
     public boolean isHasCancelButton() {
-	return hasCancelButton;
+        return hasCancelButton;
     }
 }

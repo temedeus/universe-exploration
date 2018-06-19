@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.casualty;
 
@@ -9,9 +9,8 @@ import com.universe.exploration.crewmember.CrewMember;
  * <p>
  * Bean describing crewmans death, reason of fatality etc.
  * </p>
- * 
- * @author 25.10.2015 Teemu Puurunen
  *
+ * @author 25.10.2015 Teemu Puurunen
  */
 public class Casualty {
 
@@ -26,15 +25,14 @@ public class Casualty {
      * @return the causeOfDeath
      */
     public SurveyIncident getSurveyIncident() {
-	return incident;
+        return incident;
     }
 
     /**
-     * @param causeOfDeath
-     *            the causeOfDeath to set
+     * @param causeOfDeath the causeOfDeath to set
      */
     public void setCauseOfDeath(SurveyIncident causeOfDeath) {
-	this.incident = causeOfDeath;
+        this.incident = causeOfDeath;
     }
 
     /*
@@ -44,21 +42,20 @@ public class Casualty {
      */
     @Override
     public String toString() {
-	return "Casualty [crewmenID=" + member.getId() + ", causeOfDeath=" + incident + "]";
+        return "Casualty [crewmenID=" + member.getId() + ", causeOfDeath=" + incident + "]";
     }
 
     /**
      * @return the member
      */
     public CrewMember getMember() {
-	return member;
+        return member;
     }
 
     /**
-     * @param member
-     *            the member to set
+     * @param member the member to set
      */
     public void setMember(CrewMember member) {
-	this.member = member;
+        this.member = member;
     }
 }

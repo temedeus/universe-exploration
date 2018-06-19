@@ -1,9 +1,7 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.components;
-
-import java.util.List;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -21,11 +19,12 @@ import com.universe.exploration.spritecontainer.PlanetSprite;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.userinterface.ButtonFactory;
 
+import java.util.List;
+
 /**
  * Handles selecting planets.
- * 
- * @author 1.2.2016 Teemu Puurunen
  *
+ * @author 1.2.2016 Teemu Puurunen
  */
 public class PlanetSelection {
 
@@ -51,76 +50,76 @@ public class PlanetSelection {
      * <p>
      * Initialize selection with a list of {@link PlanetCelestialComponent}.
      * </p>
-     * 
+     *
      * @param planetList
      */
     public PlanetSelection(PlanetHandler gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
-	this.gameViewObjectContainer = gameViewObjectContainer;
-	this.planetList = planetList;
+        this.gameViewObjectContainer = gameViewObjectContainer;
+        this.planetList = planetList;
 
-	surveyButton = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_SURVEY"),
-		new ClickListener() {
-		    /*
-		     * (non-Javadoc)
-		     * 
-		     * @see com.badlogic.gdx.scenes.scene2d.utils. ClickListener
-		     * #clicked(com.badlogic.gdx.scenes. scene2d.InputEvent,
-		     * float, float)
-		     */
-		    @Override
-		    public void clicked(InputEvent event, float x, float y) {
-			firePlanetClickListener();
-		    }
-		});
+        surveyButton = new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_SURVEY"),
+                new ClickListener() {
+                    /*
+                     * (non-Javadoc)
+                     *
+                     * @see com.badlogic.gdx.scenes.scene2d.utils. ClickListener
+                     * #clicked(com.badlogic.gdx.scenes. scene2d.InputEvent,
+                     * float, float)
+                     */
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        firePlanetClickListener();
+                    }
+                });
     }
 
     public void disablePlanetSelection(boolean disable) {
-	surveyButton.setDisabled(disable);
-	planetSelectBox.setDisabled(disable);
+        surveyButton.setDisabled(disable);
+        planetSelectBox.setDisabled(disable);
     }
 
     public PlanetCelestialComponent parsePlanetFromSelectBox() {
-	int planetIndex = Integer.parseInt(((String) planetSelectBox.getSelected()).substring(0, 1)) - 1;
-	return planetList.get(planetIndex);
+        int planetIndex = Integer.parseInt(((String) planetSelectBox.getSelected()).substring(0, 1)) - 1;
+        return planetList.get(planetIndex);
     }
 
     private UESelectBox<Object> createPlanetSelectBox() {
-	Object[] labelList = new Object[planetList.size()];
+        Object[] labelList = new Object[planetList.size()];
 
-	int x = 0;
-	for (PlanetCelestialComponent planet : planetList) {
-	    labelList[x++] = "" + x + ": " + planet.getComponentName();
-	}
+        int x = 0;
+        for (PlanetCelestialComponent planet : planetList) {
+            labelList[x++] = "" + x + ": " + planet.getComponentName();
+        }
 
-	planetSelectBox.setItems(labelList);
-	planetSelectBox.addCaptureListener(new ChangeListener() {
+        planetSelectBox.setItems(labelList);
+        planetSelectBox.addCaptureListener(new ChangeListener() {
 
-	    @Override
-	    public void changed(ChangeEvent event, Actor actor) {
-		fireSelectedPlanetChangedListener();
-	    }
-	});
-	return planetSelectBox;
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                fireSelectedPlanetChangedListener();
+            }
+        });
+        return planetSelectBox;
     }
 
     private void fireSelectedPlanetChangedListener() {
-	selectedPlanetChangedListener.handleEventClassEvent(new UEEvent(parsePlanetFromSelectBox()));
+        selectedPlanetChangedListener.handleEventClassEvent(new UEEvent(parsePlanetFromSelectBox()));
     }
 
     public VerticalGroup createPlanetSelectionTable() {
-	VerticalGroup table = new VerticalGroup();
-	table.align(Align.left | Align.bottom);
-	table.addActor(new Spacer());
+        VerticalGroup table = new VerticalGroup();
+        table.align(Align.left | Align.bottom);
+        table.addActor(new Spacer());
 
-	if (planetList.size() > 0) {
-	    table.addActor(new UELabel(Localizer.getInstance().get("LABEL_PLANET_SELECTION")));
-	    table.addActor(createPlanetSelectBox());
-	    table.addActor(surveyButton);
-	} else {
-	    table.addActor(new UELabel(Localizer.getInstance().get("LABEL_NO_PLANETS_FOUND")));
-	}
+        if (planetList.size() > 0) {
+            table.addActor(new UELabel(Localizer.getInstance().get("LABEL_PLANET_SELECTION")));
+            table.addActor(createPlanetSelectBox());
+            table.addActor(surveyButton);
+        } else {
+            table.addActor(new UELabel(Localizer.getInstance().get("LABEL_NO_PLANETS_FOUND")));
+        }
 
-	return table;
+        return table;
     }
 
     /**
@@ -139,23 +138,21 @@ public class PlanetSelection {
      * </p>
      */
     private void firePlanetClickListener() {
-	planetClickListener.handleEventClassEvent(
-		new UEEvent(gameViewObjectContainer.getPlanetSpriteByComponent(parsePlanetFromSelectBox())));
+        planetClickListener.handleEventClassEvent(
+                new UEEvent(gameViewObjectContainer.getPlanetSpriteByComponent(parsePlanetFromSelectBox())));
     }
 
     /**
-     * @param selectedPlanetChangedListener
-     *            the selectedPlanetChangedListener to set
+     * @param selectedPlanetChangedListener the selectedPlanetChangedListener to set
      */
     public void setSelectedPlanetChangedListener(UEListener selectedPlanetChangedListener) {
-	this.selectedPlanetChangedListener = selectedPlanetChangedListener;
+        this.selectedPlanetChangedListener = selectedPlanetChangedListener;
     }
 
     /**
-     * @param planetClickListener
-     *            the planetClickListener to set
+     * @param planetClickListener the planetClickListener to set
      */
     public void setPlanetClickListener(UEListener planetClickListener) {
-	this.planetClickListener = planetClickListener;
+        this.planetClickListener = planetClickListener;
     }
 }

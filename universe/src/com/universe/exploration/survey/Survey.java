@@ -1,20 +1,19 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.survey;
-
-import java.util.List;
 
 import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.resource.ResourcesFoundBean;
 
+import java.util.List;
+
 /**
  * Survey abstraction. Contains information about the survey itself, resources
  * found during the expedition, start and end dates.
- * 
- * @author 25.10.2015 Teemu Puurunen
  *
+ * @author 25.10.2015 Teemu Puurunen
  */
 public class Survey {
     private List<CrewMember> surveyTeam;
@@ -42,98 +41,91 @@ public class Survey {
      * @return the resourcesFound
      */
     public ResourcesFoundBean getResourcesFound() {
-	return resourcesFound;
+        return resourcesFound;
     }
 
     /**
-     * @param resourcesFound
-     *            the resourcesFound to set
+     * @param resourcesFound the resourcesFound to set
      */
     public void setResourcesFound(ResourcesFoundBean resourcesFound) {
-	this.resourcesFound = resourcesFound;
+        this.resourcesFound = resourcesFound;
     }
 
     /**
      * @return the mortalities
      */
     public List<Casualty> getMortalities() {
-	return mortalities;
+        return mortalities;
     }
 
     /**
-     * @param mortalities
-     *            the mortalities to set
+     * @param mortalities the mortalities to set
      */
     public void setMortalities(List<Casualty> mortalities) {
-	this.mortalities = mortalities;
+        this.mortalities = mortalities;
     }
 
     /**
      * @return the surveyStartDay
      */
     public int getSurveyStartDay() {
-	return surveyStartDay;
+        return surveyStartDay;
     }
 
     /**
      * @return the surveyEndDay
      */
     public int getSurveyEndDay() {
-	return surveyEndDay;
+        return surveyEndDay;
     }
 
     /**
-     * @param surveyStartDay
-     *            the surveyStartDay to set
+     * @param surveyStartDay the surveyStartDay to set
      */
     public void setSurveyStartDay(int surveyStartDay) {
-	this.surveyStartDay = surveyStartDay;
+        this.surveyStartDay = surveyStartDay;
     }
 
     /**
-     * @param surveyEndDay
-     *            the surveyEndDay to set
+     * @param surveyEndDay the surveyEndDay to set
      */
     public void setSurveyEndDay(int surveyEndDay) {
-	this.surveyEndDay = surveyEndDay;
+        this.surveyEndDay = surveyEndDay;
     }
 
     /**
      * @return the surveyTeam
      */
     public List<CrewMember> getSurveyTeam() {
-	return surveyTeam;
+        return surveyTeam;
     }
 
     /**
-     * @param surveyTeam
-     *            the surveyTeam to set
+     * @param surveyTeam the surveyTeam to set
      */
     public void setSurveyTeam(List<CrewMember> surveyTeam) {
-	this.surveyTeam = surveyTeam;
+        this.surveyTeam = surveyTeam;
     }
 
     /**
-     * 
      * @return
      */
     public int getSurveyTeamSize() {
-	return surveyTeam.size();
+        return surveyTeam.size();
     }
 
     /**
      * @return the surveyName
      */
     public String getSurveyName() {
-	return surveyName;
+        return surveyName;
     }
 
     /**
-     * @param surveyName
-     *            the surveyName to set
+     * @param surveyName the surveyName to set
      */
     public void setSurveyName(String surveyName) {
-	this.surveyName = surveyName;
+        this.surveyName = surveyName;
     }
 
 }

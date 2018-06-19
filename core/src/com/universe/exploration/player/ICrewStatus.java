@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.player;
 
@@ -8,9 +8,8 @@ import com.universe.exploration.resource.Resource;
 
 /**
  * Interface for different crew statuses.
- * 
- * @author 14.1.2017 Teemu Puurunen
  *
+ * @author 14.1.2017 Teemu Puurunen
  */
 public interface ICrewStatus {
     /**

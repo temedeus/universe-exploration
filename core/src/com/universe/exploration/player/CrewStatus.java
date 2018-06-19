@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.player;
 
@@ -7,9 +7,8 @@ package com.universe.exploration.player;
  * Abstract class for crew statuses. Deals with handling min/max values and the
  * current value. Also provides a warning if given resource is about to be
  * depleted.
- * 
- * @author 14.1.2017 Teemu Puurunen
  *
+ * @author 14.1.2017 Teemu Puurunen
  */
 public abstract class CrewStatus implements ICrewStatus {
 
@@ -26,8 +25,8 @@ public abstract class CrewStatus implements ICrewStatus {
      * warn on depletion of this given resource.
      */
     public CrewStatus() {
-	value = getSetup().getMaxValue();
-	providedWarningOnDepletion = true;
+        value = getSetup().getMaxValue();
+        providedWarningOnDepletion = true;
     }
 
     /*
@@ -37,11 +36,11 @@ public abstract class CrewStatus implements ICrewStatus {
      */
     @Override
     public void incrementValue(float increment) {
-	if (value + increment > getSetup().getMaxValue()) {
-	    value = getSetup().getMaxValue();
-	} else {
-	    value += increment;
-	}
+        if (value + increment > getSetup().getMaxValue()) {
+            value = getSetup().getMaxValue();
+        } else {
+            value += increment;
+        }
     }
 
     /*
@@ -51,27 +50,27 @@ public abstract class CrewStatus implements ICrewStatus {
      */
     @Override
     public void decrementValue(float decrement) {
-	if (value - decrement <= getSetup().getMinValue()) {
-	    value = getSetup().getMinValue();
-	    providedWarningOnDepletion = false;
-	} else {
-	    value -= decrement;
-	}
+        if (value - decrement <= getSetup().getMinValue()) {
+            value = getSetup().getMinValue();
+            providedWarningOnDepletion = false;
+        } else {
+            value -= decrement;
+        }
     }
 
     @Override
     public float getValue() {
-	return value;
+        return value;
     }
 
     @Override
     public boolean isProvidedWarningOnDepletion() {
-	return providedWarningOnDepletion;
+        return providedWarningOnDepletion;
     }
 
     @Override
     public void setProvidedWarningOnDepletion(boolean providedWarningOnDepletion) {
-	this.providedWarningOnDepletion = providedWarningOnDepletion;
+        this.providedWarningOnDepletion = providedWarningOnDepletion;
     }
 
 }

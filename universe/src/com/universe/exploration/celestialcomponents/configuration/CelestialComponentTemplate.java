@@ -1,22 +1,17 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.celestialcomponents.configuration;
 
-import com.universe.exploration.celestialcomponents.configuration.planets.ColdRockyPlanet;
-import com.universe.exploration.celestialcomponents.configuration.planets.ExteriorTerrestrialPlanet;
-import com.universe.exploration.celestialcomponents.configuration.planets.GasGiantPlanet;
-import com.universe.exploration.celestialcomponents.configuration.planets.GoldilocksPlanet;
-import com.universe.exploration.celestialcomponents.configuration.planets.InteriorTerrestrialPlanet;
+import com.universe.exploration.celestialcomponents.configuration.planets.*;
 import com.universe.exploration.celestialcomponents.configuration.stars.LargeStar;
 import com.universe.exploration.celestialcomponents.configuration.stars.MediumStar;
 import com.universe.exploration.celestialcomponents.configuration.stars.SmallStar;
 
 /**
  * Enumeration of potential stars and planets.
- * 
- * @author 15.1.2017 Teemu Puurunen
  *
+ * @author 15.1.2017 Teemu Puurunen
  */
 public enum CelestialComponentTemplate {
     // SYSTEM STARS
@@ -38,21 +33,21 @@ public enum CelestialComponentTemplate {
     private final int prevalance;
 
     CelestialComponentTemplate(AbstractConfiguration componentType, int prevalance) {
-	this.componentType = componentType;
-	this.prevalance = prevalance;
+        this.componentType = componentType;
+        this.prevalance = prevalance;
     }
 
     /**
      * @return the graphicsFile
      */
     public AbstractConfiguration getComponentType() {
-	return componentType;
+        return componentType;
     }
 
     /**
      * @return the prevalance
      */
     public int getPrevalance() {
-	return prevalance;
+        return prevalance;
     }
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.spritecontainer;
 
@@ -8,9 +8,8 @@ package com.universe.exploration.spritecontainer;
  * Basically this abstraction is solely to maintain information on the selected
  * planet. Class also takes care of fading it in and out from view.
  * </p>
- * 
- * @author 12.1.2016 Teemu Puurunen
  *
+ * @author 12.1.2016 Teemu Puurunen
  */
 public class SelectedPlanet {
     private PlanetSprite selectedPlanet;
@@ -22,27 +21,26 @@ public class SelectedPlanet {
     private static final Fader planetFader = new Fader(alphaMin, alphaMax, decrementRate, incrementRate);
 
     public SelectedPlanet() {
-	planetFader.setAlphaValue(0.0f);
+        planetFader.setAlphaValue(0.0f);
     }
 
     public void handleAlpha(boolean fadeAway) {
-	selectedPlanet.getEnlarged().setAlpha(planetFader.updateAlpha(fadeAway));
-	selectedPlanet.getEnlarged().rotate(0.01f);
+        selectedPlanet.getEnlarged().setAlpha(planetFader.updateAlpha(fadeAway));
+        selectedPlanet.getEnlarged().rotate(0.01f);
     }
 
     /**
      * @return the selectedPlanet
      */
     public PlanetSprite getSelectedPlanet() {
-	return selectedPlanet;
+        return selectedPlanet;
     }
 
     /**
-     * @param selectedPlanet
-     *            the selectedPlanet to set
+     * @param selectedPlanet the selectedPlanet to set
      */
     public void setSelectedPlanet(PlanetSprite selectedPlanet) {
-	this.selectedPlanet = selectedPlanet;
+        this.selectedPlanet = selectedPlanet;
     }
 
 }

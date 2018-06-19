@@ -6,18 +6,17 @@ import com.universe.exploration.resource.Water;
 
 /**
  * Describes water status of a crew.
- * 
- * @author 14.1.2017 Teemu Puurunen
  *
+ * @author 14.1.2017 Teemu Puurunen
  */
 public class CrewStatusWater extends CrewStatus {
     protected float value;
 
     /**
-     * 
+     *
      */
     public CrewStatusWater() {
-	value = 200;
+        value = 200;
     }
 
     /*
@@ -28,7 +27,7 @@ public class CrewStatusWater extends CrewStatus {
      */
     @Override
     public Class<? extends Resource> mapCrewStatusToResource() {
-	return Water.class;
+        return Water.class;
     }
 
     /*
@@ -39,7 +38,7 @@ public class CrewStatusWater extends CrewStatus {
      */
     @Override
     public CrewMemberCondition deprivationCausesCondition() {
-	return CrewMemberCondition.WATER_DEPRIVATION;
+        return CrewMemberCondition.WATER_DEPRIVATION;
     }
 
     /*
@@ -49,7 +48,7 @@ public class CrewStatusWater extends CrewStatus {
      */
     @Override
     public CrewStatusSetup getSetup() {
-	return CrewStatusSetup.WATER;
+        return CrewStatusSetup.WATER;
     }
 
     /*
@@ -60,7 +59,7 @@ public class CrewStatusWater extends CrewStatus {
      */
     @Override
     public float healthDecreaseWhenDepleated() {
-	return StatusConsumption.HEALTH_DECREASE_WHEN_WATER_DEPLETED;
+        return StatusConsumption.HEALTH_DECREASE_WHEN_WATER_DEPLETED;
     }
 
     /*
@@ -70,6 +69,6 @@ public class CrewStatusWater extends CrewStatus {
      */
     @Override
     public float getDecrement() {
-	return StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN;
+        return StatusConsumption.CREWMEN_WATER_CONSUMPTION_PER_CREWMAN;
     }
 }

@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.resource;
 
 /**
  * @author 13.1.2017 Teemu Puurunen
- *
  */
 public class Air extends Resource {
 
@@ -16,7 +15,7 @@ public class Air extends Resource {
      */
     @Override
     public String getResourceLocal() {
-	return "GENERIC_AIR";
+        return "GENERIC_AIR";
     }
 
     /* (non-Javadoc)
@@ -24,7 +23,7 @@ public class Air extends Resource {
      */
     @Override
     public ResourcesFoundBoundary getResourcesFoundBoundary() {
-	return ResourcesFoundBoundary.AIR;
+        return ResourcesFoundBoundary.AIR;
     }
 
 }

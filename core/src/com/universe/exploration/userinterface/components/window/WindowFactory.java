@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.components.window;
 
@@ -19,7 +19,7 @@ import com.universe.exploration.userinterface.skins.UserInterfaceBank;
  * never requires any advanced functionality so we'll make do with what we have
  * now. If game complexity increases significantly, let's work on abstraction
  * levels then.
- * 
+ *
  * @author 25.8.2015 Teemu Puurunen
  */
 public class WindowFactory {
@@ -30,48 +30,47 @@ public class WindowFactory {
     private WindowContainer windowContainer;
 
     public WindowFactory(WindowContainer windowContainer) {
-	this.windowContainer = windowContainer;
+        this.windowContainer = windowContainer;
     }
 
     /**
      * Create a window based on {@link WindowType}. With no
      * <code>okAction</code> specified, just close the window.
-     * 
+     *
      * @param windowType
      * @param contentTable
-     * @param okAction
-     *            Action taken when primary button is pressed. If
-     *            <code>null</code>, just close window.
+     * @param okAction        Action taken when primary button is pressed. If
+     *                        <code>null</code>, just close window.
      * @param hasCancelButton
      * @return
      */
     public <T extends Actor> BasicWindow createWindow(final WindowType windowType, T contentTable, ClickListener okAction) {
-	final BasicWindow window = createWindowFrame(windowType);
+        final BasicWindow window = createWindowFrame(windowType);
 
-	UETable buttontable = new UETable();
+        UETable buttontable = new UETable();
 
-	if (okAction != null) {
-	    buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
-	} else {
-	    buttontable.add(
-		    new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), createCancelClickListener(windowType)));
-	}
+        if (okAction != null) {
+            buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
+        } else {
+            buttontable.add(
+                    new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), createCancelClickListener(windowType)));
+        }
 
-	if (windowType.isHasCancelButton()) {
-	    buttontable.add(
-		    new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CANCEL"), createCancelClickListener(windowType)));
-	}
+        if (windowType.isHasCancelButton()) {
+            buttontable.add(
+                    new ButtonFactory().createTextButton(Localizer.getInstance().get("BTN_CANCEL"), createCancelClickListener(windowType)));
+        }
 
-	buttontable.row();
+        buttontable.row();
 
-	window.add(combineDataAndButtonbar(contentTable, buttontable));
+        window.add(combineDataAndButtonbar(contentTable, buttontable));
 
-	return window;
+        return window;
     }
 
     /**
      * Creates a description window with secondary action.
-     * 
+     *
      * @param windowType
      * @param contentTable
      * @param secondaryButtonTitle
@@ -80,68 +79,67 @@ public class WindowFactory {
      * @return
      */
     public BasicWindow createWindowWithSecondaryAction(WindowType windowType, UETable contentTable, String secondaryButtonTitle,
-	    ClickListener okAction, ClickListener secondaryAction) {
-	final BasicWindow window = createWindowFrame(windowType);
+                                                       ClickListener okAction, ClickListener secondaryAction) {
+        final BasicWindow window = createWindowFrame(windowType);
 
-	UETable buttontable = new UETable();
-	buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
-	buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(secondaryButtonTitle), secondaryAction));
+        UETable buttontable = new UETable();
+        buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), okAction));
+        buttontable.add(new ButtonFactory().createTextButton(Localizer.getInstance().get(secondaryButtonTitle), secondaryAction));
 
-	buttontable.row();
+        buttontable.row();
 
-	Table table = new Table();
-	table.add(contentTable);
-	table.row();
-	table.add(buttontable);
+        Table table = new Table();
+        table.add(contentTable);
+        table.row();
+        table.add(buttontable);
 
-	window.add(table);
+        window.add(table);
 
-	return window;
+        return window;
     }
 
     private BasicWindow createWindowFrame(final WindowType windowType) {
-	if (windowType.getWindowSetup().equals(WindowSetup.LARGE))
-	    return new LargeWindow(windowType, skin, STYLE);
+        if (windowType.getWindowSetup().equals(WindowSetup.LARGE))
+            return new LargeWindow(windowType, skin, STYLE);
 
-	if (windowType.getWindowSetup().equals(WindowSetup.MEDIUM))
-	    return new MediumWindow(windowType, skin, STYLE);
+        if (windowType.getWindowSetup().equals(WindowSetup.MEDIUM))
+            return new MediumWindow(windowType, skin, STYLE);
 
-	if (windowType.getWindowSetup().equals(WindowSetup.SMALL))
-	    return new SmallWindow(windowType, skin, STYLE);
+        if (windowType.getWindowSetup().equals(WindowSetup.SMALL))
+            return new SmallWindow(windowType, skin, STYLE);
 
-	return null;
+        return null;
     }
 
     public ClickListener createCancelClickListener(final WindowType windowType) {
-	return new ClickListener() {
-	    @Override
-	    public void clicked(InputEvent event, float x, float y) {
-		windowContainer.closeWindow(windowType);
-	    }
-	};
+        return new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                windowContainer.closeWindow(windowType);
+            }
+        };
     }
 
     private <T extends Actor> Table combineDataAndButtonbar(T contentTable, Table buttontable) {
-	Table table = new Table();
-	table.add(contentTable);
-	table.row();
-	table.add(buttontable);
+        Table table = new Table();
+        table.add(contentTable);
+        table.row();
+        table.add(buttontable);
 
-	return table;
+        return table;
     }
 
     /**
      * @return the windowContainer
      */
     public WindowContainer getWindowContainer() {
-	return windowContainer;
+        return windowContainer;
     }
 
     /**
-     * @param windowContainer
-     *            the windowContainer to set
+     * @param windowContainer the windowContainer to set
      */
     public void setWindowContainer(WindowContainer windowContainer) {
-	this.windowContainer = windowContainer;
+        this.windowContainer = windowContainer;
     }
 }

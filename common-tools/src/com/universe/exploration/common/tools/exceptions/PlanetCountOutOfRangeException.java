@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.common.tools.exceptions;
 
 /**
  * @author 18.6.2015 Teemu Puurunen
- *
  */
 public class PlanetCountOutOfRangeException extends Exception {
 
@@ -15,7 +14,7 @@ public class PlanetCountOutOfRangeException extends Exception {
      * @param string
      */
     public PlanetCountOutOfRangeException(String string) {
-	super(string);
+        super(string);
     }
 
 }

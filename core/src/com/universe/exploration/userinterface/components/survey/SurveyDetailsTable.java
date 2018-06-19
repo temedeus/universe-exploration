@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.components.survey;
 
@@ -12,19 +12,18 @@ import com.universe.exploration.userinterface.components.UETable;
 
 /**
  * Survey details table.
- * 
- * @author 10.1.2017 Teemu Puurunen
  *
+ * @author 10.1.2017 Teemu Puurunen
  */
 public class SurveyDetailsTable extends UETable {
     public SurveyDetailsTable(Survey survey) {
-	Table cell = new Table();
-	cell.padBottom(15);
-	cell.padRight(15);
-	cell.add(new UELabel(Localizer.getInstance().get("LABEL_NAME") + survey.getSurveyName()));
-	cell.row();
-	cell.add(new UELabel(new CrewMemberTools().concatenateCrewMemberListNames((survey.getSurveyTeam()))));
-	cell.row();
-	add(cell);
+        Table cell = new Table();
+        cell.padBottom(15);
+        cell.padRight(15);
+        cell.add(new UELabel(Localizer.getInstance().get("LABEL_NAME") + survey.getSurveyName()));
+        cell.row();
+        cell.add(new UELabel(new CrewMemberTools().concatenateCrewMemberListNames((survey.getSurveyTeam()))));
+        cell.row();
+        add(cell);
     }
 }

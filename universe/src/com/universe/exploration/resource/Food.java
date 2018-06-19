@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.resource;
 
 /**
  * @author 13.1.2017 Teemu Puurunen
- *
  */
 public class Food extends Resource {
 
@@ -16,7 +15,7 @@ public class Food extends Resource {
      */
     @Override
     public String getResourceLocal() {
-	return "GENERIC_FOOD";
+        return "GENERIC_FOOD";
     }
 
     /* (non-Javadoc)
@@ -24,7 +23,7 @@ public class Food extends Resource {
      */
     @Override
     public ResourcesFoundBoundary getResourcesFoundBoundary() {
-	return ResourcesFoundBoundary.FOOD;
+        return ResourcesFoundBoundary.FOOD;
     }
 
 }

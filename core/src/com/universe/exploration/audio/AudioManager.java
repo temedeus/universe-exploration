@@ -1,117 +1,80 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.audio;
-
-import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
+import java.util.HashMap;
+
 /**
  * Use this class to manage all sound effects and music within the game.
- * 
- * @author 5.11.2015 Teemu Puurunen
  *
+ * @author 5.11.2015 Teemu Puurunen
  */
 public class AudioManager {
-	/**
-	 * Music files
-	 */
-	private HashMap<IAudioFile, Sound> audioFileCache = new HashMap<IAudioFile, Sound>();
+    /**
+     * MusicConfiguration files
+     */
+    private HashMap<IAudioFile, Sound> audioFileCache = new HashMap<IAudioFile, Sound>();
 
-	/**
-	 * We will need the ID of the currently playing music in order to smoothly
-	 * transition to another songs.
-	 */
-	private long currentlyPlayingBackgroundMusic;
 
-	/**
-	 * Master volume for music.
-	 */
-	private float musicVolume;
+    private HashMap<IAudioFile, com.badlogic.gdx.audio.Music> musicCache = new HashMap<IAudioFile, com.badlogic.gdx.audio.Music>();
+    /**
+     * We will need the ID of the currently playing music in order to smoothly
+     * transition to another songs.
+     */
+    private com.badlogic.gdx.audio.Music currentlyPlayingBackgroundMusic;
 
-	/**
-	 * Master volume for sound effects.
-	 */
-	private float soundEffectsVolume;
+    /**
+     * Master volume for music.
+     */
+    private float musicVolume;
 
-	/**
-	 * TODO: Right now we're just loading all the sounds ready because there
-	 * isnt many of them. Once you get to coding the main menu there is probably
-	 * a need to load this stuff only once necessary.
-	 * 
-	 * TODO: LibGdx own resource manager?
-	 */
-	public AudioManager() {
-		for (SoundEffect effect : SoundEffect.values()) {
-			audioFileCache.put(effect, Gdx.audio.newSound(Gdx.files.internal(effect.getAudioFilePath())));
-		}
+    /**
+     * Master volume for sound effects.
+     */
+    private float soundEffectsVolume;
 
-		for (Music effect : Music.values()) {
-			audioFileCache.put(effect, Gdx.audio.newSound(Gdx.files.internal(effect.getAudioFilePath())));
-		}
-	}
+    /**
+     * TODO: Right now we're just loading all the sounds ready because there
+     * isnt many of them. Once you get to coding the main menu there is probably
+     * a need to load this stuff only once necessary.
+     * <p>
+     * TODO: LibGdx own resource manager?
+     */
+    public AudioManager() {
+        for (SoundEffect effect : SoundEffect.values()) {
+            audioFileCache.put(effect, Gdx.audio.newSound(Gdx.files.internal(effect.getAudioFilePath())));
+        }
 
-	public void playSoundEffect(IAudioFile audio) {
-		audioFileCache.get(audio).play();
-	}
+        for (MusicConfiguration effect : MusicConfiguration.values()) {
+            musicCache.put(effect, Gdx.audio.newMusic(Gdx.files.internal(effect.getAudioFilePath())));
+        }
+    }
 
-	public void playMusic(Music music, boolean loop) {
-		currentlyPlayingBackgroundMusic = (loop) ? audioFileCache.get(music).loop() : audioFileCache.get(music).play();
-	}
+    public void playSoundEffect(IAudioFile audio) {
+        audioFileCache.get(audio).play();
+    }
 
-	/**
-	 * TODO: transition to another song
-	 * 
-	 * @param music
-	 * @param loop
-	 */
-	public void smoothTransitionTo(Music music, boolean loop) {
-		audioFileCache.get(music).stop();
-	}
+    public void playMusic(MusicConfiguration music, boolean loop) {
+        currentlyPlayingBackgroundMusic = musicCache.get(music);
+        musicCache.get(music).setLooping(loop);
+        musicCache.get(music).play();
+    }
 
-	/**
-	 * @return the currentlyPlayingBackgroundMusic
-	 */
-	public long getCurrentlyPlayingBackgroundMusic() {
-		return currentlyPlayingBackgroundMusic;
-	}
+    /**
+     * @return the currentlyPlayingBackgroundMusic
+     */
+    public com.badlogic.gdx.audio.Music getCurrentlyPlayingBackgroundMusic() {
+        return currentlyPlayingBackgroundMusic;
+    }
 
-	/**
-	 * @return the audioFileCache
-	 */
-	public HashMap<IAudioFile, Sound> getAudioFileCache() {
-		return audioFileCache;
-	}
-
-	/**
-	 * @return the musicVolume
-	 */
-	public float getMusicVolume() {
-		return musicVolume;
-	}
-
-	/**
-	 * @return the soundEffectsVolume
-	 */
-	public float getSoundEffectsVolume() {
-		return soundEffectsVolume;
-	}
-
-	/**
-	 * @param musicVolume
-	 *            the musicVolume to set
-	 */
-	public void setMusicVolume(float musicVolume) {
-		this.musicVolume = musicVolume;
-	}
-
-	/**
-	 * @param soundEffectsVolume
-	 *            the soundEffectsVolume to set
-	 */
-	public void setSoundEffectsVolume(float soundEffectsVolume) {
-		this.soundEffectsVolume = soundEffectsVolume;
-	}
+    /**
+     * @return the audioFileCache
+     */
+    public HashMap<IAudioFile, Sound> getAudioFileCache() {
+        return audioFileCache;
+    }
 }

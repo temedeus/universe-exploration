@@ -43,135 +43,129 @@ abstract class SpriteContainer {
     protected String graphicsSource;
 
     public SpriteContainer(CelestialComponent starSystemComponent) {
-	this(starSystemComponent.getSpriteSize(), starSystemComponent.getGraphicsFile());
-	this.starSystemComponent = starSystemComponent;
-	celestialBodyGfxModel = new SpriteContainerState();
-	celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
+        this(starSystemComponent.getSpriteSize(), starSystemComponent.getGraphicsFile());
+        this.starSystemComponent = starSystemComponent;
+        celestialBodyGfxModel = new SpriteContainerState();
+        celestialBodyGfxModel.setStarSystemComponent(starSystemComponent);
     }
 
     public SpriteContainer(int spriteSize, String graphicsSource) {
-	this.spriteSize = spriteSize;
-	this.graphicsSource = graphicsSource;
+        this.spriteSize = spriteSize;
+        this.graphicsSource = graphicsSource;
 
-	setupSmallVersion();
-	setupDetailed();
+        setupSmallVersion();
+        setupDetailed();
     }
 
     /**
      * Initialize sprite and set its basic properties
      */
     public void setupSmallVersion() {
-	Texture texture = new Texture(Gdx.files.internal(graphicsSource));
-	smallVersion = new Sprite(texture);
-	smallVersion.setSize(this.spriteSize, this.spriteSize);
-	smallVersion.setOriginCenter();
+        Texture texture = new Texture(Gdx.files.internal(graphicsSource));
+        smallVersion = new Sprite(texture);
+        smallVersion.setSize(this.spriteSize, this.spriteSize);
+        smallVersion.setOriginCenter();
     }
 
     /**
      * Initialize sprite and set its basic properties
      */
     public void setupDetailed() {
-	Texture texture = new Texture(Gdx.files.internal(graphicsSource));
-	enlarged = new Sprite(texture);
-	enlarged.setSize(CoreConfiguration.ENLARGED_PLANET_SPRITE_SIZE, CoreConfiguration.ENLARGED_PLANET_SPRITE_SIZE);
-	enlarged.setOrigin(enlarged.getWidth() / 2, enlarged.getHeight() / 2);
-	enlarged.setPosition(-(enlarged.getWidth() / 2) - 600, -(enlarged.getWidth() / 2 + 600));
+        Texture texture = new Texture(Gdx.files.internal(graphicsSource));
+        enlarged = new Sprite(texture);
+        enlarged.setSize(CoreConfiguration.ENLARGED_PLANET_SPRITE_SIZE, CoreConfiguration.ENLARGED_PLANET_SPRITE_SIZE);
+        enlarged.setOrigin(enlarged.getWidth() / 2, enlarged.getHeight() / 2);
+        enlarged.setPosition(-(enlarged.getWidth() / 2) - 600, -(enlarged.getWidth() / 2 + 600));
     }
 
     public void updateSpritePosition() {
-	smallVersion.setPosition(celestialBodyGfxModel.getPositionX() - smallVersion.getWidth() / 2,
-		celestialBodyGfxModel.getPositionY() - smallVersion.getHeight() / 2);
+        smallVersion.setPosition(celestialBodyGfxModel.getPositionX() - smallVersion.getWidth() / 2,
+                celestialBodyGfxModel.getPositionY() - smallVersion.getHeight() / 2);
     }
 
     /**
      * @return the spriteSize
      */
     public int getSpriteSize() {
-	return spriteSize;
+        return spriteSize;
     }
 
     /**
-     * @param spriteSize
-     *            the spriteSize to set
+     * @param spriteSize the spriteSize to set
      */
     public void setSpriteSize(int spriteSize) {
-	this.spriteSize = spriteSize;
+        this.spriteSize = spriteSize;
     }
 
     /**
      * @return the graphicsSource
      */
     public String getGraphicsSource() {
-	return graphicsSource;
+        return graphicsSource;
     }
 
     /**
-     * @param graphicsSource
-     *            the graphicsSource to set
+     * @param graphicsSource the graphicsSource to set
      */
     public void setGraphicsSource(String graphicsSource) {
-	this.graphicsSource = graphicsSource;
+        this.graphicsSource = graphicsSource;
     }
 
     /**
      * @return the componentType
      */
     public CelestialComponent getComponentType() {
-	return starSystemComponent;
+        return starSystemComponent;
     }
 
     /**
-     * @param componentType
-     *            the componentType to set
+     * @param componentType the componentType to set
      */
     public void setComponentType(CelestialComponent componentType) {
-	this.starSystemComponent = componentType;
-	this.setCelestialBodyGfxModel(new SpriteContainerState());
-	this.celestialBodyGfxModel.setStarSystemComponent(componentType);
+        this.starSystemComponent = componentType;
+        this.setCelestialBodyGfxModel(new SpriteContainerState());
+        this.celestialBodyGfxModel.setStarSystemComponent(componentType);
     }
 
     /**
      * @return the sprite
      */
     public Sprite getSprite() {
-	return smallVersion;
+        return smallVersion;
     }
 
     /**
-     * @param sprite
-     *            the sprite to set
+     * @param sprite the sprite to set
      */
     public void setSprite(Sprite sprite) {
-	this.smallVersion = sprite;
+        this.smallVersion = sprite;
     }
 
     /**
      * @return the startBodyGfxModel
      */
     public SpriteContainerState getCelestialBodyGfxModel() {
-	return celestialBodyGfxModel;
+        return celestialBodyGfxModel;
     }
 
     /**
-     * @param startBodyGfxModel
-     *            the startBodyGfxModel to set
+     * @param startBodyGfxModel the startBodyGfxModel to set
      */
     public void setCelestialBodyGfxModel(SpriteContainerState startBodyGfxModel) {
-	this.celestialBodyGfxModel = startBodyGfxModel;
+        this.celestialBodyGfxModel = startBodyGfxModel;
     }
 
     /**
      * @return the enlarged
      */
     public Sprite getEnlarged() {
-	return enlarged;
+        return enlarged;
     }
 
     /**
-     * @param enlarged
-     *            the enlarged to set
+     * @param enlarged the enlarged to set
      */
     public void setEnlarged(Sprite enlarged) {
-	this.enlarged = enlarged;
+        this.enlarged = enlarged;
     }
 }

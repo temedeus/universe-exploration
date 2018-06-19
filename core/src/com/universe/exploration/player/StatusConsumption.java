@@ -1,13 +1,12 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.player;
 
 /**
  * Status consumption.
- * 
- * @author 13.1.2017 Teemu Puurunen
  *
+ * @author 13.1.2017 Teemu Puurunen
  */
 public class StatusConsumption {
 

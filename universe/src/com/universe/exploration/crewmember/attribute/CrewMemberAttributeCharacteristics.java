@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.crewmember.attribute;
 
 /**
  * @author 10.1.2017 Teemu Puurunen
- *
  */
 public enum CrewMemberAttributeCharacteristics {
     AGILITY(10, 4),
@@ -21,24 +20,24 @@ public enum CrewMemberAttributeCharacteristics {
     private final int minValue;
 
     /**
-     * 
+     *
      */
     private CrewMemberAttributeCharacteristics(int maxValue, int minValue) {
-	this.maxValue = maxValue;
-	this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.minValue = minValue;
     }
 
     /**
      * @return the maxValue
      */
     public int getMaxValue() {
-	return maxValue;
+        return maxValue;
     }
 
     /**
      * @return the minValue
      */
     public int getMinValue() {
-	return minValue;
+        return minValue;
     }
 }

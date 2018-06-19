@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.spritecontainer.data;
 
@@ -8,9 +8,8 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 /**
  * Abstract sprite container state. Describes position in Gdx space.
- * 
- * @author 2.8.2015 Teemu Puurunen
  *
+ * @author 2.8.2015 Teemu Puurunen
  */
 public class SpriteContainerState {
 
@@ -35,79 +34,75 @@ public class SpriteContainerState {
     protected CelestialComponent starSystemComponent;
 
     /**
-     * 
+     *
      */
     public SpriteContainerState() {
-	positionX = 0;
-	positionY = 0;
-	angle = 0;
+        positionX = 0;
+        positionY = 0;
+        angle = 0;
     }
 
     public void updateSpriteData() {
-	positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.cos((float) angle));
-	positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.sin((float) angle));
+        positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.cos((float) angle));
+        positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.sin((float) angle));
 
-	angle += ((PlanetCelestialComponent) starSystemComponent).getOrbitalVelocity();
+        angle += ((PlanetCelestialComponent) starSystemComponent).getOrbitalVelocity();
     }
 
     /**
      * @return the positionX
      */
     public float getPositionX() {
-	return positionX;
+        return positionX;
     }
 
     /**
-     * @param positionX
-     *            the positionX to set
+     * @param positionX the positionX to set
      */
     public void setPositionX(float positionX) {
-	this.positionX = positionX;
+        this.positionX = positionX;
     }
 
     /**
      * @return the positionY
      */
     public float getPositionY() {
-	return positionY;
+        return positionY;
     }
 
     /**
-     * @param positionY
-     *            the positionY to set
+     * @param positionY the positionY to set
      */
     public void setPositionY(float positionY) {
-	this.positionY = positionY;
+        this.positionY = positionY;
     }
 
     /**
      * @return the angle
      */
     public float getAngle() {
-	return angle;
+        return angle;
     }
 
     /**
-     * @param angle
-     *            the angle to set
+     * @param angle the angle to set
      */
     public void setAngle(float angle) {
-	this.angle = angle;
+        this.angle = angle;
     }
 
     /**
      * @return the starSystemComponent
      */
     public CelestialComponent getStarSystemComponent() {
-	return starSystemComponent;
+        return starSystemComponent;
     }
 
     /**
-     * @param starSystemComponent
-     *            the starSystemComponent to set
+     * @param starSystemComponent the starSystemComponent to set
      */
     public void setStarSystemComponent(CelestialComponent starSystemComponent) {
-	this.starSystemComponent = starSystemComponent;
-	this.angle = (float) starSystemComponent.getAngle();
+        this.starSystemComponent = starSystemComponent;
+        this.angle = (float) starSystemComponent.getAngle();
     }
 }

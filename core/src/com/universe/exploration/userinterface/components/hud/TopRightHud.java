@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.userinterface.components.hud;
 
@@ -10,22 +10,21 @@ import com.badlogic.gdx.utils.Align;
 
 /**
  * Top right hud.
- * 
- * @author 10.1.2017 Teemu Puurunen
  *
+ * @author 10.1.2017 Teemu Puurunen
  */
 public class TopRightHud extends VerticalGroup {
 
     public TopRightHud(float width, TextButton hyperSpaceJumpButton, TextButton crewControlButton, TextButton followSurveyButton,
-	    TextButton optionsButton) {
-	setWidth(width);
-	align(Align.right | Align.top);
-	setPosition(0, Gdx.graphics.getHeight());
-	padTop(30);
-	padRight(30);
-	addActor(hyperSpaceJumpButton);
-	addActor(crewControlButton);
-	addActor(followSurveyButton);
-	addActor(optionsButton);
+                       TextButton optionsButton) {
+        setWidth(width);
+        align(Align.right | Align.top);
+        setPosition(0, Gdx.graphics.getHeight());
+        padTop(30);
+        padRight(30);
+        addActor(hyperSpaceJumpButton);
+        addActor(crewControlButton);
+        addActor(followSurveyButton);
+        addActor(optionsButton);
     }
 }

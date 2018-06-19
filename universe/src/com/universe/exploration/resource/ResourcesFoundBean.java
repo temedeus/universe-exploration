@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.resource;
 
@@ -8,30 +8,28 @@ import java.util.List;
 
 /**
  * Describes the resources that were found during the survey mission.
- * 
- * @author 25.10.2015 Teemu Puurunen
  *
+ * @author 25.10.2015 Teemu Puurunen
  */
 public class ResourcesFoundBean {
     private List<Resource> resources;
 
     public ResourcesFoundBean() {
-	resources = new ArrayList<Resource>();
+        resources = new ArrayList<Resource>();
     }
 
     /**
      * @return the resources
      */
     public List<Resource> getResources() {
-	return resources;
+        return resources;
     }
 
     /**
-     * @param resources
-     *            the resources to set
+     * @param resources the resources to set
      */
     public void addToResources(Resource resource) {
-	this.resources.add(resource);
+        this.resources.add(resource);
     }
 
 }

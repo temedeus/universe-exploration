@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.player;
 
 /**
  * @author 1.10.2015 Teemu Puurunen
- *
  */
 public class PlayerStatusItemkeys {
     public static String TIME = "TIME";
@@ -21,7 +20,7 @@ public class PlayerStatusItemkeys {
     public static String FOOD = "FOOD";
 
     public static String MORALE = "MORALE";
-    
+
     public static String CREWMEN_ON_SURVEY = "CREWMEN_ON_SURVEY";
 }
 

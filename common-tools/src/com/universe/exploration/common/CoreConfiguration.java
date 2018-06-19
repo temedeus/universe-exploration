@@ -2,11 +2,10 @@ package com.universe.exploration.common;
 
 /**
  * GameConfiguration.java
- * 
+ * <p>
  * Game configuration. TODO: XML configuration instead of hard-coding.
- * 
- * @author 6.6.2015 Teemu Puurunen
  *
+ * @author 6.6.2015 Teemu Puurunen
  */
 public class CoreConfiguration {
 
@@ -22,7 +21,7 @@ public class CoreConfiguration {
 
     public static final float MAX_POWER = 100;
 
-    public static final String USERINTERFACE_SKIN = "uiskin.json";
+    public static final String USERINTERFACE_SKIN = "star-soldier/skin/star-soldier-ui.json";
 
     public static final float TIME_FLOW = 0.005f;
 

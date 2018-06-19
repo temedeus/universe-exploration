@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.resource;
 
 /**
  * @author 13.1.2017 Teemu Puurunen
- *
  */
 public class Water extends Resource {
 
@@ -16,7 +15,7 @@ public class Water extends Resource {
      */
     @Override
     public String getResourceLocal() {
-	return "GENERIC_WATER";
+        return "GENERIC_WATER";
     }
 
     /*
@@ -26,7 +25,7 @@ public class Water extends Resource {
      */
     @Override
     public ResourcesFoundBoundary getResourcesFoundBoundary() {
-	return ResourcesFoundBoundary.WATER;
+        return ResourcesFoundBoundary.WATER;
     }
 
 }

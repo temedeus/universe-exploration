@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.universe.exploration.starsystem.components;
 
@@ -9,14 +9,13 @@ package com.universe.exploration.starsystem.components;
  * maximum and minimum values, but NOT the current state of the given
  * astronomical body!
  * </p>
- * 
+ * <p>
  * <p>
  * You "install" one of these components into a model and from there on it acts
  * upon boundaries and settings defined in one of these classes.
  * </p>
- * 
- * @author 7.7.2015 Teemu Puurunen
  *
+ * @author 7.7.2015 Teemu Puurunen
  */
 public class CelestialComponent implements ICelestialComponent {
     protected int spriteSize;
@@ -24,11 +23,10 @@ public class CelestialComponent implements ICelestialComponent {
     protected String graphicsFile;
 
     /**
-     * @param componentName
-     *            the componentName to set
+     * @param componentName the componentName to set
      */
     public void setComponentName(String componentName) {
-	this.componentName = componentName;
+        this.componentName = componentName;
     }
 
     protected String componentName;
@@ -42,25 +40,24 @@ public class CelestialComponent implements ICelestialComponent {
      * @return the angle
      */
     public double getAngle() {
-	return angle;
+        return angle;
     }
 
     /**
-     * @param angle
-     *            the angle to set
+     * @param angle the angle to set
      */
     public void setAngle(double angle) {
-	this.angle = angle;
+        this.angle = angle;
     }
 
     /**
      * If not overridden, return false. This is pretty much component specific,
      * but each component should have one.
-     * 
+     *
      * @return
      */
     public boolean configure() {
-	return false;
+        return false;
     }
 
     /**
@@ -68,7 +65,7 @@ public class CelestialComponent implements ICelestialComponent {
      * overridden in each file that extends this class.
      */
     public void setSpriteSize(int spriteSize) {
-	this.spriteSize = spriteSize * 3;
+        this.spriteSize = spriteSize * 3;
     }
 
     /**
@@ -76,28 +73,27 @@ public class CelestialComponent implements ICelestialComponent {
      * overridden in each file that extends this class.
      */
     public int getSpriteSize() {
-	return spriteSize;
+        return spriteSize;
     }
 
     /**
      * @return the graphicsFile
      */
     public String getGraphicsFile() {
-	return graphicsFile;
+        return graphicsFile;
     }
 
     /**
-     * @param graphicsFile
-     *            the graphicsFile to set
+     * @param graphicsFile the graphicsFile to set
      */
     public void setGraphicsFile(String graphicsFile) {
-	this.graphicsFile = graphicsFile;
+        this.graphicsFile = graphicsFile;
     }
 
     /**
      * @return the componentName
      */
     public String getComponentName() {
-	return componentName;
+        return componentName;
     }
 }

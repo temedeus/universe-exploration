@@ -1,17 +1,13 @@
 package com.universe.exploration.crewmember;
 
+import com.universe.exploration.crew.CrewMemberCondition;
+import com.universe.exploration.crew.CrewMemberStatus;
+import com.universe.exploration.crewmember.attribute.*;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import com.universe.exploration.crew.CrewMemberCondition;
-import com.universe.exploration.crew.CrewMemberStatus;
-import com.universe.exploration.crewmember.attribute.Agility;
-import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
-import com.universe.exploration.crewmember.attribute.Intelligence;
-import com.universe.exploration.crewmember.attribute.Morale;
-import com.universe.exploration.crewmember.attribute.Strength;
 
 public class CrewMember {
     private int id;
@@ -19,7 +15,7 @@ public class CrewMember {
     private String name;
 
     private int age;
-    
+
     /**
      * This is a property that will not be seen by the user.
      */
@@ -30,144 +26,135 @@ public class CrewMember {
     private Nationality nationality;
 
     private Map<String, CrewMemberAttribute> crewMemberAttributes = new HashMap<String, CrewMemberAttribute>();
-    
+
     private CrewMemberStatus status;
-    
+
     private Set<CrewMemberCondition> condition = new HashSet<CrewMemberCondition>();
 
     /**
      * @return the name
      */
     public String getName() {
-	return name;
+        return name;
     }
 
     /**
      * @return the age
      */
     public int getAge() {
-	return age;
+        return age;
     }
 
     /**
      * @return the sex
      */
     public CrewmemberSex getSex() {
-	return sex;
+        return sex;
     }
 
     /**
      * @return the morale
      */
     public Morale getMorale() {
-	return ((Morale) crewMemberAttributes.get(Morale.class.getName()));
+        return ((Morale) crewMemberAttributes.get(Morale.class.getName()));
     }
 
     /**
      * @return the intelligence
      */
     public Intelligence getIntelligence() {
-	return ((Intelligence) crewMemberAttributes.get(Intelligence.class.getName()));
+        return ((Intelligence) crewMemberAttributes.get(Intelligence.class.getName()));
     }
 
     /**
      * @return the strength
      */
     public Strength getStrength() {
-	return ((Strength) crewMemberAttributes.get(Strength.class.getName()));
+        return ((Strength) crewMemberAttributes.get(Strength.class.getName()));
     }
 
     /**
-     * @param name
-     *            the name to set
+     * @param name the name to set
      */
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     /**
-     * @param age
-     *            the age to set
+     * @param age the age to set
      */
     public void setAge(int age) {
-	this.age = age;
+        this.age = age;
     }
 
     /**
-     * @param sex
-     *            the sex to set
+     * @param sex the sex to set
      */
     public void setSex(CrewmemberSex sex) {
-	this.sex = sex;
+        this.sex = sex;
     }
-    
+
     /**
-     * @param morale
-     *            the morale to set
+     * @param morale the morale to set
      */
     public void setMorale(int morale) {
-	crewMemberAttributes.put(Morale.class.getName(), new Morale(morale));
+        crewMemberAttributes.put(Morale.class.getName(), new Morale(morale));
     }
 
     /**
-     * @param intelligence
-     *            the intelligence to set
+     * @param intelligence the intelligence to set
      */
     public void setIntelligence(int intelligence) {
-	crewMemberAttributes.put(Intelligence.class.getName(), new Intelligence(intelligence));
+        crewMemberAttributes.put(Intelligence.class.getName(), new Intelligence(intelligence));
     }
 
     /**
-     * @param strength
-     *            the strength to set
+     * @param strength the strength to set
      */
     public void setStrength(int strength) {
-	crewMemberAttributes.put(Strength.class.getName(), new Strength(strength));
+        crewMemberAttributes.put(Strength.class.getName(), new Strength(strength));
     }
 
     /**
      * @return the id
      */
     public int getId() {
-	return id;
+        return id;
     }
 
     /**
-     * @param id
-     *            the id to set
+     * @param id the id to set
      */
     public void setId(int id) {
-	this.id = id;
+        this.id = id;
     }
 
     /**
      * @return the agility
      */
     public Agility getAgility() {
-	return ((Agility) crewMemberAttributes.get(Agility.class.getName()));
+        return ((Agility) crewMemberAttributes.get(Agility.class.getName()));
     }
 
     /**
-     * @param agility
-     *            the agility to set
+     * @param agility the agility to set
      */
     public void setAgility(int agility) {
-	crewMemberAttributes.put(Agility.class.getName(), new Agility(agility));
+        crewMemberAttributes.put(Agility.class.getName(), new Agility(agility));
     }
 
     /**
      * @return the nationality
      */
     public Nationality getNationality() {
-	return nationality;
+        return nationality;
     }
 
     /**
-     * @param nationality
-     *            the nationality to set
+     * @param nationality the nationality to set
      */
     public void setNationality(Nationality nationality) {
-	this.nationality = nationality;
+        this.nationality = nationality;
     }
 
     /**
@@ -183,7 +170,7 @@ public class CrewMember {
     public void setStatus(CrewMemberStatus status) {
         this.status = status;
     }
-    
+
     /**
      * @return the subStatus
      */
@@ -192,7 +179,7 @@ public class CrewMember {
     }
 
     public void addToCondition(CrewMemberCondition condition) {
-	this.condition.add(condition);
+        this.condition.add(condition);
     }
 
     /**
@@ -208,13 +195,13 @@ public class CrewMember {
     public void setHealth(float health) {
         this.health = health;
     }
-    
+
     public void decreaseHealth(float dec) {
-	if(health > 0) {
-	    this.health -= dec;
-	} else {
-	    this.status = CrewMemberStatus.KIA;
-	}
+        if (health > 0) {
+            this.health -= dec;
+        } else {
+            this.status = CrewMemberStatus.KIA;
+        }
     }
 
     /**

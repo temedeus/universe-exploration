@@ -1,17 +1,16 @@
 package com.universe.exploration.starsystem;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.StarCelestialComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a star system containing hte star, planets and the actualy
  * boundaries. Generated based on {@link StarSystemConfiguration}.
- * 
- * @author Teemu
  *
+ * @author Teemu
  */
 public class StarSystem {
     private StarCelestialComponent systemstar;
@@ -20,30 +19,29 @@ public class StarSystem {
 
     /**
      * Add planet to star system.
-     * 
+     *
      * @param planet
      */
     public void addPlanet(PlanetCelestialComponent planet) {
-	planets.add(planet);
+        planets.add(planet);
     }
 
     public void emptyPlanetsList() {
-	planets.clear();
+        planets.clear();
     }
 
     /**
      * @return the systemstar
      */
     public StarCelestialComponent getSystemstar() {
-	return systemstar;
+        return systemstar;
     }
 
     /**
-     * @param systemstar
-     *            the systemstar to set
+     * @param systemstar the systemstar to set
      */
     public void setSystemstar(StarCelestialComponent systemstar) {
-	this.systemstar = systemstar;
+        this.systemstar = systemstar;
     }
 
     /**
@@ -55,36 +53,34 @@ public class StarSystem {
      * Star system constructor.
      */
     public StarSystem() {
-	this.planets = new ArrayList<PlanetCelestialComponent>();
+        this.planets = new ArrayList<PlanetCelestialComponent>();
     }
 
     /**
      * @return the planetCount
      */
     public int getPlanetCount() {
-	return planetCount;
+        return planetCount;
     }
 
     /**
-     * @param planetCount
-     *            the planetCount to set
+     * @param planetCount the planetCount to set
      */
     public void setPlanetCount(int planetCount) {
-	this.planetCount = planetCount;
+        this.planetCount = planetCount;
     }
 
     /**
      * @return the planets
      */
     public List<PlanetCelestialComponent> getPlanets() {
-	return planets;
+        return planets;
     }
 
     /**
-     * @param planets
-     *            the planets to set
+     * @param planets the planets to set
      */
     public void setPlanets(List<PlanetCelestialComponent> planets) {
-	this.planets = planets;
+        this.planets = planets;
     }
 }
