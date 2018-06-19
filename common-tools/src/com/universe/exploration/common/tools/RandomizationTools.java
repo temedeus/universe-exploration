@@ -17,10 +17,7 @@ public class RandomizationTools {
      * @return integer
      */
     public static final int getRandomInteger(int lower, int upper) {
-        // Random rand = new Random();
-        int randomNumber = (int) (Math.random() * (upper - lower + 1)) + lower;
-
-        return randomNumber;
+        return (int) (Math.random() * (upper - lower + 1)) + lower;
     }
 
     public static final boolean randomBoolean() {

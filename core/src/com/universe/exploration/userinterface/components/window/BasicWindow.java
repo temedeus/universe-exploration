@@ -24,7 +24,7 @@ public abstract class BasicWindow extends Window implements IBasicWindow {
     private void setDefault() {
         getTitleLabel().setAlignment(Align.center, Align.bottom);
         setMovable(true);
-
+        setWindowSize();
         setPosition(GdxHelper.getScreenCenterX() - getWidth() / 2, GdxHelper.getScreenCenterY() - getHeight() / 2);
     }
 
