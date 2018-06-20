@@ -23,10 +23,7 @@ import com.universe.exploration.spritecontainer.PlanetHandler;
 import com.universe.exploration.spritecontainer.PlanetSprite;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.survey.Survey;
-import com.universe.exploration.userinterface.components.PlanetSelection;
-import com.universe.exploration.userinterface.components.UELabel;
-import com.universe.exploration.userinterface.components.UETable;
-import com.universe.exploration.userinterface.components.VolumeSlider;
+import com.universe.exploration.userinterface.components.*;
 import com.universe.exploration.userinterface.components.hud.TopRightHud;
 import com.universe.exploration.userinterface.components.log.LogDisplay;
 import com.universe.exploration.userinterface.components.log.LogDisplayTable;
@@ -265,9 +262,7 @@ public class UIController {
                     public void clicked(InputEvent event, float x, float y) {
                         if (!UniverseExploration.gameStatus.isPaused() && isHyperspaceJumpAllowed) {
                             UniverseExploration.audioManager.playSoundEffect(SoundEffect.HYPERSPACEJUMP);
-                            final Dialog dialog = new Dialog(Localizer.getInstance().get("DESC_HYPERSPACE_JUMP"),
-                                    UserInterfaceBank.userInterfaceSkin);
-                            dialog.setSize(200, 100);
+                            final UEDialog dialog = new UEDialog(Localizer.getInstance().get("DESC_HYPERSPACE_JUMP"));
                             dialog.show(uiStage);
                             Timer.schedule(new Timer.Task() {
                                 @Override
