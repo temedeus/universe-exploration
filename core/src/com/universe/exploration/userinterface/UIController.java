@@ -127,12 +127,6 @@ public class UIController {
 
     private UEListener createWindowChangeListener() {
         return new UEListener() {
-            /*
-             * (non-Javadoc)
-             *
-             * @see com.universe.exploration.listener.UEListener#
-             * handleEventClassEvent (com.universe.exploration.listener.UEEvent)
-             */
             @Override
             public void handleEventClassEvent(UEEvent e) {
                 WindowContainerEvent event = (WindowContainerEvent) e.getPayLoad();
@@ -190,8 +184,8 @@ public class UIController {
         return new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                createSurveyTeamSelectionWindow((PlanetSprite) e.getPayLoad());
                 windowContainer.closeWindow(WindowType.PLANET_DETAILS);
+                createSurveyTeamSelectionWindow((PlanetSprite) e.getPayLoad());
             }
         };
     }

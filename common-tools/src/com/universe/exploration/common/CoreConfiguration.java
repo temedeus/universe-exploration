@@ -33,7 +33,7 @@ public class CoreConfiguration {
 
     public static final float SPACE_BACKGROUND_POSITION_Y = -600;
 
-    public static final int MAX_DAYS_ON_SURVEY = 30;
+    public static final int MAX_DAYS_ON_SURVEY = 5;
 
     public static final float PLANET_ENHANCEMENT_MIN = 120;
 

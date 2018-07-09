@@ -3,7 +3,6 @@
  */
 package com.universe.exploration.userinterface;
 
-import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.listener.UEEvent;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.userinterface.components.window.BasicWindow;
@@ -13,6 +12,7 @@ import com.universe.exploration.userinterface.components.window.WindowType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Handles instances
@@ -20,7 +20,7 @@ import java.util.List;
  * @author 7.10.2015 Teemu Puurunen
  */
 public class WindowContainer {
-    private HashMap<WindowType, BasicWindow> windowmap;
+    private Map<WindowType, BasicWindow> windowMap;
 
     private List<WindowType> windowTypesContained;
 
@@ -29,14 +29,13 @@ public class WindowContainer {
     private WindowFactory windowFactory;
 
     public WindowContainer() {
-        windowmap = new HashMap<WindowType, BasicWindow>();
+        windowMap = new HashMap<WindowType, BasicWindow>();
         windowFactory = new WindowFactory(this);
     }
 
     public void add(WindowType key, BasicWindow window) {
-        // updatePauseStatus();
         checkIfNeedToAlert(key, WindowContainerEvent.ADD);
-        windowmap.put(key, window);
+        windowMap.put(key, window);
     }
 
     /**
@@ -54,28 +53,16 @@ public class WindowContainer {
      * @return
      */
     public void closeWindow(WindowType key) {
-        BasicWindow window = windowmap.get(key);
+        BasicWindow window = windowMap.get(key);
         if (window != null) {
             window.remove();
             checkIfNeedToAlert(key, WindowContainerEvent.REMOVE);
-            closeChildren(key.relatedViews());
-            windowmap.remove(key);
-            // updatePauseStatus();
+            closeDependentWindows(key.relatedViews());
+            windowMap.remove(key);
         }
     }
 
-    private void updatePauseStatus() {
-        boolean foundPauseable = false;
-        for (WindowType type : windowmap.keySet()) {
-            if (type.windowPausesGame()) {
-                foundPauseable = true;
-            }
-        }
-
-        UniverseExploration.setGameStatusPaused(foundPauseable);
-    }
-
-    private void closeChildren(List<WindowType> dependencies) {
+    private void closeDependentWindows(List<WindowType> dependencies) {
         if (dependencies != null) {
             for (WindowType dependency : dependencies) {
                 closeWindow(dependency);
@@ -93,11 +80,6 @@ public class WindowContainer {
         if (windowTypesContained.contains(key)) {
             fireSpecificedWindowChangeListener(event);
         }
-    }
-
-    public boolean hasWindow(WindowType key) {
-        BasicWindow window = windowmap.get(key);
-        return (window != null) ? true : false;
     }
 
     private void fireSpecificedWindowChangeListener(WindowContainerEvent windowContainerEvent) {

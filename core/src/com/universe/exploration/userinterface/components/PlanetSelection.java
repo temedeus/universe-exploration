@@ -122,21 +122,6 @@ public class PlanetSelection {
         return table;
     }
 
-    /**
-     * <p>
-     * TODO: Fix this logic. We deal with both {@link PlanetSprite} and
-     * {@link PlanetCelestialComponent}... wtf?!
-     * </p>
-     * <p>
-     * Check {@link GameObjectCanvas} and the firePlanetClickListener method
-     * there.
-     * </p>
-     * <p>
-     * Currently the planet is dug out using the number in front of the planet
-     * list. This is not very smart way to perform this. SelectBox seems to
-     * accept Object but I didn't figure out how to setup captions.
-     * </p>
-     */
     private void firePlanetClickListener() {
         planetClickListener.handleEventClassEvent(
                 new UEEvent(gameViewObjectContainer.getPlanetSpriteByComponent(parsePlanetFromSelectBox())));

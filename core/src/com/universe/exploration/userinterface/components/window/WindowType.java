@@ -10,11 +10,8 @@ import java.util.List;
 
 /**
  * <p>
- * Contains window caption and ok button text. Referenced as {@link LocalKey},
- * not direct strings.
+ * Contains window caption and ok button text.
  * </p>
- * <p>
- * TODO: Maybe {@link BasicWindow} could incorporate type within?
  *
  * @author 1.11.2015 Teemu Puurunen
  */

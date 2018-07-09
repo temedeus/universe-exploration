@@ -115,8 +115,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
     private void pollForGameOver() {
         if (UniverseExploration.gameStatus.getCrew().getAliveCrewmen().size() == 0 && !gameStatus.isPaused()) {
-            uiController.createGameOverWindow(createGameOverClicklistener());
             uiController.getWindowContainer().closeAllWindows();
+            uiController.createGameOverWindow(createGameOverClicklistener());
             setGameStatusPaused(true);
         }
     }
@@ -355,6 +355,8 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
                 updateIngameLog(caption);
             }
 
+            //survey.getSurveyTeam().stream()
+              //      .filter(member -> member.getStatus() == CrewMemberStatus.ONSURVEY)
             for (CrewMember member : survey.getSurveyTeam()) {
                 if (member.getStatus() == CrewMemberStatus.ONSURVEY) {
                     member.setStatus(CrewMemberStatus.ALIVE);

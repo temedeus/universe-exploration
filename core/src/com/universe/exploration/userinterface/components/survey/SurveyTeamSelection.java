@@ -137,7 +137,7 @@ public class SurveyTeamSelection {
     }
 
     private enum SurveyTeamCrewMemberModifyType {
-        ADD, REMOVE;
+        ADD, REMOVE
     }
 
     /**
@@ -145,13 +145,6 @@ public class SurveyTeamSelection {
      */
     public List<CrewMember> getSelectedCrewMembers() {
         return selectedCrewMembers;
-    }
-
-    /**
-     * @param selectedCrewMembers the selectedCrewMembers to set
-     */
-    public void setSelectedCrewMembers(List<CrewMember> selectedCrewMembers) {
-        this.selectedCrewMembers = selectedCrewMembers;
     }
 
     public UETextField getSurveyNameField() {
