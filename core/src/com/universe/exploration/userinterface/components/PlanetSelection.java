@@ -88,12 +88,11 @@ public class PlanetSelection {
 
         int x = 0;
         for (PlanetCelestialComponent planet : planetList) {
-            labelList[x++] = "" + x + ": " + planet.getComponentName();
+            labelList[x++] = String.valueOf(x + ": " + planet.getComponentName());
         }
 
         planetSelectBox.setItems(labelList);
         planetSelectBox.addCaptureListener(new ChangeListener() {
-
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 fireSelectedPlanetChangedListener();

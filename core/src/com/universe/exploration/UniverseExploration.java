@@ -189,7 +189,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
         uiController.setHyperspaceJumpListener(createHyperSpaceJumpListener());
         uiController.setStartPlanetSurveyListener(createStartPlanetSurveyListener());
         uiController.setSelectedPlanetChangedListener(selectedPlanetChangedListener());
-        uiController.setVolumeListener(createVolumeListener());
     }
 
     private UEListener createHyperSpaceJumpListener() {
@@ -235,22 +234,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
             public void handleEventClassEvent(UEEvent e) {
                 PlanetCelestialComponent planet = (PlanetCelestialComponent) e.getPayLoad();
                 gameObjectCanvas.setSelectedPlanet(planet);
-            }
-        };
-    }
-
-    private UEListener createVolumeListener() {
-        return new UEListener() {
-            /*
-             * (non-Javadoc)
-             *
-             * @see com.universe.exploration.listener.UEListener#
-             * handleEventClassEvent ()
-             */
-            @Override
-            public void handleEventClassEvent(UEEvent e) {
-                Float volume = (Float) e.getPayLoad();
-                audioManager.getCurrentlyPlayingBackgroundMusic().setVolume(volume);
             }
         };
     }

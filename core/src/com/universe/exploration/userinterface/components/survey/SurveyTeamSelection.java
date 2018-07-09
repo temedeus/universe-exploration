@@ -92,7 +92,6 @@ public class SurveyTeamSelection {
                 }
             }
         }
-
     }
 
     private void refreshTables() {

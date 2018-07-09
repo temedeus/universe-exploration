@@ -2,7 +2,10 @@ package com.universe.exploration.userinterface;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -71,11 +74,6 @@ public class UIController {
     public WindowContainer windowContainer;
 
     /**
-     * Listen for change in volume.
-     */
-    private UEListener volumeListener;
-
-    /**
      * <p>
      * This flag determines is hyperspace jump is allowed. Jump can be disabled
      * for example when game over window is shown.
@@ -112,12 +110,6 @@ public class UIController {
         windowContainerSetup();
     }
 
-    private void fireVolumeChangedListener(float newVolumeVal) {
-        float val = newVolumeVal / 100;
-        if (val <= 100) {
-            volumeListener.handleEventClassEvent(new UEEvent(val));
-        }
-    }
 
     private void windowContainerSetup() {
         windowContainer = new WindowContainer();
@@ -227,22 +219,6 @@ public class UIController {
         return table;
     }
 
-    public TextButton createVolumeChangeButton(String caption, final float value, final Slider volumeslider) {
-        return new ButtonFactory().createTextButton(caption, new ClickListener() {
-            /*
-             * (non-Javadoc)
-             *
-             * @see
-             * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
-             * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-             */
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                fireVolumeChangedListener(value);
-                volumeslider.setValue(value);
-            }
-        });
-    }
 
     /**
      * Create hyperspace jump button
@@ -297,7 +273,7 @@ public class UIController {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        show(createOptionsWindow());
+                        show(new Options().createOptionsWindow(windowContainer));
                     }
                 });
 
@@ -340,16 +316,14 @@ public class UIController {
     }
 
     /**
-     * Add actor to stage.
-     *
-     * @param actor Any component that extends {@link Actor}
+     * @param window
+     * @param <T>
      */
     public <T extends Actor> void show(BasicWindow window) {
         if (!UniverseExploration.gameStatus.isPaused()) {
             windowContainer.add(window.getWindowType(), window);
             uiStage.addActor(window);
         }
-
     }
 
     /**
@@ -476,39 +450,6 @@ public class UIController {
         return table;
     }
 
-    private BasicWindow createOptionsWindow() {
-        UETable table = new UETable();
-        table.align(Align.left | Align.top);
-
-        final VolumeSlider volumeSlider = new VolumeSlider();
-        volumeSlider.addListener(new ClickListener() {
-            /*
-             * (non-Javadoc)
-             *
-             * @see
-             * com.badlogic.gdx.scenes.scene2d.utils.ClickListener#clicked(com
-             * .badlogic.gdx.scenes.scene2d.InputEvent, float, float)
-             */
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                fireVolumeChangedListener(volumeSlider.getValue());
-            }
-        });
-
-        table.add(UIComponentFactory.createSpacer());
-        table.add(new UELabel(Localizer.getInstance().get("LABEL_VOLUME")));
-        table.row();
-        table.add(createVolumeChangeButton(Localizer.getInstance().get("BTN_MIN_VOLUME"), 0f, volumeSlider));
-        table.add(volumeSlider);
-        table.add(createVolumeChangeButton(Localizer.getInstance().get("BTN_MAX_VOLUME"), 100f, volumeSlider));
-        table.row();
-        table.add(UIComponentFactory.createSpacer());
-
-        BasicWindow window = windowContainer.getWindowFactory().createWindow(WindowType.OPTIONS_WINDOW, table, null);
-
-        return window;
-    }
-
     private ClickListener createShowSurveyDetailsClickListener(final Survey survey) {
         return new ClickListener() {
             /*
@@ -618,15 +559,10 @@ public class UIController {
         planetInformationTable.add(pair.getTable());
         planetInformationTable.row();
 
-        form.getSurveyLength().addListener(new EventListener() {
-
-            @Override
-            public boolean handle(Event event) {
-                label.setText(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " ("
-                        + form.getSurveyLength().getValue() + ") days");
-
-                return true;
-            }
+        form.getSurveyLength().addListener((Event event) -> {
+            label.setText(Localizer.getInstance().get("LABEL_SURVEY_LENGTH") + " ("
+                    + form.getSurveyLength().getValue() + ") days");
+            return true;
         });
 
         openWithPrimaryButtonAction(WindowType.SURVEY_WINDOW, planetInformationTable,
@@ -671,13 +607,6 @@ public class UIController {
      */
     public void setPlanetClickListener(UEListener planetClickListener) {
         planetSelection.setPlanetClickListener(planetClickListener);
-    }
-
-    /**
-     * @param volumeListener the volumeListener to set
-     */
-    public void setVolumeListener(UEListener volumeListener) {
-        this.volumeListener = volumeListener;
     }
 
     /**
