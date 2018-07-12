@@ -21,13 +21,13 @@ import java.util.List;
 public class SurveyFactory {
 
     /**
-     * <p>
-     * Create a {@link Survey} object based on start day and planet data.
-     * </p>
-     *
+     * Create new survey.
+     * s
      * @param startDay
-     * @param crewmenCount Integer How many crewmen are on the survey team.
+     * @param surveyLength
+     * @param surveyTeam
      * @param planet
+     * @param surveyName
      * @return
      */
     public Survey createSurvey(int startDay, int surveyLength, List<CrewMember> surveyTeam, PlanetCelestialComponent planet,

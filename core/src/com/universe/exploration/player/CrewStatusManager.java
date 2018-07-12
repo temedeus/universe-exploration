@@ -32,7 +32,7 @@ public class CrewStatusManager {
      * Setup initial values. Start with full values
      */
     public CrewStatusManager() {
-        statuses = new ArrayList<ICrewStatus>();
+        statuses = new ArrayList<>();
         statuses.add(new CrewStatusAir());
         statuses.add(new CrewStatusFood());
         statuses.add(new CrewStatusWater());
@@ -67,11 +67,11 @@ public class CrewStatusManager {
      * @param resource
      */
     public void adjustStatusValue(Resource resource) {
-        for (ICrewStatus status : statuses) {
+        statuses.forEach(status -> {
             if (status.mapCrewStatusToResource().equals(resource.getClass())) {
                 status.incrementValue(resource.getAmount());
             }
-        }
+        });
     }
 
     /**
@@ -81,26 +81,26 @@ public class CrewStatusManager {
      */
     private void updateCrewMemberStatuses(List<CrewMember> crewmen) {
         List<ICrewStatus> statusesToDecrease = new ArrayList<ICrewStatus>();
-        for (ICrewStatus status : statuses) {
+        statuses.forEach(status -> {
             float decrement = (status.getValue() == 0) ? StatusConsumption.HEALTH_DECREASE_WHEN_AIR_DEPLETED : 0;
             if (decrement > 0 && !status.isProvidedWarningOnDepletion()) {
                 fireCrewStatusChangeListener(Localizer.getInstance().get(status.getSetup().getDepletionMessageLocale()));
                 status.setProvidedWarningOnDepletion(true);
                 statusesToDecrease.add(status);
             }
-        }
+        });
 
         /**
          * Perform health increase on each crewman individually. Stronger ones
          * last more when bad condition hits.
          */
-        for (CrewMember member : crewmen) {
-            for (ICrewStatus status : statusesToDecrease) {
+        crewmen.forEach(member -> {
+            statusesToDecrease.forEach(status -> {
                 member.decreaseHealth(status.healthDecreaseWhenDepleated()
                         - ((status.healthDecreaseWhenDepleated() * ((float) member.getStrength().getValue() / 100)) / 2));
                 member.addToCondition(status.deprivationCausesCondition());
-            }
-        }
+            });
+        });
     }
 
     /**
@@ -173,16 +173,14 @@ public class CrewStatusManager {
     /**
      * Find given status class and its value.
      *
-     * @param clazz
+     * @param setup
      * @return
      */
     public float getStatusValue(CrewStatusSetup setup) {
-        for (ICrewStatus status : statuses) {
-            if (status.getSetup() == setup) {
-                return status.getValue();
-            }
-        }
-
-        return 0f;
+        return statuses.stream()
+                .filter((status -> status.getSetup() == setup))
+                .findAny()
+                .map(ICrewStatus::getValue)
+                .orElse(0f);
     }
 }

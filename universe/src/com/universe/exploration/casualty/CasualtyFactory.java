@@ -41,7 +41,6 @@ public class CasualtyFactory {
         } else {
             return null;
         }
-
     }
 
     private List<SurveyIncidentCategory> createListofApplicableCauseOfDeath(PlanetCelestialComponent planet) {

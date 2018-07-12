@@ -38,13 +38,8 @@ public class GameStatus {
      *                 deactivated.
      */
     public void activateSurveyMode(boolean activate) {
-        if (activate) {
-            setPlanetaryMovementActive(false);
-            setZoomIn(true);
-        } else {
-            setPlanetaryMovementActive(true);
-            setZoomIn(false);
-        }
+            setPlanetaryMovementActive(!activate);
+            setZoomIn(activate);
     }
 
     public boolean isPaused() {

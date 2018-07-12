@@ -63,7 +63,7 @@ public class Localizer {
     }
 
     /**
-     * Get localization based on given {@link LocalKey}. Return key (as string)
+     * Get localization based on given {@link TranslatableEnum}. Return key (as string)
      * if none found.
      *
      * @param key

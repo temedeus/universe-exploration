@@ -33,11 +33,6 @@ abstract class SpriteContainer {
     protected int spriteSize;
 
     /**
-     * Sprite source string
-     */
-    protected String spriteSource;
-
-    /**
      * Graphics source
      */
     protected String graphicsSource;
@@ -160,12 +155,5 @@ abstract class SpriteContainer {
      */
     public Sprite getEnlarged() {
         return enlarged;
-    }
-
-    /**
-     * @param enlarged the enlarged to set
-     */
-    public void setEnlarged(Sprite enlarged) {
-        this.enlarged = enlarged;
     }
 }

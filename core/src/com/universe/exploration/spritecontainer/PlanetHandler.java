@@ -14,6 +14,7 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Maintains planets.
@@ -38,7 +39,7 @@ public class PlanetHandler {
     /**
      * Add single star system object into arraylist
      *
-     * @param starsystemObject
+     * @param celestialComponent
      */
     public void addPlanet(CelestialComponent celestialComponent) {
 
@@ -52,39 +53,25 @@ public class PlanetHandler {
     }
 
     /**
-     * Add multiple star system objects into arraylist
-     *
-     * @param starsystemObjects
-     */
-    public void addMultiplePlanets(List<CelestialComponent> starSystemComponents) {
-        for (CelestialComponent starSystemComponent : starSystemComponents) {
-            addPlanet(starSystemComponent);
-        }
-    }
-
-    /**
      * Draw sprites on screen and update their position and angles
      */
     public void update(PlanetSprite selected) {
         if (!planetaryMovement)
             return;
 
-        for (PlanetSprite graphicsGfx : planetContainer) {
-            graphicsGfx.setPlanetSelected(graphicsGfx.equals(selected));
-            graphicsGfx.getCelestialBodyGfxModel().updateSpriteData();
-            graphicsGfx.updateSpritePosition();
-            graphicsGfx.handleZooming();
+        for (PlanetSprite planet : planetContainer) {
+            planet.setPlanetSelected(planet.equals(selected));
+            planet.getCelestialBodyGfxModel().updateSpriteData();
+            planet.updateSpritePosition();
+            planet.handleZooming();
         }
     }
 
     public PlanetSprite getPlanetSpriteByComponent(PlanetCelestialComponent planet) {
-        for (PlanetSprite graphcisGfx : planetContainer) {
-            if (graphcisGfx.getComponentType() == planet) {
-                return graphcisGfx;
-            }
-        }
-
-        return null;
+        return planetContainer.stream()
+                .filter(planetSprite -> planetSprite.getComponentType() == planet)
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -93,9 +80,7 @@ public class PlanetHandler {
      * @param batch
      */
     public void drawPlanets(SpriteBatch batch) {
-        for (PlanetSprite graphicsGfx : planetContainer) {
-            graphicsGfx.getSprite().draw(batch);
-        }
+        planetContainer.forEach(planet -> planet.getSprite().draw(batch));
     }
 
     /**
@@ -126,13 +111,6 @@ public class PlanetHandler {
     }
 
     /**
-     * @return the planetaryMovement
-     */
-    public boolean isPlanetaryMovement() {
-        return planetaryMovement;
-    }
-
-    /**
      * @param planetaryMovement the planetaryMovement to set
      */
     public void setPlanetaryMovement(boolean planetaryMovement) {
@@ -155,6 +133,7 @@ public class PlanetHandler {
             render.setColor(new Color(255, 255, 255, alpha));
             render.begin(ShapeType.Line);
             render.circle(0f, 0f, radius);
+
             render.end();
         }
 

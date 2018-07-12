@@ -5,7 +5,6 @@ package com.universe.exploration.spritecontainer;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.common.tools.GdxHelper;
 
 /**
  * @author 27.12.2015 Teemu Puurunen
@@ -25,19 +24,14 @@ public class StarWrapper {
 
     private final Fader starFader = new Fader(alphaMin, alphaMax, decrementRate, incrementRate);
 
-    /**
-     *
-     */
     public StarWrapper(Sprite star) {
         this.star = star;
         starFader.setAlphaValue(alphaMax);
     }
 
-    public void update() {
-        // TODO: sort this offset. It likely has something to do with initiating
-        // the sprite and its offsets etc.
-        float starX = GdxHelper.getScreenCenterX() - star.getWidth() / 2 - 650;
-        float starY = GdxHelper.getScreenCenterY() - star.getHeight() / 2 - 400;
+    public void update(float centerX, float centerY) {
+        float starX = centerX - star.getWidth() / 2;
+        float starY = centerY - star.getHeight() / 2;
 
         star.rotate((float) 0.1);
         star.setPosition(starX, starY);
@@ -45,16 +39,10 @@ public class StarWrapper {
         alphaReachedMinimum = starFader.isAlphaMinimized();
     }
 
-    /**
-     * @return the star
-     */
     public Sprite getStar() {
         return star;
     }
 
-    /**
-     * @return the zoomed
-     */
     public boolean isAlphaReachedMinimum() {
         return alphaReachedMinimum;
     }

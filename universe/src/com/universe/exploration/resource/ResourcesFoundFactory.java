@@ -20,14 +20,14 @@ public class ResourcesFoundFactory {
         ResourcesFoundBean resourcesFoundBean = new ResourcesFoundBean();
         int crewSize = crew.size();
 
-        for (Resource resource : planet.getResourcesFound()) {
+        planet.getResourcesFound().forEach( resource -> {
             float amount = crewSize * randomizeAmount(resource.getResourcesFoundBoundary());
 
             if (amount > 0) {
                 resource.setAmount(amount);
                 resourcesFoundBean.addToResources(resource);
             }
-        }
+        });
 
         return resourcesFoundBean;
     }

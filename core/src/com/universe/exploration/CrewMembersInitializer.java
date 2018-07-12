@@ -72,27 +72,6 @@ public class CrewMembersInitializer {
     }
 
     /**
-     * @return the rootPathMale
-     */
-    public static String getRootPathMale() {
-        return ROOT_PATH_MALE;
-    }
-
-    /**
-     * @return the rootPathFemale
-     */
-    public static String getRootPathFemale() {
-        return ROOT_PATH_FEMALE;
-    }
-
-    /**
-     * @return the crewmemberProfileFiles
-     */
-    public static List<CrewmemberProfileSource> getCrewmemberProfileFiles() {
-        return CREWMEMBER_PROFILE_FILES;
-    }
-
-    /**
      * @return the maleProfiles
      */
     public List<CrewmemberProfile> getMaleProfiles() {

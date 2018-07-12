@@ -1,5 +1,6 @@
 package com.universe.exploration.camera;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class CameraMonitor {
@@ -10,7 +11,7 @@ public class CameraMonitor {
     private static final float ZOOM_MIN = -5;
 
     public CameraMonitor() {
-        camera = new OrthographicCamera(1920, 1080);
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.zoom = ZOOM_MIN;
     }
 

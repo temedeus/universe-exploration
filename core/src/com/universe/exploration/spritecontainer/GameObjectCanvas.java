@@ -53,15 +53,12 @@ public class GameObjectCanvas {
 
     /**
      * Generates graphical representation based on given star system
-     *
-     * @param iua
      */
     public GameObjectCanvas() {
         initBasicSetup();
 
         // Space background
-        SpaceSpriteContainer spaceBgGFX = new SpaceSpriteContainer();
-        space = spaceBgGFX.getSprite();
+        space = new SpaceSpriteContainer().getSprite();
 
         // Generate system star.
         SystemStarSpriteContainer starSpriteContainer = new SystemStarSpriteContainer(
@@ -73,9 +70,7 @@ public class GameObjectCanvas {
 
         planetHandler = new PlanetHandler();
 
-        for (PlanetCelestialComponent planet : planetList) {
-            planetHandler.addPlanet(planet);
-        }
+        planetList.forEach(planet -> planetHandler.addPlanet(planet));
 
         // Initially select the first planet (visual borders).
         if (planetList.size() > 0) {
@@ -91,8 +86,7 @@ public class GameObjectCanvas {
         liveComponentBatch = new SpriteBatch();
         backgroundBatch = new SpriteBatch();
 
-        backgroundCamera = new OrthographicCamera(1920, 1080);
-
+        backgroundCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     public void destroy() {
@@ -106,12 +100,6 @@ public class GameObjectCanvas {
     public void drawGameContent() {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        // TODO: bg and other objects are handled in different batches because
-        // game is
-        // suppose to feature zooming/moving camera in the future. Find out if 1
-        // batch is okay after all
-
         handleBackgroundBatch();
         handleLiveComponentBatch();
     }
@@ -121,7 +109,7 @@ public class GameObjectCanvas {
         shapeRenderer.setProjectionMatrix(camera.combined);
         liveComponentBatch.begin();
 
-        starWrapper.update();
+        starWrapper.update(backgroundCamera.position.x, backgroundCamera.position.y);
 
         planetHandler.setPlanetaryMovement(UniverseExploration.gameStatus.isPlanetaryMovementActive());
 
@@ -159,6 +147,7 @@ public class GameObjectCanvas {
                     selectedPlanet.getSelectedPlanet().getSprite().getX() + selectedPlanet.getSelectedPlanet().getSprite().getWidth() / 2,
                     selectedPlanet.getSelectedPlanet().getSprite().getY() + selectedPlanet.getSelectedPlanet().getSprite().getHeight() / 2,
                     varyingRadius);
+
             shapeRenderer.end();
         }
     }
@@ -183,9 +172,9 @@ public class GameObjectCanvas {
         selectedPlanet.setSelectedPlanet(planetHandler.getPlanetSpriteByComponent(planet));
     }
 
-    private void firePlanetClickListener(PlanetSprite pgfx) {
-        selectedPlanet.setSelectedPlanet(pgfx);
-        planetClickListener.handleEventClassEvent(new UEEvent(pgfx));
+    private void firePlanetClickListener(PlanetSprite planetSprite) {
+        selectedPlanet.setSelectedPlanet(planetSprite);
+        planetClickListener.handleEventClassEvent(new UEEvent(planetSprite));
     }
 
     public void handleBackgroundBatch() {
@@ -219,7 +208,7 @@ public class GameObjectCanvas {
             // goofy).
             boolean hidePlanet = !UniverseExploration.gameStatus.isPlanetaryMovementActive() && starWrapper.isAlphaReachedMinimum();
 
-            selectedPlanet.handleAlpha((hidePlanet) ? false : true);
+            selectedPlanet.handleAlpha(!hidePlanet);
             selectedPlanet.getSelectedPlanet().getEnlarged().draw(backgroundBatch);
         }
     }
@@ -231,13 +220,6 @@ public class GameObjectCanvas {
      */
     public void updateCameraOnCanvas(OrthographicCamera cam) {
         this.camera = cam;
-    }
-
-    /**
-     * @return the planetClickListener
-     */
-    public UEListener getPlanetClickListener() {
-        return planetClickListener;
     }
 
     /**

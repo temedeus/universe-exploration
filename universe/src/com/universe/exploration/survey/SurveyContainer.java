@@ -40,23 +40,11 @@ public class SurveyContainer extends ArrayList<Survey> {
         return null;
     }
 
+    // Return false if there are any crewmembers in any other status than alive.
     public boolean isSurveyTeamAcceptable(List<CrewMember> crewmen) {
-        for (CrewMember member : crewmen) {
-            if (member.getStatus() != CrewMemberStatus.ALIVE) {
-                return false;
-            }
-        }
-
-        return true;
+        return !crewmen.stream()
+                .filter(member -> member.getStatus() != CrewMemberStatus.ALIVE)
+                .findAny()
+                .isPresent();
     }
-
-    public int crewmenOnSurvey() {
-        int crewmenOnSurvey = 0;
-        for (Survey surveyStatus : this) {
-            crewmenOnSurvey += surveyStatus.getSurveyTeamSize();
-        }
-
-        return crewmenOnSurvey;
-    }
-
 }
