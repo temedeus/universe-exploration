@@ -12,7 +12,7 @@ import com.universe.exploration.resource.Food;
 import com.universe.exploration.resource.Water;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 import com.universe.exploration.starsystem.components.StarCelestialComponent;
-import com.universe.exploration.survey.Lifeform;
+import com.universe.exploration.survey.LifeformLevel;
 
 /**
  * Generates {@link StarSystem}.
@@ -145,7 +145,7 @@ public class StarSystemFactory {
     }
 
     private void setupFoodPresence(PlanetCelestialComponent planet) {
-        if (planet.getLifeforms().getRank() >= Lifeform.VEGETATION.getRank()) {
+        if (planet.getLifeforms().getRank() >= LifeformLevel.VEGETATION.getRank()) {
             planet.addFoundResource(new Food());
         }
     }

@@ -13,7 +13,7 @@ import java.util.MissingResourceException;
 /**
  * <p>
  * Use this class to get localized strings. You can either use a string or
- * {@link LocalKey}.
+ * {@link TranslatableEnum}.
  * </p>
  *
  * @author 25.8.2015 Teemu Puurunen
@@ -66,7 +66,7 @@ public class Localizer {
      * Get localization based on given {@link TranslatableEnum}. Return key (as string)
      * if none found.
      *
-     * @param key
+     * @param local
      * @return
      */
     public String get(TranslatableEnum local) {

@@ -4,7 +4,7 @@
 package com.universe.exploration.celestialcomponents.configuration;
 
 import com.universe.exploration.common.tools.MathTools;
-import com.universe.exploration.survey.Lifeform;
+import com.universe.exploration.survey.LifeformLevel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,14 +30,18 @@ public class PlanetConfiguration extends AbstractConfiguration {
 
     protected float chanceForVegetation;
 
-    private Map<Lifeform, Supplier> lifeformMapping;
+    /**
+     * Provides list of life form levels and how to deduce their probability. Order matters here since first applicable
+     * is used.
+     */
+    private Map<LifeformLevel, Supplier> lifeformMapping;
 
     public PlanetConfiguration() {
         lifeformMapping = new HashMap<>();
-        lifeformMapping.put(Lifeform.CIVILIZED, () -> MathTools.calculateIfOddsHit(getChanceCivilization()));
-        lifeformMapping.put(Lifeform.ANIMAL, () -> MathTools.calculateIfOddsHit(getChanceAnimal()));
-        lifeformMapping.put(Lifeform.VEGETATION, () -> MathTools.calculateIfOddsHit(getChanceForVegetation()));
-        lifeformMapping.put(Lifeform.BACTERIAL, () -> MathTools.calculateIfOddsHit(getChanceForBacterial()));
+        lifeformMapping.put(LifeformLevel.CIVILIZED, () -> MathTools.calculateIfOddsHit(getChanceCivilization()));
+        lifeformMapping.put(LifeformLevel.ANIMAL, () -> MathTools.calculateIfOddsHit(getChanceAnimal()));
+        lifeformMapping.put(LifeformLevel.VEGETATION, () -> MathTools.calculateIfOddsHit(getChanceForVegetation()));
+        lifeformMapping.put(LifeformLevel.BACTERIAL, () -> MathTools.calculateIfOddsHit(getChanceForBacterial()));
     }
 
     /**
@@ -47,17 +51,17 @@ public class PlanetConfiguration extends AbstractConfiguration {
      * @param necessitiesMet
      * @return
      */
-    public Lifeform randomizePlanetLifeFormLevel(boolean necessitiesMet) {
+    public LifeformLevel randomizePlanetLifeFormLevel(boolean necessitiesMet) {
         if (necessitiesMet) {
             return lifeformMapping.entrySet()
                     .stream()
                     .filter(lifeformCallableEntry -> (Boolean) lifeformCallableEntry.getValue().get())
                     .findFirst()
                     .map(lifeformSupplierEntry -> lifeformSupplierEntry.getKey())
-                    .orElse(Lifeform.NONE);
+                    .orElse(LifeformLevel.NONE);
         }
 
-        return Lifeform.NONE;
+        return LifeformLevel.NONE;
     }
 
     /**

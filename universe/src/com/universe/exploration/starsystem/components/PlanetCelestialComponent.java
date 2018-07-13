@@ -5,7 +5,7 @@ package com.universe.exploration.starsystem.components;
 
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
 import com.universe.exploration.resource.Resource;
-import com.universe.exploration.survey.Lifeform;
+import com.universe.exploration.survey.LifeformLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class PlanetCelestialComponent extends CelestialComponent {
      */
     private double solarMass;
 
-    private Lifeform lifeform;
+    private LifeformLevel lifeformLevel;
 
     private List<Resource> resourcesFound;
 
@@ -187,15 +187,15 @@ public class PlanetCelestialComponent extends CelestialComponent {
     /**
      * @return the lifeforms
      */
-    public Lifeform getLifeforms() {
-        return lifeform;
+    public LifeformLevel getLifeforms() {
+        return lifeformLevel;
     }
 
     /**
      * @param lifeforms the lifeforms to set
      */
-    public void setLifeforms(Lifeform lifeform) {
-        this.lifeform = lifeform;
+    public void setLifeforms(LifeformLevel lifeformLevel) {
+        this.lifeformLevel = lifeformLevel;
     }
 
     /**

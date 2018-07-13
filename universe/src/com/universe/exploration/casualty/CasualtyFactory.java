@@ -8,7 +8,7 @@ import com.universe.exploration.crewmember.CrewMember;
 import com.universe.exploration.crewmember.attribute.CrewMemberAttribute;
 import com.universe.exploration.resource.Water;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
-import com.universe.exploration.survey.Lifeform;
+import com.universe.exploration.survey.LifeformLevel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class CasualtyFactory {
             applicableSurveyIncidents.add(SurveyIncidentCategory.LACK_OF_OXYGEN);
         }
 
-        if (planet.getLifeforms() != Lifeform.NONE) {
+        if (planet.getLifeforms() != LifeformLevel.NONE) {
             applicableSurveyIncidents.addAll(planet.getLifeforms().provideSurveyIncidentCategoryList());
         }
 
