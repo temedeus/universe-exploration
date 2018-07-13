@@ -138,7 +138,7 @@ public class StarSystemFactory {
 
         boolean mandatoryForLife = planet.containsInstanceOfResource(Water.class)
                 && planet.containsInstanceOfResource(Air.class);
-        planet.setLifeforms(cc.randomizePlanetLifeForm(mandatoryForLife));
+        planet.setLifeforms(cc.randomizePlanetLifeFormLevel(mandatoryForLife));
         setupFoodPresence(planet);
 
         return planet;

@@ -10,25 +10,6 @@ import com.universe.exploration.common.tools.RandomizationTools;
  */
 public abstract class AbstractConfiguration {
 
-    /**
-     * Identifier for component so that we can refer to it from UI-side.
-     */
-    protected String componentID;
-
-    /**
-     * @return the componentID
-     */
-    public String getComponentID() {
-        return componentID;
-    }
-
-    /**
-     * @param componentID the componentID to set
-     */
-    public void setComponentID(String componentID) {
-        this.componentID = componentID;
-    }
-
     protected String templateName;
 
     protected String[] graphicsFiles;
@@ -52,10 +33,4 @@ public abstract class AbstractConfiguration {
         return templateName;
     }
 
-    /**
-     * @param componentName the componentName to set
-     */
-    public void setComponentName(String componentName) {
-        this.templateName = componentName;
-    }
 }

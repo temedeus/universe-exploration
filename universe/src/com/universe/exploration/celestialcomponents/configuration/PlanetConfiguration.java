@@ -6,6 +6,10 @@ package com.universe.exploration.celestialcomponents.configuration;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.survey.Lifeform;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
 /**
  * Provides boundaries for creating planets.
  *
@@ -26,29 +30,31 @@ public class PlanetConfiguration extends AbstractConfiguration {
 
     protected float chanceForVegetation;
 
+    private Map<Lifeform, Supplier> lifeformMapping;
+
+    public PlanetConfiguration() {
+        lifeformMapping = new HashMap<>();
+        lifeformMapping.put(Lifeform.CIVILIZED, () -> MathTools.calculateIfOddsHit(getChanceCivilization()));
+        lifeformMapping.put(Lifeform.ANIMAL, () -> MathTools.calculateIfOddsHit(getChanceAnimal()));
+        lifeformMapping.put(Lifeform.VEGETATION, () -> MathTools.calculateIfOddsHit(getChanceForVegetation()));
+        lifeformMapping.put(Lifeform.BACTERIAL, () -> MathTools.calculateIfOddsHit(getChanceForBacterial()));
+    }
+
     /**
-     * In order to have any life at all, planet needs to contain water.
+     * Deduces the level of lifeforms on a planet. Given enumeration tells the minimum level of life forms.
+     * If conditions are not met (boolean given directly), return enum representing no lifeforms.
      *
      * @param necessitiesMet
      * @return
      */
-    public Lifeform randomizePlanetLifeForm(boolean necessitiesMet) {
+    public Lifeform randomizePlanetLifeFormLevel(boolean necessitiesMet) {
         if (necessitiesMet) {
-            if (MathTools.calculateIfOddsHit(getChanceCivilization())) {
-                return Lifeform.CIVILIZED;
-            }
-
-            if (MathTools.calculateIfOddsHit(getChanceAnimal())) {
-                return Lifeform.ANIMAL;
-            }
-
-            if (MathTools.calculateIfOddsHit(getChanceForVegetation())) {
-                return Lifeform.VEGETATION;
-            }
-
-            if (MathTools.calculateIfOddsHit(getChanceForBacterial())) {
-                return Lifeform.BACTERIAL;
-            }
+            return lifeformMapping.entrySet()
+                    .stream()
+                    .filter(lifeformCallableEntry -> (Boolean) lifeformCallableEntry.getValue().get())
+                    .findFirst()
+                    .map(lifeformSupplierEntry -> lifeformSupplierEntry.getKey())
+                    .orElse(Lifeform.NONE);
         }
 
         return Lifeform.NONE;
@@ -90,65 +96,9 @@ public class PlanetConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * @return the chanceToFindFood
-     */
-    public float getChanceToFindFood() {
-        return chanceToFindFood;
-    }
-
-    /**
-     * @param chanceForCivilization the chanceForCivilization to set
-     */
-    public void setChanceForCivilization(float chanceForCivilization) {
-        this.chanceForCivilization = chanceForCivilization;
-    }
-
-    /**
-     * @param chanceForBacterial the chanceForBacterial to set
-     */
-    public void setChanceForBacterial(float chanceForBacterial) {
-        this.chanceForBacterial = chanceForBacterial;
-    }
-
-    /**
-     * @param cHANCE_ANchanceForAnimalLifeIMAL the chanceForAnimalLife to set
-     */
-    public void setChanceForAnimalLife(float chanceForAnimalLife) {
-        this.chanceForAnimalLife = chanceForAnimalLife;
-    }
-
-    /**
-     * @param chanceToExtractWater the chanceToExtractWater to set
-     */
-    public void setChanceToExtractWater(float chanceToExtractWater) {
-        this.chanceToExtractWater = chanceToExtractWater;
-    }
-
-    /**
-     * @param chanceToExtractOxygen the chanceToExtractOxygen to set
-     */
-    public void setChanceToExractOxygen(float chanceToExtractOxygen) {
-        this.chanceToExtractOxygen = chanceToExtractOxygen;
-    }
-
-    /**
-     * @param chanceToFindFood the chanceToFindFood to set
-     */
-    public void setChanceToFindFood(float chanceToFindFood) {
-        this.chanceToFindFood = chanceToFindFood;
-    }
-
-    /**
      * @return the chanceForVegetation
      */
     public float getChanceForVegetation() {
         return chanceForVegetation;
-    }
-
-    /**
-     * @param chanceForVegetation the chanceForVegetation to set
-     */
-    public void setChanceForVegetation(float chanceForVegetation) {
-        this.chanceForVegetation = chanceForVegetation;
     }
 }
