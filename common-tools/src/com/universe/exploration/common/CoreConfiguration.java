@@ -1,9 +1,7 @@
 package com.universe.exploration.common;
 
 /**
- * GameConfiguration.java
- * <p>
- * Game configuration. TODO: XML configuration instead of hard-coding.
+ * Game configuration. TODO: JSON configuration instead of hard-coding.
  *
  * @author 6.6.2015 Teemu Puurunen
  */
