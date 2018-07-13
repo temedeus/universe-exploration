@@ -289,7 +289,7 @@ public enum SurveyIncident {
      * Default implementation returns null and as such is affected by planet
      * conditions only.
      *
-     * @return
+     * @return listOfApplicableAttributes
      */
     public List<Class<? extends CrewMemberAttribute>> listOfContributingAttributes() {
         List<Class<? extends CrewMemberAttribute>> listOfApplicableAttributes = new ArrayList<Class<? extends CrewMemberAttribute>>();
