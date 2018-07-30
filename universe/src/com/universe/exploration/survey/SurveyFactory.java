@@ -47,14 +47,12 @@ public class SurveyFactory {
     }
 
     private void setMemberStatusOnSurvey(List<CrewMember> surveyTeam) {
-        for (CrewMember member : surveyTeam) {
-            member.setStatus(CrewMemberStatus.ONSURVEY);
-        }
+        surveyTeam.forEach(member -> member.setStatus(CrewMemberStatus.ONSURVEY));
     }
 
     private List<Casualty> createCasualtyList(List<CrewMember> surveyTeam, PlanetCelestialComponent planet) {
         CasualtyFactory casualtyFactory = new CasualtyFactory(planet);
-        List<Casualty> casualties = new ArrayList<Casualty>();
+        List<Casualty> casualties = new ArrayList<>();
 
         for (CrewMember surveyTeamMember : surveyTeam) {
             Casualty casualty = casualtyFactory.createCasualty(surveyTeamMember);
