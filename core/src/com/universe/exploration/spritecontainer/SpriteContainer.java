@@ -79,47 +79,10 @@ abstract class SpriteContainer {
     }
 
     /**
-     * @return the spriteSize
-     */
-    public int getSpriteSize() {
-        return spriteSize;
-    }
-
-    /**
-     * @param spriteSize the spriteSize to set
-     */
-    public void setSpriteSize(int spriteSize) {
-        this.spriteSize = spriteSize;
-    }
-
-    /**
-     * @return the graphicsSource
-     */
-    public String getGraphicsSource() {
-        return graphicsSource;
-    }
-
-    /**
-     * @param graphicsSource the graphicsSource to set
-     */
-    public void setGraphicsSource(String graphicsSource) {
-        this.graphicsSource = graphicsSource;
-    }
-
-    /**
      * @return the componentType
      */
     public CelestialComponent getComponentType() {
         return starSystemComponent;
-    }
-
-    /**
-     * @param componentType the componentType to set
-     */
-    public void setComponentType(CelestialComponent componentType) {
-        this.starSystemComponent = componentType;
-        this.setCelestialBodyGfxModel(new SpriteContainerState());
-        this.celestialBodyGfxModel.setStarSystemComponent(componentType);
     }
 
     /**
@@ -130,24 +93,10 @@ abstract class SpriteContainer {
     }
 
     /**
-     * @param sprite the sprite to set
-     */
-    public void setSprite(Sprite sprite) {
-        this.smallVersion = sprite;
-    }
-
-    /**
      * @return the startBodyGfxModel
      */
     public SpriteContainerState getCelestialBodyGfxModel() {
         return celestialBodyGfxModel;
-    }
-
-    /**
-     * @param startBodyGfxModel the startBodyGfxModel to set
-     */
-    public void setCelestialBodyGfxModel(SpriteContainerState startBodyGfxModel) {
-        this.celestialBodyGfxModel = startBodyGfxModel;
     }
 
     /**

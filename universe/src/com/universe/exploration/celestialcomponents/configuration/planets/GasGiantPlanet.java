@@ -9,11 +9,15 @@ import com.universe.exploration.celestialcomponents.configuration.PlanetConfigur
  * @author 24.8.2015 Teemu Puurunen
  */
 public class GasGiantPlanet extends PlanetConfiguration {
-
-    public GasGiantPlanet() {
+    @Override
+    public void setup() {
         templateName = "Giant gas planet";
-        graphicsFiles = new String[]{"gasplanet/planet3.png", "gasplanet/gasplanet1.png"};
-        spriteSizes = new int[]{40, 50, 55};
+
+        graphicsFiles.add("gasplanet/planet3.png");
+        graphicsFiles.add("gasplanet/gasplanet1.png");
+        spriteSizes.add(400);
+        spriteSizes.add(500);
+        spriteSizes.add(550);
 
         chanceForCivilization = 0;
 

@@ -9,10 +9,14 @@ import com.universe.exploration.celestialcomponents.configuration.PlanetConfigur
  * @author 24.8.2015 Teemu Puurunen
  */
 public class ColdRockyPlanet extends PlanetConfiguration {
-    public ColdRockyPlanet() {
+    @Override
+    public void setup() {
         templateName = "Cold rocky planet";
-        graphicsFiles = new String[]{"planet4.png"};
-        spriteSizes = new int[]{4, 8, 10};
+
+        graphicsFiles.add("planet4.png");
+        spriteSizes.add(40);
+        spriteSizes.add(80);
+        spriteSizes.add(100);
 
         chanceForCivilization = 0;
 

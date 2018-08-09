@@ -5,16 +5,22 @@ package com.universe.exploration.celestialcomponents.configuration.planets;
 
 import com.universe.exploration.celestialcomponents.configuration.PlanetConfiguration;
 
+import java.util.ArrayList;
+
 /**
  * Interior terrestrial planet template.
  *
  * @author 14.1.2017 Teemu Puurunen
  */
 public class InteriorTerrestrialPlanet extends PlanetConfiguration {
-    public InteriorTerrestrialPlanet() {
+    @Override
+    public void setup() {
         templateName = "Interior terrestrial planet";
-        graphicsFiles = new String[]{"planet1.png"};
-        spriteSizes = new int[]{10, 12, 14};
+        graphicsFiles = new ArrayList<>();
+        graphicsFiles.add("planet1.png");
+        spriteSizes.add(100);
+        spriteSizes.add(120);
+        spriteSizes.add(140);
 
         chanceForCivilization = 0;
         chanceForBacterial = 1;

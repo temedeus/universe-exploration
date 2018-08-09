@@ -5,25 +5,34 @@ package com.universe.exploration.celestialcomponents.configuration;
 
 import com.universe.exploration.common.tools.RandomizationTools;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author 24.8.2015 Teemu Puurunen
  */
-public abstract class AbstractConfiguration {
+public abstract class AbstractConfiguration implements IAbstractConfiguration {
 
     protected String templateName;
 
-    protected String[] graphicsFiles;
+    protected List<String> graphicsFiles;
 
-    protected int[] spriteSizes;
+    protected List<Integer> spriteSizes;
+
+    AbstractConfiguration() {
+        graphicsFiles = new ArrayList<>();
+        spriteSizes = new ArrayList<>();
+        setup();
+    }
 
     public String getRandomGraphicsFile() {
-        int x = RandomizationTools.getRandomInteger(0, graphicsFiles.length - 1);
-        return graphicsFiles[x];
+        int x = RandomizationTools.getRandomInteger(0, graphicsFiles.size() - 1);
+        return graphicsFiles.get(x);
     }
 
     public int getRandomSpriteSize() {
-        int x = RandomizationTools.getRandomInteger(0, spriteSizes.length - 1);
-        return spriteSizes[x];
+        int x = RandomizationTools.getRandomInteger(0, spriteSizes.size() - 1);
+        return spriteSizes.get(x);
     }
 
     /**

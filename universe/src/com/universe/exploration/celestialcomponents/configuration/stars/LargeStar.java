@@ -9,10 +9,10 @@ import com.universe.exploration.celestialcomponents.configuration.StarConfigurat
  * @author 24.8.2015 Teemu Puurunen
  */
 public class LargeStar extends StarConfiguration {
-
-    public LargeStar() {
+    @Override
+    public void setup() {
         templateName = "Large star";
-        graphicsFiles = new String[]{"star1.png"};
-        spriteSizes = new int[]{4096};
+        graphicsFiles.add("star1.png");
+        spriteSizes.add(4096);
     }
 }

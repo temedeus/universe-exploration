@@ -140,12 +140,13 @@ public class GameObjectCanvas {
         }
 
         if (planetHandler.getPlanetCount() > 0) {
+            PlanetSprite selected = selectedPlanet.getSelectedPlanet();
             Color navyBlue = new Color(0, 0, 0.5f, 0.7f);
             shapeRenderer.setColor(navyBlue);
             shapeRenderer.begin(ShapeType.Line);
             shapeRenderer.circle(
-                    selectedPlanet.getSelectedPlanet().getSprite().getX() + selectedPlanet.getSelectedPlanet().getSprite().getWidth() / 2,
-                    selectedPlanet.getSelectedPlanet().getSprite().getY() + selectedPlanet.getSelectedPlanet().getSprite().getHeight() / 2,
+                    selected.getSprite().getX() + selected.getSprite().getWidth() / 2,
+                    selected.getSprite().getY() + selected.getSprite().getHeight() / 2,
                     varyingRadius);
 
             shapeRenderer.end();

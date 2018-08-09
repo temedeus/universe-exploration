@@ -7,6 +7,7 @@ import com.universe.exploration.crew.CrewMemberStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Representation of the crew composed of {@link CrewMember}.
@@ -18,10 +19,6 @@ public class Crew {
 
     public void addCrewman(CrewMember crewman) {
         crewmen.add(crewman);
-    }
-
-    public void removeCrewman(CrewMember c) {
-        crewmen.remove(c);
     }
 
     public List<CrewMember> getCrewmen() {
@@ -62,14 +59,9 @@ public class Crew {
         return getCrewMembersByStatus(statuses);
     }
 
-    public List<CrewMember> getCrewMembersByStatus(List<CrewMemberStatus> statuses) {
-        List<CrewMember> filteredMembers = new ArrayList<CrewMember>();
-        for (CrewMember member : crewmen) {
-            if (statuses.contains(member.getStatus())) {
-                filteredMembers.add(member);
-            }
-        }
-
-        return filteredMembers;
+    private List<CrewMember> getCrewMembersByStatus(List<CrewMemberStatus> statuses) {
+        return crewmen.stream()
+                .filter(member -> statuses.contains(member.getStatus()))
+                .collect(Collectors.toList());
     }
 }

@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  *
  * @author 14.1.2017 Teemu Puurunen
  */
-public class PlanetConfiguration extends AbstractConfiguration {
+public abstract class PlanetConfiguration extends AbstractConfiguration {
     protected float chanceForCivilization;
 
     protected float chanceForBacterial;

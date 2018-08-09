@@ -18,7 +18,7 @@ public enum MusicConfiguration implements IAudioFile {
     private final String id;
     private final String audioFile;
 
-    private MusicConfiguration(String id, String audioFile) {
+    MusicConfiguration(String id, String audioFile) {
         this.id = id;
         this.audioFile = audioFile;
     }

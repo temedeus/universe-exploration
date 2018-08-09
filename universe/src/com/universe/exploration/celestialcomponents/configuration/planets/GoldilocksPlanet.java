@@ -9,11 +9,13 @@ import com.universe.exploration.celestialcomponents.configuration.PlanetConfigur
  * @author 24.8.2015 Teemu Puurunen
  */
 public class GoldilocksPlanet extends PlanetConfiguration {
-
-    public GoldilocksPlanet() {
+    @Override
+    public void setup() {
         templateName = "Goldilocks planet";
-        graphicsFiles = new String[]{"planet5.png"};
-        spriteSizes = new int[]{10, 12, 14};
+        graphicsFiles.add("planet5.png");
+        spriteSizes.add(100);
+        spriteSizes.add(120);
+        spriteSizes.add(140);
 
         chanceForCivilization = 20;
         chanceForBacterial = 80;

@@ -9,11 +9,14 @@ import com.universe.exploration.celestialcomponents.configuration.PlanetConfigur
  * @author 24.8.2015 Teemu Puurunen
  */
 public class ExteriorTerrestrialPlanet extends PlanetConfiguration {
-
-    public ExteriorTerrestrialPlanet() {
+    @Override
+    public void setup() {
         templateName = "Exterior terrestrial planet";
-        graphicsFiles = new String[]{"planet2.png"};
-        spriteSizes = new int[]{8, 10, 12};
+
+        graphicsFiles.add("planet2.png");
+        spriteSizes.add(80);
+        spriteSizes.add(100);
+        spriteSizes.add(120);
 
         chanceForCivilization = 7;
         chanceForBacterial = 20;

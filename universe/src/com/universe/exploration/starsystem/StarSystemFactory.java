@@ -32,16 +32,6 @@ public class StarSystemFactory {
     }
 
     /**
-     * Custom configuration configuration
-     *
-     * @param starSystemConfiguration StarSystemConfiguration
-     */
-    public StarSystemFactory(StarSystemConfiguration starSystemConfiguration) {
-        this.starSystemConfiguration = starSystemConfiguration;
-        this.starsystem = new StarSystem();
-    }
-
-    /**
      * Create a star system.
      *
      * @return StarSystem starsystem
@@ -51,10 +41,8 @@ public class StarSystemFactory {
                 starSystemConfiguration.getMaxPlanetCount());
 
         // Planet count between configured limits.
-        if (MathTools.betweenIntRangeInclusively(planetCount, this.starSystemConfiguration.getMaxPlanetCount(),
+        if (!MathTools.betweenIntRangeInclusively(planetCount, this.starSystemConfiguration.getMaxPlanetCount(),
                 this.starSystemConfiguration.getMinPlanetCount())) {
-            this.starsystem.setPlanetCount(planetCount);
-        } else {
             throw new PlanetCountOutOfRangeException(
                     "Planet count must be between " + this.starSystemConfiguration.getMinPlanetCount() + " and "
                             + this.starSystemConfiguration.getMaxPlanetCount() + ". Current value: " + planetCount);

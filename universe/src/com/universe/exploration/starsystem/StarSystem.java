@@ -26,10 +26,6 @@ public class StarSystem {
         planets.add(planet);
     }
 
-    public void emptyPlanetsList() {
-        planets.clear();
-    }
-
     /**
      * @return the systemstar
      */
@@ -45,29 +41,10 @@ public class StarSystem {
     }
 
     /**
-     * Planets in given star system.
-     */
-    private int planetCount;
-
-    /**
      * Star system constructor.
      */
     public StarSystem() {
-        this.planets = new ArrayList<PlanetCelestialComponent>();
-    }
-
-    /**
-     * @return the planetCount
-     */
-    public int getPlanetCount() {
-        return planetCount;
-    }
-
-    /**
-     * @param planetCount the planetCount to set
-     */
-    public void setPlanetCount(int planetCount) {
-        this.planetCount = planetCount;
+        this.planets = new ArrayList<>();
     }
 
     /**
