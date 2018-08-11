@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @author 14.1.2017 Teemu Puurunen
  */
 public class Crew {
-    private List<CrewMember> crewmen = new ArrayList<CrewMember>();
+    private List<CrewMember> crewmen = new ArrayList<>();
 
     public void addCrewman(CrewMember crewman) {
         crewmen.add(crewman);
@@ -31,7 +31,7 @@ public class Crew {
      * @return List
      */
     public List<CrewMember> getAliveCrewmen() {
-        List<CrewMemberStatus> statuses = new ArrayList<CrewMemberStatus>();
+        List<CrewMemberStatus> statuses = new ArrayList<>();
         statuses.add(CrewMemberStatus.ALIVE);
         statuses.add(CrewMemberStatus.ONSURVEY);
         return getCrewMembersByStatus(statuses);
@@ -43,7 +43,7 @@ public class Crew {
      * @return List
      */
     public List<CrewMember> getCrewMenAboardSpaceShip() {
-        List<CrewMemberStatus> statuses = new ArrayList<CrewMemberStatus>();
+        List<CrewMemberStatus> statuses = new ArrayList<>();
         statuses.add(CrewMemberStatus.ALIVE);
         return getCrewMembersByStatus(statuses);
     }
@@ -54,7 +54,7 @@ public class Crew {
      * @return List
      */
     public List<CrewMember> getCrewMenOnSurvey() {
-        List<CrewMemberStatus> statuses = new ArrayList<CrewMemberStatus>();
+        List<CrewMemberStatus> statuses = new ArrayList<>();
         statuses.add(CrewMemberStatus.ONSURVEY);
         return getCrewMembersByStatus(statuses);
     }

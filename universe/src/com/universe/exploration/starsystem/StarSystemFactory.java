@@ -36,21 +36,13 @@ public class StarSystemFactory {
      *
      * @return StarSystem starsystem
      */
-    public StarSystem makeStarSystem() throws PlanetCountOutOfRangeException {
+    public StarSystem makeStarSystem()  {
         int planetCount = RandomizationTools.getRandomInteger(starSystemConfiguration.getMinPlanetCount(),
                 starSystemConfiguration.getMaxPlanetCount());
 
-        // Planet count between configured limits.
-        if (!MathTools.betweenIntRangeInclusively(planetCount, this.starSystemConfiguration.getMaxPlanetCount(),
-                this.starSystemConfiguration.getMinPlanetCount())) {
-            throw new PlanetCountOutOfRangeException(
-                    "Planet count must be between " + this.starSystemConfiguration.getMinPlanetCount() + " and "
-                            + this.starSystemConfiguration.getMaxPlanetCount() + ". Current value: " + planetCount);
-        }
-
         populateWithPlanets(planetCount);
 
-        CelestialComponentTemplate template = (CelestialComponentTemplate) ((WeightedRandomizationItem) RandomizationTools
+        CelestialComponentTemplate template = (CelestialComponentTemplate) (RandomizationTools
                 .getWeightedRandomItem(starSystemConfiguration.getPotentialStars())).getItem();
 
         StarCelestialComponent systemstar = new StarCelestialComponent();

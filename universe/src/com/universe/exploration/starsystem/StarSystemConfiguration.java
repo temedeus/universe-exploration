@@ -53,8 +53,8 @@ public class StarSystemConfiguration {
     private List<WeightedRandomizationItem> potentialPlanets;
 
     public StarSystemConfiguration() {
-        potentialPlanets = new ArrayList<WeightedRandomizationItem>();
-        potentialStars = new ArrayList<WeightedRandomizationItem>();
+        potentialPlanets = new ArrayList<>();
+        potentialStars = new ArrayList<>();
 
         for (CelestialComponentTemplate template : CelestialComponentTemplate.values()) {
             if (template.getComponentType() instanceof StarConfiguration) {

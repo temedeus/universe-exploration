@@ -11,53 +11,6 @@ package com.universe.exploration.common.tools;
  * @author 15.1.2017 Teemu Puurunen
  */
 public class MathTools {
-    /**
-     * Check if val is between max and min (inclusively).
-     *
-     * @param val
-     * @param max
-     * @param min
-     * @return
-     */
-    public static boolean betweenIntRangeInclusively(int val, int max, int min) {
-        return (val >= min && val <= max) ? true : false;
-    }
-
-    /**
-     * Check if val is between max and min (exclusively).
-     *
-     * @param val
-     * @param max
-     * @param min
-     * @return
-     */
-    public static boolean betweenIntRangeExclusively(int val, int max, int min) {
-        return (val > min && val < max) ? true : false;
-    }
-
-    /**
-     * Check if val is between max and min (exclusively).
-     *
-     * @param val
-     * @param max
-     * @param min
-     * @return
-     */
-    public static boolean betweenFloatRangeExclusively(float val, float max, float min) {
-        return (val > min && val < max) ? true : false;
-    }
-
-    /**
-     * Check if val is between max and min (inclusively).
-     *
-     * @param val
-     * @param max
-     * @param min
-     * @return
-     */
-    public static boolean betweenFloatRangeInclusively(float val, float max, float min) {
-        return (val >= min && val <= max) ? true : false;
-    }
 
     /**
      * Decrease value if result above zero. Otherwise return zero.
@@ -77,7 +30,7 @@ public class MathTools {
      * @return
      */
     public static boolean calculateIfOddsHit(float percentage) {
-        return ((float) Math.random() < (percentage / 100)) ? true : false;
+        return (float) Math.random() < (percentage / 100);
     }
 
     public static String roundedFloatAsString(float f) {

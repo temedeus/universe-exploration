@@ -23,7 +23,7 @@ public class FileReader {
      */
     public List<String> readTextFile(String path) throws IOException {
         BufferedReader bufferedReader = GdxHelper.provideAssetReader(path);
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
         String line = bufferedReader.readLine();
         while (line != null) {
             lines.add(line);

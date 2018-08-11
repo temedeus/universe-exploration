@@ -42,8 +42,4 @@ public class GdxHelper {
     public static float getDeltaTime() {
         return Gdx.graphics.getDeltaTime() * 100;
     }
-
-    public static void logError(String tag, String error) {
-        Gdx.app.error(tag, error);
-    }
 }

@@ -44,7 +44,7 @@ public class CasualtyFactory {
     }
 
     private List<SurveyIncidentCategory> createListofApplicableCauseOfDeath(PlanetCelestialComponent planet) {
-        List<SurveyIncidentCategory> applicableSurveyIncidents = new ArrayList<SurveyIncidentCategory>();
+        List<SurveyIncidentCategory> applicableSurveyIncidents = new ArrayList<>();
 
         applicableSurveyIncidents.add(SurveyIncidentCategory.GENERAL);
 

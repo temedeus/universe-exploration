@@ -10,9 +10,7 @@ import com.universe.exploration.crew.CrewMemberStatus;
 import java.util.List;
 
 /**
- * Before utilizing this factory you must first populate {@link #maleProfiles}
- * and {@link #femaleProfiles} using {@link #addToNames(CrewmemberSex, String)}.
- * Otherwise you will get zero crewmen.
+ * Generate crew from crewmemeber profiles.
  */
 public class CrewFactory {
 
@@ -69,19 +67,5 @@ public class CrewFactory {
 
         crewmember.setStrength(RandomizationTools.getRandomInteger(CrewCharacteristicsBoundaries.MIN_STRENGTH,
                 CrewCharacteristicsBoundaries.MAX_STRENGTH));
-    }
-
-    /**
-     * @param maleProfiles the maleProfiles to set
-     */
-    public void setMaleProfiles(List<CrewmemberProfile> maleProfiles) {
-        this.maleProfiles = maleProfiles;
-    }
-
-    /**
-     * @param femaleProfiles the femaleProfiles to set
-     */
-    public void setFemaleProfiles(List<CrewmemberProfile> femaleProfiles) {
-        this.femaleProfiles = femaleProfiles;
     }
 }

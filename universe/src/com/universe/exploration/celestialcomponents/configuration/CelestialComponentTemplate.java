@@ -23,7 +23,7 @@ public enum CelestialComponentTemplate {
     RED_MINERAL_PLANET(new ExteriorTerrestrialPlanet(), 4),
     GAS_GIANT_PLANET(new GasGiantPlanet(), 10),
     COLD_ROCKY_PLANET(new ColdRockyPlanet(), 15),
-    EARTLIKE_PLANET(new GoldilocksPlanet(), 2);
+    EARTHLIKE_PLANET(new GoldilocksPlanet(), 2);
 
     private final AbstractConfiguration componentType;
 

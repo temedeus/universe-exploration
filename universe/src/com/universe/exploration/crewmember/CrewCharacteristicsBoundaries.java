@@ -4,15 +4,9 @@
 package com.universe.exploration.crewmember;
 
 /**
- * <p>
  * Range values for {@link CrewMember} characteristics. These values are also
  * used in presenting min/max values in other parts of game. As such constants
  * are declared public and static.
- * </p>
- * <p>
- * Certain values cannot go all the way to zero as I figured you never hire
- * below average personnel as astronauts.
- * </p>
  *
  * @author 13.3.2016 Teemu Puurunen
  */

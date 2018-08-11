@@ -15,7 +15,7 @@ public class MinimalLogger {
     private LinkedList<String> log;
 
     public MinimalLogger() {
-        log = new LinkedList<String>();
+        log = new LinkedList<>();
     }
 
     private final int logSize = 10;

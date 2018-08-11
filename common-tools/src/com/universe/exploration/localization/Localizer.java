@@ -25,8 +25,7 @@ public class Localizer {
     private I18NBundle localizationBundle;
 
     /**
-     * Initialize once. If localizations change in the middle of the game...
-     * well, boohoo.
+     * Initialize localiser.
      *
      * @return
      */

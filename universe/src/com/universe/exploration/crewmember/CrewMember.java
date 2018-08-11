@@ -25,11 +25,11 @@ public class CrewMember {
 
     private Nationality nationality;
 
-    private Map<String, CrewMemberAttribute> crewMemberAttributes = new HashMap<String, CrewMemberAttribute>();
+    private Map<String, CrewMemberAttribute> crewMemberAttributes = new HashMap<>();
 
     private CrewMemberStatus status;
 
-    private Set<CrewMemberCondition> condition = new HashSet<CrewMemberCondition>();
+    private Set<CrewMemberCondition> condition = new HashSet<>();
 
     /**
      * @return the name
@@ -165,7 +165,7 @@ public class CrewMember {
     }
 
     /**
-     * @param crewMemberStatus the crewMemberStatus to set
+     * @param CrewMemberStatus the crewMemberStatus to set
      */
     public void setStatus(CrewMemberStatus status) {
         this.status = status;
