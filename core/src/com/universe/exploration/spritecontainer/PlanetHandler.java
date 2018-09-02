@@ -14,7 +14,6 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Maintains planets.
@@ -41,14 +40,11 @@ public class PlanetHandler {
      *
      * @param celestialComponent
      */
-    public void addPlanet(CelestialComponent celestialComponent) {
-
-        if (celestialComponent instanceof PlanetCelestialComponent) {
-            planetContainer.add(new PlanetSprite(celestialComponent));
-        }
+    public void addPlanet(PlanetCelestialComponent celestialComponent) {
+        planetContainer.add(new PlanetSprite(celestialComponent));
     }
 
-    public PlanetSprite getPlanetGfxContainerAtIndex(int i) {
+    public PlanetSprite getPlanetAtIndex(int i) {
         return planetContainer.get(i);
     }
 
@@ -61,7 +57,7 @@ public class PlanetHandler {
 
         for (PlanetSprite planet : planetContainer) {
             planet.setPlanetSelected(planet.equals(selected));
-            planet.getCelestialBodyGfxModel().updateSpriteData();
+            planet.getCelestialBodyConfiguration().updateSpriteData();
             planet.updateSpritePosition();
             planet.handleZooming();
         }
@@ -90,16 +86,16 @@ public class PlanetHandler {
      * @return
      */
     public PlanetSprite getPlanetWithCoordinatesWithinBoundaries(Vector3 coordinates) {
-        for (PlanetSprite graphicsGfx : planetContainer) {
+        for (PlanetSprite planetSprite : planetContainer) {
             // Enlarge hit area a wee bit.
-            Rectangle planetRectangle = graphicsGfx.getSprite().getBoundingRectangle();
+            Rectangle planetRectangle = planetSprite.getSprite().getBoundingRectangle();
             planetRectangle.x -= 5;
             planetRectangle.y -= 5;
             planetRectangle.width += 50;
             planetRectangle.height += 50;
 
             if (planetRectangle.contains(coordinates.x, coordinates.y)) {
-                return graphicsGfx;
+                return planetSprite;
             }
         }
 
@@ -124,11 +120,11 @@ public class PlanetHandler {
      * @param render   Shaperenderer with the appropriate camera combined.
      */
     public void drawOrbits(PlanetSprite selected, ShapeRenderer render) {
-        for (PlanetSprite graphicsGfx : planetContainer) {
-            float radius = (float) ((PlanetCelestialComponent) graphicsGfx.celestialBodyGfxModel
+        for (PlanetSprite planetSprite : planetContainer) {
+            float radius = (float) ((PlanetCelestialComponent) planetSprite.celestialBodyConfiguration
                     .getStarSystemComponent()).getOrbitalRadius();
 
-            float alpha = (graphicsGfx.equals(selected)) ? 0.5f : 0.1f;
+            float alpha = (planetSprite.equals(selected)) ? 0.5f : 0.1f;
 
             render.setColor(new Color(255, 255, 255, alpha));
             render.begin(ShapeType.Line);

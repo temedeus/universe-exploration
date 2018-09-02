@@ -247,7 +247,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
 
                 SurveyFactory surveyFactory = new SurveyFactory();
                 Survey survey = surveyFactory.createSurvey((int) gameStatus.getCrewStatus().getTime(), surveyLength,
-                        form.getSelectedCrewMembers(), (PlanetCelestialComponent) form.getPlanet(),
+                        form.getSelectedCrewMembers(), form.getPlanet(),
                         form.getSurveyName().getText());
                 survey.setSurveyTeam(crew);
                 gameStatus.getSurveyStatusContainer().add(survey);
@@ -292,17 +292,11 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
      *
      * @return
      */
-    private boolean createStarSystem() {
-        try {
-            UniverseExploration.gameStatus.setStarSystem(new StarSystemFactory().makeStarSystem());
-            gameObjectCanvas = new GameObjectCanvas();
-            gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
-            gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
-        } catch (PlanetCountOutOfRangeException e) {
-            Gdx.app.log("ERROR", "Generated planet count is not within range!", e);
-        }
-
-        return true;
+    private void createStarSystem() {
+        UniverseExploration.gameStatus.setStarSystem(new StarSystemFactory().makeStarSystem());
+        gameObjectCanvas = new GameObjectCanvas();
+        gameObjectCanvas.updateCameraOnCanvas(playerMonitor.getOrthographicCamera());
+        gameObjectCanvas.setPlanetClickListener(createPlanetClickListener());
     }
 
     public UEListener createPlanetClickListener() {
@@ -311,8 +305,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
             public void handleEventClassEvent(final UEEvent e) {
                 uiController.createPlanetClickWindow(e);
             }
-
-            ;
         };
     }
 
@@ -349,21 +341,19 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
             ResourcesFoundBean rf = survey.getResourcesFound();
             String resourcesCaption = updateResources(rf);
 
-            List<String> surveyData = generateSurveyDataRows(caption, resourcesCaption, casualtyList, rf);
+            List<String> surveyData = generateSurveyDataRows(caption, resourcesCaption, casualtyList);
             uiController.createSurveyClosedWindow(surveyData);
         }
     }
 
-    private List<String> generateSurveyDataRows(String caption, String resourcesCaption, List<Casualty> casualtyList,
-                                                ResourcesFoundBean rf) {
-        List<String> surveydata = new ArrayList<String>();
+    private List<String> generateSurveyDataRows(String caption, String resourcesCaption, List<Casualty> casualtyList) {
+        List<String> surveydata = new ArrayList<>();
 
         surveydata.add(caption);
-        if (casualtyList.size() > 0) {
-            for (Casualty casualty : casualtyList) {
-                surveydata.add(casualty.getMember().getName() + ": "
-                        + Localizer.getInstance().get(casualty.getSurveyIncident().getLocalizationKey()));
-            }
+
+        for (Casualty casualty : casualtyList) {
+            surveydata.add(casualty.getMember().getName() + ": "
+                    + Localizer.getInstance().get(casualty.getSurveyIncident().getLocalizationKey()));
         }
 
         surveydata.add("");
@@ -373,7 +363,7 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     }
 
     private String updateResources(ResourcesFoundBean foundResources) {
-        List<String> resources = new ArrayList<String>();
+        List<String> resources = new ArrayList<>();
 
         for (Resource resource : foundResources.getResources()) {
             resources.add(Localizer.getInstance().get(resource.getResourceLocal()));

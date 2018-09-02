@@ -17,7 +17,7 @@ public class DataPairTableFactory {
     public UETable createPlanetInformationTable(PlanetSprite pgfx) {
         UETable planetInformationTable = new UETable();
 
-        PlanetInformation planetSurveyLabels = new PlanetInformation((PlanetCelestialComponent) pgfx.getCelestialBodyGfxModel()
+        PlanetInformation planetSurveyLabels = new PlanetInformation((PlanetCelestialComponent) pgfx.getCelestialBodyConfiguration()
                 .getStarSystemComponent());
         planetSurveyLabels.createPairs();
 

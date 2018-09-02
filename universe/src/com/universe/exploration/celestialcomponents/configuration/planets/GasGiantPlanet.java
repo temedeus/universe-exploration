@@ -15,9 +15,9 @@ public class GasGiantPlanet extends PlanetConfiguration {
 
         graphicsFiles.add("gasplanet/planet3.png");
         graphicsFiles.add("gasplanet/gasplanet1.png");
-        spriteSizes.add(400);
-        spriteSizes.add(500);
-        spriteSizes.add(550);
+        spriteSizes.add(110);
+        spriteSizes.add(130);
+        spriteSizes.add(150);
 
         chanceForCivilization = 0;
 

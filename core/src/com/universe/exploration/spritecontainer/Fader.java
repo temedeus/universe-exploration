@@ -36,6 +36,7 @@ public class Fader {
         this.maximumValue = maximumValue;
         this.decrementRate = decrementRate;
         this.incrementRate = incrementRate;
+        this.currentValue = minimumValue;
     }
 
     public float updateAlpha(boolean decreaseAlphaValue) {

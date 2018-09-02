@@ -67,7 +67,7 @@ public class StarSystemFactory {
             // Container for our planet data.
             PlanetCelestialComponent planet = new PlanetCelestialComponent();
 
-            WeightedRandomizationItem item = ((WeightedRandomizationItem) RandomizationTools
+            WeightedRandomizationItem item = ( RandomizationTools
                     .getWeightedRandomItem(starSystemConfiguration.getPotentialsPlanets()));
             CelestialComponentTemplate template = ((CelestialComponentTemplate) item.getItem());
             PlanetConfiguration planetTemplate = (PlanetConfiguration) template.getComponentType();

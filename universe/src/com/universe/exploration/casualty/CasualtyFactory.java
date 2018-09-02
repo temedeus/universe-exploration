@@ -38,9 +38,9 @@ public class CasualtyFactory {
             casualty.setMember(crewMember);
 
             return casualty;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     private List<SurveyIncidentCategory> createListofApplicableCauseOfDeath(PlanetCelestialComponent planet) {

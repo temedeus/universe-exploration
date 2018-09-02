@@ -75,7 +75,7 @@ public class GameObjectCanvas {
         // Initially select the first planet (visual borders).
         if (planetList.size() > 0) {
             selectedPlanet = new SelectedPlanet();
-            selectedPlanet.setSelectedPlanet(planetHandler.getPlanetGfxContainerAtIndex(0));
+            selectedPlanet.setSelectedPlanet(planetHandler.getPlanetAtIndex(0));
         }
     }
 

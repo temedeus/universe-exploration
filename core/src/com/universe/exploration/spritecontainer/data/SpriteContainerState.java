@@ -33,9 +33,6 @@ public class SpriteContainerState {
      */
     protected CelestialComponent starSystemComponent;
 
-    /**
-     *
-     */
     public SpriteContainerState() {
         positionX = 0;
         positionY = 0;
@@ -57,38 +54,10 @@ public class SpriteContainerState {
     }
 
     /**
-     * @param positionX the positionX to set
-     */
-    public void setPositionX(float positionX) {
-        this.positionX = positionX;
-    }
-
-    /**
      * @return the positionY
      */
     public float getPositionY() {
         return positionY;
-    }
-
-    /**
-     * @param positionY the positionY to set
-     */
-    public void setPositionY(float positionY) {
-        this.positionY = positionY;
-    }
-
-    /**
-     * @return the angle
-     */
-    public float getAngle() {
-        return angle;
-    }
-
-    /**
-     * @param angle the angle to set
-     */
-    public void setAngle(float angle) {
-        this.angle = angle;
     }
 
     /**
