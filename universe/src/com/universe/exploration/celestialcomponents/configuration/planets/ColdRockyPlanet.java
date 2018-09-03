@@ -3,12 +3,12 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
-import com.universe.exploration.celestialcomponents.configuration.PlanetConfiguration;
+import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
 
 /**
  * @author 24.8.2015 Teemu Puurunen
  */
-public class ColdRockyPlanet extends PlanetConfiguration {
+public class ColdRockyPlanet extends PlanetTemplate {
     @Override
     public void setup() {
         templateName = "Cold rocky planet";

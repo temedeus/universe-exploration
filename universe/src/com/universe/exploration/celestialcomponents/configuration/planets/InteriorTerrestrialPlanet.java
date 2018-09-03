@@ -3,7 +3,7 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.planets;
 
-import com.universe.exploration.celestialcomponents.configuration.PlanetConfiguration;
+import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author 14.1.2017 Teemu Puurunen
  */
-public class InteriorTerrestrialPlanet extends PlanetConfiguration {
+public class InteriorTerrestrialPlanet extends PlanetTemplate {
     @Override
     public void setup() {
         templateName = "Interior terrestrial planet";

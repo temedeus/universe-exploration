@@ -25,14 +25,14 @@ public enum CelestialComponentTemplate {
     COLD_ROCKY_PLANET(new ColdRockyPlanet(), 15),
     EARTHLIKE_PLANET(new GoldilocksPlanet(), 2);
 
-    private final AbstractConfiguration componentType;
+    private final AbstractTemplate componentType;
 
     /**
      * Determines the likelihood of the component.
      */
     private final int prevalance;
 
-    CelestialComponentTemplate(AbstractConfiguration componentType, int prevalance) {
+    CelestialComponentTemplate(AbstractTemplate componentType, int prevalance) {
         this.componentType = componentType;
         this.prevalance = prevalance;
     }
@@ -40,7 +40,7 @@ public enum CelestialComponentTemplate {
     /**
      * @return the graphicsFile
      */
-    public AbstractConfiguration getComponentType() {
+    public AbstractTemplate getComponentType() {
         return componentType;
     }
 

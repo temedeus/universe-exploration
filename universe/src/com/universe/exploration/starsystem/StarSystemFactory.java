@@ -1,12 +1,11 @@
 package com.universe.exploration.starsystem;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTemplate;
-import com.universe.exploration.celestialcomponents.configuration.PlanetConfiguration;
+import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
 import com.universe.exploration.common.tools.IngameAstronomicalConstants;
 import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.RandomizationTools;
 import com.universe.exploration.common.tools.WeightedRandomizationItem;
-import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.resource.Air;
 import com.universe.exploration.resource.Food;
 import com.universe.exploration.resource.Water;
@@ -70,7 +69,7 @@ public class StarSystemFactory {
             WeightedRandomizationItem item = ( RandomizationTools
                     .getWeightedRandomItem(starSystemConfiguration.getPotentialsPlanets()));
             CelestialComponentTemplate template = ((CelestialComponentTemplate) item.getItem());
-            PlanetConfiguration planetTemplate = (PlanetConfiguration) template.getComponentType();
+            PlanetTemplate planetTemplate = (PlanetTemplate) template.getComponentType();
 
             // Generate all the new values
             planet = calculatePlanetOrbitalData(planet, planetarySpace, previousOrbitalRadious, x);
@@ -107,7 +106,7 @@ public class StarSystemFactory {
     }
 
     private PlanetCelestialComponent calculatePlanetHabitability(PlanetCelestialComponent planet,
-                                                                 PlanetConfiguration cc) {
+                                                                 PlanetTemplate cc) {
         if (MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen())) {
             planet.addFoundResource(new Air());
         }
@@ -137,7 +136,7 @@ public class StarSystemFactory {
      * @return
      */
     private PlanetCelestialComponent setupPlanetBasicInfo(PlanetCelestialComponent planet,
-                                                          PlanetConfiguration planetTemplate) {
+                                                          PlanetTemplate planetTemplate) {
         planet.setGraphicsFile(planetTemplate.getRandomGraphicsFile());
         planet.setSpriteSize(planetTemplate.getRandomSpriteSize());
         planet.setComponentName(planetTemplate.getComponentName());

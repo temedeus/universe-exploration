@@ -51,16 +51,6 @@ public class CelestialComponent implements ICelestialComponent {
     }
 
     /**
-     * If not overridden, return false. This is pretty much component specific,
-     * but each component should have one.
-     *
-     * @return
-     */
-    public boolean configure() {
-        return false;
-    }
-
-    /**
      * Calculates sprite size based on defined "real" spacial values. Must be
      * overridden in each file that extends this class.
      */

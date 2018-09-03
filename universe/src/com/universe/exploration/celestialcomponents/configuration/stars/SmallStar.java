@@ -3,12 +3,12 @@
  */
 package com.universe.exploration.celestialcomponents.configuration.stars;
 
-import com.universe.exploration.celestialcomponents.configuration.StarConfiguration;
+import com.universe.exploration.celestialcomponents.configuration.StarTemplate;
 
 /**
  * @author 24.8.2015 Teemu Puurunen
  */
-public class SmallStar extends StarConfiguration {
+public class SmallStar extends StarTemplate {
     @Override
     public void setup() {
         templateName = "Small star";

@@ -32,7 +32,7 @@ public class PlanetHandler {
      * Constructor cleans the planet list.
      */
     public PlanetHandler() {
-        planetContainer = new ArrayList<PlanetSprite>();
+        planetContainer = new ArrayList<>();
     }
 
     /**

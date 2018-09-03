@@ -1,8 +1,8 @@
 package com.universe.exploration.starsystem;
 
 import com.universe.exploration.celestialcomponents.configuration.CelestialComponentTemplate;
-import com.universe.exploration.celestialcomponents.configuration.PlanetConfiguration;
-import com.universe.exploration.celestialcomponents.configuration.StarConfiguration;
+import com.universe.exploration.celestialcomponents.configuration.PlanetTemplate;
+import com.universe.exploration.celestialcomponents.configuration.StarTemplate;
 import com.universe.exploration.common.tools.WeightedRandomizationItem;
 
 import java.util.ArrayList;
@@ -57,11 +57,11 @@ public class StarSystemConfiguration {
         potentialStars = new ArrayList<>();
 
         for (CelestialComponentTemplate template : CelestialComponentTemplate.values()) {
-            if (template.getComponentType() instanceof StarConfiguration) {
+            if (template.getComponentType() instanceof StarTemplate) {
                 potentialStars.add(new WeightedRandomizationItem(template.getPrevalance(), template));
             }
 
-            if (template.getComponentType() instanceof PlanetConfiguration) {
+            if (template.getComponentType() instanceof PlanetTemplate) {
                 potentialPlanets.add(new WeightedRandomizationItem(template.getPrevalance(), template));
             }
         }
