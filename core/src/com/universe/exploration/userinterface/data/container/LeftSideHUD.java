@@ -18,7 +18,7 @@ public class LeftSideHUD extends DataPairContainer {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.universe.exploration.ui.data.DataAndValueContainer#createPairs()
      */
     @Override
@@ -37,8 +37,8 @@ public class LeftSideHUD extends DataPairContainer {
     public void updateHUDValues(CrewStatusManager playerStatus) {
         update(PlayerStatusItemkeys.TIME, String.valueOf((int) playerStatus.getTime() + " days"));
         update(PlayerStatusItemkeys.AIR, String.valueOf((int) playerStatus.getStatusValue(CrewStatusSetup.AIR)));
-        update(PlayerStatusItemkeys.CREWMEN, String.valueOf((int) UniverseExploration.gameStatus.getCrew().getCrewMenAboardSpaceShip().size()));
-        update(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, String.valueOf((int) UniverseExploration.gameStatus.getCrew().getCrewMenOnSurvey().size()));
+        update(PlayerStatusItemkeys.CREWMEN, String.valueOf(UniverseExploration.gameStatus.getCrew().getCrewMenAboardSpaceShip().size()));
+        update(PlayerStatusItemkeys.CREWMEN_ON_SURVEY, String.valueOf(UniverseExploration.gameStatus.getCrew().getCrewMenOnSurvey().size()));
         update(PlayerStatusItemkeys.WATER, String.valueOf((int) playerStatus.getStatusValue(CrewStatusSetup.WATER)));
         update(PlayerStatusItemkeys.FOOD, String.valueOf((int) playerStatus.getStatusValue(CrewStatusSetup.FOOD)));
         update(PlayerStatusItemkeys.POWER, String.valueOf((int) playerStatus.getPower() + " %"));

@@ -19,11 +19,6 @@ import java.util.List;
  * this configuration.
  * </p>
  * <p>
- * <p>
- * Configuration class for universe generation. TODO: create schema and XML
- * configuration based on schema. Config class in future should just read this
- * XML configuration instead of having everything hard-coded.
- * </p>
  *
  * @author 6.6.2015 Teemu Puurunen
  */

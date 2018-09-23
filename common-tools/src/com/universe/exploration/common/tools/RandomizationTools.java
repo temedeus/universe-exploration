@@ -11,10 +11,10 @@ import java.util.Random;
 public class RandomizationTools {
     /**
      * Generate random integer based on upper and lower limits.
-     *
-     * @param integer lower
-     * @param integer upper
-     * @return integer
+     * 
+     * @param lower
+     * @param upper
+     * @return
      */
     public static final int getRandomInteger(int lower, int upper) {
         return (int) (Math.random() * (upper - lower + 1)) + lower;

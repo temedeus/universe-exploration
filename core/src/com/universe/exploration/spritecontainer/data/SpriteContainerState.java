@@ -40,8 +40,8 @@ public class SpriteContainerState {
     }
 
     public void updateSpriteData() {
-        positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.cos((float) angle));
-        positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.sin((float) angle));
+        positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.cos(angle));
+        positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.sin(angle));
 
         angle += ((PlanetCelestialComponent) starSystemComponent).getOrbitalVelocity();
     }

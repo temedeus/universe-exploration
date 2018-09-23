@@ -12,7 +12,6 @@ import com.universe.exploration.audio.SoundEffect;
 import com.universe.exploration.camera.CameraMonitor;
 import com.universe.exploration.casualty.Casualty;
 import com.universe.exploration.common.tools.TextManipulationTools;
-import com.universe.exploration.common.tools.exceptions.PlanetCountOutOfRangeException;
 import com.universe.exploration.crew.CrewMemberStatus;
 import com.universe.exploration.crewmember.CrewFactory;
 import com.universe.exploration.crewmember.CrewMember;

@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class TextManipulationTools {
     public static String implodeListAsString(List<String> list, String separator) {
+        if(list.size() == 1) return list.get(0);
         String returnVal = "";
 
         for (String str : list) {

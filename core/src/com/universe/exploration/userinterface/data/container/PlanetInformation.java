@@ -3,7 +3,6 @@
  */
 package com.universe.exploration.userinterface.data.container;
 
-import com.universe.exploration.common.tools.MathTools;
 import com.universe.exploration.common.tools.Units;
 import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.resource.Air;
@@ -35,7 +34,7 @@ public class PlanetInformation extends DataPairContainer {
         String oxygenFound = (cc.containsInstanceOfResource(Air.class)) ? "GENERAL_YES" : "GENERAL_NO";
 
         float orbitalRadius = ((float) cc.getOrbitalRadius() / 1000);
-        String orbitalRadiusToString = MathTools.roundedFloatAsString(orbitalRadius) + " " + Units.AU.getUnit();
+        String orbitalRadiusToString = String.valueOf(Math.round(orbitalRadius)) + " " + Units.AU.getUnit();
 
         addNoId(Localizer.getInstance().get("DESC_PLANET_TYPE"), cc.getComponentName());
         addNoId(Localizer.getInstance().get("SUBHEADER_ORBITAL_RADIUS"), orbitalRadiusToString);

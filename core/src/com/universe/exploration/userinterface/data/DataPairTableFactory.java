@@ -14,10 +14,10 @@ import com.universe.exploration.userinterface.skins.UserInterfaceBank;
  * @author 20.10.2015 Teemu Puurunen
  */
 public class DataPairTableFactory {
-    public UETable createPlanetInformationTable(PlanetSprite pgfx) {
+    public UETable createPlanetInformationTable(PlanetSprite planetSprite) {
         UETable planetInformationTable = new UETable();
 
-        PlanetInformation planetSurveyLabels = new PlanetInformation((PlanetCelestialComponent) pgfx.getCelestialBodyConfiguration()
+        PlanetInformation planetSurveyLabels = new PlanetInformation((PlanetCelestialComponent) planetSprite.getSpriteContainerState()
                 .getStarSystemComponent());
         planetSurveyLabels.createPairs();
 

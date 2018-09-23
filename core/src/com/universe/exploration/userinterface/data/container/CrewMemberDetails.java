@@ -9,25 +9,17 @@ import com.universe.exploration.localization.Localizer;
 import com.universe.exploration.userinterface.data.DataPair;
 
 /**
+ * Crew member details.
+ *
  * @author 9.4.2016 Teemu Puurunen
  */
 public class CrewMemberDetails extends DataPairContainer {
     private CrewMember crewMember;
 
-    /**
-     *
-     */
     public CrewMemberDetails(CrewMember crewMember) {
         this.crewMember = crewMember;
     }
 
-    /**
-     * {@link DataPair} keys are hard-coded as they are not really used anywhere
-     * outside this context. If things change, they should be somewhere else.
-     *
-     * @param crewMember
-     * @return
-     */
     @Override
     public void createPairs() {
         add("name", "Name:", crewMember.getName());

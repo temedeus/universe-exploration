@@ -25,19 +25,12 @@ public class FileReader {
         BufferedReader bufferedReader = GdxHelper.provideAssetReader(path);
         List<String> lines = new ArrayList<>();
         String line = bufferedReader.readLine();
+
         while (line != null) {
             lines.add(line);
             line = bufferedReader.readLine();
         }
 
         return lines;
-    }
-
-    public boolean fileExist(String path) {
-        return GdxHelper.provideFileHandle(path).exists();
-    }
-
-    public boolean isDirectory(String path) {
-        return GdxHelper.provideFileHandle(path).isDirectory();
     }
 }

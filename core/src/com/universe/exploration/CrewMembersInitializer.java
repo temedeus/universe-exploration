@@ -32,8 +32,8 @@ public class CrewMembersInitializer {
 
     private static final List<CrewmemberProfileSource> CREWMEMBER_PROFILE_FILES = createNameProfileFilepathList();
 
-    private List<CrewmemberProfile> maleProfiles = new ArrayList<CrewmemberProfile>();
-    private List<CrewmemberProfile> femaleProfiles = new ArrayList<CrewmemberProfile>();
+    private List<CrewmemberProfile> maleProfiles = new ArrayList<>();
+    private List<CrewmemberProfile> femaleProfiles = new ArrayList<>();
 
     public CrewMembersInitializer() throws IOException {
         FileReader fh = new FileReader();

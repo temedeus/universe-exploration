@@ -16,7 +16,7 @@ public enum SoundEffect implements IAudioFile {
     private final String id;
     private final String audioFile;
 
-    private SoundEffect(String id, String audioFile) {
+    SoundEffect(String id, String audioFile) {
         this.id = id;
         this.audioFile = audioFile;
     }

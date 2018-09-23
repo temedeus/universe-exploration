@@ -35,13 +35,6 @@ public class TableFormContainerPair {
     }
 
     /**
-     * @param actorMap the actorMap to set
-     */
-    public void setFormContainer(FormContainer actorMap) {
-        this.actorMap = actorMap;
-    }
-
-    /**
      * @param table the table to set
      */
     public void setTable(Table table) {

@@ -17,25 +17,15 @@ public class AudioManager {
     /**
      * MusicConfiguration files
      */
-    private HashMap<IAudioFile, Sound> audioFileCache = new HashMap<IAudioFile, Sound>();
+    private HashMap<IAudioFile, Sound> audioFileCache = new HashMap<>();
 
 
-    private HashMap<IAudioFile, com.badlogic.gdx.audio.Music> musicCache = new HashMap<IAudioFile, com.badlogic.gdx.audio.Music>();
+    private HashMap<IAudioFile, com.badlogic.gdx.audio.Music> musicCache = new HashMap<>();
     /**
      * We will need the ID of the currently playing music in order to smoothly
      * transition to another songs.
      */
     private com.badlogic.gdx.audio.Music currentlyPlayingBackgroundMusic;
-
-    /**
-     * Master volume for music.
-     */
-    private float musicVolume;
-
-    /**
-     * Master volume for sound effects.
-     */
-    private float soundEffectsVolume;
 
     /**
      * TODO: Right now we're just loading all the sounds ready because there
@@ -69,12 +59,5 @@ public class AudioManager {
      */
     public com.badlogic.gdx.audio.Music getCurrentlyPlayingBackgroundMusic() {
         return currentlyPlayingBackgroundMusic;
-    }
-
-    /**
-     * @return the audioFileCache
-     */
-    public HashMap<IAudioFile, Sound> getAudioFileCache() {
-        return audioFileCache;
     }
 }

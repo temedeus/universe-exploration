@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.universe.exploration.starsystem.components.CelestialComponent;
+import com.universe.exploration.common.tools.GdxHelper;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 import java.util.ArrayList;
@@ -26,13 +26,13 @@ public class PlanetHandler {
     /**
      * Planets
      */
-    private List<PlanetSprite> planetContainer;
+    private List<PlanetSprite> planets;
 
     /**
      * Constructor cleans the planet list.
      */
     public PlanetHandler() {
-        planetContainer = new ArrayList<>();
+        planets = new ArrayList<>();
     }
 
     /**
@@ -41,11 +41,11 @@ public class PlanetHandler {
      * @param celestialComponent
      */
     public void addPlanet(PlanetCelestialComponent celestialComponent) {
-        planetContainer.add(new PlanetSprite(celestialComponent));
+        planets.add(new PlanetSprite(celestialComponent));
     }
 
     public PlanetSprite getPlanetAtIndex(int i) {
-        return planetContainer.get(i);
+        return planets.get(i);
     }
 
     /**
@@ -55,16 +55,16 @@ public class PlanetHandler {
         if (!planetaryMovement)
             return;
 
-        for (PlanetSprite planet : planetContainer) {
+        for (PlanetSprite planet : planets) {
             planet.setPlanetSelected(planet.equals(selected));
-            planet.getCelestialBodyConfiguration().updateSpriteData();
+            planet.getSpriteContainerState().updateSpriteData();
             planet.updateSpritePosition();
             planet.handleZooming();
         }
     }
 
     public PlanetSprite getPlanetSpriteByComponent(PlanetCelestialComponent planet) {
-        return planetContainer.stream()
+        return planets.stream()
                 .filter(planetSprite -> planetSprite.getComponentType() == planet)
                 .findFirst()
                 .orElse(null);
@@ -76,7 +76,7 @@ public class PlanetHandler {
      * @param batch
      */
     public void drawPlanets(SpriteBatch batch) {
-        planetContainer.forEach(planet -> planet.getSprite().draw(batch));
+        planets.forEach(planet -> planet.getSprite().draw(batch));
     }
 
     /**
@@ -86,7 +86,7 @@ public class PlanetHandler {
      * @return
      */
     public PlanetSprite getPlanetWithCoordinatesWithinBoundaries(Vector3 coordinates) {
-        for (PlanetSprite planetSprite : planetContainer) {
+        for (PlanetSprite planetSprite : planets) {
             // Enlarge hit area a wee bit.
             Rectangle planetRectangle = planetSprite.getSprite().getBoundingRectangle();
             planetRectangle.x -= 5;
@@ -103,7 +103,7 @@ public class PlanetHandler {
     }
 
     public int getPlanetCount() {
-        return planetContainer.size();
+        return planets.size();
     }
 
     /**
@@ -120,8 +120,8 @@ public class PlanetHandler {
      * @param render   Shaperenderer with the appropriate camera combined.
      */
     public void drawOrbits(PlanetSprite selected, ShapeRenderer render) {
-        for (PlanetSprite planetSprite : planetContainer) {
-            float radius = (float) ((PlanetCelestialComponent) planetSprite.celestialBodyConfiguration
+        for (PlanetSprite planetSprite : planets) {
+            float radius = (float) ((PlanetCelestialComponent) planetSprite.spriteContainerState
                     .getStarSystemComponent()).getOrbitalRadius();
 
             float alpha = (planetSprite.equals(selected)) ? 0.5f : 0.1f;

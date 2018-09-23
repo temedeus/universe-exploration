@@ -15,7 +15,7 @@ public enum CrewStatusSetup {
     private final float maxValue;
     private final String depletionMessageLocale;
 
-    private CrewStatusSetup(float minValue, float maxValue, String depletionMessageLocale) {
+    CrewStatusSetup(float minValue, float maxValue, String depletionMessageLocale) {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.depletionMessageLocale = depletionMessageLocale;

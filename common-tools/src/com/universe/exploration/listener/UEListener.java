@@ -6,13 +6,15 @@ package com.universe.exploration.listener;
 import java.util.EventObject;
 
 /**
+ * Event listener.
+ *
  * @author 25.8.2015 Teemu Puurunen
  */
 public class UEListener implements IUEListener {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.universe.exploration.listener.IUEListener#handleEventClassEvent(java
      * .util.EventObject)
@@ -24,7 +26,7 @@ public class UEListener implements IUEListener {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.universe.exploration.listener.IUEListener#handleEventClassEvent()
      */
@@ -34,7 +36,7 @@ public class UEListener implements IUEListener {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * com.universe.exploration.listener.IUEListener#handleEventClassEvent(java
      * .util.EventObject)

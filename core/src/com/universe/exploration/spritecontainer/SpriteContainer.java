@@ -8,14 +8,9 @@ import com.universe.exploration.spritecontainer.data.SpriteContainerState;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
 abstract class SpriteContainer {
-
-    /**
-     * TODO: constructor takes {@link SpriteContainerState} instead of
-     * {@link CelestialComponent}
-     */
     protected CelestialComponent starSystemComponent;
 
-    protected SpriteContainerState celestialBodyConfiguration;
+    protected SpriteContainerState spriteContainerState;
 
     /**
      * Sprite containing graphics item
@@ -40,8 +35,8 @@ abstract class SpriteContainer {
     public SpriteContainer(CelestialComponent starSystemComponent) {
         this(starSystemComponent.getSpriteSize(), starSystemComponent.getGraphicsFile());
         this.starSystemComponent = starSystemComponent;
-        celestialBodyConfiguration = new SpriteContainerState();
-        celestialBodyConfiguration.setStarSystemComponent(starSystemComponent);
+        spriteContainerState = new SpriteContainerState();
+        spriteContainerState.setStarSystemComponent(starSystemComponent);
     }
 
     public SpriteContainer(int spriteSize, String graphicsSource) {
@@ -74,8 +69,8 @@ abstract class SpriteContainer {
     }
 
     public void updateSpritePosition() {
-        smallVersion.setPosition(celestialBodyConfiguration.getPositionX() - smallVersion.getWidth() / 2,
-                celestialBodyConfiguration.getPositionY() - smallVersion.getHeight() / 2);
+        smallVersion.setPosition(spriteContainerState.getPositionX() - smallVersion.getWidth() / 2,
+                spriteContainerState.getPositionY() - smallVersion.getHeight() / 2);
     }
 
     /**
@@ -95,8 +90,8 @@ abstract class SpriteContainer {
     /**
      * @return the startBodyGfxModel
      */
-    public SpriteContainerState getCelestialBodyConfiguration() {
-        return celestialBodyConfiguration;
+    public SpriteContainerState getSpriteContainerState() {
+        return spriteContainerState;
     }
 
     /**

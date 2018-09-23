@@ -19,15 +19,8 @@ public class WeightedRandomizationItem {
         return weight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
     public Object getItem() {
         return item;
     }
 
-    public void setItem(Object item) {
-        this.item = item;
-    }
 }

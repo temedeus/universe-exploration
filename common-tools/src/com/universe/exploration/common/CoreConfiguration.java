@@ -25,8 +25,6 @@ public class CoreConfiguration {
 
     public static final float TIME_START = 0;
 
-    public static final String WEBSITE_URL = "http://www.universe-exploration.com";
-
     public static final float SPACE_BACKGROUND_POSITION_X = -1000;
 
     public static final float SPACE_BACKGROUND_POSITION_Y = -600;

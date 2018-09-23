@@ -8,17 +8,12 @@ import com.universe.exploration.userinterface.data.container.DataPairContainer;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
- * <p>
+ * UI representation of a pair (do not confuse with Java Pair).
+ *
  * Paired up with {@link DataPairContainer} based classes it makes up an easy
  * way to show data on screen using two labels showing title and value. Value
  * can easily be assigned to different styles.
- * </p>
- * <p>
- * <p>
- * Note! This data structure isn't meant as a data storage per ce. It contains
- * value and its label which are automatically formatted along to comform with
- * current UI.
- * </p>
+ *
  *
  * @author 1.10.2015 Teemu Puurunen
  */
@@ -37,10 +32,6 @@ public class DataPair {
      * Concrete value
      */
     private Label value;
-
-    public DataPair() {
-
-    }
 
     /**
      * <p>

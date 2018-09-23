@@ -9,9 +9,7 @@ import com.badlogic.gdx.files.FileHandle;
 import java.io.BufferedReader;
 
 /**
- * <p>
  * LibGdx specific helper methods
- * </p>
  *
  * @author 25.8.2015 Teemu Puurunen
  */
@@ -24,11 +22,6 @@ public class GdxHelper {
         return Gdx.files.external(path);
     }
 
-    /**
-     * Get screen center X
-     *
-     * @return float
-     */
     public static float getScreenCenterX() {
         float w = Gdx.graphics.getWidth();
         return (w / 2);

@@ -36,12 +36,10 @@ public class WindowFactory {
     /**
      * Create a window based on {@link WindowType}. With no
      * <code>okAction</code> specified, just close the window.
-     *
      * @param windowType
      * @param contentTable
-     * @param okAction        Action taken when primary button is pressed. If
-     *                        <code>null</code>, just close window.
-     * @param hasCancelButton
+     * @param okAction
+     * @param <T>
      * @return
      */
     public <T extends Actor> BasicWindow createWindow(final WindowType windowType, T contentTable, ClickListener okAction) {

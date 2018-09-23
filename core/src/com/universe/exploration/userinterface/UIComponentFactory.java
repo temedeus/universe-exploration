@@ -10,15 +10,13 @@ import com.universe.exploration.userinterface.forms.PlanetSurveyForm;
 import com.universe.exploration.userinterface.skins.UserInterfaceBank;
 
 /**
+ * Factory for UI components.
+ *
  * @author 18.10.2015 Teemu Puurunen
  */
 public class UIComponentFactory {
     public static TableFormContainerPair createHorizontalSlider(float minVal, float maxVal, float interval) {
         return createSliderWithMinMaxValues(minVal, maxVal, interval, false);
-    }
-
-    public static TableFormContainerPair createVerticalSlider(float minVal, float maxVal, float interval) {
-        return createSliderWithMinMaxValues(minVal, maxVal, interval, true);
     }
 
     /**

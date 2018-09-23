@@ -106,18 +106,18 @@ public class StarSystemFactory {
     }
 
     private PlanetCelestialComponent calculatePlanetHabitability(PlanetCelestialComponent planet,
-                                                                 PlanetTemplate cc) {
-        if (MathTools.calculateIfOddsHit(cc.getChanceToExtractOxygen())) {
+                                                                 PlanetTemplate planetTemplate) {
+        if (MathTools.calculateIfOddsHit(planetTemplate.getChanceToExtractOxygen())) {
             planet.addFoundResource(new Air());
         }
 
-        if (MathTools.calculateIfOddsHit(cc.getChanceToExtractWater())) {
+        if (MathTools.calculateIfOddsHit(planetTemplate.getChanceToExtractWater())) {
             planet.addFoundResource(new Water());
         }
 
         boolean mandatoryForLife = planet.containsInstanceOfResource(Water.class)
                 && planet.containsInstanceOfResource(Air.class);
-        planet.setLifeforms(cc.randomizePlanetLifeFormLevel(mandatoryForLife));
+        planet.setLifeforms(planetTemplate.randomizePlanetLifeFormLevel(mandatoryForLife));
         setupFoodPresence(planet);
 
         return planet;

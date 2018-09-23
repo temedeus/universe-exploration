@@ -25,11 +25,11 @@ public class DataPairContainer implements IDataPairContainer {
      *
      */
     public DataPairContainer() {
-        pairList = new ArrayList<DataPair>();
+        pairList = new ArrayList<>();
     }
 
     public DataPairContainer(Object auxiliaryDataContainer) {
-        pairList = new ArrayList<DataPair>();
+        pairList = new ArrayList<>();
         this.auxiliaryDataContainer = auxiliaryDataContainer;
     }
 
@@ -68,11 +68,11 @@ public class DataPairContainer implements IDataPairContainer {
      * @param newVal
      */
     public void update(String id, String newVal) {
-        for (DataPair pair : pairList) {
-            if (pair.getId() == id) {
-                pair.updateValue(newVal);
-            }
-        }
+      pairList.forEach(pair -> {
+          if (pair.getId() == id) {
+              pair.updateValue(newVal);
+          }
+      });
     }
 
     /**

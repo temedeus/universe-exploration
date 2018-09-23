@@ -24,9 +24,9 @@ import java.util.List;
  */
 public class SurveyTeamSelection {
 
-    private List<CrewMember> unselectedCrewMembers = new ArrayList<CrewMember>();
+    private List<CrewMember> unselectedCrewMembers = new ArrayList<>();
 
-    private List<CrewMember> selectedCrewMembers = new ArrayList<CrewMember>();
+    private List<CrewMember> selectedCrewMembers = new ArrayList<>();
 
     private UETable unselectedCrewMemberTable = new UETable();
 

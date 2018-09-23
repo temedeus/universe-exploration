@@ -70,10 +70,9 @@ public class GameObjectCanvas {
 
         planetHandler = new PlanetHandler();
 
-        planetList.forEach(planet -> planetHandler.addPlanet(planet));
-
         // Initially select the first planet (visual borders).
         if (planetList.size() > 0) {
+            planetList.forEach(planet -> planetHandler.addPlanet(planet));
             selectedPlanet = new SelectedPlanet();
             selectedPlanet.setSelectedPlanet(planetHandler.getPlanetAtIndex(0));
         }
@@ -192,14 +191,7 @@ public class GameObjectCanvas {
     }
 
     /**
-     * <p>
-     * Draw close-up of the selected planet. This version of the planet is drawn
-     * when you select planet details.
-     * </p>
-     * <p>
-     * Note! Do not confuse with the larger planet that is found in the main
-     * game screen when you select a planet from the planet selection.
-     * </p>
+     * Draw close-up of the planet. Note! Separate of that found in the main view with entire star system.
      */
     private void drawSelectedEnlargedPlanet() {
         // It is perfectly normal scenario that there is no selected planet.

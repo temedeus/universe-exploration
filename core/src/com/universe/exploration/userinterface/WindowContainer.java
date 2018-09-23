@@ -29,7 +29,7 @@ public class WindowContainer {
     private WindowFactory windowFactory;
 
     public WindowContainer() {
-        windowMap = new HashMap<WindowType, BasicWindow>();
+        windowMap = new HashMap<>();
         windowFactory = new WindowFactory(this);
     }
 

@@ -33,14 +33,6 @@ public class MathTools {
         return (float) Math.random() < (percentage / 100);
     }
 
-    public static String roundedFloatAsString(float f) {
-        return roundedFloatAsStringByGivenPrecision(f, 3);
-    }
-
-    public static String roundedFloatAsStringByGivenPrecision(float f, int precision) {
-        return String.valueOf(Math.round(f));
-    }
-
     /**
      * Generates a random angle as double (0-360 degrees).
      *
