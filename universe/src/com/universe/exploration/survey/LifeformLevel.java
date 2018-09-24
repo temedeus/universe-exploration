@@ -26,7 +26,7 @@ public enum LifeformLevel {
          */
         @Override
         public List<SurveyIncidentCategory> provideSurveyIncidentCategoryList() {
-            List<SurveyIncidentCategory> categories = new ArrayList<SurveyIncidentCategory>();
+            List<SurveyIncidentCategory> categories = new ArrayList<>();
             categories.add(SurveyIncidentCategory.CIVILIZATION);
             categories.add(SurveyIncidentCategory.BACTERIAL);
             categories.add(SurveyIncidentCategory.ANIMAL);
@@ -43,7 +43,7 @@ public enum LifeformLevel {
          */
         @Override
         public List<SurveyIncidentCategory> provideSurveyIncidentCategoryList() {
-            List<SurveyIncidentCategory> categories = new ArrayList<SurveyIncidentCategory>();
+            List<SurveyIncidentCategory> categories = new ArrayList<>();
             categories.add(SurveyIncidentCategory.ANIMAL);
             categories.add(SurveyIncidentCategory.BACTERIAL);
 
@@ -59,7 +59,7 @@ public enum LifeformLevel {
          */
         @Override
         public List<SurveyIncidentCategory> provideSurveyIncidentCategoryList() {
-            List<SurveyIncidentCategory> categories = new ArrayList<SurveyIncidentCategory>();
+            List<SurveyIncidentCategory> categories = new ArrayList<>();
             categories.add(SurveyIncidentCategory.BACTERIAL);
 
             return categories;
@@ -75,7 +75,7 @@ public enum LifeformLevel {
          */
         @Override
         public List<SurveyIncidentCategory> provideSurveyIncidentCategoryList() {
-            List<SurveyIncidentCategory> categories = new ArrayList<SurveyIncidentCategory>();
+            List<SurveyIncidentCategory> categories = new ArrayList<>();
             categories.add(SurveyIncidentCategory.BACTERIAL);
 
             return categories;

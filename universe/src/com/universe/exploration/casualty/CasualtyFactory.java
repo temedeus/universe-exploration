@@ -71,6 +71,6 @@ public class CasualtyFactory {
 
         float odds = incident.getOdds() - (incident.getOdds() * (float) attributeValueSum / 100);
 
-        return (MathTools.calculateIfOddsHit(odds)) ? true : false;
+        return MathTools.calculateIfOddsHit(odds);
     }
 }

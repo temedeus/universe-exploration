@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.universe.exploration.common.tools.GdxHelper;
 import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
 
 import java.util.ArrayList;
@@ -55,17 +54,17 @@ public class PlanetHandler {
         if (!planetaryMovement)
             return;
 
-        for (PlanetSprite planet : planets) {
+        planets.forEach(planet -> {
             planet.setPlanetSelected(planet.equals(selected));
             planet.getSpriteContainerState().updateSpriteData();
             planet.updateSpritePosition();
             planet.handleZooming();
-        }
+        });
     }
 
     public PlanetSprite getPlanetSpriteByComponent(PlanetCelestialComponent planet) {
         return planets.stream()
-                .filter(planetSprite -> planetSprite.getComponentType() == planet)
+                .filter(planetSprite -> planetSprite.getSpriteContainerState().getStarSystemComponent() == planet)
                 .findFirst()
                 .orElse(null);
     }

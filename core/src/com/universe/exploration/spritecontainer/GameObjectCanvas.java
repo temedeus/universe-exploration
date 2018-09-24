@@ -221,11 +221,4 @@ public class GameObjectCanvas {
     public void setPlanetClickListener(UEListener planetClickListener) {
         this.planetClickListener = planetClickListener;
     }
-
-    /**
-     * @return the gameViewObjectContainer
-     */
-    public PlanetHandler getGameViewObjectContainer() {
-        return planetHandler;
-    }
 }

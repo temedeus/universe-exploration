@@ -8,8 +8,6 @@ import com.universe.exploration.spritecontainer.data.SpriteContainerState;
 import com.universe.exploration.starsystem.components.CelestialComponent;
 
 abstract class SpriteContainer {
-    protected CelestialComponent starSystemComponent;
-
     protected SpriteContainerState spriteContainerState;
 
     /**
@@ -34,7 +32,6 @@ abstract class SpriteContainer {
 
     public SpriteContainer(CelestialComponent starSystemComponent) {
         this(starSystemComponent.getSpriteSize(), starSystemComponent.getGraphicsFile());
-        this.starSystemComponent = starSystemComponent;
         spriteContainerState = new SpriteContainerState();
         spriteContainerState.setStarSystemComponent(starSystemComponent);
     }
@@ -71,13 +68,6 @@ abstract class SpriteContainer {
     public void updateSpritePosition() {
         smallVersion.setPosition(spriteContainerState.getPositionX() - smallVersion.getWidth() / 2,
                 spriteContainerState.getPositionY() - smallVersion.getHeight() / 2);
-    }
-
-    /**
-     * @return the componentType
-     */
-    public CelestialComponent getComponentType() {
-        return starSystemComponent;
     }
 
     /**

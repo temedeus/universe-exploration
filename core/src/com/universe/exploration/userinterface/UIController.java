@@ -69,8 +69,6 @@ public class UIController {
 
     private LeftSideHUD leftsidePlayerStatus;
 
-    private PlanetSelection planetSelection;
-
     public WindowContainer windowContainer;
 
     /**
@@ -95,10 +93,7 @@ public class UIController {
 
     private static final float RIGHT_SIDE_BUTTON_WIDTH = 500;
 
-    public UIController(PlanetHandler gameViewObjectContainer, List<PlanetCelestialComponent> planetList) {
-
-        planetSelection = new PlanetSelection(gameViewObjectContainer, planetList);
-
+    public UIController() {
         logDisplay = new LogDisplay(10, UserInterfaceBank.userInterfaceSkin);
         uiStage = new Stage(new ScreenViewport());
 
@@ -144,7 +139,6 @@ public class UIController {
             isHyperspaceJumpAllowed = false;
         }
 
-        planetSelection.disablePlanetSelection(UniverseExploration.gameStatus.isZoomIn());
         uiStage.act(GdxHelper.getDeltaTime());
         uiStage.draw();
     }
@@ -159,8 +153,6 @@ public class UIController {
         table.align(Align.left | Align.top);
         table.setPosition(0, Gdx.graphics.getHeight());
         table.addActor(populateWithStatus(leftsidePlayerStatus));
-
-        table.addActor(planetSelection.createPlanetSelectionTable());
 
         return table;
     }
@@ -553,7 +545,7 @@ public class UIController {
         planetInformationTable.add(label);
         planetInformationTable.row();
 
-        form.setPlanet((PlanetCelestialComponent) planetSpriteContainer.getComponentType());
+        form.setPlanet((PlanetCelestialComponent) planetSpriteContainer.getSpriteContainerState().getStarSystemComponent());
         form.setSelectedCrewMembers(teamSelection.getSelectedCrewMembers());
         form.setSurveyName(teamSelection.getSurveyNameField());
         planetInformationTable.add(pair.getTable());
@@ -602,19 +594,6 @@ public class UIController {
         this.planetSurveyListener = planetSurveyListener;
     }
 
-    /**
-     * @param planetClickListener the planetClickListener to set
-     */
-    public void setPlanetClickListener(UEListener planetClickListener) {
-        planetSelection.setPlanetClickListener(planetClickListener);
-    }
-
-    /**
-     * @param selectedPlanetChangedListener the selectedPlanetChangedListener to set
-     */
-    public void setSelectedPlanetChangedListener(UEListener selectedPlanetChangedListener) {
-        planetSelection.setSelectedPlanetChangedListener(selectedPlanetChangedListener);
-    }
 
     /**
      * @param logMessageListener the logMessageListener to set

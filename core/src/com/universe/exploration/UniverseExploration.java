@@ -39,7 +39,7 @@ import java.util.List;
 
 /**
  * Main game class.
- * <p>
+ *
  * TODO: {@link UniverseExploration} and {@link UIController} both perform
  * actions that do not belong in these classes. Refactor.
  */
@@ -177,17 +177,14 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
     }
 
     private void setupUiController() {
-        uiController = new UIController(gameObjectCanvas.getGameViewObjectContainer(),
-                UniverseExploration.gameStatus.getStarSystem().getPlanets());
+        uiController = new UIController();
         setupUIControllerListeners();
     }
 
     private void setupUIControllerListeners() {
         uiController.setLogMessageListener(createLogMessageListener());
-        uiController.setPlanetClickListener(createPlanetClickListener());
         uiController.setHyperspaceJumpListener(createHyperSpaceJumpListener());
         uiController.setStartPlanetSurveyListener(createStartPlanetSurveyListener());
-        uiController.setSelectedPlanetChangedListener(selectedPlanetChangedListener());
     }
 
     private UEListener createHyperSpaceJumpListener() {
@@ -329,8 +326,6 @@ public class UniverseExploration extends ApplicationAdapter implements InputProc
                 updateIngameLog(caption);
             }
 
-            //survey.getSurveyTeam().stream()
-              //      .filter(member -> member.getStatus() == CrewMemberStatus.ONSURVEY)
             for (CrewMember member : survey.getSurveyTeam()) {
                 if (member.getStatus() == CrewMemberStatus.ONSURVEY) {
                     member.setStatus(CrewMemberStatus.ALIVE);

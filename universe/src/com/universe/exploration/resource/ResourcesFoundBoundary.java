@@ -15,8 +15,8 @@ public enum ResourcesFoundBoundary {
 
     WATER(0, 100), AIR(0, 8), FOOD(0, 8);
 
-    private float min;
-    private float max;
+    private final float min;
+    private final float max;
 
     ResourcesFoundBoundary(float min, float max) {
         this.min = min;
@@ -35,19 +35,5 @@ public enum ResourcesFoundBoundary {
      */
     public float getMax() {
         return max;
-    }
-
-    /**
-     * @param min the min to set
-     */
-    public void setMin(float min) {
-        this.min = min;
-    }
-
-    /**
-     * @param max the max to set
-     */
-    public void setMax(float max) {
-        this.max = max;
     }
 }

@@ -15,7 +15,7 @@ public class ResourcesFoundBean {
     private List<Resource> resources;
 
     public ResourcesFoundBean() {
-        resources = new ArrayList<Resource>();
+        resources = new ArrayList<>();
     }
 
     /**
@@ -26,7 +26,7 @@ public class ResourcesFoundBean {
     }
 
     /**
-     * @param resources the resources to set
+     * @param resource the resources to set
      */
     public void addToResources(Resource resource) {
         this.resources.add(resource);

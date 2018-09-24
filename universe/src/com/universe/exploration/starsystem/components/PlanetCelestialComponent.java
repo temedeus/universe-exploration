@@ -80,7 +80,7 @@ public class PlanetCelestialComponent extends CelestialComponent {
     }
 
     /**
-     * @param lifeforms the lifeforms to set
+     * @param lifeformLevel the lifeforms to set
      */
     public void setLifeforms(LifeformLevel lifeformLevel) {
         this.lifeformLevel = lifeformLevel;
@@ -94,7 +94,7 @@ public class PlanetCelestialComponent extends CelestialComponent {
     }
 
     /**
-     * @param resourcesFound the resourcesFound to set
+     * @param resource the resourcesFound to set
      */
     public void addFoundResource(Resource resource) {
         this.resourcesFound.add(resource);

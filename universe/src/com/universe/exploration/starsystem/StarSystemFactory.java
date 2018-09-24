@@ -22,13 +22,6 @@ public class StarSystemFactory {
     private StarSystem starsystem;
     private StarSystemConfiguration starSystemConfiguration;
 
-    /**
-     * Default configuration
-     */
-    public StarSystemFactory() {
-        this.starSystemConfiguration = new StarSystemConfiguration();
-        this.starsystem = new StarSystem();
-    }
 
     /**
      * Create a star system.
@@ -36,6 +29,10 @@ public class StarSystemFactory {
      * @return StarSystem starsystem
      */
     public StarSystem makeStarSystem()  {
+
+        this.starSystemConfiguration = new StarSystemConfiguration();
+        this.starsystem = new StarSystem();
+
         int planetCount = RandomizationTools.getRandomInteger(starSystemConfiguration.getMinPlanetCount(),
                 starSystemConfiguration.getMaxPlanetCount());
 
