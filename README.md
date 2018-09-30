@@ -1,8 +1,8 @@
 # Universe Exploration
 Universe Exploration is a strategy game where one must travel through star systems in search for civilized life.
-In order for one to keep on searching, you must look for resources in order to keep on going.
+In order to keep exploring, you must look for resources in order to keep on going.
 
-You can view website for screenshots:
+You can view Universe Exploration website for screenshots:
 http://universe-exploration.com
 
 # Requirements:
