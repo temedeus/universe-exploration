@@ -71,9 +71,9 @@ public class SurveyTeamSelection {
         if (crewmen.size() == 0) {
             table.add(new UELabel("-- nothing found --"));
         } else {
-            int x = 0;
+            int row = 0;
             for (CrewMember crewmember : crewmen) {
-                x++;
+                row++;
 
                 table.padBottom(15);
                 table.padRight(15);
@@ -87,7 +87,7 @@ public class SurveyTeamSelection {
                 }
 
                 // 5 per row seems good.
-                if (x == 5) {
+                if (row == 5) {
                     table.row();
                 }
             }

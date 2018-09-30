@@ -4,12 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TextManipulationToolsTest {
 
     @Test
     public void testImplodeListAsStringJoinsStringsProperlyWithSeparator() throws Exception {
-        ArrayList<String> testStringList = new ArrayList<>();
+        List<String> testStringList = new ArrayList<>();
         testStringList.add("blaa");
         testStringList.add("bloo");
         testStringList.add("blee");

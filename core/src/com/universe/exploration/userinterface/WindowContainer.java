@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Handles instances
+ * Manages {@link BasicWindow} windows instances.
  *
  * @author 7.10.2015 Teemu Puurunen
  */
@@ -64,9 +64,7 @@ public class WindowContainer {
 
     private void closeDependentWindows(List<WindowType> dependencies) {
         if (dependencies != null) {
-            for (WindowType dependency : dependencies) {
-                closeWindow(dependency);
-            }
+            dependencies.forEach(dependency -> closeWindow(dependency));
         }
     }
 
@@ -87,10 +85,10 @@ public class WindowContainer {
     }
 
     /**
-     * @param specificedWindowChangeListener the specificedWindowChangeListener to set
+     * @param specifiedWindowChangeListener the listener when window changes.
      */
-    public void setSpecificedWindowChangeListener(UEListener specificedWindowChangeListener) {
-        this.notifyOfSpecifiedWindowsChanged = specificedWindowChangeListener;
+    public void setSpecificedWindowChangeListener(UEListener specifiedWindowChangeListener) {
+        this.notifyOfSpecifiedWindowsChanged = specifiedWindowChangeListener;
     }
 
     /**

@@ -59,6 +59,7 @@ public class LogDisplay {
         int logItemsSize = logItems.size();
         int y = logItemsSize - 1;
 
+        // We swap label contents, not the labels themselves.
         for (int x = logMax - 1; x > (logMax - 1 - logItemsSize); x--) {
             logEntries[x].setText(logItems.get(y));
             y--;

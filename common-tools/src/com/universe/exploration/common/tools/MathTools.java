@@ -5,8 +5,6 @@ package com.universe.exploration.common.tools;
 
 /**
  * Math tools.
- * <p>
- * TODO: probably could have used some library.
  *
  * @author 15.1.2017 Teemu Puurunen
  */
