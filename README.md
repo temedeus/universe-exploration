@@ -16,6 +16,9 @@ Easiest way is using IDE where very few setup steps are needed. These instructio
 are yours to find out. Previously this project was aimed to be GWT compiled and run through browser. Due to
 technological limitations browser is no longer supported. Following instructions apply to Android and Desktop.
 
+## Tests
+Test are run using *JUnit* and *JMockit*.
+
 ## Desktop
 Create new *Application* runtime configuration. Select module *Desktop*. As for the run directory, one must select
 Android assets folder (e.g. *universe-exploration\android\assets*).
@@ -27,8 +30,8 @@ Main class:
 Setup run configuration with *Android* module. You can also setup an emulator using Android tools:
 https://developer.android.com/studio/run/emulator
 
-Recommended way of running is hooking up a real device to the computer and running it on that one
-instead of an emulator. Depending on your setup Android emulator might not run sufficiently enough.
+Recommended way of running is hooking up a real device to the computer and running UE on that one
+instead of an emulator. Depending on your setup Android emulator might not run sufficiently enough. 
 
 # Project status
 Universe Exploration is still a work-in-progress. The source code is open for fork, reviews and so forth.
