@@ -19,41 +19,39 @@ import com.universe.exploration.survey.LifeformLevel;
  * @author 7.6.2015 Teemu Puurunen
  */
 public class StarSystemFactory {
-    private StarSystem starsystem;
-    private StarSystemConfiguration starSystemConfiguration;
-
-
     /**
      * Create a star system.
      *
      * @return StarSystem starsystem
      */
-    public StarSystem makeStarSystem()  {
+    public StarSystem makeStarSystem() {
 
-        this.starSystemConfiguration = new StarSystemConfiguration();
-        this.starsystem = new StarSystem();
+        StarSystemConfiguration starSystemConfiguration = new StarSystemConfiguration();
+        StarSystem starSystem = new StarSystem();
 
         int planetCount = RandomizationTools.getRandomInteger(starSystemConfiguration.getMinPlanetCount(),
                 starSystemConfiguration.getMaxPlanetCount());
 
-        populateWithPlanets(planetCount);
+        populateWithPlanets(starSystem, starSystemConfiguration, planetCount);
 
         CelestialComponentTemplate template = (CelestialComponentTemplate) (RandomizationTools
                 .getWeightedRandomItem(starSystemConfiguration.getPotentialStars())).getItem();
 
-        StarCelestialComponent systemstar = new StarCelestialComponent();
-        systemstar.setGraphicsFile(template.getComponentType().getRandomGraphicsFile());
-        this.starsystem.setSystemstar(systemstar);
+        StarCelestialComponent systemStar = new StarCelestialComponent();
+        systemStar.setGraphicsFile(template.getComponentType().getRandomGraphicsFile());
+        starSystem.setSystemstar(systemStar);
 
-        return this.starsystem;
+        return starSystem;
     }
 
     /**
      * Populate starsystem with planets
      *
+     * @param starSystem
+     * @param starSystemConfiguration
      * @param planetCount
      */
-    private void populateWithPlanets(int planetCount) {
+    private void populateWithPlanets(StarSystem starSystem, StarSystemConfiguration starSystemConfiguration, int planetCount) {
         double planetarySpace = MathTools.calculatePlanetarySpace(planetCount);
 
         double previousOrbitalRadious = 0;
@@ -63,7 +61,7 @@ public class StarSystemFactory {
             // Container for our planet data.
             PlanetCelestialComponent planet = new PlanetCelestialComponent();
 
-            WeightedRandomizationItem item = ( RandomizationTools
+            WeightedRandomizationItem item = (RandomizationTools
                     .getWeightedRandomItem(starSystemConfiguration.getPotentialsPlanets()));
             CelestialComponentTemplate template = ((CelestialComponentTemplate) item.getItem());
             PlanetTemplate planetTemplate = (PlanetTemplate) template.getComponentType();
@@ -78,7 +76,7 @@ public class StarSystemFactory {
             previousOrbitalRadious = planet.getOrbitalRadius();
 
             // Add planet
-            starsystem.addPlanet(planet);
+            starSystem.addPlanet(planet);
         }
     }
 

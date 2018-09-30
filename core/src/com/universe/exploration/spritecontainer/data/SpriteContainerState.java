@@ -39,7 +39,10 @@ public class SpriteContainerState {
         angle = 0;
     }
 
-    public void updateSpriteData() {
+    /**
+     * Make planets go around their system.
+     */
+    public void update() {
         positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.cos(angle));
         positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.sin(angle));
 

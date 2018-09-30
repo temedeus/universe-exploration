@@ -10,7 +10,7 @@ import com.universe.exploration.starsystem.components.PlanetCelestialComponent;
  */
 public class PlanetSpriteState extends SpriteContainerState {
     @Override
-    public void updateSpriteData() {
+    public void update() {
         if (starSystemComponent instanceof PlanetCelestialComponent) {
             positionX = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.cos(angle));
             positionY = (float) (((PlanetCelestialComponent) starSystemComponent).getOrbitalRadius() * (float) Math.sin( angle));

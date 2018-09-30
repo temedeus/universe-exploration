@@ -16,6 +16,6 @@ public class SystemStarSpriteState extends SpriteContainerState {
     }
 
     @Override
-    public void updateSpriteData() {
+    public void update() {
     }
 }

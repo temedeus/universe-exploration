@@ -56,7 +56,7 @@ public class PlanetHandler {
 
         planets.forEach(planet -> {
             planet.setPlanetSelected(planet.equals(selected));
-            planet.getSpriteContainerState().updateSpriteData();
+            planet.getSpriteContainerState().update();
             planet.updateSpritePosition();
             planet.handleZooming();
         });
@@ -64,7 +64,7 @@ public class PlanetHandler {
 
     public PlanetSprite getPlanetSpriteByComponent(PlanetCelestialComponent planet) {
         return planets.stream()
-                .filter(planetSprite -> planetSprite.getSpriteContainerState().getStarSystemComponent() == planet)
+                .filter(planetSprite -> planet.equals(planetSprite.getSpriteContainerState().getStarSystemComponent()))
                 .findFirst()
                 .orElse(null);
     }
