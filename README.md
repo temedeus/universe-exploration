@@ -7,12 +7,12 @@ http://universe-exploration.com
 
 # Requirements:
 Following need to be manually installed:
-* Gradle 4.7.
+* Gradle 4.7. (or just use the Gradle wrapper)
 * Java 8
 
 # Setup
 Import Gradle project to IDE of your selection (or run command-line gradle build if that's your thing). At least
-IntelliJ and Eclipse have both imported this
+IntelliJ and Eclipse have both imported this project without any trouble.
 
 # Running project
 Easiest way is using IDE where very few setup steps are needed. These instructions are for IntelliJ Idea. Other IDEs

@@ -3,7 +3,7 @@ package com.universe.exploration.common.tools;
 /**
  * Randomization item that has a weight.
  *
- * @author Teemu
+ * @author Teemu Puurunen
  */
 public class WeightedRandomizationItem {
     private double weight;

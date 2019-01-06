@@ -18,10 +18,6 @@ public class GdxHelper {
         return new BufferedReader(Gdx.files.internal(path).reader());
     }
 
-    public static FileHandle provideFileHandle(String path) {
-        return Gdx.files.external(path);
-    }
-
     public static float getScreenCenterX() {
         float w = Gdx.graphics.getWidth();
         return (w / 2);

@@ -16,7 +16,6 @@ public class TextManipulationToolsTest {
         testStringList.add("blee");
 
         String joined = TextManipulationTools.implodeListAsString(testStringList, ", ");
-        System.out.println("bkporgrkpo");
         Assert.assertEquals("blaa, bloo, blee", joined);
     }
 
