@@ -27,12 +27,10 @@ public class Options {
         });
 
         table.add(UIComponentFactory.createSpacer());
-        table.add(new UELabel(Localizer.getInstance().get("LABEL_VOLUME")));
-        table.row();
+        table.addRow(new UELabel(Localizer.getInstance().get("LABEL_VOLUME")));
         table.add(createVolumeChangeButton(Localizer.getInstance().get("BTN_MIN_VOLUME"), 0f, volumeSlider));
         table.add(volumeSlider);
-        table.add(createVolumeChangeButton(Localizer.getInstance().get("BTN_MAX_VOLUME"), 100f, volumeSlider));
-        table.row();
+        table.addRow(createVolumeChangeButton(Localizer.getInstance().get("BTN_MAX_VOLUME"), 100f, volumeSlider));
         table.add(UIComponentFactory.createSpacer());
 
         BasicWindow window = windowContainer.getWindowFactory().createWindow(WindowType.OPTIONS_WINDOW, table, null);

@@ -23,7 +23,7 @@ public enum WindowType {
      */
     SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY", WindowSetup.LARGE, true),
 
-    OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS", WindowSetup.MEDIUM, true),
+    OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS", WindowSetup.MEDIUM, false),
 
     /**
      * Game over window.
@@ -46,7 +46,7 @@ public enum WindowType {
          */
         @Override
         public List<WindowType> relatedViews() {
-            List<WindowType> dependencies = new ArrayList<WindowType>();
+            List<WindowType> dependencies = new ArrayList<>();
             dependencies.add(SURVEY_DETAILS);
 
             return dependencies;
@@ -56,7 +56,7 @@ public enum WindowType {
     SURVEY_DETAILS("TITLE_SURVEY_DETAILS", "BTN_OK", WindowSetup.LARGE, false) {
         @Override
         public List<WindowType> relatedViews() {
-            List<WindowType> dependencies = new ArrayList<WindowType>();
+            List<WindowType> dependencies = new ArrayList<>();
             dependencies.add(PLANET_DETAILS);
             return dependencies;
         }
@@ -71,7 +71,7 @@ public enum WindowType {
          */
         @Override
         public List<WindowType> relatedViews() {
-            List<WindowType> dependencies = new ArrayList<WindowType>();
+            List<WindowType> dependencies = new ArrayList<>();
             dependencies.add(CREWMEMBER_DETAILS);
 
             return dependencies;
@@ -113,10 +113,6 @@ public enum WindowType {
      */
     public List<WindowType> relatedViews() {
         return null;
-    }
-
-    public boolean windowPausesGame() {
-        return false;
     }
 
     /**
