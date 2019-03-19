@@ -18,9 +18,7 @@ public class SurveyDetailsTable extends UETable {
     public SurveyDetailsTable(Survey survey) {
         padBottom(15);
         padRight(15);
-        add(new UELabel(Localizer.getInstance().get("LABEL_NAME") + survey.getSurveyName()));
-        row();
-        add(new UELabel(new CrewMemberTools().concatenateCrewMemberListNames((survey.getSurveyTeam()))));
-        row();
+        addRow(new UELabel(Localizer.getInstance().get("LABEL_NAME") + survey.getSurveyName()));
+        addRow(new UELabel(new CrewMemberTools().concatenateCrewMemberListNames((survey.getSurveyTeam()))));
     }
 }

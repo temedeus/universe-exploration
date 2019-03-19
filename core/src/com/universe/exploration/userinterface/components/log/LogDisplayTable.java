@@ -19,7 +19,6 @@ public class LogDisplayTable extends UETable {
         padTop(30);
         padLeft(30);
 
-        add(table);
-        row();
+        addRow(table);
     }
 }

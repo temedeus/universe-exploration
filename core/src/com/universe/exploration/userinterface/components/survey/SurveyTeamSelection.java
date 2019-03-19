@@ -87,7 +87,7 @@ public class SurveyTeamSelection {
                 }
 
                 // 5 per row seems good.
-                if (row == 5) {
+                if (row % 5 == 0) {
                     table.row();
                 }
             }
