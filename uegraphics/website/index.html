@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="universeExplorationMain" ng-controller="universeExplorationControllerMain">
 <head>
-  <title>{{title}}</title>
+  <title>Universe-Exploration - Good old clunky space strategy</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link href='https://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
   <link href="website.css" rel="stylesheet" type="text/css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
+  <link href="lightbox/css/lightbox.css" rel="stylesheet" />
 </head>
-<body>
+<body class="radient-bg">
 
-  <div id="full-content" class="radient-bg">
+  <div id="full-content">
 
     <div class="container-fluid main-content">
 
@@ -30,33 +28,33 @@
      <div class="row">
       <div class="col-md-8">  
        <h1>Source code</h1>
-   		<p>Project is available on GitHub: <a href="https://github.com/temedeus/universe-exploration">https://github.com/temedeus/universe-exploration</a></p>
-   		<p>Feel free to fork and gaze around the source code.</p>
-      </div>
-    </div>
-     <div class="row">
-      <div class="col-md-8">  
-       <h1>Screenshots</h1>
-       <p>Here are a few screenshots from the current progress.</p>
-        <a href="ue_screenshot2.png"><img src="ue_screenshot2_thumb.png" alt="Universe Exploration screenshot" /></a>
-        <a href="ue_screenshot1.png"><img src="ue_screenshot1_thumb.png" alt="Universe Exploration screenshot" /></a>
-      </p>
+       <p>Project is available on GitHub: <a href="https://github.com/temedeus/universe-exploration">https://github.com/temedeus/universe-exploration</a></p>
+       <p>Feel free to fork and gaze around the source code.</p>
+     </div>
+   </div>
+   <div class="row">
+    <div class="col-md-8">  
+     <h1>Screenshots</h1>
+     <p>Here are a few screenshots from the current progress.</p>
+   </div>
+ </div>
+ <div class="row">
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <a href="ue_screenshot2.png" data-lightbox="screenshots"><img class="img-responsive" src="ue_screenshot2_thumb.png" alt="Universe Exploration screenshot" /></a>
     </div>
   </div>
-
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <a href="ue_screenshot1.png" data-lightbox="screenshots"><img class="img-responsive" src="ue_screenshot1_thumb.png" alt="Universe Exploration screenshot" /></a>
+    </div>
+  </div>
 </div>
 
 </div>
+</div>
 
-<script src="universeExplorationMainController.js">
-</script>
-
-<script type="text/javascript">
-	// MDB Lightbox Init
-$(function () {
-$("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
-});
-</script>
+<script src="lightbox/js/lightbox-plus-jquery.min.js"> </script>
 
 </body>
 </html>

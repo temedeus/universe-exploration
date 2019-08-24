@@ -4,6 +4,7 @@
 *.war
 *.ear
 hs_err_pid*
+uegraphics/website/node_modules/
 
 ## GWT
 war/
