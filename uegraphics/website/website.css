@@ -30,7 +30,7 @@ a:hover {
 	background-repeat: no-repeat;
 }
 .radient-bg {
-	background: #282537;
+	background: #070609;
 	background-image: -webkit-radial-gradient(top, circle cover, #111117 0%, #050406 80%);
 	background-image: -moz-radial-gradient(top, circle cover, #111117 0%, #050406 80%);
 	background-image: -o-radial-gradient(top, circle cover, #111117 0%, #050406 80%);
@@ -54,5 +54,5 @@ a:hover {
 }
 
 .thumbnail {
-	background-color: #282537;
+	background-color: #070609;
 }
