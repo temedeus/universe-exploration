@@ -25,7 +25,7 @@ a:hover {
 	padding: 20px;
 	margin-top: 30px;
 	border-color: #404040;
-	background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("corner_planet.png");
+	background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("images/corner_planet.png");
 	background-position: right bottom; 
 	background-repeat: no-repeat;
 }
