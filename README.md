@@ -1,10 +1,12 @@
 # Universe Exploration
 Universe Exploration is a strategy game where one must travel through star systems in search for civilized life.
-In order to keep exploring, you must look for resources in order to keep on going.
+In order to keep exploring, you must look for resources.
+
+Project is written in Java using libgdx.
 
 # Requirements:
 Following need to be manually installed:
-* Gradle 4.7. (or just use the Gradle wrapper)
+* Gradle 4.7. (or preferably just use the Gradle wrapper)
 * Java 8
 
 # Setup
