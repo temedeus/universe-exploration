@@ -13,6 +13,5 @@ public class DesktopLauncher {
 		config.fullscreen = false;
 		config.vSyncEnabled = true;
 		new LwjglApplication(new UniverseExploration(), config);
-		
 	}
 }

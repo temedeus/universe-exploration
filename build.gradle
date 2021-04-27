@@ -1,116 +1,103 @@
 buildscript {
+    
+
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
     }
     dependencies {
-        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.5'
-        classpath 'com.android.tools.build:gradle:3.1.3'
-        classpath 'com.android.tools.lint:lint-gradle:26.1.3'
+        classpath 'com.android.tools.build:gradle:3.5.4'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12'
+        
+
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
-    apply plugin: "idea"
 
     version = '1.0'
     ext {
-        appName = 'universe-exploration'
-        gdxVersion = '1.6.5'
-        roboVMVersion = '1.0.0-alpha-04'
+        appName = "universe-exploration"
+        gdxVersion = '1.9.14'
+        roboVMVersion = '2.3.12'
+        box2DLightsVersion = '1.5'
+        ashleyVersion = '1.7.3'
+        aiVersion = '1.8.2'
+        gdxControllersVersion = '2.1.0'
     }
 
     repositories {
+        mavenLocal()
         mavenCentral()
         google()
-        jcenter()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
 }
 
 project(":desktop") {
-    apply plugin: "java"
+    apply plugin: "java-library"
+
 
     dependencies {
-        testCompile "junit:junit:4.11"
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        
     }
 }
 
 project(":android") {
-    apply plugin: "android"
+    apply plugin: "com.android.application"
 
     configurations { natives }
 
     dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+        implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
+        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
-        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
-        compile "com.badlogicgames.box2dlights:box2dlights:1.2"
+        natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
+        
     }
-
 }
 
 project(":core") {
-    apply plugin: "java"
+    apply plugin: "java-library"
+
 
     dependencies {
-        testCompile "junit:junit:4.12"
-        testCompile group: 'org.jmockit', name: 'jmockit', version: '1.8'
-        compile project(":common-tools")
-        compile project(":universe")
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "com.badlogicgames.box2dlights:box2dlights:1.2"
-		compile "org.jmock:jmock-junit4:2.8.2"
-
-		//compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
-		//compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        
     }
 }
 
-project(":common-tools") {
-    apply plugin: "java"
-    
+project(":ios") {
+    apply plugin: "java-library"
+    apply plugin: "robovm"
+
+
     dependencies {
-        testCompile "junit:junit:4.12"
-        testCompile group: 'org.jmockit', name: 'jmockit', version: '1.8'
-		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-		compile "org.jmock:jmock-junit4:2.8.2"
+        implementation project(":core")
+        api "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+        api "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
+        api "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
+        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
+        
     }
-}
-
-project(":universe") {
-    apply plugin: "java"
-	
-	dependencies {
-        testCompile "junit:junit:4.12"
-        testCompile group: 'org.jmockit', name: 'jmockit', version: '1.8'
-        compile project(":common-tools")
-		compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-		compile "org.jmock:jmock-junit4:2.8.2"
-	}
-}
-
-tasks.eclipse.doLast {
-    delete ".project"
 }

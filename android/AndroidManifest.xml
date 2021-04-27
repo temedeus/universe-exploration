@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.universe.exploration.android"
-    android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="24" />
+    package="com.universe.exploration" >
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
+        android:isGame="true"
+        android:appCategory="game"
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
         <activity
-            android:name="com.universe.exploration.android.AndroidLauncher"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:name="com.universe.exploration.AndroidLauncher"
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
