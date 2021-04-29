@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.universe.exploration.screens.MainMenuScreen;
 
 /**
- * Main game class.
+ * Main game class used as an entry point for all game screens.
  */
 public class UniverseExploration extends Game {
     private SpriteBatch batch;
@@ -27,6 +27,7 @@ public class UniverseExploration extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+        super.dispose();
     }
 
 	public SpriteBatch getBatch() {
