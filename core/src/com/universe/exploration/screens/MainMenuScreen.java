@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -15,6 +16,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.button.ButtonFactory;
+import com.universe.exploration.component.dialog.Dialog;
+import com.universe.exploration.component.dialog.DialogFactory;
+import com.universe.exploration.component.dialog.DialogType;
 import tools.GdxHelper;
 
 /**
@@ -43,7 +47,8 @@ public class MainMenuScreen implements Screen {
         mainMenuButtonGroup.padTop(30);
         mainMenuButtonGroup.padRight(30);
 
-        TextButton startGame = new ButtonFactory().createTextButton("Start Game", ((event, x, y) -> {}));
+        Dialog dialog = new DialogFactory().createDialog(DialogType.QUIT_WINDOW, new Table(), null);
+        TextButton startGame = new ButtonFactory().createTextButton("Start Game", ((event, x, y) -> {mainMenuStage.addActor(dialog);}));
         TextButton settings = new ButtonFactory().createTextButton("Settings", (event, x, y) -> {});
         TextButton quit = new ButtonFactory().createTextButton("Quit", (event, x, y) -> { Gdx.app.exit();});
 
