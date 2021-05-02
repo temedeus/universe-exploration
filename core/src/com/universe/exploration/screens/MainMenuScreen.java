@@ -46,11 +46,10 @@ public class MainMenuScreen implements Screen {
         mainMenuButtonGroup.setPosition(GdxHelper.getScreenCenterX(), GdxHelper.getScreenCenterY());
         mainMenuButtonGroup.padTop(30);
         mainMenuButtonGroup.padRight(30);
-
-        Dialog dialog = new DialogFactory().createDialog(DialogType.QUIT_WINDOW, new Table(), null);
-        TextButton startGame = new ButtonFactory().createTextButton("Start Game", ((event, x, y) -> {mainMenuStage.addActor(dialog);}));
+        Dialog dialog = new DialogFactory().createDialog(DialogType.QUIT_WINDOW, new Table(), ((event, x, y) -> { Gdx.app.exit();}));
+        TextButton startGame = new ButtonFactory().createTextButton("Start Game", ((event, x, y) -> {}));
         TextButton settings = new ButtonFactory().createTextButton("Settings", (event, x, y) -> {});
-        TextButton quit = new ButtonFactory().createTextButton("Quit", (event, x, y) -> { Gdx.app.exit();});
+        TextButton quit = new ButtonFactory().createTextButton("Quit", (event, x, y) -> { mainMenuStage.addActor(dialog); });
 
         mainMenuButtonGroup.addActor(startGame);
         mainMenuButtonGroup.addActor(settings);

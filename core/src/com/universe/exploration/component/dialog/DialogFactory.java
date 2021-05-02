@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.ComponentStyle;
+import com.universe.exploration.component.FunctionalClickListener;
 import com.universe.exploration.component.button.ButtonFactory;
 
 /**
@@ -18,7 +19,6 @@ public class DialogFactory {
 
     private static final String STYLE = "default";
 
-
     /**
      * Create a window based on {@link DialogType}. With no
      * <code>okAction</code> specified, just close the window.
@@ -28,24 +28,21 @@ public class DialogFactory {
      * @param <T>
      * @return
      */
-    public <T extends Actor> Dialog createDialog(final DialogType windowType, T contentTable, ClickListener okAction) {
+    public <T extends Actor> Dialog createDialog(final DialogType windowType, T contentTable, FunctionalClickListener okAction) {
         final Dialog window = createWindowFrame(windowType);
 
         Table buttontable = new Table();
+        ButtonFactory buttonFactory = new ButtonFactory();
+        FunctionalClickListener okActionWithClose = (event, x, y) -> {
+            okAction.onClick(event,x,y);
+            window.remove();
+        };
 
-        if (okAction != null) {
-            buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), (event, x, y) -> {
-            }));
-        } else {
-            buttontable.add(
-                    new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), (event, x, y) -> {
-                        window.remove();
-                    }));
-        }
+        buttontable.add(buttonFactory.createTextButton(windowType.getLocalizedOkButtonCaption(), okActionWithClose));
 
         if (windowType.isHasCancelButton()) {
             buttontable.add(
-                    new ButtonFactory().createTextButton("Cancel", (event, x, y) -> {
+                    buttonFactory.createTextButton("Cancel", (event, x, y) -> {
                         window.remove();
                     }));
         }
@@ -63,28 +60,35 @@ public class DialogFactory {
      * @param windowType
      * @param contentTable
      * @param secondaryButtonTitle
-     * @param okAction
+     * @param primaryAction
      * @param secondaryAction
      * @return
      */
     public Dialog createWindowWithSecondaryAction(DialogType windowType, Table contentTable, String secondaryButtonTitle,
-                                                  ClickListener okAction, ClickListener secondaryAction) {
+                                                  FunctionalClickListener primaryAction, FunctionalClickListener secondaryAction) {
         final Dialog window = createWindowFrame(windowType);
 
-        Table buttontable = new Table();
-        buttontable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), (event, x, y) -> {
-            window.remove();
-        }));
-        buttontable.add(new ButtonFactory().createTextButton(secondaryButtonTitle, (event, x, y) -> {
-            window.remove();
-        }));
 
-        buttontable.row();
+        FunctionalClickListener primaryActionWithClose = (event, x, y) -> {
+            primaryAction.onClick(event,x,y);
+            window.remove();
+        };
+
+        FunctionalClickListener secondaryActionWithClose = (event, x, y) -> {
+            primaryAction.onClick(event,x,y);
+            window.remove();
+        };
+
+        Table buttonTable = new Table();
+        buttonTable.add(new ButtonFactory().createTextButton(windowType.getLocalizedOkButtonCaption(), primaryActionWithClose));
+        buttonTable.add(new ButtonFactory().createTextButton(secondaryButtonTitle, secondaryActionWithClose));
+
+        buttonTable.row();
 
         Table table = new Table();
         table.add(contentTable);
         table.row();
-        table.add(buttontable);
+        table.add(buttonTable);
 
         window.add(table);
 

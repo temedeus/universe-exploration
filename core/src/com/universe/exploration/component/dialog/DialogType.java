@@ -15,7 +15,7 @@ import java.util.List;
  * @author 1.11.2015 Teemu Puurunen
  */
 public enum DialogType {
-    QUIT_WINDOW("TITLE_QUIT_GAME", "BTN_OK", DialogSetup.SMALL, true),
+    QUIT_WINDOW("TITLE_QUIT_GAME", "BTN_OK", DialogSetup.MEDIUM, true),
 
     /**
      * Open up details for sending a survey team.

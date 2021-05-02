@@ -9,21 +9,15 @@ package com.universe.exploration.component.dialog;
  * @author 18.9.2015 Teemu Puurunen
  */
 public enum DialogSetup {
-    SMALL(480, 300), MEDIUM(800, 600), LARGE(1024, 768);
+    SMALL(0.3f), MEDIUM(0.6f), LARGE(0.8f);
 
-    private final int width;
-    private final int height;
+    private final float screenSizeRatio;
 
-    DialogSetup(int width, int height) {
-        this.width = width;
-        this.height = height;
+    DialogSetup(float ratio) {
+        this.screenSizeRatio = ratio;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
+    public float getScreenSizeRatio() {
+        return screenSizeRatio;
     }
 }

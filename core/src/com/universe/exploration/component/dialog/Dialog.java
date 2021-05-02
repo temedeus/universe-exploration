@@ -3,6 +3,7 @@
  */
 package com.universe.exploration.component.dialog;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
@@ -33,7 +34,7 @@ public abstract class Dialog extends Window {
     }
 
     void setWindowSize() {
-        setSize(getWindowSetup().getWidth(), getWindowSetup().getHeight());
+        setSize((float) (Gdx.graphics.getWidth() * getWindowSetup().getScreenSizeRatio()), (float) (Gdx.graphics.getHeight() * getWindowSetup().getScreenSizeRatio()));
     };
 
     abstract DialogSetup getWindowSetup();

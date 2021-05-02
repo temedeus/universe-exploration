@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.universe.exploration.ComponentStyle;
 import com.universe.exploration.component.FunctionalClickListener;
 
@@ -31,7 +32,9 @@ public class ButtonFactory {
             }
         });
         button.setTransform(true);
-        button.setScale(1.0f);
+        button.getLabel().setFontScale(3f);
+        button.setOrigin(Align.center);
+
         return button;
     }
 }
