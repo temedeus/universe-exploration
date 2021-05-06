@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
-import tools.GdxHelper;
+import com.universe.exploration.utils.GdxHelper;
 
 /**
  * Abstract base class for all dialogs.

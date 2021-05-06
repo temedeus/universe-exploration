@@ -1,20 +1,20 @@
 package com.universe.exploration.component.button;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.universe.exploration.ComponentStyle;
+import com.universe.exploration.BasicUI;
+import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.FunctionalClickListener;
 
 /**
  * Button factory.
 */
 public class ButtonFactory {
-    private final Skin uiSkin = ComponentStyle.userInterfaceSkin;
+    private final Skin uiSkin = UniverseExploration.basicUI.getUserInterfaceSkin();
 
     /**
      * Create button.

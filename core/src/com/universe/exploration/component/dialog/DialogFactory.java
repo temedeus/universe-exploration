@@ -6,8 +6,8 @@ package com.universe.exploration.component.dialog;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.universe.exploration.ComponentStyle;
+import com.universe.exploration.BasicUI;
+import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.FunctionalClickListener;
 import com.universe.exploration.component.button.ButtonFactory;
 
@@ -15,7 +15,7 @@ import com.universe.exploration.component.button.ButtonFactory;
  * @author 25.8.2015 Teemu Puurunen
  */
 public class DialogFactory {
-    private final Skin skin = ComponentStyle.userInterfaceSkin;
+    private final Skin skin = UniverseExploration.basicUI.getUserInterfaceSkin();
 
     private static final String STYLE = "default";
 

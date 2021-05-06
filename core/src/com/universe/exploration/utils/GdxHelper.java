@@ -1,4 +1,4 @@
-package tools;
+package com.universe.exploration.utils;
 
 import com.badlogic.gdx.Gdx;
 

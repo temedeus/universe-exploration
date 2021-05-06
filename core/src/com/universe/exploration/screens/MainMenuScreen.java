@@ -4,14 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.UniverseExploration;
@@ -19,7 +15,7 @@ import com.universe.exploration.component.button.ButtonFactory;
 import com.universe.exploration.component.dialog.Dialog;
 import com.universe.exploration.component.dialog.DialogFactory;
 import com.universe.exploration.component.dialog.DialogType;
-import tools.GdxHelper;
+import com.universe.exploration.utils.GdxHelper;
 
 /**
  * Main menu screen.

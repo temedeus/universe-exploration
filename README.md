@@ -27,7 +27,7 @@ Main class:
 * com.universe.exploration.desktop.DesktopLauncher
 
 ## Android
-Setup run configuration with *Android* module. You can also setup an emulator using Android tools:
+Setup run configuration with *Android* module. You can also setup an emulator using Android com.universe.exploration.tools:
 https://developer.android.com/studio/run/emulator
 
 Recommended way of running is hooking up a real device to the computer and running UE on that one
