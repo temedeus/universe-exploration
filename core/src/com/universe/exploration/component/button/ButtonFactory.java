@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.universe.exploration.BasicUI;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.FunctionalClickListener;
 
@@ -14,7 +13,7 @@ import com.universe.exploration.component.FunctionalClickListener;
  * Button factory.
 */
 public class ButtonFactory {
-    private final Skin uiSkin = UniverseExploration.basicUI.getUserInterfaceSkin();
+    private final Skin uiSkin = UniverseExploration.commonUIAssets.getUserInterfaceSkin();
 
     /**
      * Create button.

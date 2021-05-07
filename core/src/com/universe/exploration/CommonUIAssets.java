@@ -3,7 +3,7 @@ package com.universe.exploration;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class BasicUI {
+public class CommonUIAssets {
 
     private BitmapFont font;// = new BitmapFont(Gdx.files.internal("fonts/ueimpact_emp.fnt"), Gdx.files.internal("fonts/ueimpact_emp.png"), false);
 

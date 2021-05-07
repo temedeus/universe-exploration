@@ -1,13 +1,43 @@
 package com.universe.exploration.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.utils.GdxHelper;
 
 public class InitialLoadingScreen implements Screen {
     private UniverseExploration universeExploration;
 
+    private final Skin uiSkin = UniverseExploration.commonUIAssets.getUserInterfaceSkin();
+
+    private Stage loadingScreenStage;
+
     public InitialLoadingScreen(final UniverseExploration universeExploration) {
         this.universeExploration = universeExploration;
+        loadingScreenStage = new Stage(new ScreenViewport());
+        loadingScreenStage.addActor(createInitialLoadingScreen());
+    }
+
+
+    private VerticalGroup createInitialLoadingScreen() {
+        VerticalGroup loadingScreenGroup = new VerticalGroup();
+        loadingScreenGroup.align(Align.center | Align.center);
+        loadingScreenGroup.setPosition(GdxHelper.getScreenCenterX(), GdxHelper.getScreenCenterY());
+        loadingScreenGroup.padTop(30);
+        loadingScreenGroup.padRight(30);
+
+        Label loadingLabel = new Label("LOADING", uiSkin);
+
+        loadingScreenGroup.addActor(loadingLabel);
+
+        return loadingScreenGroup;
     }
 
     @Override
@@ -17,7 +47,10 @@ public class InitialLoadingScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        loadingScreenStage.act(GdxHelper.getDeltaTime());
+        loadingScreenStage.draw();
     }
 
     @Override
