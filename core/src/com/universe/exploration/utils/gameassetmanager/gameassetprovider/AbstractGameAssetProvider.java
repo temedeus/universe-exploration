@@ -13,7 +13,7 @@ public abstract class AbstractGameAssetProvider {
         this.gameAssetManager = gameAssetManager;
     }
 
-    abstract void setupAssets();
+    public abstract void setupAssets();
 
     public Map<String, GameAsset> getAssets() {
         return gameAssets;

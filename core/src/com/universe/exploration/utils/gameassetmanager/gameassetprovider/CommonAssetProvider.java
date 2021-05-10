@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.universe.exploration.utils.gameassetmanager.GameAssetManager;
 
-import java.util.HashMap;
-
 public class CommonAssetProvider extends AbstractGameAssetProvider {
     public CommonAssetProvider(GameAssetManager gameAssetManager) {
         super(gameAssetManager);
@@ -17,7 +15,7 @@ public class CommonAssetProvider extends AbstractGameAssetProvider {
         gameAssetManager.getAssetManager().load(CommonAsset.UI_SKIN.getPath(), Skin.class);
     }
 
-    public enum CommonAsset {
+    public enum CommonAsset implements GameAsset {
         BITMAP_FONT("fonts/ueimpact_emp.fnt"),
         UI_SKIN("star-soldier/skin/star-soldier-ui.json");
 
@@ -27,6 +25,7 @@ public class CommonAssetProvider extends AbstractGameAssetProvider {
             this.path = path;
         }
 
+        @Override
         public String getPath() {
             return path;
         }

@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.component.group.VerticalCenteredGroup;
 import com.universe.exploration.utils.GdxHelper;
 
 public class InitialLoadingScreen implements Screen {
@@ -25,14 +25,8 @@ public class InitialLoadingScreen implements Screen {
         loadingScreenStage.addActor(createInitialLoadingScreen());
     }
 
-
     private VerticalGroup createInitialLoadingScreen() {
-        VerticalGroup loadingScreenGroup = new VerticalGroup();
-        loadingScreenGroup.align(Align.center | Align.center);
-        loadingScreenGroup.setPosition(GdxHelper.getScreenCenterX(), GdxHelper.getScreenCenterY());
-        loadingScreenGroup.padTop(30);
-        loadingScreenGroup.padRight(30);
-
+        VerticalGroup loadingScreenGroup = new VerticalCenteredGroup();
         Label loadingLabel = new Label("LOADING", uiSkin);
 
         loadingScreenGroup.addActor(loadingLabel);

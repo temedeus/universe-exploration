@@ -4,6 +4,8 @@
 package com.universe.exploration.component.dialog;
 
 
+import com.universe.exploration.UniverseExploration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,74 +17,9 @@ import java.util.List;
  * @author 1.11.2015 Teemu Puurunen
  */
 public enum DialogType {
-    QUIT_WINDOW("TITLE_QUIT_GAME", "BTN_OK", DialogSetup.MEDIUM, true),
-
-    /**
-     * Open up details for sending a survey team.
-     */
-    SURVEY_WINDOW("TITLE_SURVEY_PLANET", "BTN_SURVEY", DialogSetup.LARGE, true),
-
-    OPTIONS_WINDOW("TITLE_OPTIONS", "BTN_SAVE_SETTINGS", DialogSetup.MEDIUM, false),
-
-    /**
-     * Game over window.
-     */
-    GAME_OVER("TITLE_GAME_OVER", "BTN_TRY_AGAIN", DialogSetup.SMALL, true),
-
-    /**
-     * List of planet general details. Allows to open up e.g.
-     * {@link #SURVEY_WINDOW}.
-     */
-    PLANET_DETAILS("TITLE_SURVEY_PLANET_CONFIGURATION_SCREEN", "BTN_SURVEY", DialogSetup.LARGE, true),
-
-    SURVEY_MANAGEMENT("TITLE_SURVEY_MANAGEMENT", "BTN_OK", DialogSetup.MEDIUM, false) {
-        /*
-         * (non-Javadoc)
-         *
-         * @see
-         * com.universe.exploration.userinterface.components.window.WindowType#
-         * relatedViews()
-         */
-        @Override
-        public List<DialogType> relatedViews() {
-            List<DialogType> dependencies = new ArrayList<>();
-            dependencies.add(SURVEY_DETAILS);
-
-            return dependencies;
-        }
-    },
-
-    SURVEY_DETAILS("TITLE_SURVEY_DETAILS", "BTN_OK", DialogSetup.LARGE, false) {
-        @Override
-        public List<DialogType> relatedViews() {
-            List<DialogType> dependencies = new ArrayList<>();
-            dependencies.add(PLANET_DETAILS);
-            return dependencies;
-        }
-    },
-
-    CREW_MANAGEMENT("TITLE_CREW_MANAGEMENT", "BTN_OK", DialogSetup.LARGE, false) {
-        /*
-         * (non-Javadoc)
-         *
-         * @see com.universe.exploration.ueui.components.window.WindowType#
-         * relatedViews()
-         */
-        @Override
-        public List<DialogType> relatedViews() {
-            List<DialogType> dependencies = new ArrayList<>();
-            dependencies.add(CREWMEMBER_DETAILS);
-
-            return dependencies;
-        }
-    },
-
-    CREWMEMBER_DETAILS("TITLE_CREWMEMBER_DETAILS", "BTN_OK", DialogSetup.LARGE, false),
-
-    /**
-     * Notification of a closed survey.
-     */
-    SURVEY_CLOSED("TITLE_SURVEY", "BTN_SURVEY", DialogSetup.LARGE, false);
+    EXIT_GAME("TITLE_EXIT_GAME", "BTN_OK", DialogSetup.MEDIUM, true),
+    START_GAME("TITLE_START_GAME", "BTN_START_GAME", DialogSetup.LARGE, true),
+    SETTINGS("TITLE_OPTIONS", "BTN_SAVE_SETTINGS", DialogSetup.LARGE, true);
 
     private final String caption;
 
@@ -118,14 +55,14 @@ public enum DialogType {
      * @return the caption
      */
     public String getLocalizedCaption() {
-        return caption;
+        return UniverseExploration.getLocaliser().get(caption);
     }
 
     /**
      * @return the okButtonCaption
      */
     public String getLocalizedOkButtonCaption() {
-        return okButtonCaption;
+        return UniverseExploration.getLocaliser().get(okButtonCaption);
     }
 
     /**

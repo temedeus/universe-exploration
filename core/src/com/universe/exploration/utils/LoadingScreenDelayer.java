@@ -1,7 +1,5 @@
 package com.universe.exploration.utils;
 
-import com.badlogic.gdx.Gdx;
-
 /**
  * Create a small delay between screens.
  */
@@ -15,7 +13,7 @@ public class LoadingScreenDelayer {
             try {
                 Thread.sleep(300);
             } catch (InterruptedException e) {
-                Gdx.app.error("InitialLoadingScreen", "Error sleeping in loading screen", e);
+                LoggerWrapper.logError("InitialLoadingScreen", "Error sleeping in loading screen", e);
             }
             screenLoading = false;
         }).start();

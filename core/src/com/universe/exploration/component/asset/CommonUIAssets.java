@@ -1,13 +1,16 @@
-package com.universe.exploration;
+package com.universe.exploration.component.asset;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * Common assets needed basically everywhere within game.
+ */
 public class CommonUIAssets {
 
-    private BitmapFont font;// = new BitmapFont(Gdx.files.internal("fonts/ueimpact_emp.fnt"), Gdx.files.internal("fonts/ueimpact_emp.png"), false);
+    private BitmapFont font;
 
-    private Skin userInterfaceSkin; // = new Skin(Gdx.files.internal(USERINTERFACE_SKIN));
+    private Skin userInterfaceSkin;
 
     public BitmapFont getFont() {
         return font;

@@ -41,7 +41,7 @@ public class DialogFactory {
 
         if (windowType.isHasCancelButton()) {
             buttontable.add(
-                    buttonFactory.createTextButton("Cancel", (event, x, y) -> {
+                    buttonFactory.createTextButton(UniverseExploration.getLocaliser().get("BTN_CANCEL"), (event, x, y) -> {
                         window.remove();
                     }));
         }
