@@ -17,6 +17,7 @@ import com.universe.exploration.component.dialog.DialogType;
 import com.universe.exploration.component.group.VerticalCenteredGroup;
 import com.universe.exploration.model.crew.CrewMember;
 import com.universe.exploration.model.crew.CrewMemberStatus;
+import com.universe.exploration.screens.GameScreen;
 import com.universe.exploration.utils.GdxHelper;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class MainMenuScreen implements Screen {
         crewMembers.add(crewMember);
         crewMembers.add(crewMember);
         Dialog startGameDialog = new DialogFactory().createDialog(DialogType.START_GAME, new CrewMemberCreationDialog(crewMembers), ((event, x, y) -> {
+            universeExploration.getScreenHandler().navigateToWhenReady(GameScreen.GAME);
         }));
         return new ButtonFactory().createTextButton(universeExploration.getLocaliser().get("BTN_START_GAME"), ((event, x, y) -> {
             mainMenuStage.addActor(startGameDialog);

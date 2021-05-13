@@ -2,13 +2,18 @@ package com.universe.exploration.screens;
 
 import com.badlogic.gdx.Screen;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.screens.game.Game;
 import com.universe.exploration.screens.mainmenu.MainMenuScreen;
+import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class GameScreenHandler {
+/**
+ * All screen transition should happen via this class.
+ */
+public class ScreenHandler {
 
     private GameScreen currentScreen;
 
@@ -18,11 +23,12 @@ public class GameScreenHandler {
 
     private Map<GameScreen, Supplier<Screen>> transitionMap;
 
-    public GameScreenHandler(UniverseExploration universeExploration) {
+    public ScreenHandler(UniverseExploration universeExploration) {
         this.universeExploration = universeExploration;
 
         transitionMap = new HashMap<>();
         transitionMap.put(GameScreen.MAIN_MENU, () -> new MainMenuScreen(universeExploration));
+        transitionMap.put(GameScreen.GAME, () -> new Game(universeExploration));
     }
 
     public void handleScreenTransition() {
@@ -33,19 +39,18 @@ public class GameScreenHandler {
         });
     }
 
-    public GameScreen getCurrentScreen() {
-        return currentScreen;
-    }
-
     public void setCurrentScreen(GameScreen currentScreen) {
         this.currentScreen = currentScreen;
     }
 
-    public GameScreen getTargetScreen() {
-        return targetScreen;
-    }
-
-    public void setTargetScreen(GameScreen targetScreen) {
+    /**
+     * Setup target screen and start loading necessary assets. {@link #handleScreenTransition()} ensures
+     * actual transition once done.
+     *
+     * @param targetScreen screen to navigate to
+     */
+    public void navigateToWhenReady(GameScreen targetScreen) {
         this.targetScreen = targetScreen;
+        targetScreen.retrieveAssets(universeExploration.getAssetManager());
     }
 }

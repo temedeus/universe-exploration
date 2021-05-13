@@ -1,11 +1,6 @@
 package com.universe.exploration.model.crew;
 
 /**
- *
-
-import com.universe.exploration.localization.TranslatableEnum;
-
-/**
  * Enumeration of potential crew member conditions.
  *
  * @author 10.4.2016 Teemu Puurunen

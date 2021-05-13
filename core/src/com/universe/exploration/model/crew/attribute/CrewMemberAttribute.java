@@ -8,7 +8,7 @@ package com.universe.exploration.model.crew.attribute;
  *
  * @author 15.3.2016 Teemu Puurunen
  */
-public abstract class CrewMemberAttribute implements ICrewMemberAttribute {
+public abstract class CrewMemberAttribute {
     protected int value;
 
     public CrewMemberAttribute(int value) {

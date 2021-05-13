@@ -9,7 +9,7 @@ public abstract class AbstractGameAssetProvider {
 
     protected GameAssetManager gameAssetManager;
 
-    AbstractGameAssetProvider(GameAssetManager gameAssetManager) {
+    public AbstractGameAssetProvider(GameAssetManager gameAssetManager) {
         this.gameAssetManager = gameAssetManager;
     }
 

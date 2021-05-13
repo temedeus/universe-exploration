@@ -9,5 +9,5 @@ package com.universe.exploration.model.crew;
  * @author 13.1.2017 Teemu Puurunen
  */
 public enum CrewmemberSex {
-    MALE, FEMALE;
+    FEMALE, MALE, OTHER
 }

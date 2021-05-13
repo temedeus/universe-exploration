@@ -5,7 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.universe.exploration.component.asset.CommonUIAssets;
 import com.universe.exploration.screens.GameScreen;
-import com.universe.exploration.screens.GameScreenHandler;
+import com.universe.exploration.screens.ScreenHandler;
 import com.universe.exploration.screens.InitialLoadingScreen;
 import com.universe.exploration.utils.LoadingScreenDelayer;
 import com.universe.exploration.utils.Localiser;
@@ -20,21 +20,30 @@ public class UniverseExploration extends Game {
     public static CommonUIAssets commonUIAssets;
     private SpriteBatch batch;
     private GameAssetManager assetManager;
-    private GameScreenHandler gameScreenHandler;
+
+    public ScreenHandler getScreenHandler() {
+        return screenHandler;
+    }
+
+    public void setScreenHandler(ScreenHandler screenHandler) {
+        this.screenHandler = screenHandler;
+    }
+
+    private ScreenHandler screenHandler;
     private LoadingScreenDelayer loadingScreenDelayer;
 
     private static Localiser localiser;
 
     public void setScreenWithId(Screen screen, GameScreen gameScreen) {
         setScreen(screen);
-        gameScreenHandler.setCurrentScreen(gameScreen);
+        screenHandler.setCurrentScreen(gameScreen);
     }
 
     @Override
     public void create() {
         assetManager = new GameAssetManager();
         loadingScreenDelayer = new LoadingScreenDelayer();
-        gameScreenHandler = new GameScreenHandler(this);
+        screenHandler = new ScreenHandler(this);
         setupCommonAssets();
         localiser = Localiser.getInstance(assetManager);
     }
@@ -43,7 +52,7 @@ public class UniverseExploration extends Game {
     public void render() {
         super.render();
         if (!loadingScreenDelayer.isScreenLoading() && assetManager.getAssetManager().update()) {
-            gameScreenHandler.handleScreenTransition();
+            screenHandler.handleScreenTransition();
         }
     }
 
@@ -66,7 +75,7 @@ public class UniverseExploration extends Game {
         commonUIAssets.setFont(assetManager.getAsset(CommonAssetProvider.CommonAsset.BITMAP_FONT));
         commonUIAssets.setUserInterfaceSkin(assetManager.getAsset(CommonAssetProvider.CommonAsset.UI_SKIN));
         this.setScreenWithId(new InitialLoadingScreen(this), GameScreen.INITIAL_LOADING);
-        gameScreenHandler.setTargetScreen( GameScreen.MAIN_MENU);
+        screenHandler.navigateToWhenReady(GameScreen.MAIN_MENU);
         loadingScreenDelayer.delay();
     }
 
