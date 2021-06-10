@@ -2,9 +2,9 @@ package com.universe.exploration.screens;
 
 import com.badlogic.gdx.Screen;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.model.GameScreen;
 import com.universe.exploration.screens.game.Game;
 import com.universe.exploration.screens.mainmenu.MainMenuScreen;
-import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +51,7 @@ public class ScreenHandler {
      */
     public void navigateToWhenReady(GameScreen targetScreen) {
         this.targetScreen = targetScreen;
+        universeExploration.setScreenWithId(new LoadingScreen(universeExploration), GameScreen.INITIAL_LOADING);
         targetScreen.retrieveAssets(universeExploration.getAssetManager());
     }
 }

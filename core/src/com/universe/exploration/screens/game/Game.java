@@ -1,76 +1,67 @@
 package com.universe.exploration.screens.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.screens.AbstractScreen;
 import com.universe.exploration.utils.GdxHelper;
+import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
-public class Game implements Screen {
-    private UniverseExploration universeExploration;
+import java.util.ArrayList;
+import java.util.List;
 
-    private Stage mainMenuStage;
+public class Game extends AbstractScreen {
+    public Game(UniverseExploration universeExploration) {
+        super(universeExploration);
+    }
 
-    public Game(final UniverseExploration universeExploration) {
-        this.universeExploration = universeExploration;
-        mainMenuStage = new Stage(new ScreenViewport());
+    @Override
+    protected List<Actor> addActors() {
+        java.util.List<Actor> actors = new ArrayList();
+        actors.add( createPlanets());
+        actors.add(createLeftButton());
+        actors.add(createRightButton());
 
-        mainMenuStage.addActor(createPlanets());
+        return actors;
+    }
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(mainMenuStage);
-        Gdx.input.setInputProcessor(inputMultiplexer);
+    private ImageButton createLeftButton() {
+        Texture left = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.ARROW_LEFT);
+        Drawable drawable = new TextureRegionDrawable(new TextureRegion(left));
+        ImageButton leftButton = new ImageButton(drawable);
+        leftButton.setPosition(0, GdxHelper.getScreenCenterY()-leftButton.getHeight()/2);
+        return leftButton;
+    }
+
+    private ImageButton createRightButton() {
+        Texture left = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.ARROW_RIGHT);
+        Drawable drawable = new TextureRegionDrawable(new TextureRegion(left));
+        ImageButton leftButton = new ImageButton(drawable);
+        leftButton.setPosition(Gdx.graphics.getWidth() - leftButton.getWidth(), GdxHelper.getScreenCenterY()-leftButton.getHeight()/2);
+        return leftButton;
     }
 
     private Image createPlanets() {
         Texture planetTexture = universeExploration.getAssetManager().getAsset(PlanetAssetProvider.PlanetAsset.EARTHLIKE);
         Image earthLike = new Image(planetTexture);
 
-       // earthLike.setPosition(GdxHelper.getScreenCenterX(), GdxHelper.getScreenCenterY());
+        earthLike.setPosition(GdxHelper.getScreenCenterX() - earthLike.getWidth() / 2, GdxHelper.getScreenCenterY() - earthLike.getHeight() / 2);
+        earthLike.setOrigin(earthLike.getWidth() / 2, earthLike.getHeight() / 2);
+
+
+        RepeatAction action = Actions.repeat(RepeatAction.FOREVER, Actions.rotateBy(360, 60000));
+
+        earthLike.addAction(action);
+
         return earthLike;
-    }
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mainMenuStage.act(GdxHelper.getDeltaTime());
-        mainMenuStage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }

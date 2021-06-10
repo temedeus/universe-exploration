@@ -16,7 +16,7 @@ public class ButtonFactory {
     private final Skin uiSkin = UniverseExploration.commonUIAssets.getUserInterfaceSkin();
 
     /**
-     * Create button.
+     * Create text button.
      *
      * @param caption
      * @param clickListener

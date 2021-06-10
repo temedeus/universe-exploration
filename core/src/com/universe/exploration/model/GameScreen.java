@@ -1,6 +1,7 @@
-package com.universe.exploration.screens;
+package com.universe.exploration.model;
 
 import com.universe.exploration.utils.gameassetmanager.GameAssetManager;
+import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 public enum GameScreen {
@@ -10,6 +11,7 @@ public enum GameScreen {
     }),
     GAME((manager) -> {
         new PlanetAssetProvider(manager).setupAssets();
+        new HudAssetProvider(manager).setupAssets();
     });
 
     private AssetLoader assetLoader;

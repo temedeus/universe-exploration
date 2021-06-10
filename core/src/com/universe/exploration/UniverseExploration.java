@@ -4,9 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.universe.exploration.component.asset.CommonUIAssets;
-import com.universe.exploration.screens.GameScreen;
+import com.universe.exploration.model.GameScreen;
 import com.universe.exploration.screens.ScreenHandler;
-import com.universe.exploration.screens.InitialLoadingScreen;
+import com.universe.exploration.screens.LoadingScreen;
 import com.universe.exploration.utils.LoadingScreenDelayer;
 import com.universe.exploration.utils.Localiser;
 import com.universe.exploration.utils.gameassetmanager.GameAssetManager;
@@ -74,7 +74,6 @@ public class UniverseExploration extends Game {
         assetManager.getAssetManager().finishLoading();
         commonUIAssets.setFont(assetManager.getAsset(CommonAssetProvider.CommonAsset.BITMAP_FONT));
         commonUIAssets.setUserInterfaceSkin(assetManager.getAsset(CommonAssetProvider.CommonAsset.UI_SKIN));
-        this.setScreenWithId(new InitialLoadingScreen(this), GameScreen.INITIAL_LOADING);
         screenHandler.navigateToWhenReady(GameScreen.MAIN_MENU);
         loadingScreenDelayer.delay();
     }

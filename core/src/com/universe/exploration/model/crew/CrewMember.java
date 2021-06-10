@@ -18,8 +18,6 @@ public class CrewMember {
 
     private CrewmemberSex sex;
 
-    private Nationality nationality;
-
     private Map<Class <? extends CrewMemberAttribute>, CrewMemberAttribute> crewMemberAttributes = new HashMap<>();
 
     private CrewMemberStatus status;
@@ -90,14 +88,6 @@ public class CrewMember {
         crewMemberAttributes.put(Agility.class, new Agility(agility));
     }
 
-    public Nationality getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(Nationality nationality) {
-        this.nationality = nationality;
-    }
-
     public CrewMemberStatus getStatus() {
         return status;
     }
@@ -116,14 +106,6 @@ public class CrewMember {
 
     public void setHealth(float health) {
         this.health = health;
-    }
-
-    public void decreaseHealth(float dec) {
-        if (health > 0) {
-            this.health -= dec;
-        } else {
-            this.status = CrewMemberStatus.KIA;
-        }
     }
 
     public Map<Class <? extends CrewMemberAttribute>, CrewMemberAttribute> getCrewMemberAttributes() {

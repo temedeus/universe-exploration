@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class PlanetAssetProvider extends AbstractGameAssetProvider {
-    public PlanetAssetProvider(GameAssetManager gameAssetManager) {
+public class HudAssetProvider extends AbstractGameAssetProvider {
+    public HudAssetProvider(GameAssetManager gameAssetManager) {
         super(gameAssetManager);
     }
 
@@ -20,20 +20,16 @@ public class PlanetAssetProvider extends AbstractGameAssetProvider {
 
     @Override
     List<GameAsset> getGameAssetList() {
-        return Arrays.asList(PlanetAsset.values());
+        return Arrays.asList(HudAsset.values());
     }
 
-    public enum PlanetAsset implements GameAsset {
-        EARTHLIKE("images/planets/earthlike.png"),
-        GAS1("images/planets/gas1.png"),
-        GAS2("images/planets/gas2.png"),
-        TERRESTRIAL1("images/planets/terrestrial1.png"),
-        TERRESTRIAL2("images/planets/terrestrial2.png"),
-        TERRESTRIAL3("images/planets/terrestrial3.png");
+    public enum HudAsset implements GameAsset {
+        ARROW_LEFT("images/game_menu/arrow_left.png"),
+        ARROW_RIGHT("images/game_menu/arrow_right.png");
 
         private String path;
 
-        PlanetAsset(String path) {
+        HudAsset(String path) {
             this.path = path;
         }
 
