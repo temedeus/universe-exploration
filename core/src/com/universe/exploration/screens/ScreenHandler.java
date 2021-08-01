@@ -24,6 +24,7 @@ public class ScreenHandler {
     private Map<GameScreen, Supplier<Screen>> transitionMap;
 
     public ScreenHandler(UniverseExploration universeExploration) {
+        // TODO: instead of passing game itself here and there, add universal controller for things like localiser, asset manager etc.
         this.universeExploration = universeExploration;
 
         transitionMap = new HashMap<>();

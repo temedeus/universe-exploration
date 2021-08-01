@@ -11,7 +11,7 @@ import com.universe.exploration.component.FunctionalClickListener;
 
 /**
  * Button factory.
-*/
+ */
 public class ButtonFactory {
     private final Skin uiSkin = UniverseExploration.commonUIAssets.getUserInterfaceSkin();
 
@@ -36,4 +36,5 @@ public class ButtonFactory {
 
         return button;
     }
+
 }
