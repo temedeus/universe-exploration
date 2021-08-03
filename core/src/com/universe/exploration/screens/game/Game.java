@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.component.Grid;
 import com.universe.exploration.component.button.ButtonFactory;
 import com.universe.exploration.controller.PlanetController;
 import com.universe.exploration.model.ActorPosition;
@@ -23,6 +24,9 @@ import java.util.List;
 
 public class Game extends AbstractScreen {
     private PlanetController planetController;
+    private Grid grid;
+    private ImageButton leftButton;
+    private ImageButton rightButton;
 
     public Game(UniverseExploration universeExploration) {
         super(universeExploration);
@@ -36,6 +40,7 @@ public class Game extends AbstractScreen {
         actors.add(createLeftButton());
         actors.add(createRightButton());
         actors.add(createSurveyButton());
+        actors.add(createGrid());
         return actors;
     }
 
@@ -47,7 +52,7 @@ public class Game extends AbstractScreen {
     private ImageButton createLeftButton() {
         Texture left = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.ARROW_LEFT);
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(left));
-        ImageButton leftButton = new ImageButton(drawable);
+        leftButton = new ImageButton(drawable);
         leftButton.setPosition(0, GdxHelper.getScreenCenterY() - leftButton.getHeight() / 2);
         leftButton.addListener(new ClickListener() {
             @Override
@@ -61,15 +66,22 @@ public class Game extends AbstractScreen {
     private ImageButton createRightButton() {
         Texture left = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.ARROW_RIGHT);
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(left));
-        ImageButton leftButton = new ImageButton(drawable);
-        leftButton.setPosition(Gdx.graphics.getWidth() - leftButton.getWidth(), GdxHelper.getScreenCenterY() - leftButton.getHeight() / 2);
-        leftButton.addListener(new ClickListener() {
+        rightButton = new ImageButton(drawable);
+        rightButton.setPosition(Gdx.graphics.getWidth() - rightButton.getWidth(), GdxHelper.getScreenCenterY() - rightButton.getHeight() / 2);
+        rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 planetController.moveSelectedPlanetRight();
             }
         });
-        return leftButton;
+        return rightButton;
+    }
+
+    private Actor createGrid() {
+        grid = new Grid(universeExploration);
+        positionActor(grid, ActorPosition.CENTER, 0, 0);
+        grid.setVisible(false);
+        return grid;
     }
 
     private Button createSurveyButton() {
@@ -77,6 +89,16 @@ public class Game extends AbstractScreen {
         });
         surveyButton.setWidth(800);
         surveyButton.setHeight(200);
+        surveyButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        surveyButton.setVisible(false);
+                        grid.setVisible(true);
+                        leftButton.setVisible(false);
+                        rightButton.setVisible(false);
+                    }
+                });
         positionActor(surveyButton, ActorPosition.CENTER, 0, 0);
         return surveyButton;
     }
