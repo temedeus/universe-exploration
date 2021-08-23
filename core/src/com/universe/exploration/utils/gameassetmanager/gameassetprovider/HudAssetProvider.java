@@ -26,7 +26,9 @@ public class HudAssetProvider extends AbstractGameAssetProvider {
     public enum HudAsset implements GameAsset {
         ARROW_LEFT("images/game_menu/arrow_left.png"),
         ARROW_RIGHT("images/game_menu/arrow_right.png"),
-        GRID_CELL("images/grid/grid_cell.png");
+        GRID_CELL("images/grid/grid_cell.png"),
+        GRID_CELL_PRESSED("images/grid/grid_pressed.png"),
+        GRID_CELL_SELECTED("images/grid/grid_selected.png");
 
         private String path;
 
