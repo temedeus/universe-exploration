@@ -27,7 +27,8 @@ public class Game extends AbstractScreen {
     private Grid grid;
     private ImageButton leftButton;
     private ImageButton rightButton;
-
+    private Button surveyButton;
+    private Button endSurveyButton;
     public Game(UniverseExploration universeExploration) {
         super(universeExploration);
     }
@@ -40,6 +41,7 @@ public class Game extends AbstractScreen {
         actors.add(createLeftButton());
         actors.add(createRightButton());
         actors.add(createSurveyButton());
+        actors.add(createEndSurveyButton());
         actors.add(createGrid());
         return actors;
     }
@@ -85,7 +87,7 @@ public class Game extends AbstractScreen {
     }
 
     private Button createSurveyButton() {
-        Button surveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET"), (a, b, c) -> {
+        surveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET"), (a, b, c) -> {
         });
         surveyButton.setWidth(800);
         surveyButton.setHeight(200);
@@ -93,14 +95,39 @@ public class Game extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        surveyButton.setVisible(false);
-                        grid.setVisible(true);
-                        leftButton.setVisible(false);
-                        rightButton.setVisible(false);
+                        toggleSurveyMode(true);
                     }
                 });
         positionActor(surveyButton, ActorPosition.CENTER, 0, 0);
         return surveyButton;
+    }
+
+    private Button createEndSurveyButton() {
+        endSurveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET_END"), (a, b, c) -> {
+        });
+        endSurveyButton.setWidth(800);
+        endSurveyButton.setHeight(200);
+        endSurveyButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        toggleSurveyMode(false);
+                    }
+                });
+        positionActor(endSurveyButton, ActorPosition.MIDDLE_TOP, 0, 0);
+        endSurveyButton.setVisible(false);
+        return endSurveyButton;
+    }
+
+    private void toggleSurveyMode(boolean surveyMode) {
+        // Survey mode components
+        endSurveyButton.setVisible(surveyMode);
+        grid.setVisible(surveyMode);
+
+        // Non-survey mode components
+        surveyButton.setVisible(!surveyMode);
+        leftButton.setVisible(!surveyMode);
+        rightButton.setVisible(!surveyMode);
     }
 
     private List<Actor> createPlanets() {

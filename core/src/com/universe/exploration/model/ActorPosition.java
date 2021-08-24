@@ -34,7 +34,17 @@ public enum ActorPosition {
         public float calculatePositionY(float width, float height, float offsetY) {
             return Gdx.graphics.getHeight() - height + offsetY;
         }
-    }, MIDDLE_TOP, CENTER() {
+    }, MIDDLE_TOP() {
+        @Override
+        public float calculatePositionX(float width, float height, float offsetX) {
+            return Gdx.graphics.getWidth() / 2 - width / 2 - offsetX;
+        }
+
+        @Override
+        public float calculatePositionY(float width, float height, float offsetY) {
+            return Gdx.graphics.getHeight() - height + offsetY;
+        }
+    }, CENTER() {
         @Override
         public float calculatePositionX(float width, float height, float offsetX) {
             return Gdx.graphics.getWidth() / 2 - width / 2 + offsetX;
