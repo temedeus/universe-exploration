@@ -1,10 +1,11 @@
-package com.universe.exploration.controller;
+package com.universe.exploration.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.starsystem.Planet;
+import com.universe.exploration.controller.ControllerBase;
 import com.universe.exploration.model.starsystem.StarSystem;
 import com.universe.exploration.utils.GdxHelper;
 

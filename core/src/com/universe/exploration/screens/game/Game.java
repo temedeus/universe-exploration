@@ -3,32 +3,37 @@ package com.universe.exploration.screens.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.component.Grid;
+import com.universe.exploration.component.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
-import com.universe.exploration.controller.PlanetController;
 import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.screens.AbstractScreen;
 import com.universe.exploration.utils.GdxHelper;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
+import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends AbstractScreen {
     private PlanetController planetController;
-    private Grid grid;
+    private BoardGrid boardGrid;
     private ImageButton leftButton;
     private ImageButton rightButton;
     private Button surveyButton;
     private Button endSurveyButton;
+    private Image astronautActor;
+
     public Game(UniverseExploration universeExploration) {
         super(universeExploration);
     }
@@ -43,6 +48,8 @@ public class Game extends AbstractScreen {
         actors.add(createSurveyButton());
         actors.add(createEndSurveyButton());
         actors.add(createGrid());
+        actors.add(createAstronaut());
+
         return actors;
     }
 
@@ -79,11 +86,19 @@ public class Game extends AbstractScreen {
         return rightButton;
     }
 
+    private Actor createAstronaut() {
+        Texture astronautTexture = universeExploration.getAssetManager().getAsset(PlanetAssetProvider.PlanetAsset.ASTRONAUT);
+        astronautActor = new Image(astronautTexture);
+        astronautActor.setVisible(false);
+        astronautActor.setTouchable(Touchable.disabled);
+        return astronautActor;
+    }
+
     private Actor createGrid() {
-        grid = new Grid(universeExploration);
-        positionActor(grid, ActorPosition.CENTER, 0, 0);
-        grid.setVisible(false);
-        return grid;
+        boardGrid = new BoardGrid(universeExploration);
+        positionActor(boardGrid, ActorPosition.CENTER, 0, 30);
+        boardGrid.setVisible(false);
+        return boardGrid;
     }
 
     private Button createSurveyButton() {
@@ -105,8 +120,8 @@ public class Game extends AbstractScreen {
     private Button createEndSurveyButton() {
         endSurveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET_END"), (a, b, c) -> {
         });
-        endSurveyButton.setWidth(800);
-        endSurveyButton.setHeight(200);
+        endSurveyButton.setWidth(600);
+        endSurveyButton.setHeight(160);
         endSurveyButton.addListener(
                 new ClickListener() {
                     @Override
@@ -122,12 +137,23 @@ public class Game extends AbstractScreen {
     private void toggleSurveyMode(boolean surveyMode) {
         // Survey mode components
         endSurveyButton.setVisible(surveyMode);
-        grid.setVisible(surveyMode);
+        boardGrid.setVisible(surveyMode);
+        addAsyncAction(() -> {
+            Thread.sleep(2);
+            astronautActor.setVisible(surveyMode);
+            if (surveyMode) {
+                Vector2 vector = boardGrid.getCellPosition(0, 0);
+                astronautActor.setPosition(vector.x, vector.y + 15);
+            }
+
+            return true;
+        });
 
         // Non-survey mode components
         surveyButton.setVisible(!surveyMode);
         leftButton.setVisible(!surveyMode);
         rightButton.setVisible(!surveyMode);
+
     }
 
     private List<Actor> createPlanets() {

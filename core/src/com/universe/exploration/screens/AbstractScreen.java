@@ -12,13 +12,20 @@ import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.utils.GdxHelper;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public abstract class AbstractScreen implements Screen {
     protected Stage screenStage;
 
     protected UniverseExploration universeExploration;
 
+    private ExecutorService executorService;
+
     public AbstractScreen(final UniverseExploration universeExploration) {
+        executorService = Executors.newSingleThreadExecutor();
         this.universeExploration = universeExploration;
         initialiseControllers(universeExploration);
         screenStage = new Stage(new ScreenViewport());
@@ -26,6 +33,11 @@ public abstract class AbstractScreen implements Screen {
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(screenStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+
+    protected <T>Future addAsyncAction(Callable<T> task) {
+        return executorService.submit(task);
     }
 
     protected void initialiseControllers(UniverseExploration universeExploration) {

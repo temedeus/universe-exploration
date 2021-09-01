@@ -2,6 +2,7 @@ package com.universe.exploration.component;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -14,11 +15,12 @@ import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAsse
 import java.util.HashMap;
 import java.util.Map;
 
-public class Grid extends Table {
+public class BoardGrid extends Table {
     private Map<Integer, Map<Integer, ImageButton>> grid;
 
     private SelectedCell selectedCell;
-    public Grid(UniverseExploration universeExploration) {
+
+    public BoardGrid(UniverseExploration universeExploration) {
         Texture left = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL);
         Texture pressed = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL_PRESSED);
         Texture selected = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL_SELECTED);
@@ -28,9 +30,9 @@ public class Grid extends Table {
         grid = new HashMap<>();
         selectedCell = new SelectedCell();
 
-        for (int cx = 0; cx < 3; cx++) {
+        for (int cx = 0; cx < 6; cx++) {
             Map<Integer, ImageButton> imageButtons = new HashMap<>();
-            for (int cy = 0; cy < 5; cy++) {
+            for (int cy = 0; cy < 10; cy++) {
                 ImageButton button = new ImageButton(upDrawable, pressedDrawable, selectedDrawable);
                 imageButtons.put(cy, button);
                 int finalCx = cx;
@@ -39,7 +41,7 @@ public class Grid extends Table {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         button.setChecked(true);
-                        if(selectedCell.isSelected()) {
+                        if (selectedCell.isSelected()) {
                             selectedCell.deselect();
                         }
                         selectedCell.setSelected(finalCx, finalCy);
@@ -53,12 +55,16 @@ public class Grid extends Table {
         }
     }
 
+    public Vector2 getCellPosition(int x, int y) {
+        return grid.get(x).get(y).localToParentCoordinates(new Vector2(this.getX(), this.getY()));
+    }
+
     /**
      * Reference to selected cell.
      */
     private class SelectedCell {
-        private Integer coordinateX;
-        private Integer coordinateY;
+        Integer coordinateX;
+        Integer coordinateY;
         private Integer NO_SELECTED_VALUE = -1;
 
         SelectedCell() {
