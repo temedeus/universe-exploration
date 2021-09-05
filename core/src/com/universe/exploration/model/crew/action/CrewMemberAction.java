@@ -9,6 +9,46 @@ public class CrewMemberAction {
 
     private boolean crossReach;
 
+    public int getVerticalReach() {
+        return verticalReach;
+    }
+
+    public void setVerticalReach(int verticalReach) {
+        this.verticalReach = verticalReach;
+    }
+
+    public int getHorizontalReach() {
+        return horizontalReach;
+    }
+
+    public void setHorizontalReach(int horizontalReach) {
+        this.horizontalReach = horizontalReach;
+    }
+
+    public boolean isCrossReach() {
+        return crossReach;
+    }
+
+    public void setCrossReach(boolean crossReach) {
+        this.crossReach = crossReach;
+    }
+
+    public boolean isFillReach() {
+        return fillReach;
+    }
+
+    public void setFillReach(boolean fillReach) {
+        this.fillReach = fillReach;
+    }
+
+    public CrewMemberActionType getCrewMemberActionType() {
+        return crewMemberActionType;
+    }
+
+    public void setCrewMemberActionType(CrewMemberActionType crewMemberActionType) {
+        this.crewMemberActionType = crewMemberActionType;
+    }
+
     private boolean fillReach;
 
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
+import com.universe.exploration.listener.UEEvent;
+import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.screens.AbstractScreen;
 import com.universe.exploration.utils.GdxHelper;
@@ -23,10 +26,13 @@ import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAsse
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 import java.util.ArrayList;
+import java.util.EventObject;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class Game extends AbstractScreen {
     private PlanetController planetController;
+    private GameController gameController;
     private BoardGrid boardGrid;
     private ImageButton leftButton;
     private ImageButton rightButton;
@@ -56,6 +62,7 @@ public class Game extends AbstractScreen {
     @Override
     protected void initialiseControllers(UniverseExploration universeExploration) {
         planetController = new PlanetController(universeExploration);
+        gameController = new GameController(universeExploration);
     }
 
     private ImageButton createLeftButton() {

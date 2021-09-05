@@ -10,21 +10,27 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
+import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
+import java.util.function.Supplier;
 
 public class BoardGrid extends Table {
     private Map<Integer, Map<Integer, ImageButton>> grid;
 
     private SelectedCell selectedCell;
 
+    private Supplier<List<Vector>> coordinatesToSelect;
+
     public BoardGrid(UniverseExploration universeExploration) {
-        Texture left = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL);
+        Texture up = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL);
         Texture pressed = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL_PRESSED);
         Texture selected = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL_SELECTED);
-        Drawable upDrawable = new TextureRegionDrawable(new TextureRegion(left));
+        Drawable upDrawable = new TextureRegionDrawable(new TextureRegion(up));
         Drawable pressedDrawable = new TextureRegionDrawable(new TextureRegion(pressed));
         Drawable selectedDrawable = new TextureRegionDrawable(new TextureRegion(selected));
         grid = new HashMap<>();
@@ -33,7 +39,7 @@ public class BoardGrid extends Table {
         for (int cx = 0; cx < 6; cx++) {
             Map<Integer, ImageButton> imageButtons = new HashMap<>();
             for (int cy = 0; cy < 10; cy++) {
-                ImageButton button = new ImageButton(upDrawable, pressedDrawable, selectedDrawable);
+                ImageButton button = new ImageButton(upDrawable, pressedDrawable, null);
                 imageButtons.put(cy, button);
                 int finalCx = cx;
                 int finalCy = cy;
@@ -43,8 +49,11 @@ public class BoardGrid extends Table {
                         button.setChecked(true);
                         if (selectedCell.isSelected()) {
                             selectedCell.deselect();
+                            button.getStyle().up = upDrawable;
+                        } else {
+                            selectedCell.setSelected(finalCx, finalCy);
+                            button.getStyle().up = selectedDrawable;
                         }
-                        selectedCell.setSelected(finalCx, finalCy);
                     }
                 });
                 button.getColor().a = 0.3f;
