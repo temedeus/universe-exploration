@@ -12,16 +12,16 @@ public class Soldier extends GameCharacter {
     @Override
     public CrewMemberAction setupActions() {
         talkAction = new CrewMemberAction.Builder()
-                .verticalReach(3)
-                .horizontalReach(3)
+                .verticalReach(2)
+                .horizontalReach(2)
                 .crewMemberActionType(CrewMemberAction.CrewMemberActionType.TALK)
                 .fillReach(false)
                 .crossReach(false)
                 .build();
 
-        talkAction = new CrewMemberAction.Builder()
-                .verticalReach(3)
-                .horizontalReach(3)
+        moveAction = new CrewMemberAction.Builder()
+                .verticalReach(2)
+                .horizontalReach(2)
                 .crewMemberActionType(CrewMemberAction.CrewMemberActionType.MOVE)
                 .fillReach(false)
                 .crossReach(false)

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -17,8 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
-import com.universe.exploration.listener.UEEvent;
-import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.screens.AbstractScreen;
 import com.universe.exploration.utils.GdxHelper;
@@ -26,9 +23,7 @@ import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAsse
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 import java.util.ArrayList;
-import java.util.EventObject;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class Game extends AbstractScreen {
     private PlanetController planetController;
@@ -102,7 +97,7 @@ public class Game extends AbstractScreen {
     }
 
     private Actor createGrid() {
-        boardGrid = new BoardGrid(universeExploration);
+        boardGrid = new BoardGrid(universeExploration, this.gameController);
         positionActor(boardGrid, ActorPosition.CENTER, 0, 30);
         boardGrid.setVisible(false);
         return boardGrid;
@@ -149,7 +144,7 @@ public class Game extends AbstractScreen {
             Thread.sleep(2);
             astronautActor.setVisible(surveyMode);
             if (surveyMode) {
-                Vector2 vector = boardGrid.getCellPosition(0, 0);
+                Vector2 vector = boardGrid.getCellPosition(5, 3);
                 astronautActor.setPosition(vector.x, vector.y + 15);
             }
 

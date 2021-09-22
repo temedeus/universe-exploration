@@ -10,23 +10,27 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.listener.UEListener;
+import com.universe.exploration.model.Coordinate;
+import com.universe.exploration.screens.game.GameController;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
-import java.util.function.Supplier;
 
 public class BoardGrid extends Table {
     private Map<Integer, Map<Integer, ImageButton>> grid;
 
     private SelectedCell selectedCell;
 
-    private Supplier<List<Vector>> coordinatesToSelect;
+    private GameController gameController;
 
-    public BoardGrid(UniverseExploration universeExploration) {
+    List<Coordinate> paintedCoordinates;
+
+    public BoardGrid(UniverseExploration universeExploration, GameController gameController) {
+        this.gameController = gameController;
+        this.paintedCoordinates = new ArrayList<>();
         Texture up = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL);
         Texture pressed = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL_PRESSED);
         Texture selected = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.GRID_CELL_SELECTED);
@@ -36,23 +40,31 @@ public class BoardGrid extends Table {
         grid = new HashMap<>();
         selectedCell = new SelectedCell();
 
-        for (int cx = 0; cx < 6; cx++) {
+        for (int cy = 0; cy < 6; cy++) {
             Map<Integer, ImageButton> imageButtons = new HashMap<>();
-            for (int cy = 0; cy < 10; cy++) {
-                ImageButton button = new ImageButton(upDrawable, pressedDrawable, null);
-                imageButtons.put(cy, button);
+            for (int cx = 0; cx < 10; cx++) {
+                ImageButton button = new ImageButton(upDrawable, pressedDrawable, selectedDrawable);
+                imageButtons.put(cx, button);
                 int finalCx = cx;
                 int finalCy = cy;
                 button.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        button.setChecked(true);
                         if (selectedCell.isSelected()) {
                             selectedCell.deselect();
-                            button.getStyle().up = upDrawable;
+                            if(!paintedCoordinates.isEmpty()) {
+                                paintedCoordinates.forEach(coordinate -> grid.get(coordinate.getY()).get(coordinate.getX()).setChecked(false));
+                                paintedCoordinates = new ArrayList<>();
+                            }
+                            button.setChecked(false);
                         } else {
-                            selectedCell.setSelected(finalCx, finalCy);
-                            button.getStyle().up = selectedDrawable;
+                            paintedCoordinates = gameController.getAreaToPaint(new Coordinate(finalCx, finalCy));
+                            if(!paintedCoordinates.isEmpty()) {
+                                selectedCell.setSelected(finalCx, finalCy);
+                                paintedCoordinates.forEach(coordinate -> grid.get(coordinate.getY()).get(coordinate.getX()).setChecked(true));
+                            } else {
+                                button.setChecked(false);
+                            }
                         }
                     }
                 });
@@ -60,12 +72,12 @@ public class BoardGrid extends Table {
                 this.add(button.pad(10));
             }
             this.row();
-            grid.put(cx, imageButtons);
+            grid.put(cy, imageButtons);
         }
     }
 
     public Vector2 getCellPosition(int x, int y) {
-        return grid.get(x).get(y).localToParentCoordinates(new Vector2(this.getX(), this.getY()));
+        return grid.get(y).get(x).localToParentCoordinates(new Vector2(this.getX(), this.getY()));
     }
 
     /**
@@ -87,7 +99,7 @@ public class BoardGrid extends Table {
         }
 
         void deselect() {
-            grid.get(coordinateX).get(coordinateY).setChecked(false);
+            grid.get(coordinateY).get(coordinateX).setChecked(false);
             coordinateX = NO_SELECTED_VALUE;
             coordinateY = NO_SELECTED_VALUE;
         }

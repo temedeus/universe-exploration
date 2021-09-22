@@ -3,18 +3,19 @@ package com.universe.exploration.model.crew;
 import com.universe.exploration.model.crew.action.CrewMemberAction;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
-public abstract class GameCharacter {
+public abstract class AbstractGameCharacter {
     private boolean selected;
 
     private int coordinateX;
     private int coordinateY;
 
-    abstract  PlanetAssetProvider.PlanetAsset getAsset();
-
 
     protected CrewMemberAction talkAction;
 
     protected CrewMemberAction moveAction;
+
+    abstract  PlanetAssetProvider.PlanetAsset getAsset();
+
 
     public CrewMemberAction getTalkAction() {
         return  talkAction;
