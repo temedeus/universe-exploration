@@ -9,15 +9,16 @@ public abstract class GameCharacter {
     private int coordinateX;
     private int coordinateY;
 
-    abstract  PlanetAssetProvider.PlanetAsset getAsset();
-
+    abstract PlanetAssetProvider.PlanetAsset getAsset();
 
     protected CrewMemberAction talkAction;
 
     protected CrewMemberAction moveAction;
 
+    protected CrewMemberAction selectedAction;
+
     public CrewMemberAction getTalkAction() {
-        return  talkAction;
+        return talkAction;
     }
 
     public CrewMemberAction getMoveAction() {
@@ -25,6 +26,14 @@ public abstract class GameCharacter {
     }
 
     abstract CrewMemberAction setupActions();
+
+    public CrewMemberAction getSelectedAction() {
+        return moveAction;
+    }
+
+    public void setSelectedAction(CrewMemberAction selectedAction) {
+        this.selectedAction = selectedAction;
+    }
 
     public boolean isSelected() {
         return selected;
@@ -43,12 +52,8 @@ public abstract class GameCharacter {
         this.selected = selected;
     }
 
-    public void setCoordinateX(int coordinateX) {
+    public void setCoordinates(int coordinateX, int coordinateY) {
         this.coordinateX = coordinateX;
-    }
-
-    public void setCoordinateY(int coordinateY) {
         this.coordinateY = coordinateY;
     }
-
 }

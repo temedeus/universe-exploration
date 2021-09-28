@@ -1,13 +1,13 @@
 package com.universe.exploration.model.crew.action;
 
-import com.universe.exploration.model.starsystem.PlanetComponent;
-
 public class CrewMemberAction {
     private int verticalReach;
 
     private int horizontalReach;
 
     private boolean crossReach;
+
+    private CrewMemberActionType crewMemberActionType;
 
     public int getVerticalReach() {
         return verticalReach;
@@ -51,19 +51,12 @@ public class CrewMemberAction {
 
     private boolean fillReach;
 
-
-    private CrewMemberActionType crewMemberActionType;
-
     private CrewMemberAction(Builder builder) {
         verticalReach = builder.verticalReach;
         horizontalReach = builder.horizontalReach;
         crossReach = builder.crossReach;
         fillReach = builder.fillReach;
         crewMemberActionType = builder.crewMemberActionType;
-    }
-
-    public enum CrewMemberActionType {
-        ATTACK, TALK, MOVE;
     }
 
     public static final class Builder {

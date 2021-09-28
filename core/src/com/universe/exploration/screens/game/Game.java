@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -17,13 +18,17 @@ import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
 import com.universe.exploration.model.ActorPosition;
+import com.universe.exploration.model.Coordinate;
+import com.universe.exploration.model.crew.GameCharacter;
 import com.universe.exploration.screens.AbstractScreen;
 import com.universe.exploration.utils.GdxHelper;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game extends AbstractScreen {
     private PlanetController planetController;
@@ -33,7 +38,8 @@ public class Game extends AbstractScreen {
     private ImageButton rightButton;
     private Button surveyButton;
     private Button endSurveyButton;
-    private Image astronautActor;
+
+    private Map<GameCharacter, Image> gameCharacterImageMap;
 
     public Game(UniverseExploration universeExploration) {
         super(universeExploration);
@@ -43,13 +49,15 @@ public class Game extends AbstractScreen {
     protected List<Actor> addActors() {
         List<Actor> actors = new ArrayList();
         List<Actor> planets = createPlanets();
+        gameCharacterImageMap = new HashMap<>();
+
         actors.addAll(planets);
         actors.add(createLeftButton());
         actors.add(createRightButton());
         actors.add(createSurveyButton());
         actors.add(createEndSurveyButton());
         actors.add(createGrid());
-        actors.add(createAstronaut());
+        gameController.getPlayerGameCharacters().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
 
         return actors;
     }
@@ -57,7 +65,7 @@ public class Game extends AbstractScreen {
     @Override
     protected void initialiseControllers(UniverseExploration universeExploration) {
         planetController = new PlanetController(universeExploration);
-        gameController = new GameController(universeExploration);
+        gameController = new GameController(universeExploration, this);
     }
 
     private ImageButton createLeftButton() {
@@ -88,11 +96,12 @@ public class Game extends AbstractScreen {
         return rightButton;
     }
 
-    private Actor createAstronaut() {
+    private Actor createAstronaut(GameCharacter gameCharacter) {
         Texture astronautTexture = universeExploration.getAssetManager().getAsset(PlanetAssetProvider.PlanetAsset.ASTRONAUT);
-        astronautActor = new Image(astronautTexture);
+        Image astronautActor = new Image(astronautTexture);
         astronautActor.setVisible(false);
         astronautActor.setTouchable(Touchable.disabled);
+        gameCharacterImageMap.put(gameCharacter, astronautActor);
         return astronautActor;
     }
 
@@ -136,17 +145,33 @@ public class Game extends AbstractScreen {
         return endSurveyButton;
     }
 
+    public void createMoveToActionOnCoordinates(GameCharacter gameCharacter, int gridX, int gridY) {
+        Vector2 vector = boardGrid.getCellPosition(gridX, gridY);
+        MoveToAction moveAction = new MoveToAction();
+        moveAction.setDuration(20);
+        moveAction.setPosition(vector.x, vector.y + 15);
+        gameCharacterImageMap.get(gameCharacter).addAction(moveAction);
+    }
+
+    private void positionActorToGridCoordinates(Coordinate coordinate, Actor actor) {
+        Vector2 vector = boardGrid.getCellPosition(coordinate.getX(), coordinate.getY());
+        actor.setPosition(vector.x, vector.y + 15);
+    }
+
     private void toggleSurveyMode(boolean surveyMode) {
         // Survey mode components
         endSurveyButton.setVisible(surveyMode);
         boardGrid.setVisible(surveyMode);
         addAsyncAction(() -> {
-            Thread.sleep(2);
-            astronautActor.setVisible(surveyMode);
-            if (surveyMode) {
-                Vector2 vector = boardGrid.getCellPosition(5, 3);
-                astronautActor.setPosition(vector.x, vector.y + 15);
-            }
+            Thread.sleep(5);
+            gameCharacterImageMap.entrySet().forEach((entry) -> {
+                entry.getValue().setVisible(surveyMode);
+                if (surveyMode) {
+                    Coordinate coordinate = new Coordinate(entry.getKey().getCoordinateX(), entry.getKey().getCoordinateY());
+                    positionActorToGridCoordinates(coordinate, entry.getValue());
+                }
+            });
+
 
             return true;
         });
@@ -156,6 +181,10 @@ public class Game extends AbstractScreen {
         leftButton.setVisible(!surveyMode);
         rightButton.setVisible(!surveyMode);
 
+    }
+
+    public Map<GameCharacter, Image> getGameCharacterImageMap() {
+        return gameCharacterImageMap;
     }
 
     private List<Actor> createPlanets() {

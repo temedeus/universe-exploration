@@ -1,6 +1,7 @@
 package com.universe.exploration.model.crew;
 
 import com.universe.exploration.model.crew.action.CrewMemberAction;
+import com.universe.exploration.model.crew.action.CrewMemberActionType;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 public class Soldier extends GameCharacter {
@@ -14,7 +15,7 @@ public class Soldier extends GameCharacter {
         talkAction = new CrewMemberAction.Builder()
                 .verticalReach(2)
                 .horizontalReach(2)
-                .crewMemberActionType(CrewMemberAction.CrewMemberActionType.TALK)
+                .crewMemberActionType(CrewMemberActionType.TALK)
                 .fillReach(false)
                 .crossReach(false)
                 .build();
@@ -22,10 +23,13 @@ public class Soldier extends GameCharacter {
         moveAction = new CrewMemberAction.Builder()
                 .verticalReach(2)
                 .horizontalReach(2)
-                .crewMemberActionType(CrewMemberAction.CrewMemberActionType.MOVE)
+                .crewMemberActionType(CrewMemberActionType.WALK)
                 .fillReach(false)
                 .crossReach(false)
                 .build();
+
+        selectedAction = moveAction;
+
         return null;
     }
 }
