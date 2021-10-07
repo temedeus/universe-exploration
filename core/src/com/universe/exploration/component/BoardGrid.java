@@ -74,6 +74,7 @@ public class BoardGrid extends Table {
             row();
             grid.put(cy, imageButtons);
         }
+        pack();
     }
 
     private ImageButton createGridButton(GameAssetManager gameAssetManager) {

@@ -32,7 +32,7 @@ public class GameController extends ControllerBase {
         Soldier soldier = new Soldier();
         soldier.setupActions();
         soldier.setSelected(false);
-        soldier.setCoordinates(5, 3);
+        soldier.setCoordinates(0, 0);
         playerGameCharacters.add(soldier);
     }
 

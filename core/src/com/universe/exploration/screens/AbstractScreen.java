@@ -50,6 +50,13 @@ public abstract class AbstractScreen implements Screen {
         actor.setPosition(actorPosition.calculatePositionX(width, height, offsetX), actorPosition.calculatePositionY(width, height, offsetY));
     }
 
+    protected void anchorOnBottomOfAnotherActor(Actor actor, Actor relativeTo, float offsetX, float offsetY) {
+        float width = actor.getWidth();
+        float height = actor.getHeight();
+        final int MARGIN_FROM_PARENT = 10;
+        actor.setPosition(relativeTo.getX() + relativeTo.getWidth() / 2 - width / 2 + offsetX, relativeTo.getY() - height - MARGIN_FROM_PARENT - offsetY);
+    }
+
     protected String getLocale(String key) {
         return universeExploration.getLocaliser().get(key);
     }

@@ -38,6 +38,9 @@ public class Game extends AbstractScreen {
     private ImageButton rightButton;
     private Button surveyButton;
     private Button endSurveyButton;
+    private Button walkModeButton;
+    private Button talkModeButton;
+    private Button attackModeButton;
 
     private Map<GameCharacter, Image> gameCharacterImageMap;
 
@@ -57,6 +60,10 @@ public class Game extends AbstractScreen {
         actors.add(createSurveyButton());
         actors.add(createEndSurveyButton());
         actors.add(createGrid());
+        actors.add(attackModeButton());
+        actors.add(walkModeButton());
+        actors.add(talkModeButton());
+
         gameController.getPlayerGameCharacters().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
 
         return actors;
@@ -128,11 +135,63 @@ public class Game extends AbstractScreen {
         return surveyButton;
     }
 
+
+    private Button walkModeButton() {
+        walkModeButton = new ButtonFactory().createTextButton(getLocale("BTN_WALK_MODE"), (a, b, c) -> {
+        });
+        walkModeButton.setWidth(400);
+        walkModeButton.setHeight(100);
+        walkModeButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        toggleSurveyMode(true);
+                    }
+                });
+        anchorOnBottomOfAnotherActor(walkModeButton, boardGrid, 0, 0);
+        walkModeButton.setVisible(false);
+        return walkModeButton;
+    }
+
+    private Button talkModeButton() {
+        talkModeButton = new ButtonFactory().createTextButton(getLocale("BTN_TALK_MODE"), (a, b, c) -> {
+        });
+        talkModeButton.setWidth(400);
+        talkModeButton.setHeight(100);
+        talkModeButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        toggleSurveyMode(true);
+                    }
+                });
+        anchorOnBottomOfAnotherActor(talkModeButton, boardGrid, 420, 0);
+        talkModeButton.setVisible(false);
+        return talkModeButton;
+    }
+
+    private Button attackModeButton() {
+        attackModeButton = new ButtonFactory().createTextButton(getLocale("BTN_ATTACK_MODE"), (a, b, c) -> {
+        });
+        attackModeButton.setWidth(400);
+        attackModeButton.setHeight(100);
+        attackModeButton.addListener(
+                new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        toggleSurveyMode(true);
+                    }
+                });
+        anchorOnBottomOfAnotherActor(attackModeButton, boardGrid, -420, 0);
+        attackModeButton.setVisible(false);
+        return attackModeButton;
+    }
+
     private Button createEndSurveyButton() {
         endSurveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET_END"), (a, b, c) -> {
         });
         endSurveyButton.setWidth(600);
-        endSurveyButton.setHeight(160);
+        endSurveyButton.setHeight(120);
         endSurveyButton.addListener(
                 new ClickListener() {
                     @Override
@@ -161,6 +220,9 @@ public class Game extends AbstractScreen {
     private void toggleSurveyMode(boolean surveyMode) {
         // Survey mode components
         endSurveyButton.setVisible(surveyMode);
+        walkModeButton.setVisible(surveyMode);
+        talkModeButton.setVisible(surveyMode);
+        attackModeButton.setVisible(surveyMode);
         boardGrid.setVisible(surveyMode);
         addAsyncAction(() -> {
             Thread.sleep(5);
@@ -171,8 +233,6 @@ public class Game extends AbstractScreen {
                     positionActorToGridCoordinates(coordinate, entry.getValue());
                 }
             });
-
-
             return true;
         });
 
@@ -180,7 +240,6 @@ public class Game extends AbstractScreen {
         surveyButton.setVisible(!surveyMode);
         leftButton.setVisible(!surveyMode);
         rightButton.setVisible(!surveyMode);
-
     }
 
     public Map<GameCharacter, Image> getGameCharacterImageMap() {
