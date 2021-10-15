@@ -1,7 +1,7 @@
 package com.universe.exploration.model.crew;
 
 import com.universe.exploration.model.crew.action.CrewMemberAction;
-import com.universe.exploration.model.crew.action.CrewMemberActionType;
+import com.universe.exploration.model.crew.action.CharacterActionMode;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 public class Scientist extends GameCharacter {
@@ -15,15 +15,23 @@ public class Scientist extends GameCharacter {
         talkAction = new CrewMemberAction.Builder()
                 .verticalReach(3)
                 .horizontalReach(3)
-                .crewMemberActionType(CrewMemberActionType.TALK)
+                .crewMemberActionType(CharacterActionMode.TALK)
                 .fillReach(false)
                 .crossReach(false)
                 .build();
 
-        talkAction = new CrewMemberAction.Builder()
+        moveAction = new CrewMemberAction.Builder()
                 .verticalReach(3)
                 .horizontalReach(3)
-                .crewMemberActionType(CrewMemberActionType.WALK)
+                .crewMemberActionType(CharacterActionMode.MOVE)
+                .fillReach(false)
+                .crossReach(false)
+                .build();
+
+        attackAction = new CrewMemberAction.Builder()
+                .verticalReach(2)
+                .horizontalReach(2)
+                .crewMemberActionType(CharacterActionMode.ATTACK)
                 .fillReach(false)
                 .crossReach(false)
                 .build();

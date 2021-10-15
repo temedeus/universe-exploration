@@ -1,6 +1,7 @@
 package com.universe.exploration.model.crew;
 
 import com.universe.exploration.model.crew.action.CrewMemberAction;
+import com.universe.exploration.model.crew.action.CharacterActionMode;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 public abstract class GameCharacter {
@@ -15,24 +16,21 @@ public abstract class GameCharacter {
 
     protected CrewMemberAction moveAction;
 
-    protected CrewMemberAction selectedAction;
-
-    public CrewMemberAction getTalkAction() {
-        return talkAction;
-    }
-
-    public CrewMemberAction getMoveAction() {
-        return moveAction;
-    }
+    protected CrewMemberAction attackAction;
 
     abstract CrewMemberAction setupActions();
 
-    public CrewMemberAction getSelectedAction() {
-        return moveAction;
-    }
+    public CrewMemberAction getSelectedAction(CharacterActionMode characterActionMode) {
+        switch (characterActionMode) {
+            case MOVE:
+                return  moveAction;
+            case TALK:
+                return talkAction;
+            case ATTACK:
+                return attackAction;
+        }
 
-    public void setSelectedAction(CrewMemberAction selectedAction) {
-        this.selectedAction = selectedAction;
+        return  null;
     }
 
     public boolean isSelected() {

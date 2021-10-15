@@ -7,7 +7,7 @@ import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.crew.GameCharacter;
 import com.universe.exploration.model.crew.Soldier;
 import com.universe.exploration.model.crew.action.CrewMemberAction;
-import com.universe.exploration.model.crew.action.CrewMemberActionType;
+import com.universe.exploration.model.crew.action.CharacterActionMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ import java.util.Optional;
 public class GameController extends ControllerBase {
     private static final int BOARD_SIZE_X = 10;
     private static final int BOARD_SIZE_Y = 6;
-
     private List<GameCharacter> playerGameCharacters;
     private Optional<GameCharacter> selectedCharacter;
+    private CharacterActionMode characterActionMode;
 
     private Game game;
 
@@ -27,6 +27,7 @@ public class GameController extends ControllerBase {
     public GameController(UniverseExploration universeExploration, Game game) {
         super(universeExploration);
         this.game = game;
+        characterActionMode = CharacterActionMode.MOVE;
         selectedCharacter = Optional.empty();
         playerGameCharacters = new ArrayList<>();
         Soldier soldier = new Soldier();
@@ -43,7 +44,7 @@ public class GameController extends ControllerBase {
                 return;
             }
 
-            if (character.getSelectedAction().getCrewMemberActionType() == CrewMemberActionType.WALK) {
+            if (characterActionMode == CharacterActionMode.MOVE) {
                 character.setCoordinates(coordinateClicked.getX(), (coordinateClicked.getY()));
                 game.createMoveToActionOnCoordinates(character, coordinateClicked.getX(), coordinateClicked.getY());
             }
@@ -58,7 +59,7 @@ public class GameController extends ControllerBase {
 
         if (gameCharacter.isPresent()) {
             selectedCharacter = gameCharacter;
-            CrewMemberAction moveAction = gameCharacter.get().getSelectedAction();
+            CrewMemberAction moveAction = gameCharacter.get().getSelectedAction(characterActionMode);
             int verticalReach = moveAction.getVerticalReach();
             int horizontalReach = moveAction.getHorizontalReach();
 
@@ -81,6 +82,9 @@ public class GameController extends ControllerBase {
         return new ArrayList<>();
     }
 
+    public void setSelectedAction(CharacterActionMode characterActionMode) {
+        this.characterActionMode = characterActionMode;
+    }
 
     public void setActionTriggeredListener(UEListener actionTriggeredListener) {
         this.actionTriggeredListener = actionTriggeredListener;

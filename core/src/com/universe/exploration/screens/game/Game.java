@@ -20,6 +20,7 @@ import com.universe.exploration.component.button.ButtonFactory;
 import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.crew.GameCharacter;
+import com.universe.exploration.model.crew.action.CharacterActionMode;
 import com.universe.exploration.screens.AbstractScreen;
 import com.universe.exploration.utils.GdxHelper;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
@@ -145,7 +146,7 @@ public class Game extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        toggleSurveyMode(true);
+                        gameController.setSelectedAction(CharacterActionMode.MOVE);
                     }
                 });
         anchorOnBottomOfAnotherActor(walkModeButton, boardGrid, 0, 0);
@@ -162,7 +163,7 @@ public class Game extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        toggleSurveyMode(true);
+                        gameController.setSelectedAction(CharacterActionMode.TALK);
                     }
                 });
         anchorOnBottomOfAnotherActor(talkModeButton, boardGrid, 420, 0);
@@ -179,7 +180,7 @@ public class Game extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        toggleSurveyMode(true);
+                        gameController.setSelectedAction(CharacterActionMode.ATTACK);
                     }
                 });
         anchorOnBottomOfAnotherActor(attackModeButton, boardGrid, -420, 0);

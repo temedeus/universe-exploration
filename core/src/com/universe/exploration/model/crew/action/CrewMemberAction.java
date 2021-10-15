@@ -7,7 +7,7 @@ public class CrewMemberAction {
 
     private boolean crossReach;
 
-    private CrewMemberActionType crewMemberActionType;
+    private CharacterActionMode characterActionMode;
 
     public int getVerticalReach() {
         return verticalReach;
@@ -41,12 +41,12 @@ public class CrewMemberAction {
         this.fillReach = fillReach;
     }
 
-    public CrewMemberActionType getCrewMemberActionType() {
-        return crewMemberActionType;
+    public CharacterActionMode getCrewMemberActionType() {
+        return characterActionMode;
     }
 
-    public void setCrewMemberActionType(CrewMemberActionType crewMemberActionType) {
-        this.crewMemberActionType = crewMemberActionType;
+    public void setCrewMemberActionType(CharacterActionMode characterActionMode) {
+        this.characterActionMode = characterActionMode;
     }
 
     private boolean fillReach;
@@ -56,7 +56,7 @@ public class CrewMemberAction {
         horizontalReach = builder.horizontalReach;
         crossReach = builder.crossReach;
         fillReach = builder.fillReach;
-        crewMemberActionType = builder.crewMemberActionType;
+        characterActionMode = builder.characterActionMode;
     }
 
     public static final class Builder {
@@ -64,7 +64,7 @@ public class CrewMemberAction {
         private int horizontalReach;
         private boolean crossReach;
         private boolean fillReach;
-        private CrewMemberActionType crewMemberActionType;
+        private CharacterActionMode characterActionMode;
 
         public Builder() {
         }
@@ -89,8 +89,8 @@ public class CrewMemberAction {
             return this;
         }
 
-        public Builder crewMemberActionType(CrewMemberActionType val) {
-            crewMemberActionType = val;
+        public Builder crewMemberActionType(CharacterActionMode val) {
+            characterActionMode = val;
             return this;
         }
 
