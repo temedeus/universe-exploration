@@ -106,6 +106,7 @@ public class Game extends AbstractScreen {
 
     private Actor createAstronaut(GameCharacter gameCharacter) {
         Texture astronautTexture = universeExploration.getAssetManager().getAsset(PlanetAssetProvider.PlanetAsset.ASTRONAUT);
+
         Image astronautActor = new Image(astronautTexture);
         astronautActor.setVisible(false);
         astronautActor.setTouchable(Touchable.disabled);
@@ -146,7 +147,7 @@ public class Game extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        gameController.setSelectedAction(CharacterActionMode.MOVE);
+                        reconfigureSelectedAction(CharacterActionMode.MOVE);
                     }
                 });
         anchorOnBottomOfAnotherActor(walkModeButton, boardGrid, 0, 0);
@@ -163,7 +164,7 @@ public class Game extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        gameController.setSelectedAction(CharacterActionMode.TALK);
+                        reconfigureSelectedAction(CharacterActionMode.TALK);
                     }
                 });
         anchorOnBottomOfAnotherActor(talkModeButton, boardGrid, 420, 0);
@@ -180,12 +181,19 @@ public class Game extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        gameController.setSelectedAction(CharacterActionMode.ATTACK);
+                        reconfigureSelectedAction(CharacterActionMode.ATTACK);
                     }
                 });
         anchorOnBottomOfAnotherActor(attackModeButton, boardGrid, -420, 0);
         attackModeButton.setVisible(false);
         return attackModeButton;
+    }
+
+    private void reconfigureSelectedAction(CharacterActionMode characterActionMode) {
+        if(gameController.getSelectedAction() != characterActionMode) {
+            gameController.setSelectedAction(characterActionMode);
+            boardGrid.redrawPaintedArea();
+        }
     }
 
     private Button createEndSurveyButton() {

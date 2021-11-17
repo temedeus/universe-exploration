@@ -1,6 +1,6 @@
 package com.universe.exploration.model.crew;
 
-import com.universe.exploration.model.crew.action.CrewMemberAction;
+import com.universe.exploration.model.crew.action.CrewMemberActionConfiguration;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 public class Probe extends GameCharacter {
@@ -10,7 +10,7 @@ public class Probe extends GameCharacter {
     }
 
     @Override
-    public CrewMemberAction setupActions() {
+    public CrewMemberActionConfiguration setupActions() {
         return null;
     }
 }

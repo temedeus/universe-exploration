@@ -1,6 +1,6 @@
 package com.universe.exploration.model.crew;
 
-import com.universe.exploration.model.crew.action.CrewMemberAction;
+import com.universe.exploration.model.crew.action.CrewMemberActionConfiguration;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 public abstract class AbstractGameCharacter {
@@ -10,22 +10,22 @@ public abstract class AbstractGameCharacter {
     private int coordinateY;
 
 
-    protected CrewMemberAction talkAction;
+    protected CrewMemberActionConfiguration talkAction;
 
-    protected CrewMemberAction moveAction;
+    protected CrewMemberActionConfiguration moveAction;
 
     abstract  PlanetAssetProvider.PlanetAsset getAsset();
 
 
-    public CrewMemberAction getTalkAction() {
+    public CrewMemberActionConfiguration getTalkAction() {
         return  talkAction;
     }
 
-    public CrewMemberAction getMoveAction() {
+    public CrewMemberActionConfiguration getMoveAction() {
         return moveAction;
     }
 
-    abstract CrewMemberAction setupActions();
+    abstract CrewMemberActionConfiguration setupActions();
 
     public boolean isSelected() {
         return selected;

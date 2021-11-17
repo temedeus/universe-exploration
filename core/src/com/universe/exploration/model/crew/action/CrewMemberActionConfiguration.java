@@ -1,6 +1,6 @@
 package com.universe.exploration.model.crew.action;
 
-public class CrewMemberAction {
+public class CrewMemberActionConfiguration {
     private int verticalReach;
 
     private int horizontalReach;
@@ -51,7 +51,7 @@ public class CrewMemberAction {
 
     private boolean fillReach;
 
-    private CrewMemberAction(Builder builder) {
+    private CrewMemberActionConfiguration(Builder builder) {
         verticalReach = builder.verticalReach;
         horizontalReach = builder.horizontalReach;
         crossReach = builder.crossReach;
@@ -94,8 +94,8 @@ public class CrewMemberAction {
             return this;
         }
 
-        public CrewMemberAction build() {
-            return new CrewMemberAction(this);
+        public CrewMemberActionConfiguration build() {
+            return new CrewMemberActionConfiguration(this);
         }
     }
 }

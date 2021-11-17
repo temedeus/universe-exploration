@@ -6,7 +6,7 @@ import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.crew.GameCharacter;
 import com.universe.exploration.model.crew.Soldier;
-import com.universe.exploration.model.crew.action.CrewMemberAction;
+import com.universe.exploration.model.crew.action.CrewMemberActionConfiguration;
 import com.universe.exploration.model.crew.action.CharacterActionMode;
 
 import java.util.ArrayList;
@@ -59,9 +59,9 @@ public class GameController extends ControllerBase {
 
         if (gameCharacter.isPresent()) {
             selectedCharacter = gameCharacter;
-            CrewMemberAction moveAction = gameCharacter.get().getSelectedAction(characterActionMode);
-            int verticalReach = moveAction.getVerticalReach();
-            int horizontalReach = moveAction.getHorizontalReach();
+            CrewMemberActionConfiguration selectedAction = gameCharacter.get().getSelectedAction(characterActionMode);
+            int verticalReach = selectedAction.getVerticalReach();
+            int horizontalReach = selectedAction.getHorizontalReach();
 
             int verticalRangeStart = (coordinateClicked.getY() - verticalReach >= 0) ? coordinateClicked.getY() - verticalReach : 0;
             int verticalRangeEnd = (coordinateClicked.getY() + verticalReach <= BOARD_SIZE_Y - 1) ? coordinateClicked.getY() + verticalReach : BOARD_SIZE_Y - 1;
@@ -82,13 +82,14 @@ public class GameController extends ControllerBase {
         return new ArrayList<>();
     }
 
-    public void setSelectedAction(CharacterActionMode characterActionMode) {
-        this.characterActionMode = characterActionMode;
+    public CharacterActionMode getSelectedAction() {
+       return characterActionMode;
     }
 
-    public void setActionTriggeredListener(UEListener actionTriggeredListener) {
-        this.actionTriggeredListener = actionTriggeredListener;
+    public void setSelectedAction(CharacterActionMode characterActionMode) {
+            this.characterActionMode = characterActionMode;
     }
+
 
     public List<GameCharacter> getPlayerGameCharacters() {
         return playerGameCharacters;

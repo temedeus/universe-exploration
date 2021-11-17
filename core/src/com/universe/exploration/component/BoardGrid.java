@@ -77,6 +77,22 @@ public class BoardGrid extends Table {
         pack();
     }
 
+    public void redrawPaintedArea() {
+        if (selectedCell.isSelected()) {
+            // First reset active cells.
+            if (!paintedCoordinates.isEmpty()) {
+                paintedCoordinates.forEach(coordinate -> grid.get(coordinate.getY()).get(coordinate.getX()).setChecked(false));
+                paintedCoordinates = new ArrayList<>();
+            }
+
+            paintedCoordinates = gameController.getAreaToPaint(new Coordinate(selectedCell.coordinateX, selectedCell.coordinateY));
+            // Painted coordinates means we selected a character and we now have selection area.
+            if (!paintedCoordinates.isEmpty()) {
+                paintedCoordinates.forEach(coordinate -> grid.get(coordinate.getY()).get(coordinate.getX()).setChecked(true));
+            }
+        }
+    }
+
     private ImageButton createGridButton(GameAssetManager gameAssetManager) {
         Texture up = gameAssetManager.getAsset(HudAssetProvider.HudAsset.GRID_CELL);
         Texture pressed = gameAssetManager.getAsset(HudAssetProvider.HudAsset.GRID_CELL_PRESSED);
