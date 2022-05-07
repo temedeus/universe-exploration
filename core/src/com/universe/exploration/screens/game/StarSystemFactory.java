@@ -13,6 +13,7 @@ import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetA
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class StarSystemFactory {
 
@@ -29,20 +30,19 @@ public class StarSystemFactory {
 
         List<Planet> planets = new ArrayList<>();
 
-        for (int x = 0; x < planetCount; x++) {
+        IntStream.range(0, planetCount).forEach(count -> {
             Planet planet = createPlanet();
-            if (x == 0) {
-                planet.setPosition(PlanetController.PlanetPosition.CENTER.calculateNewPositionX(planet), GdxHelper.getScreenCenterY() - planet.getHeight() / 2);
-            } else {
-                if (x == 1) {
+            switch (count) {
+                case 0:
+                    planet.setPosition(PlanetController.PlanetPosition.CENTER.calculateNewPositionX(planet), GdxHelper.getScreenCenterY() - planet.getHeight() / 2);
+                case 1:
                     planet.setPosition(PlanetController.PlanetPosition.RIGHT.calculateNewPositionX(planet), GdxHelper.getScreenCenterY() - planet.getHeight() / 2);
-                } else {
+                default:
                     planet.setPosition(PlanetController.PlanetPosition.FAR_RIGHT.calculateNewPositionX(planet), GdxHelper.getScreenCenterY() - planet.getHeight() / 2);
-                }
             }
 
             planets.add(planet);
-        }
+        });
 
         starSystem.setPlanets(planets);
         return starSystem;

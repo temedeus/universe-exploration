@@ -35,8 +35,7 @@ public abstract class AbstractScreen implements Screen {
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
-
-    protected <T>Future addAsyncAction(Callable<T> task) {
+    protected <T> Future addAsyncAction(Callable<T> task) {
         return executorService.submit(task);
     }
 

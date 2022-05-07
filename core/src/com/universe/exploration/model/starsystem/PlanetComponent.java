@@ -13,14 +13,6 @@ public class PlanetComponent {
         this.name = name;
     }
 
-    public PlanetType getPlanetType() {
-        return planetType;
-    }
-
-    public void setPlanetType(PlanetType planetType) {
-        this.planetType = planetType;
-    }
-
     public static class Builder {
         private String name;
 
