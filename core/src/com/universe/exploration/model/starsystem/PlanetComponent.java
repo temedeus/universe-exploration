@@ -13,6 +13,10 @@ public class PlanetComponent {
         this.name = name;
     }
 
+    public PlanetType getPlanetType() {
+        return planetType;
+    }
+
     public static class Builder {
         private String name;
 
