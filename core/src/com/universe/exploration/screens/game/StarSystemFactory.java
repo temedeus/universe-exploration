@@ -64,7 +64,6 @@ public class StarSystemFactory {
         planet.setOrigin(planet.getWidth() / 2, planet.getHeight() / 2);
 
         RepeatAction action = Actions.repeat(RepeatAction.FOREVER, Actions.rotateBy(360, 60000));
-
         planet.addAction(action);
 
         return planet;

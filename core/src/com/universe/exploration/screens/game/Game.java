@@ -64,8 +64,9 @@ public class Game extends AbstractScreen {
         actors.add(attackModeButton());
         actors.add(walkModeButton());
         actors.add(talkModeButton());
-
-        gameController.getPlayerGameCharacters().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
+        planetController.moveSelectedPlanetRight();
+        gameController.getPlayerCharacters().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
+        gameController.getNpcs().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
 
         return actors;
     }
