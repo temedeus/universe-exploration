@@ -1,6 +1,6 @@
 package com.universe.exploration.model.gamecharacter;
 
-import com.universe.exploration.model.gamecharacter.action.CrewMemberActionConfiguration;
+import com.universe.exploration.model.gamecharacter.action.CharacterActionConfiguration;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
@@ -12,15 +12,15 @@ public abstract class GameCharacter {
 
     abstract PlanetAssetProvider.PlanetAsset getAsset();
 
-    protected CrewMemberActionConfiguration talkAction;
+    protected CharacterActionConfiguration talkAction;
 
-    protected CrewMemberActionConfiguration moveAction;
+    protected CharacterActionConfiguration moveAction;
 
-    protected CrewMemberActionConfiguration attackAction;
+    protected CharacterActionConfiguration attackAction;
 
-    abstract CrewMemberActionConfiguration setupActions();
+    abstract CharacterActionConfiguration setupActions();
 
-    public CrewMemberActionConfiguration getSelectedAction(CharacterActionMode characterActionMode) {
+    public CharacterActionConfiguration getSelectedAction(CharacterActionMode characterActionMode) {
         switch (characterActionMode) {
             case MOVE:
                 return  moveAction;

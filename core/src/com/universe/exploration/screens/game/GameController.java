@@ -7,12 +7,14 @@ import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.Alien;
 import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.model.gamecharacter.Soldier;
+import com.universe.exploration.model.gamecharacter.action.CharacterActionConfiguration;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
-import com.universe.exploration.model.gamecharacter.action.CrewMemberActionConfiguration;
+import com.universe.exploration.model.gamestatus.Gamestatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 public class GameController extends ControllerBase {
     private static final int BOARD_SIZE_X = 10;
@@ -26,6 +28,8 @@ public class GameController extends ControllerBase {
     private Game game;
 
     private UEListener actionTriggeredListener;
+
+    private Gamestatus gamestatus;
 
     public GameController(UniverseExploration universeExploration, Game game) {
         super(universeExploration);
@@ -62,13 +66,15 @@ public class GameController extends ControllerBase {
     }
 
     public List<Coordinate> getAreaToPaint(Coordinate coordinateClicked) {
+        List<Coordinate> coordinates = new ArrayList<>();
+
         Optional<GameCharacter> gameCharacter = playerCharacters.stream()
                 .filter(playerGameCharacter -> playerGameCharacter.getCoordinateX() == coordinateClicked.getX() && playerGameCharacter.getCoordinateY() == coordinateClicked.getY())
                 .findFirst();
 
         if (gameCharacter.isPresent()) {
             selectedCharacter = gameCharacter;
-            CrewMemberActionConfiguration selectedAction = gameCharacter.get().getSelectedAction(characterActionMode);
+            CharacterActionConfiguration selectedAction = gameCharacter.get().getSelectedAction(characterActionMode);
             int verticalReach = selectedAction.getVerticalReach();
             int horizontalReach = selectedAction.getHorizontalReach();
 
@@ -77,18 +83,10 @@ public class GameController extends ControllerBase {
             int horizontalRangeStart = (coordinateClicked.getX() - horizontalReach >= 0) ? coordinateClicked.getX() - horizontalReach : 0;
             int horizontalRangeEnd = (coordinateClicked.getX() + horizontalReach <= BOARD_SIZE_X - 1) ? coordinateClicked.getX() + horizontalReach : BOARD_SIZE_X - 1;
 
-            List<Coordinate> coordinates = new ArrayList<>();
-            for (int coordinateX = horizontalRangeStart; coordinateX <= horizontalRangeEnd; coordinateX++) {
-                coordinates.add(new Coordinate(coordinateX, coordinateClicked.getY()));
-            }
-
-            for (int coordinateY = verticalRangeStart; coordinateY <= verticalRangeEnd; coordinateY++) {
-                coordinates.add(new Coordinate(coordinateClicked.getX(), coordinateY));
-            }
-
-            return coordinates;
+            IntStream.range(horizontalRangeStart, horizontalRangeEnd + 1).forEach(coordinateX -> coordinates.add(new Coordinate(coordinateX, coordinateClicked.getY())));
+            IntStream.range(verticalRangeStart, verticalRangeEnd + 1).forEach(coordinateY -> coordinates.add(new Coordinate(coordinateClicked.getX(), coordinateY)));
         }
-        return new ArrayList<>();
+        return coordinates;
     }
 
     public CharacterActionMode getSelectedAction() {

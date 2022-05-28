@@ -1,6 +1,6 @@
 package com.universe.exploration.model.gamecharacter.action;
 
-public class CrewMemberActionConfiguration {
+public class CharacterActionConfiguration {
     private int verticalReach;
 
     private int horizontalReach;
@@ -51,7 +51,7 @@ public class CrewMemberActionConfiguration {
 
     private boolean fillReach;
 
-    private CrewMemberActionConfiguration(Builder builder) {
+    private CharacterActionConfiguration(Builder builder) {
         verticalReach = builder.verticalReach;
         horizontalReach = builder.horizontalReach;
         crossReach = builder.crossReach;
@@ -94,8 +94,8 @@ public class CrewMemberActionConfiguration {
             return this;
         }
 
-        public CrewMemberActionConfiguration build() {
-            return new CrewMemberActionConfiguration(this);
+        public CharacterActionConfiguration build() {
+            return new CharacterActionConfiguration(this);
         }
     }
 }
