@@ -1,4 +1,4 @@
-package com.universe.exploration.model.crew;
+package com.universe.exploration.model.gamecharacter;
 
 /**
  * Enumeration of potential crew member conditions.

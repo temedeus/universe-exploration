@@ -4,11 +4,11 @@ import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.controller.ControllerBase;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.model.Coordinate;
-import com.universe.exploration.model.crew.Alien;
-import com.universe.exploration.model.crew.GameCharacter;
-import com.universe.exploration.model.crew.Soldier;
-import com.universe.exploration.model.crew.action.CharacterActionMode;
-import com.universe.exploration.model.crew.action.CrewMemberActionConfiguration;
+import com.universe.exploration.model.gamecharacter.Alien;
+import com.universe.exploration.model.gamecharacter.GameCharacter;
+import com.universe.exploration.model.gamecharacter.Soldier;
+import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
+import com.universe.exploration.model.gamecharacter.action.CrewMemberActionConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,5 @@
 
-package com.universe.exploration.model.crew;
+package com.universe.exploration.model.gamecharacter;
 
 
 /**

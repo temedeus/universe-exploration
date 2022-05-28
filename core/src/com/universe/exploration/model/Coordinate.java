@@ -1,6 +1,6 @@
 package com.universe.exploration.model;
 
-import com.universe.exploration.model.crew.GameCharacter;
+import com.universe.exploration.model.gamecharacter.GameCharacter;
 
 import java.util.Objects;
 

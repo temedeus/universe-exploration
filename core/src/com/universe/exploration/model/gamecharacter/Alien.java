@@ -1,13 +1,13 @@
-package com.universe.exploration.model.crew;
+package com.universe.exploration.model.gamecharacter;
 
-import com.universe.exploration.model.crew.action.CrewMemberActionConfiguration;
-import com.universe.exploration.model.crew.action.CharacterActionMode;
+import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
+import com.universe.exploration.model.gamecharacter.action.CrewMemberActionConfiguration;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
-public class Scientist extends GameCharacter {
+public class Alien extends GameCharacter {
     @Override
     PlanetAssetProvider.PlanetAsset getAsset() {
-        return null;
+        return PlanetAssetProvider.PlanetAsset.ASTRONAUT;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Scientist extends GameCharacter {
         attackAction = new CrewMemberActionConfiguration.Builder()
                 .verticalReach(3)
                 .horizontalReach(3)
-                .crewMemberActionType(CharacterActionMode.ATTACK)
+                .crewMemberActionType(CharacterActionMode.MOVE)
                 .fillReach(false)
                 .crossReach(false)
                 .build();

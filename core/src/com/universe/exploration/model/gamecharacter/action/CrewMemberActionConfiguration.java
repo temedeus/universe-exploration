@@ -1,4 +1,4 @@
-package com.universe.exploration.model.crew.action;
+package com.universe.exploration.model.gamecharacter.action;
 
 public class CrewMemberActionConfiguration {
     private int verticalReach;
