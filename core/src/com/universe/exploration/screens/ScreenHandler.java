@@ -24,7 +24,6 @@ public class ScreenHandler {
     private Map<GameScreen, Supplier<Screen>> transitionMap;
 
     public ScreenHandler(UniverseExploration universeExploration) {
-        // TODO: instead of passing game itself here and there, add universal controller for things like localiser, asset manager etc.
         this.universeExploration = universeExploration;
 
         transitionMap = new HashMap<>();
@@ -33,11 +32,9 @@ public class ScreenHandler {
     }
 
     public void handleScreenTransition() {
-        transitionMap.forEach((key, value) -> {
-            if (targetScreen == key && currentScreen != key) {
-                universeExploration.setScreenWithId(value.get(), key);
-            }
-        });
+        if (currentScreen != targetScreen) {
+            universeExploration.setScreenWithId(transitionMap.get(targetScreen).get(), targetScreen);
+        }
     }
 
     public void setCurrentScreen(GameScreen currentScreen) {

@@ -25,10 +25,6 @@ public class UniverseExploration extends Game {
         return screenHandler;
     }
 
-    public void setScreenHandler(ScreenHandler screenHandler) {
-        this.screenHandler = screenHandler;
-    }
-
     private ScreenHandler screenHandler;
     private LoadingScreenDelayer loadingScreenDelayer;
 
@@ -76,10 +72,6 @@ public class UniverseExploration extends Game {
         commonUIAssets.setUserInterfaceSkin(assetManager.getAsset(CommonAssetProvider.CommonAsset.UI_SKIN));
         screenHandler.navigateToWhenReady(GameScreen.MAIN_MENU);
         loadingScreenDelayer.delay();
-    }
-
-    public SpriteBatch getBatch() {
-        return batch;
     }
 
     public GameAssetManager getAssetManager() {
