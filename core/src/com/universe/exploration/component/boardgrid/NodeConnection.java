@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 public class NodeConnection implements Connection<GridNode> {
     private GridNode fromNode;
     private GridNode toNode;
-    private float cost;
+    private final float cost;
 
-    public NodeConnection(GridNode fromNode, GridNode toNode, float cost) {
+    public NodeConnection(GridNode fromNode, GridNode toNode) {
         this.fromNode = fromNode;
         this.toNode = toNode;
         cost = Vector2.dst(fromNode.getX(), fromNode.getY(), toNode.getX(), toNode.getY());
