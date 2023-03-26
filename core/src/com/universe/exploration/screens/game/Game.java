@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.boardgrid.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
+import com.universe.exploration.controller.GameController;
+import com.universe.exploration.controller.PlanetController;
 import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.GameCharacter;

@@ -1,4 +1,4 @@
-package com.universe.exploration.screens.game;
+package com.universe.exploration.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -7,6 +7,7 @@ import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.starsystem.Planet;
 import com.universe.exploration.controller.ControllerBase;
 import com.universe.exploration.model.starsystem.StarSystem;
+import com.universe.exploration.screens.game.StarSystemFactory;
 import com.universe.exploration.utils.GdxHelper;
 
 import java.util.ArrayList;
@@ -105,27 +106,27 @@ public class PlanetController extends ControllerBase {
     public enum PlanetPosition {
         FAR_LEFT {
             @Override
-            float calculateNewPositionX(Planet planet) {
+            public float calculateNewPositionX(Planet planet) {
                 return 0 - planet.getWidth();
             }
         }, LEFT {
             @Override
-            float calculateNewPositionX(Planet planet) {
+            public float calculateNewPositionX(Planet planet) {
                 return 0 - (float) (planet.getWidth() * 0.75);
             }
         }, CENTER, RIGHT {
             @Override
-            float calculateNewPositionX(Planet planet) {
+            public float calculateNewPositionX(Planet planet) {
                 return Gdx.graphics.getWidth() - planet.getWidth() / 4;
             }
         }, FAR_RIGHT {
             @Override
-            float calculateNewPositionX(Planet planet) {
+            public float calculateNewPositionX(Planet planet) {
                 return Gdx.graphics.getWidth();
             }
         };
 
-        float calculateNewPositionX(Planet planet) {
+        public float calculateNewPositionX(Planet planet) {
             return GdxHelper.getScreenCenterX() - planet.getWidth() / 2;
         }
     }

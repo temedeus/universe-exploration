@@ -1,4 +1,4 @@
-package com.universe.exploration.screens.game;
+package com.universe.exploration.controller;
 
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.controller.ControllerBase;
@@ -10,6 +10,7 @@ import com.universe.exploration.model.gamecharacter.Soldier;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionConfiguration;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 import com.universe.exploration.model.gamestatus.Gamestatus;
+import com.universe.exploration.screens.game.Game;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.starsystem.Planet;
+import com.universe.exploration.controller.PlanetController;
 import com.universe.exploration.model.starsystem.PlanetComponent;
 import com.universe.exploration.model.starsystem.PlanetType;
 import com.universe.exploration.model.starsystem.StarSystem;
