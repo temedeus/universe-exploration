@@ -53,11 +53,10 @@ public class Game extends AbstractScreen {
 
     @Override
     protected List<Actor> addActors() {
-        List<Actor> actors = new ArrayList();
         List<Actor> planets = createPlanets();
         gameCharacterImageMap = new HashMap<>();
 
-        actors.addAll(planets);
+        List<Actor> actors = new ArrayList(planets);
         actors.add(createLeftButton());
         actors.add(createRightButton());
         actors.add(createSurveyButton());
@@ -238,11 +237,11 @@ public class Game extends AbstractScreen {
         boardGrid.setVisible(surveyMode);
         addAsyncAction(() -> {
             Thread.sleep(5);
-            gameCharacterImageMap.entrySet().forEach((entry) -> {
-                entry.getValue().setVisible(surveyMode);
+            gameCharacterImageMap.forEach((key, value) -> {
+                value.setVisible(surveyMode);
                 if (surveyMode) {
-                    Coordinate coordinate = new Coordinate(entry.getKey().getCoordinateX(), entry.getKey().getCoordinateY());
-                    positionActorToGridCoordinates(coordinate, entry.getValue());
+                    Coordinate coordinate = new Coordinate(key.getCoordinateX(), key.getCoordinateY());
+                    positionActorToGridCoordinates(coordinate, value);
                 }
             });
             return true;

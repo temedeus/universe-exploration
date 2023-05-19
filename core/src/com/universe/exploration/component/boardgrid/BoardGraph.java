@@ -15,7 +15,7 @@ public class BoardGraph implements IndexedGraph<GridNode> {
     private BoardNodeHeuristic boardNodeHeuristic = new BoardNodeHeuristic();
     private List<GridNode> gridNodes = new ArrayList<>();
     private List<NodeConnection> connections = new ArrayList<>();
-    private ObjectMap<GridNode, Array<NodeConnection>> connectionsMap = new ObjectMap<>();
+    private ObjectMap<GridNode, Array<Connection<GridNode>>> connectionsMap = new ObjectMap<>();
     private int lastNodeIndex = 0;
 
     public void addGridNode(GridNode gridNode) {
@@ -39,18 +39,26 @@ public class BoardGraph implements IndexedGraph<GridNode> {
         return gridNodePath;
     }
 
+    public List<GridNode> getGridNodes() {
+        return gridNodes;
+    }
+
     @Override
     public int getIndex(GridNode node) {
-        return 0;
+        return node.getIndex();
     }
 
     @Override
     public int getNodeCount() {
-        return 0;
+        return lastNodeIndex;
     }
 
     @Override
     public Array<Connection<GridNode>> getConnections(GridNode fromNode) {
-        return null;
+        if(connectionsMap.containsKey(fromNode)){
+            return connectionsMap.get(fromNode);
+        }
+
+        return new Array<>(0);
     }
 }

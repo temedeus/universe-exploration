@@ -79,10 +79,10 @@ public class GameController extends ControllerBase {
             int verticalReach = selectedAction.getVerticalReach();
             int horizontalReach = selectedAction.getHorizontalReach();
 
-            int verticalRangeStart = (coordinateClicked.getY() - verticalReach >= 0) ? coordinateClicked.getY() - verticalReach : 0;
-            int verticalRangeEnd = (coordinateClicked.getY() + verticalReach <= BOARD_SIZE_Y - 1) ? coordinateClicked.getY() + verticalReach : BOARD_SIZE_Y - 1;
-            int horizontalRangeStart = (coordinateClicked.getX() - horizontalReach >= 0) ? coordinateClicked.getX() - horizontalReach : 0;
-            int horizontalRangeEnd = (coordinateClicked.getX() + horizontalReach <= BOARD_SIZE_X - 1) ? coordinateClicked.getX() + horizontalReach : BOARD_SIZE_X - 1;
+            int verticalRangeStart = Math.max(coordinateClicked.getY() - verticalReach, 0);
+            int verticalRangeEnd = Math.min(coordinateClicked.getY() + verticalReach, BOARD_SIZE_Y - 1);
+            int horizontalRangeStart = Math.max(coordinateClicked.getX() - horizontalReach, 0);
+            int horizontalRangeEnd = Math.min(coordinateClicked.getX() + horizontalReach, BOARD_SIZE_X - 1);
 
             IntStream.range(horizontalRangeStart, horizontalRangeEnd + 1).forEach(coordinateX -> coordinates.add(new Coordinate(coordinateX, coordinateClicked.getY())));
             IntStream.range(verticalRangeStart, verticalRangeEnd + 1).forEach(coordinateY -> coordinates.add(new Coordinate(coordinateClicked.getX(), coordinateY)));
