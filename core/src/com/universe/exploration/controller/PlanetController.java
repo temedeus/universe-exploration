@@ -5,9 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.starsystem.Planet;
-import com.universe.exploration.controller.ControllerBase;
 import com.universe.exploration.model.starsystem.StarSystem;
-import com.universe.exploration.screens.game.StarSystemFactory;
 import com.universe.exploration.utils.GdxHelper;
 
 import java.util.ArrayList;

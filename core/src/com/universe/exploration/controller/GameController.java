@@ -1,7 +1,7 @@
 package com.universe.exploration.controller;
 
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.controller.ControllerBase;
+import com.universe.exploration.component.boardgrid.BoardConfig;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.Alien;
@@ -18,13 +18,18 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class GameController extends ControllerBase {
-    private static final int BOARD_SIZE_X = 10;
-    private static final int BOARD_SIZE_Y = 6;
     private List<GameCharacter> playerCharacters;
     private List<GameCharacter> npcs;
 
     private Optional<GameCharacter> selectedCharacter;
     private CharacterActionMode characterActionMode;
+
+    public PlanetController getPlanetController() {
+        return planetController;
+    }
+
+    private PlanetController planetController;
+
 
     private Game game;
 
@@ -34,6 +39,8 @@ public class GameController extends ControllerBase {
 
     public GameController(UniverseExploration universeExploration, Game game) {
         super(universeExploration);
+        planetController = new PlanetController(universeExploration);
+
         this.game = game;
         characterActionMode = CharacterActionMode.MOVE;
         selectedCharacter = Optional.empty();
@@ -46,7 +53,7 @@ public class GameController extends ControllerBase {
         Alien alien = new Alien();
         alien.setupActions();
         alien.setSelected(false);
-        alien.setCoordinates(BOARD_SIZE_X - 1, BOARD_SIZE_Y - 1);
+        alien.setCoordinates(BoardConfig.BOARD_SIZE_MAX_X - 1, BoardConfig.BOARD_SIZE_MAX_Y - 1);
         playerCharacters.add(soldier);
         npcs.add(alien);
     }
@@ -61,6 +68,7 @@ public class GameController extends ControllerBase {
             if (characterActionMode == CharacterActionMode.MOVE) {
                 character.setCoordinates(coordinateClicked.getX(), (coordinateClicked.getY()));
                 game.createMoveToActionOnCoordinates(character, coordinateClicked.getX(), coordinateClicked.getY());
+
             }
             selectedCharacter = Optional.empty();
         }
@@ -75,14 +83,14 @@ public class GameController extends ControllerBase {
 
         if (gameCharacter.isPresent()) {
             selectedCharacter = gameCharacter;
-            CharacterActionConfiguration selectedAction = gameCharacter.get().getSelectedAction(characterActionMode);
+            CharacterActionConfiguration selectedAction = gameCharacter.get().getSelectedActionConfiguration(characterActionMode);
             int verticalReach = selectedAction.getVerticalReach();
             int horizontalReach = selectedAction.getHorizontalReach();
 
             int verticalRangeStart = Math.max(coordinateClicked.getY() - verticalReach, 0);
-            int verticalRangeEnd = Math.min(coordinateClicked.getY() + verticalReach, BOARD_SIZE_Y - 1);
+            int verticalRangeEnd = Math.min(coordinateClicked.getY() + verticalReach, BoardConfig.BOARD_SIZE_MAX_Y - 1);
             int horizontalRangeStart = Math.max(coordinateClicked.getX() - horizontalReach, 0);
-            int horizontalRangeEnd = Math.min(coordinateClicked.getX() + horizontalReach, BOARD_SIZE_X - 1);
+            int horizontalRangeEnd = Math.min(coordinateClicked.getX() + horizontalReach, BoardConfig.BOARD_SIZE_MAX_X - 1);
 
             IntStream.range(horizontalRangeStart, horizontalRangeEnd + 1).forEach(coordinateX -> coordinates.add(new Coordinate(coordinateX, coordinateClicked.getY())));
             IntStream.range(verticalRangeStart, verticalRangeEnd + 1).forEach(coordinateY -> coordinates.add(new Coordinate(coordinateClicked.getX(), coordinateY)));

@@ -12,7 +12,7 @@ public abstract class GameCharacter {
 
     abstract PlanetAssetProvider.PlanetAsset getAsset();
 
-    protected CharacterActionConfiguration talkAction;
+    protected CharacterActionConfiguration specialAttackAction;
 
     protected CharacterActionConfiguration moveAction;
 
@@ -20,12 +20,12 @@ public abstract class GameCharacter {
 
     abstract CharacterActionConfiguration setupActions();
 
-    public CharacterActionConfiguration getSelectedAction(CharacterActionMode characterActionMode) {
+    public CharacterActionConfiguration getSelectedActionConfiguration(CharacterActionMode characterActionMode) {
         switch (characterActionMode) {
             case MOVE:
                 return  moveAction;
             case TALK:
-                return talkAction;
+                return specialAttackAction;
             case ATTACK:
                 return attackAction;
         }

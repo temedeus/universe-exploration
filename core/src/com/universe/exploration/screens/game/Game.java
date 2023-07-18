@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Game extends AbstractScreen {
-    private PlanetController planetController;
     private GameController gameController;
     private BoardGrid boardGrid;
     private ImageButton leftButton;
@@ -53,10 +52,9 @@ public class Game extends AbstractScreen {
 
     @Override
     protected List<Actor> addActors() {
-        List<Actor> planets = createPlanets();
         gameCharacterImageMap = new HashMap<>();
 
-        List<Actor> actors = new ArrayList(planets);
+        List<Actor> actors = new ArrayList(gameController.getPlanetController().getPlanets());
         actors.add(createLeftButton());
         actors.add(createRightButton());
         actors.add(createSurveyButton());
@@ -65,7 +63,7 @@ public class Game extends AbstractScreen {
         actors.add(attackModeButton());
         actors.add(walkModeButton());
         actors.add(talkModeButton());
-        planetController.moveSelectedPlanetRight();
+        gameController.getPlanetController().moveSelectedPlanetRight();
         gameController.getPlayerCharacters().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
         gameController.getNpcs().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
 
@@ -74,7 +72,6 @@ public class Game extends AbstractScreen {
 
     @Override
     protected void initialiseControllers(UniverseExploration universeExploration) {
-        planetController = new PlanetController(universeExploration);
         gameController = new GameController(universeExploration, this);
     }
 
@@ -86,7 +83,7 @@ public class Game extends AbstractScreen {
         leftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                planetController.moveSelectedPlanetLeft();
+                gameController.getPlanetController().moveSelectedPlanetLeft();
             }
         });
         return leftButton;
@@ -100,7 +97,7 @@ public class Game extends AbstractScreen {
         rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                planetController.moveSelectedPlanetRight();
+                gameController.getPlanetController().moveSelectedPlanetRight();
             }
         });
         return rightButton;
@@ -194,7 +191,7 @@ public class Game extends AbstractScreen {
     private void reconfigureSelectedAction(CharacterActionMode characterActionMode) {
         if(gameController.getSelectedAction() != characterActionMode) {
             gameController.setSelectedAction(characterActionMode);
-            boardGrid.redrawPaintedArea();
+            boardGrid.redrawPotentialActionArea();
         }
     }
 
@@ -251,13 +248,5 @@ public class Game extends AbstractScreen {
         surveyButton.setVisible(!surveyMode);
         leftButton.setVisible(!surveyMode);
         rightButton.setVisible(!surveyMode);
-    }
-
-    public Map<GameCharacter, Image> getGameCharacterImageMap() {
-        return gameCharacterImageMap;
-    }
-
-    private List<Actor> createPlanets() {
-        return planetController.getPlanets();
     }
 }

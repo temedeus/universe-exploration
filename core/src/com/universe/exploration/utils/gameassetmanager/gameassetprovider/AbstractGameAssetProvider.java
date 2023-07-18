@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractGameAssetProvider {
+    protected static final String ASSET_ROOT = "images/";
+
     protected Map<String, GameAsset> gameAssets;
 
     protected GameAssetManager gameAssetManager;

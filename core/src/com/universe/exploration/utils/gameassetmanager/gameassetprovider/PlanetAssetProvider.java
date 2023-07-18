@@ -24,13 +24,13 @@ public class PlanetAssetProvider extends AbstractGameAssetProvider {
     }
 
     public enum PlanetAsset implements GameAsset {
-        EARTHLIKE("images/planets/earthlike.png"),
-        GAS1("images/planets/gas1.png"),
-        GAS2("images/planets/gas2.png"),
-        TERRESTRIAL1("images/planets/terrestrial1.png"),
-        TERRESTRIAL2("images/planets/terrestrial2.png"),
-        TERRESTRIAL3("images/planets/terrestrial3.png"),
-        ASTRONAUT("images/astronaut.png");
+        EARTHLIKE(ASSET_ROOT + "planets/earthlike.png"),
+        GAS1(ASSET_ROOT + "planets/gas1.png"),
+        GAS2(ASSET_ROOT + "planets/gas2.png"),
+        TERRESTRIAL1(ASSET_ROOT + "planets/terrestrial1.png"),
+        TERRESTRIAL2(ASSET_ROOT + "planets/terrestrial2.png"),
+        TERRESTRIAL3(ASSET_ROOT + "planets/terrestrial3.png"),
+        ASTRONAUT(ASSET_ROOT + "astronaut.png");
         private String path;
 
         PlanetAsset(String path) {

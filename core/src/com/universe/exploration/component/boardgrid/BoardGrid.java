@@ -1,5 +1,6 @@
 package com.universe.exploration.component.boardgrid;
 
+import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,75 +26,30 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BoardGrid extends Table {
-    private enum PrecedingGridNodePosition {
-        HORIZONTALLY_PRECEDING_GRIDNODE,
-        VERTICALLY_PRECEDING_GRIDNODE
-    }
-
     List<Coordinate> paintedCoordinates;
     private Map<Integer, Map<Integer, GridNode>> grid;
     private SelectedCell selectedCell;
     private GameController gameController;
     private BoardGraph boardGraph;
+    private UniverseExploration universeExploration;
+
+    private GraphPath<GridNode> path = new DefaultGraphPath<>();
+    private static final Color DEFAULT_COLOR = Color.valueOf("ffffff4c");
 
     public BoardGrid(UniverseExploration universeExploration, GameController gameController) {
         this.gameController = gameController;
         this.paintedCoordinates = new ArrayList<>();
+        this.universeExploration = universeExploration;
 
         grid = new HashMap<>();
         selectedCell = new SelectedCell();
 
-        for (int cy = 0; cy < 6; cy++) {
-            Map<Integer, GridNode> imageButtons = new HashMap<>();
-            for (int cx = 0; cx < 10; cx++) {
-                ImageButton button = createGridButton(universeExploration.getAssetManager());
-                GridNode node = new GridNode(button, cx, cy);
-
-                imageButtons.put(cx, node);
-                button.addListener(getGridNodeClickListener(button, cx, cy));
-                button.getColor().a = 0.3f;
-
-                add(button.pad(10));
-            }
-            row();
-            grid.put(cy, imageButtons);
-        }
-        createPathFindingConnections();
-
-        // TODO: this is just an AI example
-        GraphPath<GridNode> path = boardGraph.findPath( grid.get(2).get(0), grid.get(5).get(3));
-        path.forEach(gridNode -> gridNode.getImageButton().setColor(Color.FIREBRICK));
+        drawBoard();
 
         pack();
     }
 
-    private void createPathFindingConnections() {
-        this.boardGraph = new BoardGraph();
-        List<GameCharacter> allCharacters = new ArrayList<>();
-        allCharacters.addAll(gameController.getPlayerCharacters());
-        allCharacters.addAll(gameController.getNpcs());
-
-
-        IntStream.range(0, 6).forEach(coordinateY -> IntStream.range(0, 10).forEach(coordinateX -> {
-            boolean gridAvailable = allCharacters.
-                    stream()
-                    .noneMatch(npc -> npc.getCoordinateX() == coordinateX && npc.getCoordinateY() == coordinateY);
-
-            if (gridAvailable) {
-                GridNode gridNode = grid.get(coordinateY).get(coordinateX);
-                Map<PrecedingGridNodePosition, GridNode> previousNodes = boardGraph.getGridNodes().stream()
-                        .filter(prevNode -> prevNode.getY() == coordinateY && prevNode.getX() == coordinateX - 1 ||
-                                prevNode.getX() == coordinateX && prevNode.getY() == coordinateY - 1)
-                        .collect(Collectors.toMap(node -> generateKey(node, coordinateX, coordinateY), Function.identity()));
-                boardGraph.addGridNode(gridNode);
-
-                createConnectionWhenPossible(previousNodes, PrecedingGridNodePosition.HORIZONTALLY_PRECEDING_GRIDNODE, gridNode);
-                createConnectionWhenPossible(previousNodes, PrecedingGridNodePosition.VERTICALLY_PRECEDING_GRIDNODE, gridNode);
-            }
-        }));
-    }
-
-    public void redrawPaintedArea() {
+    public void redrawPotentialActionArea() {
         if (selectedCell.isSelected()) {
             // First reset active cells.
             if (!paintedCoordinates.isEmpty()) {
@@ -113,9 +69,51 @@ public class BoardGrid extends Table {
         return getImageButtonAt(x, y).localToParentCoordinates(new Vector2(this.getX(), this.getY()));
     }
 
+    private void drawBoard() {
+        for (int cy = BoardConfig.BOARD_SIZE_MIN_Y; cy < BoardConfig.BOARD_SIZE_MAX_Y; cy++) {
+            Map<Integer, GridNode> imageButtons = new HashMap<>();
+            for (int cx = BoardConfig.BOARD_SIZE_MIN_X; cx < BoardConfig.BOARD_SIZE_MAX_X; cx++) {
+                ImageButton button = createGridButton(universeExploration.getAssetManager());
+                GridNode node = new GridNode(button, cx, cy);
+
+                imageButtons.put(cx, node);
+                button.addListener(createGridNodeClickListener(button, cx, cy));
+                button.getColor().a = 0.3f;
+                add(button.pad(10));
+            }
+            row();
+            grid.put(cy, imageButtons);
+        }
+    }
+
+    private void createPathFindingConnections() {
+        this.boardGraph = new BoardGraph();
+        List<GameCharacter> allCharacters = new ArrayList<>();
+        allCharacters.addAll(gameController.getPlayerCharacters());
+        allCharacters.addAll(gameController.getNpcs());
+
+        IntStream.range(BoardConfig.BOARD_SIZE_MIN_Y, BoardConfig.BOARD_SIZE_MAX_Y).forEach(coordinateY -> IntStream.range(BoardConfig.BOARD_SIZE_MIN_X, BoardConfig.BOARD_SIZE_MAX_X).
+                forEach(coordinateX -> {
+                    boolean gridAvailable = allCharacters.
+                            stream()
+                            .noneMatch(npc -> npc.getCoordinateX() == coordinateX && npc.getCoordinateY() == coordinateY);
+
+                    if (gridAvailable) {
+                        GridNode gridNode = grid.get(coordinateY).get(coordinateX);
+                        Map<PrecedingGridNodePosition, GridNode> previousNodes = boardGraph.getGridNodes().stream()
+                                .filter(prevNode -> prevNode.getY() == coordinateY && prevNode.getX() == coordinateX - 1 ||
+                                        prevNode.getX() == coordinateX && prevNode.getY() == coordinateY - 1)
+                                .collect(Collectors.toMap(node -> generateKey(node, coordinateX, coordinateY), Function.identity()));
+                        boardGraph.addGridNode(gridNode);
+
+                        createConnectionWhenPossible(previousNodes, PrecedingGridNodePosition.HORIZONTALLY_PRECEDING_GRIDNODE, gridNode);
+                        createConnectionWhenPossible(previousNodes, PrecedingGridNodePosition.VERTICALLY_PRECEDING_GRIDNODE, gridNode);
+                    }
+                }));
+    }
 
     private void createConnectionWhenPossible(Map<PrecedingGridNodePosition, GridNode> previousNodes, PrecedingGridNodePosition precedingGridNodePosition, GridNode gridNode) {
-        if(previousNodes.containsKey(precedingGridNodePosition)) {
+        if (previousNodes.containsKey(precedingGridNodePosition)) {
             GridNode previousNode = previousNodes.get(precedingGridNodePosition);
             boardGraph.connectGridNodes(previousNode, gridNode);
         }
@@ -127,7 +125,7 @@ public class BoardGrid extends Table {
                 PrecedingGridNodePosition.VERTICALLY_PRECEDING_GRIDNODE;
     }
 
-    private ClickListener getGridNodeClickListener(Button button, int finalCx, int finalCy) {
+    private ClickListener createGridNodeClickListener(Button button, int finalCx, int finalCy) {
         return new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -135,18 +133,30 @@ public class BoardGrid extends Table {
                 // Character is already selected, so perform action or simply deselect.
                 if (selectedCell.isSelected()) {
                     selectedCell.deselect();
+                    // Clicking action area means we perform given action.
                     Optional<Coordinate> matches = paintedCoordinates.stream().filter(painted -> painted.equals(coordinateClicked)).findFirst();
                     if (matches.isPresent()) {
                         gameController.applyActionWhenPossible(coordinateClicked);
+                        createPathFindingConnections();
+
+                        // TODO: this is just an AI example
+                        path.forEach(gridNode -> gridNode.getImageButton().setColor(DEFAULT_COLOR));
+                        GameCharacter gameCharacter = gameController.getNpcs().get(0);
+                        GameCharacter player = gameController.getPlayerCharacters().get(0);
+                        GridNode node1 = grid.get(gameCharacter.getCoordinateY()-1).get(gameCharacter.getCoordinateX());
+                        GridNode node2 = grid.get(player.getCoordinateY()+1).get(player.getCoordinateX());
+                        path = boardGraph.findPath(node2, node1);
+                        path.forEach(gridNode -> gridNode.getImageButton().setColor(Color.FIREBRICK));
                     }
+                    // No match, let's clear action area.
                     if (!paintedCoordinates.isEmpty()) {
                         paintedCoordinates.forEach(coordinate -> getImageButtonAt(coordinate.getX(), coordinate.getY()).setChecked(false));
                         paintedCoordinates = new ArrayList<>();
                     }
                     button.setChecked(false);
                 } else {
-                    paintedCoordinates = gameController.getAreaToPaint(coordinateClicked);
                     // Painted coordinates means we selected a character and we now have selection area.
+                    paintedCoordinates = gameController.getAreaToPaint(coordinateClicked);
                     if (!paintedCoordinates.isEmpty()) {
                         selectedCell.setSelected(finalCx, finalCy);
                         paintedCoordinates.forEach(coordinate -> getImageButtonAt(coordinate.getX(), coordinate.getY()).setChecked(true));
@@ -170,6 +180,11 @@ public class BoardGrid extends Table {
         Drawable pressedDrawable = new TextureRegionDrawable(new TextureRegion(pressed));
         Drawable selectedDrawable = new TextureRegionDrawable(new TextureRegion(selected));
         return new ImageButton(upDrawable, pressedDrawable, selectedDrawable);
+    }
+
+    private enum PrecedingGridNodePosition {
+        HORIZONTALLY_PRECEDING_GRIDNODE,
+        VERTICALLY_PRECEDING_GRIDNODE
     }
 
     /**

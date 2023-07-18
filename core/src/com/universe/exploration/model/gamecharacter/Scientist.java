@@ -12,7 +12,7 @@ public class Scientist extends GameCharacter {
 
     @Override
     public CharacterActionConfiguration setupActions() {
-        talkAction = new CharacterActionConfiguration.Builder()
+        specialAttackAction = new CharacterActionConfiguration.Builder()
                 .verticalReach(1)
                 .horizontalReach(1)
                 .crewMemberActionType(CharacterActionMode.TALK)
