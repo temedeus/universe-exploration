@@ -1,5 +1,5 @@
 # Universe Exploration
-Universe Exploration is an RPG game where one must travel through star systems in search for civilized life.
+Universe Exploration is an RPG where one must travel through star systems in search for civilized life.
 You must look for resources and communicate with alien civilisations to keep on with your journey.
 
 # Requirements:
