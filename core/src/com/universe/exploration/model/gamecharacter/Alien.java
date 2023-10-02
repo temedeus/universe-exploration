@@ -6,8 +6,8 @@ import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetA
 
 public class Alien extends GameCharacter {
     @Override
-    PlanetAssetProvider.PlanetAsset getAsset() {
-        return PlanetAssetProvider.PlanetAsset.ASTRONAUT;
+    public PlanetAssetProvider.PlanetAsset getAsset() {
+        return PlanetAssetProvider.PlanetAsset.ALIEN;
     }
 
     @Override

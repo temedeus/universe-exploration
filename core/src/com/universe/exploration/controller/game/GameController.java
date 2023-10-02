@@ -1,7 +1,9 @@
-package com.universe.exploration.controller;
+package com.universe.exploration.controller.game;
 
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.boardgrid.BoardConfig;
+import com.universe.exploration.controller.ControllerBase;
+import com.universe.exploration.controller.planetselection.PlanetSelectionController;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.Alien;
@@ -10,7 +12,7 @@ import com.universe.exploration.model.gamecharacter.Soldier;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionConfiguration;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 import com.universe.exploration.model.gamestatus.Gamestatus;
-import com.universe.exploration.screens.game.Game;
+import com.universe.exploration.screens.game.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,34 +20,22 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class GameController extends ControllerBase {
-    private List<GameCharacter> playerCharacters;
-    private List<GameCharacter> npcs;
 
-    private Optional<GameCharacter> selectedCharacter;
-    private CharacterActionMode characterActionMode;
-
-    public PlanetController getPlanetController() {
-        return planetController;
-    }
-
-    private PlanetController planetController;
-
-
-    private Game game;
+    private GameScreen gameScreen;
 
     private UEListener actionTriggeredListener;
 
     private Gamestatus gamestatus;
 
-    public GameController(UniverseExploration universeExploration, Game game) {
+    public GameController(UniverseExploration universeExploration, GameScreen gameScreen) {
         super(universeExploration);
-        planetController = new PlanetController(universeExploration);
 
-        this.game = game;
-        characterActionMode = CharacterActionMode.MOVE;
-        selectedCharacter = Optional.empty();
-        playerCharacters = new ArrayList<>();
-        npcs = new ArrayList<>();
+        this.gamestatus = new Gamestatus();
+        this.gameScreen = gameScreen;
+        gamestatus.setCharacterActionMode(CharacterActionMode.MOVE);
+        gamestatus.setSelectedCharacter(Optional.empty());
+        gamestatus.setPlayerCharacters(new ArrayList<>());
+        gamestatus.setNpcs(new ArrayList<>());
         Soldier soldier = new Soldier();
         soldier.setupActions();
         soldier.setSelected(false);
@@ -54,36 +44,36 @@ public class GameController extends ControllerBase {
         alien.setupActions();
         alien.setSelected(false);
         alien.setCoordinates(BoardConfig.BOARD_SIZE_MAX_X - 1, BoardConfig.BOARD_SIZE_MAX_Y - 1);
-        playerCharacters.add(soldier);
-        npcs.add(alien);
+        this.gamestatus.getPlayerCharacters().add(soldier);
+        this.gamestatus.getNpcs().add(alien);
     }
 
     public void applyActionWhenPossible(Coordinate coordinateClicked) {
-        if (selectedCharacter.isPresent()) {
-            GameCharacter character = selectedCharacter.get();
+        if (gamestatus.getSelectedCharacter().isPresent()) {
+            GameCharacter character = gamestatus.getSelectedCharacter().get();
             if (coordinateClicked.matchesGameCharacterPosition(character)) {
                 return;
             }
 
-            if (characterActionMode == CharacterActionMode.MOVE) {
+            if (gamestatus.getCharacterActionMode() == CharacterActionMode.MOVE) {
                 character.setCoordinates(coordinateClicked.getX(), (coordinateClicked.getY()));
-                game.createMoveToActionOnCoordinates(character, coordinateClicked.getX(), coordinateClicked.getY());
+                gameScreen.createMoveToActionOnCoordinates(character, coordinateClicked.getX(), coordinateClicked.getY());
 
             }
-            selectedCharacter = Optional.empty();
+            gamestatus.setSelectedCharacter(Optional.empty());
         }
     }
 
     public List<Coordinate> getAreaToPaint(Coordinate coordinateClicked) {
         List<Coordinate> coordinates = new ArrayList<>();
 
-        Optional<GameCharacter> gameCharacter = playerCharacters.stream()
+        Optional<GameCharacter> gameCharacter = gamestatus.getPlayerCharacters().stream()
                 .filter(playerGameCharacter -> playerGameCharacter.getCoordinateX() == coordinateClicked.getX() && playerGameCharacter.getCoordinateY() == coordinateClicked.getY())
                 .findFirst();
 
         if (gameCharacter.isPresent()) {
-            selectedCharacter = gameCharacter;
-            CharacterActionConfiguration selectedAction = gameCharacter.get().getSelectedActionConfiguration(characterActionMode);
+            gamestatus.setSelectedCharacter(gameCharacter);
+            CharacterActionConfiguration selectedAction = gameCharacter.get().getSelectedActionConfiguration(gamestatus.getCharacterActionMode());
             int verticalReach = selectedAction.getVerticalReach();
             int horizontalReach = selectedAction.getHorizontalReach();
 
@@ -99,19 +89,19 @@ public class GameController extends ControllerBase {
     }
 
     public CharacterActionMode getSelectedAction() {
-        return characterActionMode;
+        return gamestatus.getCharacterActionMode();
     }
 
     public void setSelectedAction(CharacterActionMode characterActionMode) {
-        this.characterActionMode = characterActionMode;
+        this.gamestatus.setCharacterActionMode(characterActionMode);
     }
 
     public List<GameCharacter> getPlayerCharacters() {
-        return playerCharacters;
+        return gamestatus.getPlayerCharacters();
     }
 
     public List<GameCharacter> getNpcs() {
-        return npcs;
+        return gamestatus.getNpcs();
     }
 }
 

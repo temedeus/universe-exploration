@@ -2,8 +2,7 @@ package com.universe.exploration.screens;
 
 import com.badlogic.gdx.Screen;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.model.GameScreen;
-import com.universe.exploration.screens.game.Game;
+import com.universe.exploration.screens.game.GameScreen;
 import com.universe.exploration.screens.mainmenu.MainMenuScreen;
 
 import java.util.HashMap;
@@ -15,20 +14,20 @@ import java.util.function.Supplier;
  */
 public class ScreenHandler {
 
-    private GameScreen currentScreen;
+    private com.universe.exploration.model.GameScreen currentScreen;
 
-    private GameScreen targetScreen;
+    private com.universe.exploration.model.GameScreen targetScreen;
 
     private UniverseExploration universeExploration;
 
-    private Map<GameScreen, Supplier<Screen>> transitionMap;
+    private Map<com.universe.exploration.model.GameScreen, Supplier<Screen>> transitionMap;
 
     public ScreenHandler(UniverseExploration universeExploration) {
         this.universeExploration = universeExploration;
 
         transitionMap = new HashMap<>();
-        transitionMap.put(GameScreen.MAIN_MENU, () -> new MainMenuScreen(universeExploration));
-        transitionMap.put(GameScreen.GAME, () -> new Game(universeExploration));
+        transitionMap.put(com.universe.exploration.model.GameScreen.MAIN_MENU, () -> new MainMenuScreen(universeExploration));
+        transitionMap.put(com.universe.exploration.model.GameScreen.GAME, () -> new GameScreen(universeExploration));
     }
 
     public void handleScreenTransition() {
@@ -37,7 +36,7 @@ public class ScreenHandler {
         }
     }
 
-    public void setCurrentScreen(GameScreen currentScreen) {
+    public void setCurrentScreen(com.universe.exploration.model.GameScreen currentScreen) {
         this.currentScreen = currentScreen;
     }
 
@@ -47,9 +46,9 @@ public class ScreenHandler {
      *
      * @param targetScreen screen to navigate to
      */
-    public void navigateToWhenReady(GameScreen targetScreen) {
+    public void navigateToWhenReady(com.universe.exploration.model.GameScreen targetScreen) {
         this.targetScreen = targetScreen;
-        universeExploration.setScreenWithId(new LoadingScreen(universeExploration), GameScreen.INITIAL_LOADING);
+        universeExploration.setScreenWithId(new LoadingScreen(universeExploration), com.universe.exploration.model.GameScreen.INITIAL_LOADING);
         targetScreen.retrieveAssets(universeExploration.getAssetManager());
     }
 }

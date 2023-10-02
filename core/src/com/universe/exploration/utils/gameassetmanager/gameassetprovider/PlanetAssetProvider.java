@@ -30,7 +30,9 @@ public class PlanetAssetProvider extends AbstractGameAssetProvider {
         TERRESTRIAL1(ASSET_ROOT + "planets/terrestrial1.png"),
         TERRESTRIAL2(ASSET_ROOT + "planets/terrestrial2.png"),
         TERRESTRIAL3(ASSET_ROOT + "planets/terrestrial3.png"),
-        ASTRONAUT(ASSET_ROOT + "astronaut.png");
+        ASTRONAUT(ASSET_ROOT + "astronaut.png"),
+        ALIEN(ASSET_ROOT + "alien.png");
+
         private String path;
 
         PlanetAsset(String path) {

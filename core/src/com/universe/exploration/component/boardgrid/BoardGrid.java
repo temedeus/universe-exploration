@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.controller.GameController;
+import com.universe.exploration.controller.game.GameController;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.utils.gameassetmanager.GameAssetManager;

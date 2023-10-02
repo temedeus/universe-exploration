@@ -10,7 +10,7 @@ public abstract class GameCharacter {
     private int coordinateX;
     private int coordinateY;
 
-    abstract PlanetAssetProvider.PlanetAsset getAsset();
+    public abstract PlanetAssetProvider.PlanetAsset getAsset();
 
     protected CharacterActionConfiguration specialAttackAction;
 

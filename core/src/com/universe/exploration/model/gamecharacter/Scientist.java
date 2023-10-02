@@ -6,7 +6,7 @@ import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetA
 
 public class Scientist extends GameCharacter {
     @Override
-    PlanetAssetProvider.PlanetAsset getAsset() {
+    public PlanetAssetProvider.PlanetAsset getAsset() {
         return null;
     }
 

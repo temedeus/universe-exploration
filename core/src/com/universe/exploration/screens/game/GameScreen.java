@@ -17,8 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.boardgrid.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
-import com.universe.exploration.controller.GameController;
-import com.universe.exploration.controller.PlanetController;
+import com.universe.exploration.controller.game.GameController;
+import com.universe.exploration.controller.planetselection.PlanetSelectionController;
 import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.GameCharacter;
@@ -26,14 +26,13 @@ import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 import com.universe.exploration.screens.AbstractScreen;
 import com.universe.exploration.utils.GdxHelper;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
-import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Game extends AbstractScreen {
+public class GameScreen extends AbstractScreen {
     private GameController gameController;
     private BoardGrid boardGrid;
     private ImageButton leftButton;
@@ -46,7 +45,9 @@ public class Game extends AbstractScreen {
 
     private Map<GameCharacter, Image> gameCharacterImageMap;
 
-    public Game(UniverseExploration universeExploration) {
+    private PlanetSelectionController planetSelectionController;
+
+    public GameScreen(UniverseExploration universeExploration) {
         super(universeExploration);
     }
 
@@ -54,7 +55,7 @@ public class Game extends AbstractScreen {
     protected List<Actor> addActors() {
         gameCharacterImageMap = new HashMap<>();
 
-        List<Actor> actors = new ArrayList(gameController.getPlanetController().getPlanets());
+        List<Actor> actors = new ArrayList(planetSelectionController.getPlanets());
         actors.add(createLeftButton());
         actors.add(createRightButton());
         actors.add(createSurveyButton());
@@ -63,9 +64,9 @@ public class Game extends AbstractScreen {
         actors.add(attackModeButton());
         actors.add(walkModeButton());
         actors.add(talkModeButton());
-        gameController.getPlanetController().moveSelectedPlanetRight();
-        gameController.getPlayerCharacters().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
-        gameController.getNpcs().forEach(gameCharacter -> actors.add(createAstronaut(gameCharacter)));
+        planetSelectionController.moveSelectedPlanetRight();
+        gameController.getPlayerCharacters().forEach(gameCharacter -> actors.add(setupGamecharacter(gameCharacter)));
+        gameController.getNpcs().forEach(gameCharacter -> actors.add(setupGamecharacter(gameCharacter)));
 
         return actors;
     }
@@ -73,6 +74,7 @@ public class Game extends AbstractScreen {
     @Override
     protected void initialiseControllers(UniverseExploration universeExploration) {
         gameController = new GameController(universeExploration, this);
+        planetSelectionController = new PlanetSelectionController(universeExploration);
     }
 
     private ImageButton createLeftButton() {
@@ -83,7 +85,7 @@ public class Game extends AbstractScreen {
         leftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameController.getPlanetController().moveSelectedPlanetLeft();
+               planetSelectionController.moveSelectedPlanetLeft();
             }
         });
         return leftButton;
@@ -97,14 +99,14 @@ public class Game extends AbstractScreen {
         rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameController.getPlanetController().moveSelectedPlanetRight();
+                planetSelectionController.moveSelectedPlanetRight();
             }
         });
         return rightButton;
     }
 
-    private Actor createAstronaut(GameCharacter gameCharacter) {
-        Texture astronautTexture = universeExploration.getAssetManager().getAsset(PlanetAssetProvider.PlanetAsset.ASTRONAUT);
+    private Actor setupGamecharacter(GameCharacter gameCharacter) {
+        Texture astronautTexture = universeExploration.getAssetManager().getAsset(gameCharacter.getAsset());
 
         Image astronautActor = new Image(astronautTexture);
         astronautActor.setVisible(false);

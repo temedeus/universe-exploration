@@ -1,23 +1,24 @@
-package com.universe.exploration.controller;
+package com.universe.exploration.controller.planetselection;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.starsystem.Planet;
+import com.universe.exploration.controller.ControllerBase;
 import com.universe.exploration.model.starsystem.StarSystem;
 import com.universe.exploration.utils.GdxHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlanetController extends ControllerBase {
+public class PlanetSelectionController extends ControllerBase {
 
     private List<Actor> planets;
 
     private int planetIndex;
 
-    public PlanetController(UniverseExploration universeExploration) {
+    public PlanetSelectionController(UniverseExploration universeExploration) {
         super(universeExploration);
         this.planets = generatePlanets();
 
@@ -25,10 +26,9 @@ public class PlanetController extends ControllerBase {
     }
 
     private List<Actor> generatePlanets() {
-        List<Actor> planets = new ArrayList<>();
         StarSystem starSystem = new StarSystemFactory(universeExploration).createStarSystem();
 
-        planets.addAll(starSystem.getPlanets());
+        List<Actor> planets = new ArrayList<>(starSystem.getPlanets());
         return planets;
     }
 

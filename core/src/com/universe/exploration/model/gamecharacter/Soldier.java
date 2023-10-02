@@ -6,7 +6,7 @@ import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetA
 
 public class Soldier extends GameCharacter {
     @Override
-    PlanetAssetProvider.PlanetAsset getAsset() {
+    public PlanetAssetProvider.PlanetAsset getAsset() {
         return PlanetAssetProvider.PlanetAsset.ASTRONAUT;
     }
 
