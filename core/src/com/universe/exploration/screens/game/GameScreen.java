@@ -18,7 +18,7 @@ import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.boardgrid.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
 import com.universe.exploration.controller.game.GameController;
-import com.universe.exploration.controller.planetselection.PlanetSelectionController;
+import com.universe.exploration.controller.game.planetselection.PlanetSelectionController;
 import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.GameCharacter;
@@ -218,13 +218,13 @@ public class GameScreen extends AbstractScreen {
         Vector2 vector = boardGrid.getCellPosition(gridX, gridY);
         MoveToAction moveAction = new MoveToAction();
         moveAction.setDuration(20);
-        moveAction.setPosition(vector.x, vector.y + 15);
+        moveAction.setPosition(vector.x+7, vector.y+7);
         gameCharacterImageMap.get(gameCharacter).addAction(moveAction);
     }
 
     private void positionActorToGridCoordinates(Coordinate coordinate, Actor actor) {
         Vector2 vector = boardGrid.getCellPosition(coordinate.getX(), coordinate.getY());
-        actor.setPosition(vector.x, vector.y + 15);
+        actor.setPosition(vector.x+7, vector.y+7);
     }
 
     private void toggleSurveyMode(boolean surveyMode) {

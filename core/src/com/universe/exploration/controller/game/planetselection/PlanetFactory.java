@@ -1,4 +1,4 @@
-package com.universe.exploration.controller.planetselection;
+package com.universe.exploration.controller.game.planetselection;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;

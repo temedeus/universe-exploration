@@ -3,7 +3,6 @@ package com.universe.exploration.controller.game;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.boardgrid.BoardConfig;
 import com.universe.exploration.controller.ControllerBase;
-import com.universe.exploration.controller.planetselection.PlanetSelectionController;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.Alien;

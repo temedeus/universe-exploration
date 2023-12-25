@@ -1,4 +1,4 @@
-package com.universe.exploration.controller.planetselection;
+package com.universe.exploration.controller.game.planetselection;
 
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.starsystem.Planet;
