@@ -73,8 +73,9 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     protected void initialiseControllers(UniverseExploration universeExploration) {
-        gameController = new GameController(universeExploration, this);
         planetSelectionController = new PlanetSelectionController(universeExploration);
+
+        gameController = new GameController(universeExploration, this, planetSelectionController.getPlanets());
     }
 
     private ImageButton createLeftButton() {

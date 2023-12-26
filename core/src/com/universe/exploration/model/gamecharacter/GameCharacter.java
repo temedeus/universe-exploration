@@ -18,7 +18,7 @@ public abstract class GameCharacter {
 
     protected CharacterActionConfiguration attackAction;
 
-    abstract CharacterActionConfiguration setupActions();
+    public abstract CharacterActionConfiguration setupActions();
 
     public CharacterActionConfiguration getSelectedActionConfiguration(CharacterActionMode characterActionMode) {
         switch (characterActionMode) {

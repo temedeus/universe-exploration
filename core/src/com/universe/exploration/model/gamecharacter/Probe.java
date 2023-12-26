@@ -6,9 +6,8 @@ import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetA
 public class Probe extends GameCharacter {
     @Override
     public PlanetAssetProvider.PlanetAsset getAsset() {
-        return null;
+        return PlanetAssetProvider.PlanetAsset.PROBE;
     }
-
     @Override
     public CharacterActionConfiguration setupActions() {
         return null;

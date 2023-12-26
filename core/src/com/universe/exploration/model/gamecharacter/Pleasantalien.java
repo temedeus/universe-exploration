@@ -4,10 +4,10 @@ import com.universe.exploration.model.gamecharacter.action.CharacterActionConfig
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.PlanetAssetProvider;
 
-public class Scientist extends GameCharacter {
+public class Pleasantalien extends GameCharacter {
     @Override
     public PlanetAssetProvider.PlanetAsset getAsset() {
-        return PlanetAssetProvider.PlanetAsset.SCIENTIST;
+        return PlanetAssetProvider.PlanetAsset.PINKALIEN;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Scientist extends GameCharacter {
         attackAction = new CharacterActionConfiguration.Builder()
                 .verticalReach(3)
                 .horizontalReach(3)
-                .crewMemberActionType(CharacterActionMode.ATTACK)
+                .crewMemberActionType(CharacterActionMode.MOVE)
                 .fillReach(false)
                 .crossReach(false)
                 .build();

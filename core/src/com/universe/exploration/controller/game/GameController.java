@@ -2,10 +2,10 @@ package com.universe.exploration.controller.game;
 
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.boardgrid.BoardConfig;
+import com.universe.exploration.component.starsystem.Planet;
 import com.universe.exploration.controller.ControllerBase;
 import com.universe.exploration.listener.UEListener;
 import com.universe.exploration.model.Coordinate;
-import com.universe.exploration.model.gamecharacter.Alien;
 import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.model.gamecharacter.Soldier;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionConfiguration;
@@ -26,7 +26,7 @@ public class GameController extends ControllerBase {
 
     private Gamestatus gamestatus;
 
-    public GameController(UniverseExploration universeExploration, GameScreen gameScreen) {
+    public GameController(UniverseExploration universeExploration, GameScreen gameScreen, List<Planet> planets) {
         super(universeExploration);
 
         this.gamestatus = new Gamestatus();
@@ -39,12 +39,12 @@ public class GameController extends ControllerBase {
         soldier.setupActions();
         soldier.setSelected(false);
         soldier.setCoordinates(0, 0);
-        Alien alien = new Alien();
-        alien.setupActions();
-        alien.setSelected(false);
-        alien.setCoordinates(BoardConfig.BOARD_SIZE_MAX_X - 1, BoardConfig.BOARD_SIZE_MAX_Y - 1);
+        GameCharacter npc = planets.get(0).getPlanetComponent().getNpcs().get(0);
+        npc.setupActions();
+        npc.setSelected(false);
+        npc.setCoordinates(BoardConfig.BOARD_SIZE_MAX_X - 1, BoardConfig.BOARD_SIZE_MAX_Y - 1);
         this.gamestatus.getPlayerCharacters().add(soldier);
-        this.gamestatus.getNpcs().add(alien);
+        this.gamestatus.getNpcs().add(npc);
     }
 
     public void applyActionWhenPossible(Coordinate coordinateClicked) {

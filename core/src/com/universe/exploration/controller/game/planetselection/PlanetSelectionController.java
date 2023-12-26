@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PlanetSelectionController extends ControllerBase {
 
-    private List<Actor> planets;
+    private final List<Planet> planets;
 
     private int planetIndex;
 
@@ -25,11 +25,10 @@ public class PlanetSelectionController extends ControllerBase {
         planetIndex = 0;
     }
 
-    private List<Actor> generatePlanets() {
+    private List<Planet> generatePlanets() {
         StarSystem starSystem = new StarSystemFactory(universeExploration).createStarSystem();
 
-        List<Actor> planets = new ArrayList<>(starSystem.getPlanets());
-        return planets;
+        return new ArrayList<>(starSystem.getPlanets());
     }
 
     public void moveSelectedPlanetLeft() {
@@ -39,24 +38,24 @@ public class PlanetSelectionController extends ControllerBase {
 
         planetIndex--;
 
-        Planet selectedPlanet = (Planet) planets.get(planetIndex);
+        Planet selectedPlanet = planets.get(planetIndex);
         selectedPlanet.addAction(createMovePlanetAction(selectedPlanet, PlanetPosition.CENTER));
 
-        Planet planet = (Planet) planets.get(planetIndex + 1);
+        Planet planet = planets.get(planetIndex + 1);
         planet.addAction(createMovePlanetAction(planet, PlanetPosition.RIGHT));
 
         if (planetIndex - 1 >= 0) {
-            Planet leftPlanet = (Planet) planets.get(planetIndex - 1);
+            Planet leftPlanet = planets.get(planetIndex - 1);
             leftPlanet.addAction(createMovePlanetAction(leftPlanet, PlanetPosition.LEFT));
         }
 
         if (planetIndex - 2 >= 0) {
-            Planet farLeftPlanet = (Planet) planets.get(planetIndex - 2);
+            Planet farLeftPlanet = planets.get(planetIndex - 2);
             farLeftPlanet.addAction(createMovePlanetAction(farLeftPlanet, PlanetPosition.FAR_LEFT));
         }
 
         if (planetIndex + 2 <= planets.size() - 1) {
-            Planet farRightPlanet = (Planet) planets.get((planetIndex + 2));
+            Planet farRightPlanet = planets.get((planetIndex + 2));
             farRightPlanet.addAction(createMovePlanetAction(farRightPlanet, PlanetPosition.FAR_RIGHT));
         }
     }
@@ -68,24 +67,24 @@ public class PlanetSelectionController extends ControllerBase {
 
         planetIndex++;
 
-        Planet selectedPlanet = (Planet) planets.get(planetIndex);
+        Planet selectedPlanet = planets.get(planetIndex);
         selectedPlanet.addAction(createMovePlanetAction(selectedPlanet, PlanetPosition.CENTER));
 
-        Planet leftPlanet = (Planet) planets.get(planetIndex - 1);
+        Planet leftPlanet = planets.get(planetIndex - 1);
         leftPlanet.addAction(createMovePlanetAction(leftPlanet, PlanetPosition.LEFT));
 
         if (planetIndex - 2 >= 0) {
-            Planet farLeftPlanet = (Planet) planets.get(planetIndex - 2);
+            Planet farLeftPlanet = planets.get(planetIndex - 2);
             farLeftPlanet.addAction(createMovePlanetAction(farLeftPlanet, PlanetPosition.FAR_LEFT));
         }
 
         if (planetIndex + 1 <= planets.size() - 1) {
-            Planet rightPlanet = (Planet) planets.get(planetIndex + 1);
+            Planet rightPlanet = planets.get(planetIndex + 1);
             rightPlanet.addAction(createMovePlanetAction(rightPlanet, PlanetPosition.RIGHT));
         }
 
         if (planetIndex + 2 <= planets.size() - 1) {
-            Planet rightPlanet = (Planet) planets.get(planetIndex + 2);
+            Planet rightPlanet = planets.get(planetIndex + 2);
             rightPlanet.addAction(createMovePlanetAction(rightPlanet, PlanetPosition.FAR_RIGHT));
         }
     }
@@ -97,7 +96,7 @@ public class PlanetSelectionController extends ControllerBase {
         return moveAction;
     }
 
-    public List<Actor> getPlanets() {
+    public List<Planet> getPlanets() {
         return planets;
     }
 

@@ -4,17 +4,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.universe.exploration.component.starsystem.Planet;
+import com.universe.exploration.controller.game.NpcFactory;
+import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.model.starsystem.PlanetComponent;
 import com.universe.exploration.model.starsystem.PlanetType;
 import com.universe.exploration.utils.gameassetmanager.GameAssetManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PlanetFactory {
-    private GameAssetManager gameAssetManager;
+    private final GameAssetManager gameAssetManager;
 
-    public PlanetFactory(GameAssetManager gameAssetManager) {
+    private final NpcFactory npcFactory;
+
+    public PlanetFactory(GameAssetManager gameAssetManager ) {
         this.gameAssetManager = gameAssetManager;
+        this.npcFactory = new NpcFactory(gameAssetManager);
     }
 
     public Planet createPlanet() {
@@ -23,9 +30,12 @@ public class PlanetFactory {
                 .findFirst()
                 .getAsInt();
         PlanetType planetType = PlanetType.values()[index];
+        List<GameCharacter> npcs = new ArrayList<>();
+        npcs.add(npcFactory.createNpc());
         PlanetComponent planetComponent = new PlanetComponent.Builder()
                 .withName("Name")
                 .withPlanetType(planetType)
+                .withNpcs(npcs)
                 .build();
         Texture planetTexture = gameAssetManager.getAsset(planetComponent.getPlanetType().getPlanetAsset());
         Planet planet = new Planet(planetComponent, planetTexture);
