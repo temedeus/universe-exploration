@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 
 public class PlanetSelectionScreen extends AbstractScreen {
-    private CombatController combatController;
     private PlanetSelectionController planetSelectionController;
 
     private ImageButton leftButton;

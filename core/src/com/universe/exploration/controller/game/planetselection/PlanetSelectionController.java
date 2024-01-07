@@ -27,6 +27,8 @@ public class PlanetSelectionController extends ControllerBase {
             StarSystem starSystem = new StarSystemFactory(universeExploration).createStarSystem();
             this.planets = starSystem.getPlanets();
             planetIndex = 0;
+        } else {
+            this.planets = universeExploration.getGamestatus().getPlanets();
         }
     }
 

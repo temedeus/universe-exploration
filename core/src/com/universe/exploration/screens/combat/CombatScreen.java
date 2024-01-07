@@ -60,6 +60,11 @@ public class CombatScreen extends AbstractScreen {
         combatController.getPlayerCharacters().forEach(gameCharacter -> actors.add(setupGamecharacter(gameCharacter)));
         combatController.getNpcs().forEach(gameCharacter -> actors.add(setupGamecharacter(gameCharacter)));
 
+        gameCharacterImageMap.forEach((key, value) -> {
+            Coordinate coordinate = new Coordinate(key.getCoordinateX(), key.getCoordinateY());
+            positionActorToGridCoordinates(coordinate, value);
+        });
+
         return actors;
     }
 
@@ -140,9 +145,6 @@ public class CombatScreen extends AbstractScreen {
     }
 
     private Button createEndSurveyButton() {
-        Dialog startGameDialog = new DialogFactory().createDialog(DialogType.START_GAME, new PlayerCreationDialog(), ((event, x, y) -> {
-            universeExploration.getScreenHandler().navigateToWhenReady(GameScreen.GAME);
-        }));
         endSurveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET_END"), (a, b, c) -> {
         });
         endSurveyButton.setWidth(600);
@@ -151,7 +153,7 @@ public class CombatScreen extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        screenStage.addActor(startGameDialog);
+                        universeExploration.getScreenHandler().navigateToWhenReady(GameScreen.GAME);
                     }
                 });
         positionActor(endSurveyButton, ActorPosition.MIDDLE_TOP, 0, 0);
