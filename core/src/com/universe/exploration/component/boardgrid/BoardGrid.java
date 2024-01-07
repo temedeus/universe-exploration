@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.controller.game.GameController;
+import com.universe.exploration.controller.game.CombatController;
 import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.utils.gameassetmanager.GameAssetManager;
@@ -29,15 +29,15 @@ public class BoardGrid extends Table {
     List<Coordinate> paintedCoordinates;
     private Map<Integer, Map<Integer, GridNode>> grid;
     private SelectedCell selectedCell;
-    private GameController gameController;
+    private CombatController combatController;
     private BoardGraph boardGraph;
     private UniverseExploration universeExploration;
 
     private GraphPath<GridNode> path = new DefaultGraphPath<>();
     private static final Color DEFAULT_COLOR = Color.valueOf("ffffff4c");
 
-    public BoardGrid(UniverseExploration universeExploration, GameController gameController) {
-        this.gameController = gameController;
+    public BoardGrid(UniverseExploration universeExploration, CombatController combatController) {
+        this.combatController = combatController;
         this.paintedCoordinates = new ArrayList<>();
         this.universeExploration = universeExploration;
 
@@ -57,7 +57,7 @@ public class BoardGrid extends Table {
                 paintedCoordinates = new ArrayList<>();
             }
 
-            paintedCoordinates = gameController.getAreaToPaint(new Coordinate(selectedCell.coordinateX, selectedCell.coordinateY));
+            paintedCoordinates = combatController.getAreaToPaint(new Coordinate(selectedCell.coordinateX, selectedCell.coordinateY));
             // Painted coordinates means we selected a character and we now have selection area.
             if (!paintedCoordinates.isEmpty()) {
                 paintedCoordinates.forEach(coordinate -> getImageButtonAt(coordinate.getY(), coordinate.getX()).setChecked(true));
@@ -89,8 +89,8 @@ public class BoardGrid extends Table {
     private void createPathFindingConnections() {
         this.boardGraph = new BoardGraph();
         List<GameCharacter> allCharacters = new ArrayList<>();
-        allCharacters.addAll(gameController.getPlayerCharacters());
-        allCharacters.addAll(gameController.getNpcs());
+        allCharacters.addAll(combatController.getPlayerCharacters());
+        allCharacters.addAll(combatController.getNpcs());
 
         IntStream.range(BoardConfig.BOARD_SIZE_MIN_Y, BoardConfig.BOARD_SIZE_MAX_Y).forEach(coordinateY -> IntStream.range(BoardConfig.BOARD_SIZE_MIN_X, BoardConfig.BOARD_SIZE_MAX_X).
                 forEach(coordinateX -> {
@@ -136,13 +136,13 @@ public class BoardGrid extends Table {
                     // Clicking action area means we perform given action.
                     Optional<Coordinate> matches = paintedCoordinates.stream().filter(painted -> painted.equals(coordinateClicked)).findFirst();
                     if (matches.isPresent()) {
-                        gameController.applyActionWhenPossible(coordinateClicked);
+                        combatController.applyActionWhenPossible(coordinateClicked);
                         createPathFindingConnections();
 
                         // TODO: this is just an AI example
                         path.forEach(gridNode -> gridNode.getImageButton().setColor(DEFAULT_COLOR));
-                        GameCharacter gameCharacter = gameController.getNpcs().get(0);
-                        GameCharacter player = gameController.getPlayerCharacters().get(0);
+                        GameCharacter gameCharacter = combatController.getNpcs().get(0);
+                        GameCharacter player = combatController.getPlayerCharacters().get(0);
                         GridNode node1 = grid.get(gameCharacter.getCoordinateY()-1).get(gameCharacter.getCoordinateX());
                         GridNode node2 = grid.get(player.getCoordinateY()+1).get(player.getCoordinateX());
                         path = boardGraph.findPath(node2, node1);
@@ -156,7 +156,7 @@ public class BoardGrid extends Table {
                     button.setChecked(false);
                 } else {
                     // Painted coordinates means we selected a character and we now have selection area.
-                    paintedCoordinates = gameController.getAreaToPaint(coordinateClicked);
+                    paintedCoordinates = combatController.getAreaToPaint(coordinateClicked);
                     if (!paintedCoordinates.isEmpty()) {
                         selectedCell.setSelected(finalCx, finalCy);
                         paintedCoordinates.forEach(coordinate -> getImageButtonAt(coordinate.getX(), coordinate.getY()).setChecked(true));

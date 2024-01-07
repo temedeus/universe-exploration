@@ -2,7 +2,9 @@ package com.universe.exploration.screens;
 
 import com.badlogic.gdx.Screen;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.screens.game.GameScreen;
+import com.universe.exploration.model.GameScreen;
+import com.universe.exploration.screens.combat.CombatScreen;
+import com.universe.exploration.screens.planetselection.PlanetSelectionScreen;
 import com.universe.exploration.screens.mainmenu.MainMenuScreen;
 
 import java.util.HashMap;
@@ -27,7 +29,9 @@ public class ScreenHandler {
 
         transitionMap = new HashMap<>();
         transitionMap.put(com.universe.exploration.model.GameScreen.MAIN_MENU, () -> new MainMenuScreen(universeExploration));
-        transitionMap.put(com.universe.exploration.model.GameScreen.GAME, () -> new GameScreen(universeExploration));
+        transitionMap.put(com.universe.exploration.model.GameScreen.GAME, () -> new PlanetSelectionScreen(universeExploration));
+        transitionMap.put(GameScreen.COMBAT, () -> new CombatScreen(universeExploration));
+
     }
 
     public void handleScreenTransition() {

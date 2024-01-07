@@ -46,7 +46,7 @@ public class MainMenuScreen extends AbstractScreen {
         Dialog startGameDialog = new DialogFactory().createDialog(DialogType.START_GAME, new PlayerCreationDialog(), ((event, x, y) -> {
             universeExploration.getScreenHandler().navigateToWhenReady(GameScreen.GAME);
         }));
-        return new ButtonFactory().createTextButton(universeExploration.getLocaliser().get("BTN_START_GAME"), ((event, x, y) -> {
+        return new ButtonFactory().createTextButton(UniverseExploration.getLocaliser().get("BTN_START_GAME"), ((event, x, y) -> {
             screenStage.addActor(startGameDialog);
         }));
     }
@@ -54,18 +54,17 @@ public class MainMenuScreen extends AbstractScreen {
     TextButton createSettingsButton() {
         Dialog settingsDialog = new DialogFactory().createDialog(DialogType.SETTINGS, new Table(), ((event, x, y) -> {
         }));
-        TextButton settings = new ButtonFactory().createTextButton(universeExploration.getLocaliser().get("BTN_SETTINGS"), (event, x, y) -> {
+
+        return new ButtonFactory().createTextButton(UniverseExploration.getLocaliser().get("BTN_SETTINGS"), (event, x, y) -> {
             screenStage.addActor(settingsDialog);
         });
-
-        return settings;
     }
 
     TextButton createQuitGameButton() {
         Dialog quitGameDialog = new DialogFactory().createDialog(DialogType.EXIT_GAME, new Table(), ((event, x, y) -> {
             Gdx.app.exit();
         }));
-        return new ButtonFactory().createTextButton(universeExploration.getLocaliser().get("BTN_QUIT"), (event, x, y) -> {
+        return new ButtonFactory().createTextButton(UniverseExploration.getLocaliser().get("BTN_QUIT"), (event, x, y) -> {
             screenStage.addActor(quitGameDialog);
         });
     }

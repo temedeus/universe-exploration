@@ -5,8 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.universe.exploration.component.asset.CommonUIAssets;
 import com.universe.exploration.model.GameScreen;
+import com.universe.exploration.model.gamestatus.Gamestatus;
 import com.universe.exploration.screens.ScreenHandler;
-import com.universe.exploration.screens.LoadingScreen;
 import com.universe.exploration.utils.LoadingScreenDelayer;
 import com.universe.exploration.utils.Localiser;
 import com.universe.exploration.utils.gameassetmanager.GameAssetManager;
@@ -28,6 +28,7 @@ public class UniverseExploration extends Game {
     private ScreenHandler screenHandler;
     private LoadingScreenDelayer loadingScreenDelayer;
 
+    private Gamestatus gamestatus;
     private static Localiser localiser;
 
     public void setScreenWithId(Screen screen, GameScreen gameScreen) {
@@ -38,6 +39,7 @@ public class UniverseExploration extends Game {
     @Override
     public void create() {
         assetManager = new GameAssetManager();
+        this.gamestatus = new Gamestatus();
         loadingScreenDelayer = new LoadingScreenDelayer();
         screenHandler = new ScreenHandler(this);
         setupCommonAssets();
@@ -76,5 +78,13 @@ public class UniverseExploration extends Game {
 
     public GameAssetManager getAssetManager() {
         return assetManager;
+    }
+
+    public Gamestatus getGamestatus() {
+        return gamestatus;
+    }
+
+    public void setGamestatus(Gamestatus gamestatus) {
+        this.gamestatus = gamestatus;
     }
 }

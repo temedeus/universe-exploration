@@ -14,21 +14,20 @@ import java.util.List;
 
 public class PlanetSelectionController extends ControllerBase {
 
-    private final List<Planet> planets;
+    private List<Planet> planets;
 
     private int planetIndex;
 
     public PlanetSelectionController(UniverseExploration universeExploration) {
         super(universeExploration);
-        this.planets = generatePlanets();
-
-        planetIndex = 0;
     }
 
-    private List<Planet> generatePlanets() {
-        StarSystem starSystem = new StarSystemFactory(universeExploration).createStarSystem();
-
-        return new ArrayList<>(starSystem.getPlanets());
+    public void generatePlanets() {
+        if(universeExploration.getGamestatus().getPlanets() == null) {
+            StarSystem starSystem = new StarSystemFactory(universeExploration).createStarSystem();
+            this.planets = starSystem.getPlanets();
+            planetIndex = 0;
+        }
     }
 
     public void moveSelectedPlanetLeft() {

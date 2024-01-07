@@ -14,6 +14,16 @@ public class Gamestatus {
     private Optional<GameCharacter> selectedCharacter;
     private CharacterActionMode characterActionMode;
 
+    private List<Planet> planets;
+
+    public List<Planet> getPlanets() {
+        return planets;
+    }
+
+    public void setPlanets(List<Planet> planets) {
+        this.planets = planets;
+    }
+
     public List<GameCharacter> getPlayerCharacters() {
         return playerCharacters;
     }
@@ -45,7 +55,6 @@ public class Gamestatus {
     public void setCharacterActionMode(CharacterActionMode characterActionMode) {
         this.characterActionMode = characterActionMode;
     }
-
 
 
 }

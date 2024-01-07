@@ -12,6 +12,10 @@ public enum GameScreen {
     GAME((manager) -> {
         new PlanetAssetProvider(manager).setupAssets();
         new HudAssetProvider(manager).setupAssets();
+    }),
+    COMBAT((manager) -> {
+        new PlanetAssetProvider(manager).setupAssets();
+        new HudAssetProvider(manager).setupAssets();
     });
 
     private AssetLoader assetLoader;

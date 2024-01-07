@@ -19,6 +19,7 @@ import java.util.List;
 public enum DialogType {
     EXIT_GAME("TITLE_EXIT_GAME", "BTN_OK", DialogSetup.MEDIUM, true),
     START_GAME("TITLE_START_GAME", "BTN_START_GAME", DialogSetup.LARGE, true),
+    ENGAGE_SURVEY_MODE("TITLE_ENGAGE_SURVEY_MODE", "BTN_ENGAGE_SURVEY_MODE", DialogSetup.LARGE, true),
     SETTINGS("TITLE_OPTIONS", "BTN_SAVE_SETTINGS", DialogSetup.LARGE, true);
 
     private final String caption;

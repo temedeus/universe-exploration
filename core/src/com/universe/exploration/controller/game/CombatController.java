@@ -11,7 +11,8 @@ import com.universe.exploration.model.gamecharacter.Soldier;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionConfiguration;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 import com.universe.exploration.model.gamestatus.Gamestatus;
-import com.universe.exploration.screens.game.GameScreen;
+import com.universe.exploration.screens.combat.CombatScreen;
+import com.universe.exploration.screens.planetselection.PlanetSelectionScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,19 +20,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public class GameController extends ControllerBase {
-
-    private GameScreen gameScreen;
-
+public class CombatController extends ControllerBase {
     private UEListener actionTriggeredListener;
 
     private Gamestatus gamestatus;
+    private CombatScreen combatScreen;
 
-    public GameController(UniverseExploration universeExploration, GameScreen gameScreen, List<Planet> planets) {
+    public CombatController(UniverseExploration universeExploration, CombatScreen combatScreen) {
         super(universeExploration);
 
-        this.gamestatus = new Gamestatus();
-        this.gameScreen = gameScreen;
+        this.gamestatus = universeExploration.getGamestatus();
+        this.combatScreen = combatScreen;
         gamestatus.setCharacterActionMode(CharacterActionMode.MOVE);
         gamestatus.setSelectedCharacter(Optional.empty());
         gamestatus.setPlayerCharacters(new ArrayList<>());
@@ -41,6 +40,8 @@ public class GameController extends ControllerBase {
         soldier.setSelected(false);
         soldier.setCoordinates(0, 0);
         this.gamestatus.getPlayerCharacters().add(soldier);
+
+        List<Planet> planets = this.gamestatus.getPlanets();
 
         planets.forEach(planet -> {
             for (GameCharacter gameCharacter : planet.getPlanetComponent().getNpcs()) {
@@ -61,7 +62,7 @@ public class GameController extends ControllerBase {
 
             if (gamestatus.getCharacterActionMode() == CharacterActionMode.MOVE) {
                 character.setCoordinates(coordinateClicked.getX(), (coordinateClicked.getY()));
-                gameScreen.createMoveToActionOnCoordinates(character, coordinateClicked.getX(), coordinateClicked.getY());
+                combatScreen.createMoveToActionOnCoordinates(character, coordinateClicked.getX(), coordinateClicked.getY());
 
             }
             gamestatus.setSelectedCharacter(Optional.empty());
