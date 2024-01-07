@@ -16,8 +16,6 @@ public class PlanetSelectionController extends ControllerBase {
 
     private List<Planet> planets;
 
-    private int planetIndex;
-
     public PlanetSelectionController(UniverseExploration universeExploration) {
         super(universeExploration);
     }
@@ -26,18 +24,20 @@ public class PlanetSelectionController extends ControllerBase {
         if(universeExploration.getGamestatus().getPlanets() == null) {
             StarSystem starSystem = new StarSystemFactory(universeExploration).createStarSystem();
             this.planets = starSystem.getPlanets();
-            planetIndex = 0;
+            this.universeExploration.getGamestatus().setPlanetIndex(0);
         } else {
             this.planets = universeExploration.getGamestatus().getPlanets();
         }
     }
 
     public void moveSelectedPlanetLeft() {
+        int planetIndex = this.universeExploration.getGamestatus().getPlanetIndex();
         if (planets.size() == 1 || planetIndex == 0) {
             return;
         }
 
         planetIndex--;
+        this.universeExploration.getGamestatus().setPlanetIndex(planetIndex);
 
         Planet selectedPlanet = planets.get(planetIndex);
         selectedPlanet.addAction(createMovePlanetAction(selectedPlanet, PlanetPosition.CENTER));
@@ -62,11 +62,14 @@ public class PlanetSelectionController extends ControllerBase {
     }
 
     public void moveSelectedPlanetRight() {
+        int planetIndex = this.universeExploration.getGamestatus().getPlanetIndex();
+
         if (planets.size() == 1 || planetIndex == planets.size() - 1) {
             return;
         }
 
         planetIndex++;
+        this.universeExploration.getGamestatus().setPlanetIndex(planetIndex);
 
         Planet selectedPlanet = planets.get(planetIndex);
         selectedPlanet.addAction(createMovePlanetAction(selectedPlanet, PlanetPosition.CENTER));

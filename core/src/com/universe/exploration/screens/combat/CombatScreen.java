@@ -34,13 +34,7 @@ public class CombatScreen extends AbstractScreen {
 
     private BoardGrid boardGrid;
 
-    private Button endSurveyButton;
-    private Button walkModeButton;
-    private Button talkModeButton;
-    private Button attackModeButton;
-
     private Map<GameCharacter, Image> gameCharacterImageMap;
-
 
     public CombatScreen(UniverseExploration universeExploration) {
         super(universeExploration);
@@ -73,7 +67,6 @@ public class CombatScreen extends AbstractScreen {
         combatController = new CombatController(universeExploration, this);
     }
 
-
     private Actor setupGamecharacter(GameCharacter gameCharacter) {
         Texture texture = universeExploration.getAssetManager().getAsset(gameCharacter.getAsset());
 
@@ -90,7 +83,7 @@ public class CombatScreen extends AbstractScreen {
     }
 
     private Button walkModeButton() {
-        walkModeButton = new ButtonFactory().createTextButton(getLocale("BTN_WALK_MODE"), (a, b, c) -> {
+        Button walkModeButton = new ButtonFactory().createTextButton(getLocale("BTN_WALK_MODE"), (a, b, c) -> {
         });
         walkModeButton.setWidth(400);
         walkModeButton.setHeight(100);
@@ -106,7 +99,7 @@ public class CombatScreen extends AbstractScreen {
     }
 
     private Button talkModeButton() {
-        talkModeButton = new ButtonFactory().createTextButton(getLocale("BTN_TALK_MODE"), (a, b, c) -> {
+        Button talkModeButton = new ButtonFactory().createTextButton(getLocale("BTN_TALK_MODE"), (a, b, c) -> {
         });
         talkModeButton.setWidth(400);
         talkModeButton.setHeight(100);
@@ -122,7 +115,7 @@ public class CombatScreen extends AbstractScreen {
     }
 
     private Button attackModeButton() {
-        attackModeButton = new ButtonFactory().createTextButton(getLocale("BTN_ATTACK_MODE"), (a, b, c) -> {
+        Button attackModeButton = new ButtonFactory().createTextButton(getLocale("BTN_ATTACK_MODE"), (a, b, c) -> {
         });
         attackModeButton.setWidth(400);
         attackModeButton.setHeight(100);
@@ -145,7 +138,7 @@ public class CombatScreen extends AbstractScreen {
     }
 
     private Button createEndSurveyButton() {
-        endSurveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET_END"), (a, b, c) -> {
+        Button endSurveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET_END"), (a, b, c) -> {
         });
         endSurveyButton.setWidth(600);
         endSurveyButton.setHeight(120);

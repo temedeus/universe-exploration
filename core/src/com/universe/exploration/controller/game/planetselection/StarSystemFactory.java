@@ -25,7 +25,7 @@ public class StarSystemFactory {
         List<Planet> planets = new ArrayList<>();
 
         IntStream.range(0, planetCount).forEach(planetPosition -> {
-            Planet planet = planetFactory.createPlanet();
+            Planet planet = planetFactory.createPlanet(planetPosition);
             switch (planetPosition) {
                 case 0:
                     planet.setPosition(PlanetSelectionController.PlanetPosition.CENTER.calculateNewPositionX(planet), GdxHelper.getScreenCenterY() - planet.getHeight() / 2);

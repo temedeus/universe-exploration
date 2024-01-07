@@ -106,7 +106,7 @@ public class CombatController extends ControllerBase {
     }
 
     public List<GameCharacter> getNpcs() {
-        return gamestatus.getNpcs().get("Name");
+        return gamestatus.getActivePlanetsNpcs();
     }
 }
 

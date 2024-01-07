@@ -16,6 +16,12 @@ public class Gamestatus {
 
     private List<Planet> planets;
 
+    private int planetIndex;
+
+    public List<GameCharacter> getActivePlanetsNpcs() {
+        return planets.get(planetIndex).getPlanetComponent().getNpcs();
+    }
+
     public List<Planet> getPlanets() {
         return planets;
     }
@@ -56,5 +62,12 @@ public class Gamestatus {
         this.characterActionMode = characterActionMode;
     }
 
+    public int getPlanetIndex() {
+        return planetIndex;
+    }
+
+    public void setPlanetIndex(int planetIndex) {
+        this.planetIndex = planetIndex;
+    }
 
 }

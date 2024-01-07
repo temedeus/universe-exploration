@@ -40,21 +40,12 @@ import java.util.Map;
 public class PlanetSelectionScreen extends AbstractScreen {
     private PlanetSelectionController planetSelectionController;
 
-    private ImageButton leftButton;
-    private ImageButton rightButton;
-    private Button surveyButton;
-
-    private Map<GameCharacter, Image> gameCharacterImageMap;
-
-
     public PlanetSelectionScreen(UniverseExploration universeExploration) {
         super(universeExploration);
     }
 
     @Override
     protected List<Actor> addActors() {
-        gameCharacterImageMap = new HashMap<>();
-
         List<Actor> actors = new ArrayList(planetSelectionController.getPlanets());
         actors.add(createLeftButton());
         actors.add(createRightButton());
@@ -75,7 +66,7 @@ public class PlanetSelectionScreen extends AbstractScreen {
     private ImageButton createLeftButton() {
         Texture left = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.ARROW_LEFT);
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(left));
-        leftButton = new ImageButton(drawable);
+        ImageButton leftButton = new ImageButton(drawable);
         leftButton.setPosition(0, GdxHelper.getScreenCenterY() - leftButton.getHeight() / 2);
         leftButton.addListener(new ClickListener() {
             @Override
@@ -89,7 +80,7 @@ public class PlanetSelectionScreen extends AbstractScreen {
     private ImageButton createRightButton() {
         Texture left = universeExploration.getAssetManager().getAsset(HudAssetProvider.HudAsset.ARROW_RIGHT);
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(left));
-        rightButton = new ImageButton(drawable);
+        ImageButton rightButton = new ImageButton(drawable);
         rightButton.setPosition(Gdx.graphics.getWidth() - rightButton.getWidth(), GdxHelper.getScreenCenterY() - rightButton.getHeight() / 2);
         rightButton.addListener(new ClickListener() {
             @Override
@@ -104,7 +95,8 @@ public class PlanetSelectionScreen extends AbstractScreen {
         Dialog surveyModeDialog = new DialogFactory().createDialog(DialogType.ENGAGE_SURVEY_MODE, new PlayerCreationDialog(), ((event, x, y) -> {
             universeExploration.getScreenHandler().navigateToWhenReady(GameScreen.COMBAT);
         }));
-        surveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET"), (a, b, c) -> {});
+        Button surveyButton = new ButtonFactory().createTextButton(getLocale("BTN_SURVEY_PLANET"), (a, b, c) -> {
+        });
         surveyButton.setWidth(800);
         surveyButton.setHeight(200);
         surveyButton.addListener(
