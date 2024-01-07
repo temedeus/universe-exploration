@@ -14,6 +14,7 @@ import com.universe.exploration.model.gamestatus.Gamestatus;
 import com.universe.exploration.screens.game.GameScreen;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -34,17 +35,21 @@ public class GameController extends ControllerBase {
         gamestatus.setCharacterActionMode(CharacterActionMode.MOVE);
         gamestatus.setSelectedCharacter(Optional.empty());
         gamestatus.setPlayerCharacters(new ArrayList<>());
-        gamestatus.setNpcs(new ArrayList<>());
+        gamestatus.setNpcs(new HashMap<>());
         Soldier soldier = new Soldier();
         soldier.setupActions();
         soldier.setSelected(false);
         soldier.setCoordinates(0, 0);
-        GameCharacter npc = planets.get(0).getPlanetComponent().getNpcs().get(0);
-        npc.setupActions();
-        npc.setSelected(false);
-        npc.setCoordinates(BoardConfig.BOARD_SIZE_MAX_X - 1, BoardConfig.BOARD_SIZE_MAX_Y - 1);
         this.gamestatus.getPlayerCharacters().add(soldier);
-        this.gamestatus.getNpcs().add(npc);
+
+        planets.forEach(planet -> {
+            for (GameCharacter gameCharacter : planet.getPlanetComponent().getNpcs()) {
+                gameCharacter.setupActions();
+                gameCharacter.setSelected(false);
+                gameCharacter.setCoordinates(BoardConfig.BOARD_SIZE_MAX_X - 1, BoardConfig.BOARD_SIZE_MAX_Y - 1);
+            }
+            this.gamestatus.getNpcs().put(planet.getPlanetComponent().getName(), planet.getPlanetComponent().getNpcs());
+        });
     }
 
     public void applyActionWhenPossible(Coordinate coordinateClicked) {
@@ -100,7 +105,7 @@ public class GameController extends ControllerBase {
     }
 
     public List<GameCharacter> getNpcs() {
-        return gamestatus.getNpcs();
+        return gamestatus.getNpcs().get("Name");
     }
 }
 

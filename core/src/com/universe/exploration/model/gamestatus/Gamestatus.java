@@ -1,14 +1,16 @@
 package com.universe.exploration.model.gamestatus;
 
+import com.universe.exploration.component.starsystem.Planet;
 import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Gamestatus {
     private List<GameCharacter> playerCharacters;
-    private List<GameCharacter> npcs;
+    private Map<String, List<GameCharacter>> npcs;
     private Optional<GameCharacter> selectedCharacter;
     private CharacterActionMode characterActionMode;
 
@@ -20,11 +22,11 @@ public class Gamestatus {
         this.playerCharacters = playerCharacters;
     }
 
-    public List<GameCharacter> getNpcs() {
+    public Map<String, List<GameCharacter>> getNpcs() {
         return npcs;
     }
 
-    public void setNpcs(List<GameCharacter> npcs) {
+    public void setNpcs(Map<String, List<GameCharacter>> npcs) {
         this.npcs = npcs;
     }
 

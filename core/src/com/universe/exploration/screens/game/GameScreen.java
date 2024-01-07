@@ -34,6 +34,8 @@ import java.util.Map;
 
 public class GameScreen extends AbstractScreen {
     private GameController gameController;
+    private PlanetSelectionController planetSelectionController;
+
     private BoardGrid boardGrid;
     private ImageButton leftButton;
     private ImageButton rightButton;
@@ -45,7 +47,6 @@ public class GameScreen extends AbstractScreen {
 
     private Map<GameCharacter, Image> gameCharacterImageMap;
 
-    private PlanetSelectionController planetSelectionController;
 
     public GameScreen(UniverseExploration universeExploration) {
         super(universeExploration);
@@ -74,7 +75,6 @@ public class GameScreen extends AbstractScreen {
     @Override
     protected void initialiseControllers(UniverseExploration universeExploration) {
         planetSelectionController = new PlanetSelectionController(universeExploration);
-
         gameController = new GameController(universeExploration, this, planetSelectionController.getPlanets());
     }
 
@@ -107,13 +107,13 @@ public class GameScreen extends AbstractScreen {
     }
 
     private Actor setupGamecharacter(GameCharacter gameCharacter) {
-        Texture astronautTexture = universeExploration.getAssetManager().getAsset(gameCharacter.getAsset());
+        Texture texture = universeExploration.getAssetManager().getAsset(gameCharacter.getAsset());
 
-        Image astronautActor = new Image(astronautTexture);
-        astronautActor.setVisible(false);
-        astronautActor.setTouchable(Touchable.disabled);
-        gameCharacterImageMap.put(gameCharacter, astronautActor);
-        return astronautActor;
+        Image image = new Image(texture);
+        image.setVisible(false);
+        image.setTouchable(Touchable.disabled);
+        gameCharacterImageMap.put(gameCharacter, image);
+        return image;
     }
 
     private Actor createGrid() {
@@ -223,11 +223,6 @@ public class GameScreen extends AbstractScreen {
         gameCharacterImageMap.get(gameCharacter).addAction(moveAction);
     }
 
-    private void positionActorToGridCoordinates(Coordinate coordinate, Actor actor) {
-        Vector2 vector = boardGrid.getCellPosition(coordinate.getX(), coordinate.getY());
-        actor.setPosition(vector.x+7, vector.y+7);
-    }
-
     private void toggleSurveyMode(boolean surveyMode) {
         // Survey mode components
         endSurveyButton.setVisible(surveyMode);
@@ -252,4 +247,10 @@ public class GameScreen extends AbstractScreen {
         leftButton.setVisible(!surveyMode);
         rightButton.setVisible(!surveyMode);
     }
+
+    private void positionActorToGridCoordinates(Coordinate coordinate, Actor actor) {
+        Vector2 vector = boardGrid.getCellPosition(coordinate.getX(), coordinate.getY());
+        actor.setPosition(vector.x+7, vector.y+7);
+    }
+
 }

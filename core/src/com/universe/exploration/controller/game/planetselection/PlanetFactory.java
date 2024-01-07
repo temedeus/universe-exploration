@@ -5,13 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.universe.exploration.component.starsystem.Planet;
 import com.universe.exploration.controller.game.NpcFactory;
-import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.model.starsystem.PlanetComponent;
 import com.universe.exploration.model.starsystem.PlanetType;
 import com.universe.exploration.utils.gameassetmanager.GameAssetManager;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class PlanetFactory {
@@ -29,13 +26,12 @@ public class PlanetFactory {
         int index = random.ints(0, PlanetType.values().length - 1)
                 .findFirst()
                 .getAsInt();
+
         PlanetType planetType = PlanetType.values()[index];
-        List<GameCharacter> npcs = new ArrayList<>();
-        npcs.add(npcFactory.createNpc());
         PlanetComponent planetComponent = new PlanetComponent.Builder()
                 .withName("Name")
                 .withPlanetType(planetType)
-                .withNpcs(npcs)
+                .withNpcs(npcFactory.createNpcs())
                 .build();
         Texture planetTexture = gameAssetManager.getAsset(planetComponent.getPlanetType().getPlanetAsset());
         Planet planet = new Planet(planetComponent, planetTexture);
