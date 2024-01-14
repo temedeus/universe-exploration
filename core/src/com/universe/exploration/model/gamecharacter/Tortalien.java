@@ -15,7 +15,7 @@ public class Tortalien extends GameCharacter {
         specialAttackAction = new CharacterActionConfiguration.Builder()
                 .verticalReach(1)
                 .horizontalReach(1)
-                .crewMemberActionType(CharacterActionMode.TALK)
+                .crewMemberActionType(CharacterActionMode.SPECIAL)
                 .fillReach(false)
                 .crossReach(false)
                 .build();

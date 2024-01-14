@@ -3,39 +3,28 @@ package com.universe.exploration.screens.planetselection;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.universe.exploration.UniverseExploration;
-import com.universe.exploration.component.boardgrid.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
 import com.universe.exploration.component.dialog.Dialog;
 import com.universe.exploration.component.dialog.DialogFactory;
 import com.universe.exploration.component.dialog.DialogType;
-import com.universe.exploration.controller.game.CombatController;
 import com.universe.exploration.controller.game.planetselection.PlanetSelectionController;
 import com.universe.exploration.model.ActorPosition;
-import com.universe.exploration.model.Coordinate;
 import com.universe.exploration.model.GameScreen;
-import com.universe.exploration.model.gamecharacter.GameCharacter;
-import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 import com.universe.exploration.screens.AbstractScreen;
 import com.universe.exploration.screens.mainmenu.PlayerCreationDialog;
 import com.universe.exploration.utils.GdxHelper;
 import com.universe.exploration.utils.gameassetmanager.gameassetprovider.HudAssetProvider;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PlanetSelectionScreen extends AbstractScreen {
     private PlanetSelectionController planetSelectionController;
@@ -50,9 +39,12 @@ public class PlanetSelectionScreen extends AbstractScreen {
         actors.add(createLeftButton());
         actors.add(createRightButton());
         actors.add(createSurveyButton());
-        planetSelectionController.moveSelectedPlanetRight();
 
-        this.universeExploration.getGamestatus().setPlanets(planetSelectionController.getPlanets());
+        if(this.universeExploration.getGamestatus().isInitialStatus()) {
+            planetSelectionController.moveSelectedPlanetRight();
+            this.universeExploration.getGamestatus().setPlanets(planetSelectionController.getPlanets());
+            this.universeExploration.getGamestatus().setInitialStatus(false);
+        }
 
         return actors;
     }
@@ -71,7 +63,7 @@ public class PlanetSelectionScreen extends AbstractScreen {
         leftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-               planetSelectionController.moveSelectedPlanetLeft();
+                planetSelectionController.moveSelectedPlanetLeft();
             }
         });
         return leftButton;

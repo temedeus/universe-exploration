@@ -9,6 +9,7 @@ public abstract class GameCharacter {
 
     private int coordinateX;
     private int coordinateY;
+    private boolean npc;
 
     public abstract PlanetAssetProvider.PlanetAsset getAsset();
 
@@ -24,7 +25,7 @@ public abstract class GameCharacter {
         switch (characterActionMode) {
             case MOVE:
                 return  moveAction;
-            case TALK:
+            case SPECIAL:
                 return specialAttackAction;
             case ATTACK:
                 return attackAction;
@@ -53,5 +54,13 @@ public abstract class GameCharacter {
     public void setCoordinates(int coordinateX, int coordinateY) {
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
+    }
+
+    public boolean isNpc() {
+        return npc;
+    }
+
+    public void setNpc(boolean npc) {
+        this.npc = npc;
     }
 }

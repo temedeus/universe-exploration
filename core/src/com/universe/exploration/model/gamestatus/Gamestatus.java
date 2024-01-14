@@ -16,7 +16,20 @@ public class Gamestatus {
 
     private List<Planet> planets;
 
+    private GameCharacter characterInTurn;
+
+
+    private boolean initialStatus;
+
     private int planetIndex;
+
+    public boolean isInitialStatus() {
+        return initialStatus;
+    }
+
+    public void setInitialStatus(boolean initialStatus) {
+        this.initialStatus = initialStatus;
+    }
 
     public List<GameCharacter> getActivePlanetsNpcs() {
         return planets.get(planetIndex).getPlanetComponent().getNpcs();
@@ -70,4 +83,11 @@ public class Gamestatus {
         this.planetIndex = planetIndex;
     }
 
+    public GameCharacter getCharacterInTurn() {
+        return characterInTurn;
+    }
+
+    public void setCharacterInTurn(GameCharacter characterInTurn) {
+        this.characterInTurn = characterInTurn;
+    }
 }

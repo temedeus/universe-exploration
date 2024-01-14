@@ -12,9 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.universe.exploration.UniverseExploration;
 import com.universe.exploration.component.boardgrid.BoardGrid;
 import com.universe.exploration.component.button.ButtonFactory;
-import com.universe.exploration.component.dialog.Dialog;
-import com.universe.exploration.component.dialog.DialogFactory;
-import com.universe.exploration.component.dialog.DialogType;
 import com.universe.exploration.controller.game.CombatController;
 import com.universe.exploration.model.ActorPosition;
 import com.universe.exploration.model.Coordinate;
@@ -22,7 +19,6 @@ import com.universe.exploration.model.GameScreen;
 import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
 import com.universe.exploration.screens.AbstractScreen;
-import com.universe.exploration.screens.mainmenu.PlayerCreationDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,7 +103,7 @@ public class CombatScreen extends AbstractScreen {
                 new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        reconfigureSelectedAction(CharacterActionMode.TALK);
+                        reconfigureSelectedAction(CharacterActionMode.SPECIAL);
                     }
                 });
         anchorOnBottomOfAnotherActor(talkModeButton, boardGrid, 420, 0);

@@ -40,6 +40,7 @@ public class UniverseExploration extends Game {
     public void create() {
         assetManager = new GameAssetManager();
         this.gamestatus = new Gamestatus();
+        this.gamestatus.setInitialStatus(true);
         loadingScreenDelayer = new LoadingScreenDelayer();
         screenHandler = new ScreenHandler(this);
         setupCommonAssets();
