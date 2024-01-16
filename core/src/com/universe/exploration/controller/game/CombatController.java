@@ -10,9 +10,8 @@ import com.universe.exploration.model.gamecharacter.GameCharacter;
 import com.universe.exploration.model.gamecharacter.Soldier;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionConfiguration;
 import com.universe.exploration.model.gamecharacter.action.CharacterActionMode;
-import com.universe.exploration.model.gamestatus.Gamestatus;
+import com.universe.exploration.model.gamestatus.GlobalStatus;
 import com.universe.exploration.screens.combat.CombatScreen;
-import com.universe.exploration.screens.planetselection.PlanetSelectionScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,26 +22,27 @@ import java.util.stream.IntStream;
 public class CombatController extends ControllerBase {
     private UEListener actionTriggeredListener;
 
-    private Gamestatus gamestatus;
-    private CombatScreen combatScreen;
+    private final GlobalStatus globalStatus;
+    private final CombatScreen combatScreen;
 
     public CombatController(UniverseExploration universeExploration, CombatScreen combatScreen) {
         super(universeExploration);
 
-        this.gamestatus = universeExploration.getGamestatus();
+        this.globalStatus = universeExploration.getGamestatus();
         this.combatScreen = combatScreen;
-        gamestatus.setCharacterActionMode(CharacterActionMode.MOVE);
-        gamestatus.setSelectedCharacter(Optional.empty());
-        gamestatus.setPlayerCharacters(new ArrayList<>());
-        gamestatus.setNpcs(new HashMap<>());
+        globalStatus.setCharacterActionMode(CharacterActionMode.MOVE);
+        globalStatus.setSelectedCharacter(Optional.empty());
+        globalStatus.setPlayerCharacters(new ArrayList<>());
+        globalStatus.setNpcs(new HashMap<>());
         Soldier soldier = new Soldier();
         soldier.setupActions();
         soldier.setNpc(false);
         soldier.setSelected(false);
         soldier.setCoordinates(0, 0);
-        this.gamestatus.getPlayerCharacters().add(soldier);
+        this.globalStatus.getPlayerCharacters().add(soldier);
+        this.globalStatus.setCharacterInTurn(soldier);
 
-        List<Planet> planets = this.gamestatus.getPlanets();
+        List<Planet> planets = this.globalStatus.getPlanets();
 
         planets.forEach(planet -> {
             for (GameCharacter gameCharacter : planet.getPlanetComponent().getNpcs()) {
@@ -51,36 +51,36 @@ public class CombatController extends ControllerBase {
                 gameCharacter.setSelected(false);
                 gameCharacter.setCoordinates(BoardConfig.BOARD_SIZE_MAX_X - 1, BoardConfig.BOARD_SIZE_MAX_Y - 1);
             }
-            this.gamestatus.getNpcs().put(planet.getPlanetComponent().getName(), planet.getPlanetComponent().getNpcs());
+            this.globalStatus.getNpcs().put(planet.getPlanetComponent().getName(), planet.getPlanetComponent().getNpcs());
         });
     }
 
     public void applyActionWhenPossible(Coordinate coordinateClicked) {
-        if (gamestatus.getSelectedCharacter().isPresent()) {
-            GameCharacter character = gamestatus.getSelectedCharacter().get();
+        if (globalStatus.getSelectedCharacter().isPresent()) {
+            GameCharacter character = globalStatus.getSelectedCharacter().get();
             if (coordinateClicked.matchesGameCharacterPosition(character)) {
                 return;
             }
 
-            if (gamestatus.getCharacterActionMode() == CharacterActionMode.MOVE) {
+            if (globalStatus.getCharacterActionMode() == CharacterActionMode.MOVE) {
                 character.setCoordinates(coordinateClicked.getX(), (coordinateClicked.getY()));
                 combatScreen.createMoveToActionOnCoordinates(character, coordinateClicked.getX(), coordinateClicked.getY());
-
+                updateCharacterInTurn();
             }
-            gamestatus.setSelectedCharacter(Optional.empty());
+            globalStatus.setSelectedCharacter(Optional.empty());
         }
     }
 
     public List<Coordinate> getAreaToPaint(Coordinate coordinateClicked) {
         List<Coordinate> coordinates = new ArrayList<>();
 
-        Optional<GameCharacter> gameCharacter = gamestatus.getPlayerCharacters().stream()
+        Optional<GameCharacter> gameCharacter = globalStatus.getPlayerCharacters().stream()
                 .filter(playerGameCharacter -> playerGameCharacter.getCoordinateX() == coordinateClicked.getX() && playerGameCharacter.getCoordinateY() == coordinateClicked.getY())
                 .findFirst();
 
         if (gameCharacter.isPresent()) {
-            gamestatus.setSelectedCharacter(gameCharacter);
-            CharacterActionConfiguration selectedAction = gameCharacter.get().getSelectedActionConfiguration(gamestatus.getCharacterActionMode());
+            globalStatus.setSelectedCharacter(gameCharacter);
+            CharacterActionConfiguration selectedAction = gameCharacter.get().getSelectedActionConfiguration(globalStatus.getCharacterActionMode());
             int verticalReach = selectedAction.getVerticalReach();
             int horizontalReach = selectedAction.getHorizontalReach();
 
@@ -96,19 +96,30 @@ public class CombatController extends ControllerBase {
     }
 
     public CharacterActionMode getSelectedAction() {
-        return gamestatus.getCharacterActionMode();
+        return globalStatus.getCharacterActionMode();
     }
 
     public void setSelectedAction(CharacterActionMode characterActionMode) {
-        this.gamestatus.setCharacterActionMode(characterActionMode);
+        this.globalStatus.setCharacterActionMode(characterActionMode);
     }
 
     public List<GameCharacter> getPlayerCharacters() {
-        return gamestatus.getPlayerCharacters();
+        return globalStatus.getPlayerCharacters();
     }
 
     public List<GameCharacter> getNpcs() {
-        return gamestatus.getActivePlanetsNpcs();
+        return globalStatus.getActivePlanetsNpcs();
+    }
+
+    private void updateCharacterInTurn() {
+        List<GameCharacter> gameCharacters = this.globalStatus.getCharacterInTurn().isNpc() ? this.globalStatus.getActivePlanetsNpcs() : this.globalStatus.getPlayerCharacters();
+        GameCharacter character = this.globalStatus.getCharacterInTurn();
+
+        int indexofCurrent = gameCharacters.indexOf(character);
+        GameCharacter newCharacter = indexofCurrent == gameCharacters.size() - 1 ?
+                gameCharacters.get(0) :
+                gameCharacters.get(indexofCurrent + 1);
+        this.globalStatus.setCharacterInTurn(newCharacter);
     }
 }
 

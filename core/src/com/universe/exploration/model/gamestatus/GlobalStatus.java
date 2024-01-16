@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class Gamestatus {
+public class GlobalStatus {
     private List<GameCharacter> playerCharacters;
     private Map<String, List<GameCharacter>> npcs;
     private Optional<GameCharacter> selectedCharacter;
