@@ -18,7 +18,6 @@ public class Gamestatus {
 
     private GameCharacter characterInTurn;
 
-
     private boolean initialStatus;
 
     private int planetIndex;

@@ -37,6 +37,7 @@ public class CombatController extends ControllerBase {
         gamestatus.setNpcs(new HashMap<>());
         Soldier soldier = new Soldier();
         soldier.setupActions();
+        soldier.setNpc(false);
         soldier.setSelected(false);
         soldier.setCoordinates(0, 0);
         this.gamestatus.getPlayerCharacters().add(soldier);
@@ -46,6 +47,7 @@ public class CombatController extends ControllerBase {
         planets.forEach(planet -> {
             for (GameCharacter gameCharacter : planet.getPlanetComponent().getNpcs()) {
                 gameCharacter.setupActions();
+                gameCharacter.setNpc(true);
                 gameCharacter.setSelected(false);
                 gameCharacter.setCoordinates(BoardConfig.BOARD_SIZE_MAX_X - 1, BoardConfig.BOARD_SIZE_MAX_Y - 1);
             }
